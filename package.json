@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Game Project for TCSS 491",
   "main": "app.js",
+  "babel": {
+    "presets": "env"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +20,7 @@
   },
   "homepage": "https://github.com/davidpatricksteven/COMP-WORLD-PROJECT#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
   }
 }
