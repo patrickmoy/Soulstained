@@ -1,7 +1,6 @@
 let testManager = new ImageManager();
 
 testManager.queueDownload("./res/img/testImage.png");
-testManager.queueDownload('./res/img/RobotUnicorn.png');
 testManager.queueDownload("./res/img/testLargeImage.jpg");
 testManager.queueDownload("./res/img/testLargeImage2.jpg");
 testManager.startDownload().then(() =>
@@ -27,3 +26,6 @@ testManager.startDownload().then(() =>
 //
 //   console.log('Finished drawing!');
 // });
+
+var gameEng = new GameEngine();
+gameEng.createInput("space");

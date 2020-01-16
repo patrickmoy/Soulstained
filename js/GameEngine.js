@@ -12,10 +12,11 @@ class GameEngine
 
   createInput(keyCode)
   {
+    console.log(keyCode);
     this._inputs[keyCode] = false;
   }
 
-  get input(keyCode)
+  getInput(keyCode)
   {
     return this._inputs[keyCode];
   }
