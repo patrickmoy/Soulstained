@@ -18,20 +18,41 @@ class GameEngine
 {
   constructor(ctx)
   {
+    this.entities = [];
     this.inputs = [];
-    this._context = ctx;
-    this.createInputs("Space");
+    this.ctx = ctx;
+    this.createInput("Space");
     this.startInput();
+  }
+
+  init() {
+    this.surfaceWidth = this.ctx.canvas.width;
+    this.surfaceHeight = this.ctx.canvas.height;
+    this.timer = new GameTimer();
+    console.log('Game engine initialized');
+  }
+
+  addEntity(entity) {
+    this.entities.push(entity);
   }
 
   update()
   {
-    // Do something
+    this.entities.forEach(entity => entity.update());
   }
 
   loop()
   {
+    this.clockTick = this.timer.tick();
+    this.update();
+    this.draw();
+  }
 
+  draw() {
+    this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
+    this.ctx.save();
+    this.entities.forEach(entity => entity.draw());
+    this.ctx.restore();
   }
 
   run()
@@ -44,7 +65,7 @@ class GameEngine
       // Random note: interesting, when I did gameLoop(), it would cause a stack error
       // However, when I just use gameLoop, it fixed it.
       //I guess it's because you're literally calling function and causing an infinite loop?
-      requestAnimFrame(gameLoop, self._context.canvas);
+      requestAnimFrame(gameLoop, self.ctx.canvas);
     }
     gameLoop();
   }
@@ -52,7 +73,7 @@ class GameEngine
   startInput()
   {
     var self = this;
-    this._context.canvas.addEventListener("keydown", (key) =>
+    this.ctx.canvas.addEventListener("keydown", (key) =>
     {
       if(self.inputs.hasOwnProperty(key.code))
       {
