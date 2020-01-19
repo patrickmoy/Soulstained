@@ -31,8 +31,9 @@ class GameEngine
       "KeyK": false,
       "Space": false
     };
-		this.ctx = ctx;
+    this.currentTileMap = 0;
 
+		this.ctx = ctx;
 		this.startInput();
 	}
 
