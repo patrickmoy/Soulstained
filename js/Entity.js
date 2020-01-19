@@ -7,5 +7,4 @@ class Entity {
     this.Dead = false;
     this.Dying = false;
   }
-
 }
