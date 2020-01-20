@@ -1,3 +1,4 @@
+// TODO possibly rework animation to handle direction. Doesn't seem necessary though.
 class Animation
 {
   /**
@@ -25,16 +26,15 @@ class Animation
     this.totalAnimTime = singleFrameTime * frameCount;
  }
 
- drawFrame(tick, ctx, x, y) {
+ drawFrame(tick, ctx, gamePositionX, gamePositionY, imageRow)
+ { //May have to extend this and have each entity inherit depending on spritesheet customization.
    this.elapsedTime += tick;
    if (this.isDone() && this.looping) {
       this.elapsedTime -= this.totalAnimTime; // Fiddle with later to see what's best for overlap
    }
    var frame = this.currentFrame();
-   var xIndex = 0
-   var yIndex = 0;
-   xIndex = frame % this.spriteSheet.width;
-   ctx.drawImage(this.spriteSheet, xIndex * this.frameWidth, yIndex * this.frameHeight, this.frameWidth, this.frameHeight, x, y, this.frameWidth * this.scale, this.frameHeight * this.scale);
+   var xIndex = frame % this.spriteSheet.width;
+   ctx.drawImage(this.spriteSheet, xIndex * this.frameWidth, imageRow * this.frameHeight, this.frameWidth, this.frameHeight, gamePositionX, gamePositionY, this.frameWidth * this.scale, this.frameHeight * this.scale);
  }
 
  currentFrame() {
