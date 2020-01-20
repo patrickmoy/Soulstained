@@ -21,6 +21,8 @@ class GameEngine
 	constructor(ctx)
 	{
 		this.entities = [];
+
+    // Add inputs here. Put keycode.
 		this.inputs =
     {
       "KeyW": false,
@@ -31,6 +33,8 @@ class GameEngine
       "KeyK": false,
       "Space": false
     };
+
+    this.heroFace = 's';
     this.currentTileMap = 0;
 
 		this.ctx = ctx;
@@ -89,6 +93,8 @@ class GameEngine
 	startInput()
 	{
 		var self = this;
+
+    // If button is pressed and the button is a key we care about, set it to true.
 		this.ctx.canvas.addEventListener("keydown", (key) =>
 		{
 			if (self.inputs.hasOwnProperty(key.code))
@@ -97,6 +103,7 @@ class GameEngine
 			}
 		});
 
+    // If button is lifted from press and the button is a key we care about, set it to false.
     this.ctx.canvas.addEventListener("keyup", (key) =>
   {
     if (self.inputs.hasOwnProperty(key.code))
