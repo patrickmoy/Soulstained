@@ -2,16 +2,28 @@ class Background
 {
 	constructor(game, backgroundImage)
 	{
-		//
+		// The amount of shifting
     this.SOURCE_SHIFT = 7;
-		this.sourceX = 0;
+
+		// coordinates of background image
 		this.sourceY = 0;
-		this.sourceWidth = 192;
-		this.sourceHeight = 192;
+		this.sourceX = 0;
+
+		// Size of background image to crop and use
+		this.sourceSize = 192
+
+		// Minimum X coordinate for the camera
     this.MIN_X = 0;
+
+		// Minimum Y coordinate for the camera
     this.MIN_Y = 0;
-    this.MAX_X = backgroundImage.width - this.sourceWidth;
-    this.MAX_Y = backgroundImage.height - this.sourceHeight;
+
+		// Maximum X coordinate for the camera
+    this.MAX_X = backgroundImage.width - this.sourceSize;
+
+		// Maximum Y coordinate for the camera
+    this.MAX_Y = backgroundImage.height - this.sourceSize;
+
 		this.spriteSheet = backgroundImage;
 		this.game = game;
 		this.ctx = this.game.ctx;
@@ -20,13 +32,15 @@ class Background
 	draw()
 	{
 		this.ctx.drawImage(this.spriteSheet, this.sourceX, this.sourceY,
-                       this.sourceWidth, this.sourceHeight, 0, 0,
+                       this.sourceSize, this.sourceSize, 0, 0,
                        this.ctx.canvas.width, this.ctx.canvas.height - 150);
 	}
 
 	update()
 	{
     // Can't update to next window with the prototype because of how the keys are polled
+
+		// Depending on key press, camera coordinates will move.
 		if (this.game.inputs["KeyW"])
 		{
       this.sourceY -= this.SOURCE_SHIFT;
@@ -45,6 +59,7 @@ class Background
 		{
 			this.sourceX += this.SOURCE_SHIFT;
 		}
+		// Checks the bounds to ensure we are still within the background image.
 		this.checkBounds();
 		console.log("(x, y) = (" + this.sourceX + ", " + this.sourceY + ")");
 	}
