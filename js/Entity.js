@@ -1,6 +1,7 @@
 class Entity {
 
-  constructor(game, x, y) {
+// TODO mess with layer level
+  constructor(game, x, y, layerLevel) {
     this.game = game;
     this.x = x;
     this.y = y;
