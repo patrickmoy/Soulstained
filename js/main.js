@@ -11,7 +11,7 @@ testManager.startDownload().then(() =>
   var canvas = document.getElementById("gameWorld");
   var ctx = canvas.getContext("2d");
   var gameEng = new GameEngine(ctx);
-
+  ctx.imageSmoothingEnabled = false;
 
 
   ctx.drawImage(testManager._assetCache["./res/img/simon.png"], 0, 0);
