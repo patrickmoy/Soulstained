@@ -5,7 +5,7 @@ class Hero extends Entity
 		super(game, 250, 310);
 		this.animation = new Animation(spritesheet, 32, 48, 8, .150, 8, true, 1.75);
 		this.ctx = game.ctx;
-		this.speed = 150;
+		this.speed = 500;
 		this.direction = 1;
 	}
 

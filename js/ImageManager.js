@@ -8,7 +8,7 @@ class ImageManager
     this._downloadQueue = [];
   }
 
-  // TODO ask group if they would rather have an asset manager for both 
+  // TODO ask group if they would rather have an asset manager for both
   // sound and images in one cache like preloaded like the one he provided or something else? I found that there is some libraries that will alleviate that. We can also try something else.
   queueDownload(filePath)
   {

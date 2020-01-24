@@ -13,11 +13,8 @@ testManager.startDownload().then(() =>
   var gameEng = new GameEngine(ctx);
   ctx.imageSmoothingEnabled = false;
 
-
-  ctx.drawImage(testManager._assetCache["./res/img/simon.png"], 0, 0);
-
+  gameEng.background = new Background(gameEng, testManager.getImage("./res/img/Soulstained_Draft_1.png"));
+  gameEng.addEntity(new Hero(gameEng, testManager.getImage("./res/img/hero_sprites_demo.png")));
   gameEng.init();
   gameEng.run();
-  gameEng.addEntity(new Background(gameEng, testManager.getImage("./res/img/Soulstained_Draft_1.png")));
-  gameEng.addEntity(new Hero(gameEng, testManager.getImage("./res/img/hero_sprites_demo.png")));
 });

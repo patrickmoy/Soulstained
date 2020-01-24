@@ -38,6 +38,8 @@ class GameEngine
     this.currentTileMap = 0;
 
 		this.ctx = ctx;
+    this.transition = false;
+    this.background = undefined;
 		this.startInput();
 	}
 
@@ -46,6 +48,7 @@ class GameEngine
 		this.surfaceWidth = this.ctx.canvas.width;
 		this.surfaceHeight = this.ctx.canvas.height;
 		this.timer = new GameTimer();
+    this.camera = new Camera(this, this.background, this.entities[0]);
 		console.log('Game engine initialized');
 	}
 
@@ -56,6 +59,7 @@ class GameEngine
 
 	update()
 	{
+    this.camera.update();
 		this.entities.forEach(entity => entity.update());
 	}
 
@@ -70,6 +74,7 @@ class GameEngine
 	{
 		this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
 		this.ctx.save();
+    this.camera.draw();
 		this.entities.forEach(entity => entity.draw());
 		this.ctx.restore();
 	}

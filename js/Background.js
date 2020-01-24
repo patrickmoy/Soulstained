@@ -3,7 +3,7 @@ class Background
 	constructor(game, backgroundImage)
 	{
 		// The amount of shifting
-    this.SOURCE_SHIFT = 7;
+    this.SOURCE_SHIFT = 192;
 
 		// coordinates of background image
 		this.sourceY = 0;
@@ -33,35 +33,7 @@ class Background
 	{
 		this.ctx.drawImage(this.spriteSheet, this.sourceX, this.sourceY,
                        this.sourceSize, this.sourceSize, 0, 0,
-                       this.ctx.canvas.width, this.ctx.canvas.height - 150);
-	}
-
-	update()
-	{
-    // Can't update to next window with the prototype because of how the keys are polled
-
-		// Depending on key press, camera coordinates will move.
-		if (this.game.inputs["KeyW"])
-		{
-      this.sourceY -= this.SOURCE_SHIFT;
-		}
-		if (this.game.inputs["KeyA"])
-		{
-      this.sourceX -= this.SOURCE_SHIFT;
-		}
-
-		if (this.game.inputs["KeyS"])
-		{
-			this.sourceY += this.SOURCE_SHIFT;
-		}
-
-		if (this.game.inputs["KeyD"])
-		{
-			this.sourceX += this.SOURCE_SHIFT;
-		}
-		// Checks the bounds to ensure we are still within the background image.
-		this.checkBounds();
-		console.log("(x, y) = (" + this.sourceX + ", " + this.sourceY + ")");
+                       this.ctx.canvas.width, this.ctx.canvas.height);
 	}
 
 	checkBounds()
@@ -83,5 +55,25 @@ class Background
 		{
 			this.sourceX = this.MAX_X;
 		}
+	}
+
+	shiftLeft()
+	{
+		this.sourceX -= this.SOURCE_SHIFT;
+	}
+
+	shiftRight()
+	{
+		this.sourceX += this.SOURCE_SHIFT;
+	}
+
+	shiftUp()
+	{
+		this.sourceY -= this.SOURCE_SHIFT;
+	}
+
+	shiftDown()
+	{
+		this.sourceY += this.SOURCE_SHIFT;
 	}
 }
