@@ -13,6 +13,7 @@ class Hero extends Entity
 	update()
 	{
 
+		// console.log(`(x, y) = (${this.x}, ${this.y})`);
 		if (this.game.inputs["KeyW"])
 		{
 			// Moving up so direction is 0, thus the corresponding row in the sprite sheet to load for animation is 0.
@@ -36,7 +37,6 @@ class Hero extends Entity
 			this.direction = 3;
 			this.x += this.game.clockTick * this.speed;
 		}
-		this.face = this.game.heroFace;
 	}
 
 	draw()

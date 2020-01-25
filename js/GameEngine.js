@@ -21,46 +21,47 @@ class GameEngine
 	constructor(ctx)
 	{
 		this.entities = [];
-
-    // Add inputs here. Put keycode.
-		this.inputs =
-    {
-      "KeyW": false,
-      "KeyA": false,
-      "KeyS": false,
-      "KeyD": false,
-      "KeyJ": false,
-      "KeyK": false,
-      "Space": false
-    };
-
-    this.heroFace = 's';
-    this.currentTileMap = 0;
-
+		this.inputs = {
+			"KeyW": false,
+			"KeyA": false,
+			"KeyS": false,
+			"KeyD": false,
+			"KeyJ": false,
+			"KeyK": false,
+			"Space": false,
+			"Enter": false
+		};
+		this.currentTileMap = 0;
 		this.ctx = ctx;
-    this.transition = false;
-    this.background = undefined;
-		this.startInput();
-	}
+		this.transitioning = 0;
+    this.pause = false;
 
+		this.camera;
+		this.background;
+	}
 	init()
 	{
-		this.surfaceWidth = this.ctx.canvas.width;
-		this.surfaceHeight = this.ctx.canvas.height;
 		this.timer = new GameTimer();
-    this.camera = new Camera(this, this.background, this.entities[0]);
-		console.log('Game engine initialized');
+		this.camera = new Camera(this, this.entities[0], this.background);
+		this.ctx.imageSmoothingEnabled = false;
+		this.canvasWidth = this.ctx.canvas.width;
+		this.canvasHeight = this.ctx.canvas.height;
+
+		console.log('Game initialized');
 	}
 
-	addEntity(entity)
+	run()
 	{
-		this.entities.push(entity);
-	}
+		this.startInput();
+		var self = this;
+		console.log("Game is starting...");
 
-	update()
-	{
-    this.camera.update();
-		this.entities.forEach(entity => entity.update());
+		function gameLoop()
+		{
+			self.loop();
+			window.requestAnimFrame(gameLoop, self.ctx.canvas);
+		}
+		gameLoop();
 	}
 
 	loop()
@@ -70,53 +71,54 @@ class GameEngine
 		this.draw();
 	}
 
+	update()
+	{
+		this.camera.update();
+		this.entities.forEach(entity => entity.update());
+	}
+
 	draw()
 	{
-		this.ctx.clearRect(0, 0, this.surfaceWidth, this.surfaceHeight);
+		this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 		this.ctx.save();
-    this.camera.draw();
+		this.camera.draw();
 		this.entities.forEach(entity => entity.draw());
 		this.ctx.restore();
 	}
 
-	run()
+	addEntity(entity)
 	{
-		var self = this;
-		console.log("Game is starting...");
-
-		function gameLoop()
-		{
-			self.loop();
-			// Random note: interesting, when I did gameLoop(), it would cause a stack error
-			// However, when I just use gameLoop, it fixed it.
-			//I guess it's because you're literally calling function and causing an infinite loop?
-			window.requestAnimFrame(gameLoop, self.ctx.canvas);
-		}
-		gameLoop();
+		this.entities.push(entity);
 	}
 
 	startInput()
 	{
 		var self = this;
 
-    // If button is pressed and the button is a key we care about, set it to true.
+		// If button is pressed and the button is a key we care about, set it to true.
 		this.ctx.canvas.addEventListener("keydown", (key) =>
 		{
-			if (self.inputs.hasOwnProperty(key.code))
+			if (Object.prototype.hasOwnProperty.call(self.inputs, key.code))
 			{
+
 				self.inputs[key.code] = true;
 			}
 		});
 
-    // If button is lifted from press and the button is a key we care about, set it to false.
-    this.ctx.canvas.addEventListener("keyup", (key) =>
-  {
-    if (self.inputs.hasOwnProperty(key.code))
-    {
-      self.inputs[key.code] = false;
-    }
-  });
+		// If button is lifted from press and the button is a key we care about, set it to false.
+		this.ctx.canvas.addEventListener("keyup", (key) =>
+		{
+			if (Object.prototype.hasOwnProperty.call(self.inputs, key.code))
+			{
+				self.inputs[key.code] = false;
+			}
+		});
 	}
+
+  pauseTransition()
+  {
+
+  }
 }
 
 class GameTimer

@@ -3,14 +3,14 @@ class Background
 	constructor(game, backgroundImage)
 	{
 		// The amount of shifting
-    this.SOURCE_SHIFT = 192;
+    this.SOURCE_SHIFT = 3;
 
 		// coordinates of background image
 		this.sourceY = 0;
 		this.sourceX = 0;
 
-		// Size of background image to crop and use
-		this.sourceSize = 192
+		// Size of background image in pixels to crop and use
+		this.sourceSize = 192;
 
 		// Minimum X coordinate for the camera
     this.MIN_X = 0;
@@ -31,6 +31,7 @@ class Background
 
 	draw()
 	{
+		this.checkBounds();
 		this.ctx.drawImage(this.spriteSheet, this.sourceX, this.sourceY,
                        this.sourceSize, this.sourceSize, 0, 0,
                        this.ctx.canvas.width, this.ctx.canvas.height);

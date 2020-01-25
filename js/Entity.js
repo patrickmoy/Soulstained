@@ -7,5 +7,6 @@ class Entity {
     this.y = y;
     this.Dead = false;
     this.Dying = false;
+    this.moveable = true;
   }
 }
