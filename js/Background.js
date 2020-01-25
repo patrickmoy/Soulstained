@@ -35,29 +35,34 @@ class Background
 	{
 		// Bug: due to exact checking, the screen will move left and right if the player's x and y are a certain value(s)
 		// Minor bug: going in the corners of the map such that player's x and y are negative will result undesired camera movement.
+		// TODO figure out shifting hero but not in the background file
 		var newSourceX = section.x * this.sourceSize;
 		var newSourceY = section.y * this.sourceSize;
 
 		if (this.sourceY < newSourceY)
 		{
 			this.shiftDown();
-			this.game.hero.y -= 11.34;
+			this.game.hero.y -= 11.1;
+			this.game.hero.y = Math.ceil(this.game.hero.y);
 		}
 		if (this.sourceY > newSourceY)
 		{
 			this.shiftUp();
-			this.game.hero.y += 11.34;
+			this.game.hero.y += 11.1;
+			this.game.hero.y = Math.floor(this.game.hero.y);
 		}
 
 		if (this.sourceX > newSourceX)
 		{
 			this.shiftLeft();
-			this.game.hero.x += 11.34;
+			this.game.hero.x += 11.1;
+			this.game.hero.x = Math.floor(this.game.hero.x);
 		}
 		if (this.sourceX < newSourceX)
 		{
 			this.shiftRight();
-			this.game.hero.x -= 11.34;
+			this.game.hero.x -= 11.1;
+			this.game.hero.x = Math.ceil(this.game.hero.x);
 		}
 
 		// Issue here is exact checking rather than inequality
