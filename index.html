@@ -16,9 +16,15 @@
   <script type="text/javascript" src ="./js/main.js"></script>
 </head>
 
+<style>
+    #container { position: relative; }
+    .canvas { position: absolute; top: 0; left: 0; }
+</style>
+
 <body>
-  <div style="text-align:center">
-  <canvas id="gameWorld" tabindex="1" width="800" height="800" style="border: 3px solid black; background: black"></canvas>
+  <div id = "container" style="text-align:center">
+  <canvas id="gameWorld" tabindex="1" width="720" height="720" style="border: 5px solid lightgreen; background: black"></canvas>
+  <canvas id="idWorld" tabindex="1" width="720" height="90" style="border: 5px solid pink; background: black"></canvas>
 </div>
 </body>
 
