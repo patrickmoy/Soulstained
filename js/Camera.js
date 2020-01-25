@@ -42,5 +42,15 @@ class Camera
         this.mostRecentDirection = "horizontal";
       }
     }
+    this.checkBounds();
 	}
+
+  //TODO review and possibly refactor parts of code that use exact but should be a range check
+  checkBounds()
+  {
+    if (this.section.x < this.MIN_SECTION_X) this.section.x = this.MIN_SECTION_X;
+    if (this.section.x > this.MAX_SECTION_X) this.section.x = this.MAX_SECTION_X;
+    if (this.section.y > this.MAX_SECTION_Y) this.section.y = this.MIN_SECTION_Y;
+    if (this.section.y < this.MIN_SECTION_Y) this.section.y = this.MAX_SECTION_Y;
+  }
 }

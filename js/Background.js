@@ -33,35 +33,34 @@ class Background
 	// Tiles != pixels
 	update(section)
 	{
+		// Bug: due to exact checking, the screen will move left and right if the player's x and y are a certain value(s)
+		// Minor bug: going in the corners of the map such that player's x and y are negative will result undesired camera movement.
 		var newSourceX = section.x * this.sourceSize;
 		var newSourceY = section.y * this.sourceSize;
 
 		if (this.sourceY < newSourceY)
 		{
-			console.log(`Old Y:${this.sourceY} New Y:${newSourceY}`);
 			this.shiftDown();
-			this.game.hero.y -= 11.343;
+			this.game.hero.y -= 11.34;
 		}
 		if (this.sourceY > newSourceY)
 		{
-			console.log(`Old Y:${this.sourceY} New Y:${newSourceY}`);
 			this.shiftUp();
-			this.game.hero.y += 11.343;
+			this.game.hero.y += 11.34;
 		}
 
 		if (this.sourceX > newSourceX)
 		{
-			console.log(`Old X:${this.sourceX} New X:${newSourceX}`);
 			this.shiftLeft();
-			this.game.hero.x += 11.343;
+			this.game.hero.x += 11.34;
 		}
 		if (this.sourceX < newSourceX)
 		{
-			console.log(`Old X:${this.sourceX} New X:${newSourceX}`);
 			this.shiftRight();
-			this.game.hero.x -= 11.343;
+			this.game.hero.x -= 11.34;
 		}
 
+		// Issue here is exact checking rather than inequality
 		if (this.sourceX === newSourceX && this.sourceY === newSourceY) this.game.transition = false;
 	}
 
