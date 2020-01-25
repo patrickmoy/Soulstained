@@ -29,6 +29,42 @@ class Background
 		this.ctx = this.game.ctx;
 	}
 
+	// A lot of the issues is trying to bound check. When you're doing a specific value say shift by 11. It's not always right because we are dealing both with the tiles and the pixels.
+	// Tiles != pixels
+	update(section)
+	{
+		var newSourceX = section.x * this.sourceSize;
+		var newSourceY = section.y * this.sourceSize;
+
+		if (this.sourceY < newSourceY)
+		{
+			console.log(`Old Y:${this.sourceY} New Y:${newSourceY}`);
+			this.shiftDown();
+			this.game.hero.y -= 11.343;
+		}
+		if (this.sourceY > newSourceY)
+		{
+			console.log(`Old Y:${this.sourceY} New Y:${newSourceY}`);
+			this.shiftUp();
+			this.game.hero.y += 11.343;
+		}
+
+		if (this.sourceX > newSourceX)
+		{
+			console.log(`Old X:${this.sourceX} New X:${newSourceX}`);
+			this.shiftLeft();
+			this.game.hero.x += 11.343;
+		}
+		if (this.sourceX < newSourceX)
+		{
+			console.log(`Old X:${this.sourceX} New X:${newSourceX}`);
+			this.shiftRight();
+			this.game.hero.x -= 11.343;
+		}
+
+		if (this.sourceX === newSourceX && this.sourceY === newSourceY) this.game.transition = false;
+	}
+
 	draw()
 	{
 		this.checkBounds();

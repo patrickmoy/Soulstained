@@ -33,16 +33,19 @@ class GameEngine
 		};
 		this.currentTileMap = 0;
 		this.ctx = ctx;
-		this.transitioning = 0;
-    this.pause = false;
+    this.SECTION_ROW = 8;
+		this.transition = false;
 
 		this.camera;
 		this.background;
+    this.hero;
 	}
-	init()
+	init(hero)
 	{
+    this.hero = hero;
 		this.timer = new GameTimer();
-		this.camera = new Camera(this, this.entities[0], this.background);
+		this.camera = new Camera(this, this.hero);
+
 		this.ctx.imageSmoothingEnabled = false;
 		this.canvasWidth = this.ctx.canvas.width;
 		this.canvasHeight = this.ctx.canvas.height;
@@ -74,14 +77,17 @@ class GameEngine
 	update()
 	{
 		this.camera.update();
+    if (this.transition) this.background.update(this.camera.section);
 		this.entities.forEach(entity => entity.update());
 	}
 
 	draw()
 	{
 		this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+
 		this.ctx.save();
-		this.camera.draw();
+    this.background.draw();
+    this.hero.draw();
 		this.entities.forEach(entity => entity.draw());
 		this.ctx.restore();
 	}

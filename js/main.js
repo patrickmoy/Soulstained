@@ -11,7 +11,6 @@ testManager.startDownload().then(() =>
   var gameEng = new GameEngine(ctx);
 
   gameEng.background = new Background(gameEng, testManager.getImage(path("openworld")));
-  gameEng.addEntity(new Hero(gameEng, testManager.getImage(path("hero"))));
-  gameEng.init();
+  gameEng.init(new Hero(gameEng, testManager.getImage(path("hero"))));
   gameEng.run();
 });
