@@ -1,6 +1,7 @@
 /** Game Engine for the {Working Title} Game
  * Copied from Seth Ladd's Game Development Talk on Google IO 2011
  * Modified to work with our game.
+ * 12 x 12 blocks per section and 8 x 8 sections
  */
 
 window.requestAnimFrame = (function()
