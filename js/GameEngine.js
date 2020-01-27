@@ -31,9 +31,10 @@ class GameEngine
 			"Space": false,
 			"Enter": false
 		};
-		this.currentTileMap = 0;
 		this.ctx = ctx;
     this.SECTION_ROW = 8;
+
+    // Boolean to indicate when transitioning to new tilemap/section
 		this.transition = false;
 
 		this.camera;
@@ -76,8 +77,6 @@ class GameEngine
 
 	update()
 	{
-    console.log(this.transition);
-    console.log(`(x,y) = (${this.hero.x},${this.hero.y})`);
 		this.camera.update();
     if (this.transition) this.background.update(this.camera.section);
 		this.entities.forEach(entity => entity.update());
@@ -122,11 +121,6 @@ class GameEngine
 			}
 		});
 	}
-
-  pauseTransition()
-  {
-
-  }
 }
 
 class GameTimer

@@ -45,6 +45,7 @@ class Background
 			this.game.hero.y -= 11.1;
 			this.game.hero.y = Math.ceil(this.game.hero.y);
 		}
+
 		if (this.sourceY > newSourceY)
 		{
 			this.shiftUp();
@@ -58,6 +59,7 @@ class Background
 			this.game.hero.x += 11.1;
 			this.game.hero.x = Math.floor(this.game.hero.x);
 		}
+
 		if (this.sourceX < newSourceX)
 		{
 			this.shiftRight();

@@ -9,7 +9,6 @@ class Hero extends Entity
 		this.direction = 1;
 	}
 
-	//spriteSheet, frameWidth, frameHeight, sheetWidth, singleFrameTime, frameCount, loop, scale
 	update()
 	{
 		if (!this.game.transition)
@@ -48,7 +47,8 @@ class Hero extends Entity
 
 	checkBounds()
 	{
-		// TODO rather than comparing the hero.x or y which is just the top left corner, we need to compare to the hitbox of the player.
+		// TODO rather than comparing the hero.x or y which is just the top left corner,
+		// we need to compare to the "hitbox" of the player.
     // For the time being, we just test the top left corner of the player
 
 		// Up Canvas Border
