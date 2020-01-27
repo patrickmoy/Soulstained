@@ -7,11 +7,14 @@ class Hero extends Entity
 		this.ctx = game.ctx;
 		this.speed = 500;
 		this.direction = 1;
+		this.collisionArrays = new CollisionArrays();
 	}
 
 	//spriteSheet, frameWidth, frameHeight, sheetWidth, singleFrameTime, frameCount, loop, scale
-	update()
+	update(section)
 	{
+		let prevY = this.y;
+		let prevX = this.x;
 		if (!this.game.transition)
 		{
 			if (this.game.inputs["KeyW"])
@@ -38,6 +41,16 @@ class Hero extends Entity
 				this.x += this.game.clockTick * this.speed;
 			}
 		}
+
+		if (this.collisionArrays.detectCollision(section, this.y, this.x)) {
+			console.log("collision!");
+			this.y = prevY;
+			this.x = prevX;
+			// when there is collision -> i set the hero's coordinates to previous x and y
+			// when there is update in camera, hero's update happens first
+			// so if there is collision, the panning doesn't happen because pan only happens when hero x and y are out of bounds
+		}
+
 	}
 
 	draw()
