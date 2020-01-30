@@ -3,7 +3,7 @@
  * Modified to work with our game.
  * 12 x 12 blocks per section and 8 x 8 sections
  */
-
+// Anything in caps is default and can not be changed.
 window.requestAnimFrame = (function()
 {
 	return window.requestAnimationFrame ||
@@ -16,111 +16,101 @@ window.requestAnimFrame = (function()
 			window.setTimeout(callback, 1000 / 60);
 		};
 })();
-
 class GameEngine
 {
-	constructor(ctx)
+	constructor(gameContext, uiContext)
 	{
-		this.entities = [];
-		this.inputs = {
-			"KeyW": false,
-			"KeyA": false,
-			"KeyS": false,
-			"KeyD": false,
-			"KeyJ": false,
-			"KeyK": false,
-			"Space": false,
-			"Enter": false
-		};
-		this.ctx = ctx;
-    this.SECTION_ROW = 8;
+		this.GAME_CONTEXT = gameContext;
+    this.UI_CONTEXT = uiContext;
 
-    // Boolean to indicate when transitioning to new tilemap/section
+    this.INPUTS = {"KeyW": false, "KeyA": false, "KeyS": false,
+                   "KeyD": false, "KeyJ": false, "KeyK": false,
+                   "Space": false, "Enter": false};
+    this.WORLDS = {"OpenWorld": new World(), "NecroDungeon": new World(), "WolfDungeon": new World()}; // I wonder, will it create a new instance everytime you switch?
 		this.transition = false;
+    this.inInventory = false;
 
-		this.camera;
-		this.background;
-    this.hero;
+    this.TIMER;
+    this.GAME_CANVAS_WIDTH;
+    this.GAME_CANVAS_HEIGHT;
+    this.UI_CANVAS_WIDTH;
+    this.UI_CANVAS_HEIGHT;
 	}
-	init(hero)
-	{
-    this.hero = hero;
-		this.timer = new GameTimer();
-		this.camera = new Camera(this, this.hero);
 
-		this.ctx.imageSmoothingEnabled = false;
-		this.canvasWidth = this.ctx.canvas.width;
-		this.canvasHeight = this.ctx.canvas.height;
+	init()
+	{
+		this.GAME_CONTEXT.imageSmoothingEnabled = false;
+    this.UI_CONTEXT.imageSmoothingEnabled = false;
+
+		this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
+		this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
+    this.UI_CANVAS_WIDTH = this.UI_CONTEXT.canvas.width;
+    this.UI_CANVAS_HEIGHT = this.UI_CONTEXT.canvas.height;
+    this.TIMER = new GameTimer();
 
 		console.log('Game initialized');
 	}
 
 	run()
 	{
-		this.startInput();
 		var self = this;
+
+    // If button is pressed and the button is a key we care about, set it to true.
+    this.GAME_CONTEXT.canvas.addEventListener("keydown", (key) =>
+    {
+      if (Object.prototype.hasOwnProperty.call(self.INPUTS, key.code))
+      {
+        self.INPUTS[key.code] = true;
+      }
+    });
+    // If button is lifted from press and the button is a key we care about, set it to false.
+    this.GAME_CONTEXT.canvas.addEventListener("keyup", (key) =>
+    {
+      if (Object.prototype.hasOwnProperty.call(self.INPUTS, key.code))
+      {
+        self.INPUTS[key.code] = false;
+      }
+    });
+
 		console.log("Game is starting...");
 
 		function gameLoop()
 		{
 			self.loop();
-			window.requestAnimFrame(gameLoop, self.ctx.canvas);
+			window.requestAnimFrame(gameLoop, self.GAME_CONTEXT.canvas);
 		}
 		gameLoop();
 	}
 
 	loop()
 	{
-		this.clockTick = this.timer.tick();
+		this.clockTick = this.TIMER.tick();
 		this.update();
 		this.draw();
 	}
 
 	update()
 	{
-		this.camera.update();
-    if (this.transition) this.background.update(this.camera.section);
-		this.entities.forEach(entity => entity.update());
+    if (this.inInventory)
+    {
+      // Player is in the inventory which has no relation to the map. map will essentially pause
+    }
+    else
+    {
+      // Player is now movable around the map
+    }
 	}
 
 	draw()
 	{
-		this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-
-		this.ctx.save();
-    this.background.draw();
-    this.hero.draw();
-		this.entities.forEach(entity => entity.draw());
-		this.ctx.restore();
-	}
-
-	addEntity(entity)
-	{
-		this.entities.push(entity);
-	}
-
-	startInput()
-	{
-		var self = this;
-
-		// If button is pressed and the button is a key we care about, set it to true.
-		this.ctx.canvas.addEventListener("keydown", (key) =>
-		{
-			if (Object.prototype.hasOwnProperty.call(self.inputs, key.code))
-			{
-
-				self.inputs[key.code] = true;
-			}
-		});
-
-		// If button is lifted from press and the button is a key we care about, set it to false.
-		this.ctx.canvas.addEventListener("keyup", (key) =>
-		{
-			if (Object.prototype.hasOwnProperty.call(self.inputs, key.code))
-			{
-				self.inputs[key.code] = false;
-			}
-		});
+		this.GAME_CONTEXT.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+		this.GAME_CONTEXT.save();
+		this.GAME_CONTEXT.restore();
+    // There was a change that affects the UI so we update the UI
+    if (this.UI_CONTEXT.change)
+    {
+      // When a change occurs, we just redraw. If nothing changes, the canvas should remain static
+    }
 	}
 }
 
@@ -135,10 +125,12 @@ class GameTimer
 
 	tick()
 	{
+    // Switched ordering
 		var currentTime = Date.now();
 		var delta = (currentTime - this.lastTimeStamp) / 1000;
+    var gameDelta = Math.min(delta, this.maxStep);
+
 		this.lastTimeStamp = currentTime;
-		var gameDelta = Math.min(delta, this.maxStep);
 		this.gameTime += gameDelta;
 
 		return gameDelta;

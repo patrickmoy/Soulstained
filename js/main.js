@@ -1,16 +1,17 @@
 const path = (name) => `./res/img/${name}.png`;
 
-let testManager = new ImageManager();
+let ImageHandler = new ImageManager();
 
-testManager.queueDownload(path("openworld"));
-testManager.queueDownload(path("hero"));
-testManager.startDownload().then(() =>
+ImageHandler.queueDownload(path("openworld"));
+ImageHandler.queueDownload(path("hero"));
+ImageHandler.startDownload().then(() =>
 {
-  var canvas = document.getElementById("gameWorld");
-  var ctx = canvas.getContext("2d");
-  var gameEng = new GameEngine(ctx);
+  var gameCanvas = document.getElementById("gameWorld");
+  var uiCanvas = document.getElementById("uiWorld");
+  var gameContext = gameCanvas.getContext("2d");
+  var uiContext = uiCanvas.getContext("2d");
+  var gameEng = new GameEngine(gameContext, uiContext);
 
-  gameEng.background = new Background(gameEng, testManager.getImage(path("openworld")));
-  gameEng.init(new Hero(gameEng, testManager.getImage(path("hero"))));
+  gameEng.init();
   gameEng.run();
 });

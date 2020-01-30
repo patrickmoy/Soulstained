@@ -4,8 +4,8 @@ class ImageManager
   {
     // this._failCount = 0;
     // this._successCount = 0;
-    this._assetCache = [];
-    this._downloadQueue = [];
+    this.assets = [];
+    this.downloadQueue = [];
   }
 
   // TODO ask group if they would rather have an asset manager for both
@@ -13,7 +13,7 @@ class ImageManager
   queueDownload(filePath)
   {
     console.log(filePath + ' has been added to the Download Queue.');
-    this._downloadQueue.push(filePath);
+    this.downloadQueue.push(filePath);
   }
 
 startDownload()
@@ -22,7 +22,7 @@ startDownload()
      function loadImages()
      {
        let promiseArray = [];
-       for (let i = 0; i < self._downloadQueue.length; i++)
+       for (let i = 0; i < self.downloadQueue.length; i++)
        {
          let imagePromise = new Promise((resolve, reject) =>
          {
@@ -39,8 +39,8 @@ startDownload()
              reject(img.src);
            });
 
-           img.src = self._downloadQueue[i];
-           self._assetCache[self._downloadQueue[i]] = img;
+           img.src = self.downloadQueue[i];
+           self.assets[self.downloadQueue[i]] = img;
          });
          promiseArray.push(imagePromise);
        }
@@ -53,7 +53,7 @@ startDownload()
   // startDownload(callbackFunction)
   // {
   //     var self = this;
-  //     for (let i = 0; i < self._downloadQueue.length; i++)
+  //     for (let i = 0; i < self.downloadQueue.length; i++)
   //     {
   //       let img = new Image();
   //       img.addEventListener("load", () =>
@@ -69,19 +69,19 @@ startDownload()
   //         self._failCount++;
   //         if (self.isDone()) callbackFunction();
   //       });
-  //       img.src = self._downloadQueue[i];
-  //       self._assetCache[self._downloadQueue[i]] = img;
+  //       img.src = self.downloadQueue[i];
+  //       self.assets[self.downloadQueue[i]] = img;
   //     }
   // }
   //
   // isDone()
   // {
-  //   return this._downloadQueue.length === this._failCount + this._successCount;
+  //   return this.downloadQueue.length === this._failCount + this._successCount;
   // }
 
 
   getImage(filePath)
   {
-    return this._assetCache[filePath];
+    return this.assets[filePath];
   }
 }

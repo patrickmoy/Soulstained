@@ -26,7 +26,7 @@ class Background
 
 		this.spriteSheet = backgroundImage;
 		this.game = game;
-		this.ctx = this.game.ctx;
+		this.context = this.game.context;
 	}
 
 	// A lot of the issues is trying to bound check. When you're doing a specific value say shift by 11. It's not always right because we are dealing both with the tiles and the pixels.
@@ -74,9 +74,9 @@ class Background
 	draw()
 	{
 		this.checkBounds();
-		this.ctx.drawImage(this.spriteSheet, this.sourceX, this.sourceY,
+		this.context.drawImage(this.spriteSheet, this.sourceX, this.sourceY,
                        this.sourceSize, this.sourceSize, 0, 0,
-                       this.ctx.canvas.width, this.ctx.canvas.height);
+                       this.context.canvas.width, this.context.canvas.height);
 	}
 
 	checkBounds()

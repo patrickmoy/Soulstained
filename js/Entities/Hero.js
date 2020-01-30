@@ -4,7 +4,7 @@ class Hero extends Entity
 	{
 		super(game, 250, 310);
 		this.animation = new Animation(spritesheet, 32, 48, 8, .150, 8, true, 1.75);
-		this.ctx = game.ctx;
+		this.context = game.context;
 		this.speed = 500;
 		this.direction = 1;
 	}
@@ -42,7 +42,7 @@ class Hero extends Entity
 	draw()
 	{
 		// This assumes each row corresponds to a separate animation. However, this is not always the case depending on our own design of spritesheet files.
-		this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, this.direction);
+		this.animation.drawFrame(this.game.clockTick, this.context, this.x, this.y, this.direction);
 	}
 
 	checkBounds()

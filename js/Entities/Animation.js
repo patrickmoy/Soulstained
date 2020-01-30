@@ -26,7 +26,7 @@ class Animation
     this.totalAnimTime = singleFrameTime * frameCount;
  }
 
- drawFrame(tick, ctx, gamePositionX, gamePositionY, imageRow)
+ drawFrame(tick, context, gamePositionX, gamePositionY, imageRow)
  { //May have to extend this and have each entity inherit depending on spritesheet customization.
    this.elapsedTime += tick;
    if (this.isDone() && this.looping) {
@@ -34,7 +34,7 @@ class Animation
    }
    var frame = this.currentFrame();
    var xIndex = frame % this.spriteSheet.width;
-   ctx.drawImage(this.spriteSheet, xIndex * this.frameWidth, imageRow * this.frameHeight, this.frameWidth, this.frameHeight, gamePositionX, gamePositionY, this.frameWidth * this.scale, this.frameHeight * this.scale);
+   context.drawImage(this.spriteSheet, xIndex * this.frameWidth, imageRow * this.frameHeight, this.frameWidth, this.frameHeight, gamePositionX, gamePositionY, this.frameWidth * this.scale, this.frameHeight * this.scale);
  }
 
  currentFrame() {
