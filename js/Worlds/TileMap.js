@@ -1,4 +1,5 @@
-// A section of the map that will show the current camera.
+// A single section of the screen that holds entities
+// and collision arrays
 class TileMap
 {
   constructor(collisionArray, entities)
