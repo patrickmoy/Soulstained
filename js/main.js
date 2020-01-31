@@ -10,7 +10,7 @@ ImageHandler.startDownload().then(() =>
   var uiCanvas = document.getElementById("uiWorld");
   var gameContext = gameCanvas.getContext("2d");
   var uiContext = uiCanvas.getContext("2d");
-  var gameEng = new GameEngine(gameContext, uiContext);
+  var gameEng = new GameEngine(gameContext, uiContext, ImageHandler.assets);
 
   gameEng.init();
   gameEng.run();

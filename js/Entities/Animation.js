@@ -1,4 +1,3 @@
-// TODO possibly rework animation to handle direction. Doesn't seem necessary though.
 class Animation
 {
   /**

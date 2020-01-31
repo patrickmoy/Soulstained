@@ -4,6 +4,7 @@
  * 12 x 12 blocks per section and 8 x 8 sections
  */
 // Anything in caps is default and can not be changed.
+
 window.requestAnimFrame = (function()
 {
 	return window.requestAnimationFrame ||
@@ -18,30 +19,40 @@ window.requestAnimFrame = (function()
 })();
 class GameEngine
 {
-	constructor(gameContext, uiContext)
+	constructor(gameContext, uiContext, images)
 	{
+		this.IMAGES = images;
 		this.GAME_CONTEXT = gameContext;
     this.UI_CONTEXT = uiContext;
 
     this.INPUTS = {"KeyW": false, "KeyA": false, "KeyS": false,
                    "KeyD": false, "KeyJ": false, "KeyK": false,
                    "Space": false, "Enter": false};
-    this.WORLDS = {"OpenWorld": new World(), "NecroDungeon": new World(), "WolfDungeon": new World()}; // I wonder, will it create a new instance everytime you switch?
 		this.transition = false;
     this.inInventory = false;
+    this.pause = false; // Pauses other actions while we switch to a new map.
+    this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
 
     this.TIMER;
     this.GAME_CANVAS_WIDTH;
     this.GAME_CANVAS_HEIGHT;
     this.UI_CANVAS_WIDTH;
     this.UI_CANVAS_HEIGHT;
+    this.currentWorld;
 	}
 
 	init()
 	{
 		this.GAME_CONTEXT.imageSmoothingEnabled = false;
     this.UI_CONTEXT.imageSmoothingEnabled = false;
+    // Create the tilemaps
 
+    // Create the worlds
+    this.WORLDS["OpenWorld"] = new World(this, this.IMAGES[path("openworld")], undefined, 5, 5);
+
+
+    // Set the current world to the open world
+    this.currentWorld = this.WORLDS["OpenWorld"];
 		this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
 		this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
     this.UI_CANVAS_WIDTH = this.UI_CONTEXT.canvas.width;
@@ -105,12 +116,14 @@ class GameEngine
 	{
 		this.GAME_CONTEXT.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
 		this.GAME_CONTEXT.save();
-		this.GAME_CONTEXT.restore();
+    this.currentWorld.draw();
     // There was a change that affects the UI so we update the UI
     if (this.UI_CONTEXT.change)
     {
       // When a change occurs, we just redraw. If nothing changes, the canvas should remain static
     }
+		this.GAME_CONTEXT.restore();
+
 	}
 }
 
