@@ -5,6 +5,17 @@
  */
 // Anything in caps is default and can not be changed.
 
+const openWorldTileMaps =
+  [[],
+   [],
+   [],
+   [],
+   [],
+   [],
+   [],
+   []
+    ];
+
 window.requestAnimFrame = (function()
 {
 	return window.requestAnimationFrame ||
