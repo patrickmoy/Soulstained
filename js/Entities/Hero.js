@@ -4,8 +4,8 @@ class Hero extends Entity
 	{
 		super(game, 250, 310);
 		this.animation = new Animation(spritesheet, 32, 48, 8, .150, 8, true, 1.75);
-		this.context = game.context;
-		this.speed = 500;
+		this.context = game.GAME_CONTEXT;
+		this.speed = 250;
 		this.direction = 1;
 	}
 
@@ -13,25 +13,25 @@ class Hero extends Entity
 	{
 		if (!this.game.transition)
 		{
-			if (this.game.inputs["KeyW"])
+			if (this.game.INPUTS["KeyW"])
 			{
 				// Moving up so direction is 0, thus the corresponding row in the sprite sheet to load for animation is 0.
 				// The same applies to other directions.
 				this.direction = 0;
 				this.y -= this.game.clockTick * this.speed;
 			}
-			if (this.game.inputs["KeyS"])
+			if (this.game.INPUTS["KeyS"])
 			{
 				this.direction = 1;
 				this.y += this.game.clockTick * this.speed;
 			}
-			if (this.game.inputs["KeyA"])
+			if (this.game.INPUTS["KeyA"])
 			{
 				this.direction = 2;
 				this.x -= this.game.clockTick * this.speed;
 			}
 
-			if (this.game.inputs["KeyD"])
+			if (this.game.INPUTS["KeyD"])
 			{
 				this.direction = 3;
 				this.x += this.game.clockTick * this.speed;
@@ -47,9 +47,6 @@ class Hero extends Entity
 
 	checkBounds()
 	{
-		// TODO rather than comparing the hero.x or y which is just the top left corner,
-		// we need to compare to the "hitbox" of the player.
-    // For the time being, we just test the top left corner of the player
 
 		// Up Canvas Border
 		if (this.y < 0)

@@ -32,6 +32,7 @@ class GameEngine
     this.inInventory = false;
     this.pause = false; // Pauses other actions while we switch to a new map.
     this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
+    this.currentEntities = []; // Stores entities at the current tile map
 
     this.TIMER;
     this.GAME_CANVAS_WIDTH;
@@ -45,10 +46,14 @@ class GameEngine
 	{
 		this.GAME_CONTEXT.imageSmoothingEnabled = false;
     this.UI_CONTEXT.imageSmoothingEnabled = false;
+
+    // Add hero to the entity list. Hero is always at index 0
+    this.currentEntities.push(new Hero(this, this.IMAGES[path("hero")]));
+
     // Create the tilemaps
 
     // Create the worlds
-    this.WORLDS["OpenWorld"] = new World(this, this.IMAGES[path("openworld")], undefined, 5, 5);
+    this.WORLDS["OpenWorld"] = new World(this, this.IMAGES[path("openworld")], openWorldTileMaps, 5, 5);
 
 
     // Set the current world to the open world
@@ -106,24 +111,36 @@ class GameEngine
     {
       // Player is in the inventory which has no relation to the map. map will essentially pause
     }
+    else if (this.transition)
+    {
+      // Transition is happening
+      this.currentWorld.update();
+      this.currentEntities[0].update();
+    }
     else
     {
       // Player is now movable around the map
+      this.currentEntities.forEach(entity => entity.update());
     }
 	}
 
 	draw()
 	{
-		this.GAME_CONTEXT.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+		this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT);
 		this.GAME_CONTEXT.save();
     this.currentWorld.draw();
+    this.currentEntities.forEach(entity => entity.draw());
+    this.GAME_CONTEXT.restore();
+    // Transition is handled here
     // There was a change that affects the UI so we update the UI
     if (this.UI_CONTEXT.change)
     {
       // When a change occurs, we just redraw. If nothing changes, the canvas should remain static
+      this.UI_CONTEXT.clearRect(0, 0, this.UI_CANVAS_WIDTH, this.UI_CANVAS_HEIGHT);
+      this.UI_CONTEXT.save();
+      // Redraw the ui
+      this.UI_CONTEXT.restore();
     }
-		this.GAME_CONTEXT.restore();
-
 	}
 }
 

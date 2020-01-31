@@ -1,12 +1,14 @@
+// A section of the map that will show the current camera.
 class TileMap
 {
-  constructor(entities)
+  constructor(collisionArray, entities)
   {
+    this.COLLISION_ARRAY = collisionArray;
     this.ENTITIES = entities;
   }
 
-  update()
+  getEntities()
   {
-    this.ENTITIES.forEach(entity => entity.update());
+    return this.ENTITIES;
   }
 }

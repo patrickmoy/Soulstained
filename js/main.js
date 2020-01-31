@@ -1,3 +1,13 @@
+const openWorldTileMaps =
+  [[],
+   [],
+   [],
+   [],
+   [],
+   [],
+   [],
+   []
+  ];
 const path = (name) => `./res/img/${name}.png`;
 
 let ImageHandler = new ImageManager();
