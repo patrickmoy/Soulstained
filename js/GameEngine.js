@@ -57,50 +57,49 @@ class GameEngine
 
     run()
     {
-	this.startInput();
-	var self = this;
-	console.log("Game is starting...");
+    	this.startInput();
+    	var self = this;
+    	console.log("Game is starting...");
 
-	function gameLoop()
-	{
-	    self.loop();
-	    window.requestAnimFrame(gameLoop, self.ctx.canvas);
-	}
-	gameLoop();
+    	function gameLoop()
+    	{
+    	    self.loop();
+    	    window.requestAnimFrame(gameLoop, self.ctx.canvas);
+    	}
+    	gameLoop();
     }
 
     loop()
     {
-	this.clockTick = this.timer.tick();
-	this.update();
-	this.collisionUpdate();
-	this.draw();
+    	this.clockTick = this.timer.tick();
+    	this.update();
+    	this.collisionUpdate();
+    	this.draw();
     }
 
     update()
     {
-	this.camera.update();
-	if (this.transition) this.background.update(this.camera.section);
-	this.entities.forEach(entity => entity.update());
-	this.collision.entities = this.entities.filter(x => !x.isDead && x.collides);
-	
+    	this.camera.update();
+    	if (this.transition) this.background.update(this.camera.section);
+    	this.entities.forEach(entity => entity.update());
+    	this.collision.entities = this.entities.filter(x => !x.isDead && x.collides);
+
     }
-    collisionUpdate() {
+    collisionUpdate()
+    {
 	    this.myCollisions = this.collision.checkCollisions(this.collision.entities);
 	    this.collision.processCollisions(this.myCollisions);
 	    this.entities.forEach(entity => entity.allowUpdate());
-
 	  }
 
     draw()
     {
-	this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-
-	this.ctx.save();
-	this.background.draw();
-	this.hero.draw();
-	this.entities.forEach(entity => entity.draw());
-	this.ctx.restore();
+    	this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
+    	this.ctx.save();
+    	this.background.draw();
+    	this.hero.draw();
+    	this.entities.forEach(entity => entity.draw());
+    	this.ctx.restore();
     }
 
     addEntity(entity)

@@ -21,22 +21,22 @@ class Zombie extends Entity {
       switch (this.direction) {
         case 0:
           if (this.y - (this.game.clockTick * this.speed) >= 0) {
-              this.y -= this.game.clockTick * this.speed;
+              this.newY -= this.game.clockTick * this.speed;
             }
           break;
         case 1:
           if (this.y + (this.game.clockTick * this.speed) <= 744) {
-            this.y += this.game.clockTick * this.speed;
+            this.newY += this.game.clockTick * this.speed;
           }
           break;
         case 2:
           if (this.x - (this.game.clockTick * this.speed) >= 0) {
-            this.x -= this.game.clockTick * this.speed;
+            this.newX -= this.game.clockTick * this.speed;
           }
           break;
         case 3:
           if (this.x + (this.game.clockTick * this.speed) <= 744) {
-            this.x += this.game.clockTick * this.speed;
+            this.newX += this.game.clockTick * this.speed;
           }
           break;
         default:
