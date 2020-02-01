@@ -1,7 +1,8 @@
 class Zombie extends Entity {
 
-  constructor(game, spritesheet) {
-    super(game, 300, 100, 56, 56);
+  constructor(game, spritesheet, x, y) {
+    
+    super(game, x, y, 56, 56);
     this.animation = new Animation(spritesheet, 16, 16, 2, .450, 2, true, 3.5);
     this.ctx = game.ctx;
     this.speed = 100;
