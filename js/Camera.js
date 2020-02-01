@@ -19,7 +19,7 @@ class Camera
 
 
 
-    this.section = {x: 0, y: 0}; // Camera's position relative to the
+    this.section = {x: 5, y: 5}; // Camera's position relative to the
 				    // sections of the world
     this.MIN_SECTION_X = 0; // Minimum x section of the world
     this.MIN_SECTION_Y = 0; // Minimum y section of the world

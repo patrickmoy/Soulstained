@@ -6,8 +6,8 @@ class Background
     this.SOURCE_SHIFT = 3;
 
 		// coordinates of background image
-		this.sourceY = 0;
-		this.sourceX = 0;
+		this.sourceY = 960;
+		this.sourceX = 960;
 
 		// Size of background image in pixels to crop and use
 		this.sourceSize = 192;
