@@ -76,8 +76,6 @@ class GameEngine
 
 	update()
 	{
-    console.log(this.transition);
-    console.log(`(x,y) = (${this.hero.x},${this.hero.y})`);
 		this.camera.update();
     if (this.transition) this.background.update(this.camera.section);
 		this.entities.forEach(entity => entity.update());

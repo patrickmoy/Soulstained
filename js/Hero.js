@@ -2,15 +2,14 @@ class Hero extends Entity
 {
 	constructor(game, spritesheet)
 	{
-		super(game, 250, 310);
+		super(game, 300, 570, 32 * 1.75, 48 * 1.75);
 		this.animation = new Animation(spritesheet, 32, 48, 8, .150, 8, true, 1.75);
 		this.ctx = game.ctx;
-		this.speed = 500;
+		this.speed = 300;
 		this.direction = 1;
-		this.collisionArrays = new CollisionArrays();
 	}
 
-	//spriteSheet, frameWidth, frameHeight, sheetWidth, singleFrameTime, frameCount, loop, scale
+	//spriteSheet, frameWidth, frameHeight, sheetWidth, singleFrameTime, frameCount, loop, scalecoll
 	update(section)
 	{
 		let prevY = this.y;
@@ -41,16 +40,6 @@ class Hero extends Entity
 				this.x += this.game.clockTick * this.speed;
 			}
 		}
-
-		if (this.collisionArrays.detectCollision(section, this.y, this.x)) {
-			console.log("collision!");
-			this.y = prevY;
-			this.x = prevX;
-			// when there is collision -> i set the hero's coordinates to previous x and y
-			// when there is update in camera, hero's update happens first
-			// so if there is collision, the panning doesn't happen because pan only happens when hero x and y are out of bounds
-		}
-
 	}
 
 	draw()
@@ -61,9 +50,6 @@ class Hero extends Entity
 
 	checkBounds()
 	{
-		// TODO rather than comparing the hero.x or y which is just the top left corner, we need to compare to the hitbox of the player.
-    // For the time being, we just test the top left corner of the player
-
 		// Up Canvas Border
 		if (this.y < 0)
 		{
