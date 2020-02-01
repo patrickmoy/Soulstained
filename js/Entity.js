@@ -17,7 +17,6 @@ class Entity
       min: [x, y],
       max: [x + width, y + height]
     };
-    this.skipUpdate = false;
   }
 
   getCollisionBox()

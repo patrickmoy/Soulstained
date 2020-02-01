@@ -12,9 +12,28 @@ class Hero extends Entity
 	//spriteSheet, frameWidth, frameHeight, sheetWidth, singleFrameTime, frameCount, loop, scalecoll
 	update()
 	{
-		
+
 		if (!this.game.transition)
 		{
+			if (this.game.inputs["KeyW"]) {
+				// Moving up so direction is 0, thus the corresponding row in the sprite sheet to load for animation is 0.
+				// The same applies to other directions.
+				this.direction = 0;
+				this.newY = this.y - this.game.clockTick * this.speed;
+			}
+			if (this.game.inputs["KeyS"]) {
+				this.direction = 1;
+				this.newY = this.y + this.game.clockTick * this.speed;
+			}
+			if (this.game.inputs["KeyA"]) {
+				this.direction = 2;
+				this.newX = this.x - this.game.clockTick * this.speed;
+			}
+			if (this.game.inputs["KeyD"]) {
+				this.direction = 3;
+				this.newX = this.x + this.game.clockTick * this.speed;
+			}
+			/*
 			if (this.game.inputs["KeyW"])
 			{
 				// Moving up so direction is 0, thus the corresponding row in the sprite sheet to load for animation is 0.
@@ -38,6 +57,7 @@ class Hero extends Entity
 				this.direction = 3;
 				this.x += this.game.clockTick * this.speed;
 			}
+			*/
 		}
 	}
 

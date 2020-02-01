@@ -1,7 +1,7 @@
 class Zombie extends Entity {
 
   constructor(game, spritesheet, x, y) {
-    
+
     super(game, x, y, 56, 56);
     this.animation = new Animation(spritesheet, 16, 16, 2, .450, 2, true, 3.5);
     this.ctx = game.ctx;
@@ -11,10 +11,12 @@ class Zombie extends Entity {
     this.count = 0;
     this.boxWidth = 56;
     this.boxHeight = 56;
+    this.skipUpdate = false;
   }
 
 
   update() {
+    this.skipUpdate = false;
     if (this.count > 50) {
       this.count = 0;
       this.pickDirection();
