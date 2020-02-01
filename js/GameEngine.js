@@ -20,39 +20,40 @@ class GameEngine
 {
     constructor(ctx)
     {
-	this.entities = [];			// entities
-	this.myCollisions = [];			// collided entities
-	this.inputs = {
-		"KeyW": false,
-		"KeyA": false,
-		"KeyS": false,
-		"KeyD": false,
-		"KeyJ": false,
-		"KeyK": false,
-		"Space": false,
-		"Enter": false
-	};
-	this.currentTileMap = 0;
-	this.ctx = ctx;
-	this.SECTION_ROW = 8;
-	this.transition = false;
+    	this.entities = [];			// entities
+    	this.myCollisions = [];			// collided entities
+    	this.inputs = {
+    		"KeyW": false,
+    		"KeyA": false,
+    		"KeyS": false,
+    		"KeyD": false,
+    		"KeyJ": false,
+    		"KeyK": false,
+    		"Space": false,
+    		"Enter": false
+    	};
+    	this.currentTileMap = 0;
+    	this.ctx = ctx;
+    	this.SECTION_ROW = 8;
+    	this.transition = false;
 
-	this.camera;
-	this.background;
-	this.hero;
+    	this.camera;
+    	this.background;
+    	this.hero;
     }
     init(hero)
     {
-	this.hero = hero;
-	this.collision = new CollisionDetection(); // instantiate collision detection class
-	this.timer = new GameTimer();
-	this.camera = new Camera(this, this.hero);
+    	this.hero = hero;
+      this.entities.push(this.hero);
+    	this.collision = new CollisionDetection(); // instantiate collision detection class
+    	this.timer = new GameTimer();
+    	this.camera = new Camera(this, this.hero);
 
-	this.ctx.imageSmoothingEnabled = false;
-	this.canvasWidth = this.ctx.canvas.width;
-	this.canvasHeight = this.ctx.canvas.height;
+    	this.ctx.imageSmoothingEnabled = false;
+    	this.canvasWidth = this.ctx.canvas.width;
+    	this.canvasHeight = this.ctx.canvas.height;
 
-	console.log('Game initialized');
+    	console.log('Game initialized');
     }
 
     run()
@@ -73,16 +74,23 @@ class GameEngine
     {
     	this.clockTick = this.timer.tick();
     	this.update();
-    	this.collisionUpdate();
+      if(!this.transition) this.collisionUpdate();
     	this.draw();
     }
 
     update()
     {
-    	this.camera.update();
-    	if (this.transition) this.background.update(this.camera.section);
-    	this.entities.forEach(entity => entity.update());
-    	this.collision.entities = this.entities.filter(x => !x.isDead && x.collides);
+    	if (this.transition)
+      {
+        this.background.update(this.camera.section);
+      }
+      else
+      {
+    	   this.entities.forEach(entity => entity.update());
+         this.camera.update();
+    	   this.collision.entities = this.entities.filter(x => !x.isDead && x.collides);
+
+      }
 
     }
     collisionUpdate()

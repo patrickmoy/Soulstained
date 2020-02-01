@@ -17,7 +17,7 @@ class Camera
     // [(0,6), (1,6), (2,6), (3,6), (4,6), (5,6), (6,6), (7,6)]
     // [(0,7), (1,7), (2,7), (3,7), (4,7), (5,7), (6,7), (7,7)]
 
-	
+
 
     this.section = {x: 0, y: 0}; // Camera's position relative to the
 				    // sections of the world
@@ -29,7 +29,7 @@ class Camera
 
 	update()
 	{
-    this.hero.update(this.section);
+    //this.hero.update(this.section);
     var bound = this.hero.checkBounds();
     if (!this.game.transition && bound.change)
     {
@@ -48,7 +48,7 @@ class Camera
     this.checkBounds();
 	}
 
-	
+
   checkBounds()
   {
     if (this.section.x < this.MIN_SECTION_X) {

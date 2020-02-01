@@ -15,6 +15,7 @@ class Hero extends Entity
 
 		if (!this.game.transition)
 		{
+			this.skipUpdate = false; 
 			if (this.game.inputs["KeyW"]) {
 				// Moving up so direction is 0, thus the corresponding row in the sprite sheet to load for animation is 0.
 				// The same applies to other directions.
@@ -33,6 +34,7 @@ class Hero extends Entity
 				this.direction = 3;
 				this.newX = this.x + this.game.clockTick * this.speed;
 			}
+			this.predictBox();
 			/*
 			if (this.game.inputs["KeyW"])
 			{
