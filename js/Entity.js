@@ -1,7 +1,6 @@
 class Entity
 {
 
-  // TODO mess with layer level
   constructor(game, x, y, width, height)
   {
     this.game = game;
@@ -43,7 +42,11 @@ class Entity
       this.newX = this.x;
       this.newY = this.y;
     }
-
+    
+    skipUpdate()
+    {
+	
+    }
 
   }
 

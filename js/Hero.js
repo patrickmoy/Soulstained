@@ -5,15 +5,14 @@ class Hero extends Entity
 		super(game, 300, 570, 32 * 1.75, 48 * 1.75);
 		this.animation = new Animation(spritesheet, 32, 48, 8, .150, 8, true, 1.75);
 		this.ctx = game.ctx;
-		this.speed = 300;
+		this.speed = 250;
 		this.direction = 1;
 	}
 
 	//spriteSheet, frameWidth, frameHeight, sheetWidth, singleFrameTime, frameCount, loop, scalecoll
-	update(section)
+	update()
 	{
-		let prevY = this.y;
-		let prevX = this.x;
+		
 		if (!this.game.transition)
 		{
 			if (this.game.inputs["KeyW"])
@@ -57,13 +56,13 @@ class Hero extends Entity
 		}
 
 		// Right Canvas Border
-		if (this.x > this.game.canvasWidth)
+		if (this.x + this.width > this.game.canvasWidth)
 		{
 			return {direction: "horizontal", change: 1};
 		}
 
 		// Down Canvas Border
-		if (this.y > this.game.canvasHeight)
+		if (this.y + this.height > this.game.canvasHeight)
 		{
 			return {direction: "vertical", change: 1};
 		}

@@ -42,26 +42,26 @@ class Background
 		if (this.sourceY < newSourceY)
 		{
 			this.shiftDown();
-			this.game.hero.y -= 11.1;
+			this.game.hero.y -= 9;
 			this.game.hero.y = Math.ceil(this.game.hero.y);
 		}
 		if (this.sourceY > newSourceY)
 		{
 			this.shiftUp();
-			this.game.hero.y += 11.1;
+			this.game.hero.y += 9;
 			this.game.hero.y = Math.floor(this.game.hero.y);
 		}
 
 		if (this.sourceX > newSourceX)
 		{
 			this.shiftLeft();
-			this.game.hero.x += 11.1;
+			this.game.hero.x += 10;
 			this.game.hero.x = Math.floor(this.game.hero.x);
 		}
 		if (this.sourceX < newSourceX)
 		{
 			this.shiftRight();
-			this.game.hero.x -= 11.1;
+			this.game.hero.x -= 10;
 			this.game.hero.x = Math.ceil(this.game.hero.x);
 		}
 
