@@ -42,27 +42,27 @@ class Background
 		if (this.sourceY < newSourceY)
 		{
 			this.shiftDown();
-			this.game.hero.y -= 9;
-			this.game.hero.y = Math.ceil(this.game.hero.y);
+			this.game.hero.newY -= 9;
+			this.game.hero.newY = Math.ceil(this.game.hero.newY);
 		}
 		if (this.sourceY > newSourceY)
 		{
 			this.shiftUp();
-			this.game.hero.y += 9;
-			this.game.hero.y = Math.floor(this.game.hero.y);
+			this.game.hero.newY += 9;
+			this.game.hero.newY = Math.floor(this.game.hero.newY);
 		}
 
 		if (this.sourceX > newSourceX)
 		{
 			this.shiftLeft();
-			this.game.hero.x += 10;
-			this.game.hero.x = Math.floor(this.game.hero.x);
+			this.game.hero.newX += 10;
+			this.game.hero.newX = Math.floor(this.game.hero.newX);
 		}
 		if (this.sourceX < newSourceX)
 		{
 			this.shiftRight();
-			this.game.hero.x -= 10;
-			this.game.hero.x = Math.ceil(this.game.hero.x);
+			this.game.hero.newX -= 10;
+			this.game.hero.newX = Math.ceil(this.game.hero.newX);
 		}
 
 		// Issue here is exact checking rather than inequality

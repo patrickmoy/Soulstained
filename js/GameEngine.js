@@ -74,7 +74,7 @@ class GameEngine
     {
     	this.clockTick = this.timer.tick();
     	this.update();
-      if(!this.transition) this.collisionUpdate();
+      this.collisionUpdate();
     	this.draw();
     }
 
