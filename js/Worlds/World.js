@@ -20,7 +20,6 @@ class World
 
 		this.SOURCE_SHIFT = 3; // Shifting amount (in px) every update();
 		this.SIZE = 192; // Pixel width and height to represent one section.
-		this.transition = false;
 		this.sourceX = this.section.x * this.SIZE;
 		this.sourceY = this.section.y * this.SIZE;
 		// Update the sections position start.
@@ -45,17 +44,17 @@ export class OpenWorld extends World
 		super(game, worldImage, sectionX, sectionY);
 
 		// Create open world tile maps here. 8 x 8 TileMaps
-		this.openWorldTileMaps =
-		[
-			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
-			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
-			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
-			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
-			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
-			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
-			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
-			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()]
-		];
+		// this.openWorldTileMaps =
+		// [
+		// 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+		// 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+		// 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+		// 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+		// 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+		// 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+		// 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+		// 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()]
+		// ];
 	}
 }
 

@@ -6,7 +6,7 @@ import {Animation} from "./Animation.js";
 export class Hero extends Entity
 {
 	/**
-	 *
+	 * The entity that the player can control and play the game with.
 	 * @param game {GameEngine} The engine of the game for accessing
 	 * @param spritesheet {Image} The image of the hero for animation and updating
 	 */
@@ -55,6 +55,10 @@ export class Hero extends Entity
 		this.animation.drawFrame(this.game.clockTick, this.context, this.x, this.y, this.direction);
 	}
 
+	/**
+	 *
+	 * @returns {{change: number, direction: string}}
+	 */
 	checkBounds()
 	{
 		// Up Canvas Border

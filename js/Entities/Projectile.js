@@ -1,1 +1,1 @@
-// If collide, stop drawing
+// If collide, remove from entities list

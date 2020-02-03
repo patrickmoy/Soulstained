@@ -22,9 +22,6 @@ export class Entity
 				xMax: x + width,
 				yMax: y + height
 			};
-		this.isDead = false;
-		this.Dying = false; // ? What is this for ?. Used for death animation. Not sure yet.
-		this.moveable = true;
 		this.futureHitBox =
 			{
 				xMin: x,
@@ -33,6 +30,9 @@ export class Entity
 				yMax: y + height
 			};
 
+		this.isDead = false;
+		this.Dying = false; // ? What is this for ?. Used for death animation. Not sure yet.
+		this.moveable = true;
 		this.pushUpdate = false; // Used for collision to check if entity's new hitbox should be pushed for new update with the new hit box or not.
 		// Is changed by collision detection
 		// TODO need new name.
