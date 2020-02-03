@@ -1,4 +1,4 @@
-class World
+export class World
 {
 	constructor(game, worldImage, tileMaps, sectionX, sectionY)
 	{

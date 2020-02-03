@@ -1,29 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang = "en">
 <link rel="shortcut icon" href="favicon.ico">
 
 <head>
-  <meta charset="utf-8">
-  <title>Soul Stained</title>
-  <script type="text/javascript" src ="./js/Worlds/World.js"></script>
-  <script type="text/javascript" src ="./js/ImageManager.js"></script>
-  <script type="text/javascript" src ="./js/Entities/Animation.js"></script>
-  <script type="text/javascript" src ="./js/Entities/Entity.js"></script>
-  <script type="text/javascript" src ="./js/Entities/Hero.js"></script>
-  <script type="text/javascript" src ="./js/GameEngine.js"></script>
+    <meta charset="utf-8">
+    <title>Soul Stained</title>
 
-  <script type="text/javascript" src ="./js/main.js"></script>
+    <script type="module" src ="js/Main.js"></script>
 </head>
 
 <style>
     #container { position: relative; }
-    .canvas { position: absolute; top: 0; left: 0; }
 </style>
 
 <body>
-  <div id = "container" style="text-align:center">
-  <canvas id="gameWorld" tabindex="1" width="720" height="720" style="border: 5px solid lightgreen; background: black"></canvas>
-  <canvas id="uiWorld" tabindex="1" width="720" height="90" style="border: 5px solid pink; background: black"></canvas>
+<div id = "container" style="text-align:center">
+    <canvas id="gameWorld" tabindex="1" width="720" height="720" style="border: 5px solid lightgreen; background: black"></canvas>
+    <canvas id="uiWorld" tabindex="1" width="720" height="90" style="border: 5px solid pink; background: black"></canvas>
 </div>
 </body>
 

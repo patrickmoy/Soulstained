@@ -1,5 +1,15 @@
-class Hero extends Entity
+import {Entity} from "./Entity.js";
+import {Animation} from "./Animation.js";
+/**
+ *
+ */
+export class Hero extends Entity
 {
+	/**
+	 *
+	 * @param game {GameEngine}
+	 * @param spritesheet {Image}
+	 */
 	constructor(game, spritesheet)
 	{
 		super(game, 250, 310);
@@ -41,13 +51,11 @@ class Hero extends Entity
 
 	draw()
 	{
-		// This assumes each row corresponds to a separate animation. However, this is not always the case depending on our own design of spritesheet files.
 		this.animation.drawFrame(this.game.clockTick, this.context, this.x, this.y, this.direction);
 	}
 
 	checkBounds()
 	{
-
 		// Up Canvas Border
 		if (this.y < 0)
 		{
