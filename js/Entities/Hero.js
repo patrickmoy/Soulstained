@@ -12,7 +12,8 @@ export class Hero extends Entity
 	 */
 	constructor(game, spritesheet)
 	{
-		super(game, 250, 310);
+		// TODO find right width and height for hero
+		super(game, 300, 570, 56, 84, 0);
 		this.animation = new Animation(spritesheet, 32, 48, 8, .150, 8, true, 1.75);
 		this.context = game.GAME_CONTEXT;
 		this.speed = 250;

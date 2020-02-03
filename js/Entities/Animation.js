@@ -3,9 +3,10 @@
  */
 export class Animation
 {
+	// noinspection SpellCheckingInspection,SpellCheckingInspection
 	/**
 	 * Constructor to create Animation object. Class is written with a horizontally aligned sprite sheet in mind - please ensure sprite sheet is formatted as such through Aseprite or Marmoset Hexels.
-	 * @param {string} spriteSheet   Filepath of sprite sheet.
+	 * @param {Image} spriteSheet   Filepath of sprite sheet.
 	 * @param {number} frameHeight X coordinate to begin pulling sprite
 	 * @param {number} frameWidth Y coordinate to begin pull
 	 * @param {number} sheetWidth  X coordinate to stop
@@ -44,8 +45,8 @@ export class Animation
 		{
 			this.elapsedTime -= this.totalAnimTime;
 		}
-		var frame = this.currentFrame();
-		var xIndex = frame % this.spriteSheet.width;
+		const frame = this.currentFrame();
+		const xIndex = frame % this.spriteSheet.width;
 		context.drawImage(this.spriteSheet, xIndex * this.frameWidth, imageRow * this.frameHeight, this.frameWidth, this.frameHeight, gamePositionX, gamePositionY, this.frameWidth * this.scale, this.frameHeight * this.scale);
 	}
 
@@ -58,6 +59,10 @@ export class Animation
 		return Math.floor(this.elapsedTime / this.frameDuration);
 	}
 
+	/**
+	 * Checks if the animation is done
+	 * @returns {boolean} true if animation has completed all frames, false otherwise
+	 */
 	isDone()
 	{
 		return this.elapsedTime >= this.totalAnimTime;

@@ -103,7 +103,7 @@ export class GameEngine
 	 */
 	run()
 	{
-		var self = this;
+		const self = this;
 
 		console.log("Game is starting...");
 
@@ -184,9 +184,9 @@ class GameTimer
 	 */
 	tick()
 	{
-		var currentTime = Date.now();
-		var delta = (currentTime - this.lastTimeStamp) / 1000;
-		var gameDelta = Math.min(delta, this.maxStep);
+		const currentTime = Date.now();
+		const delta = (currentTime - this.lastTimeStamp) / 1000;
+		const gameDelta = Math.min(delta, this.maxStep);
 
 		this.lastTimeStamp = currentTime;
 		this.gameTime += gameDelta;

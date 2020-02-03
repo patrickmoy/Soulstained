@@ -9,11 +9,11 @@ ImageHandler.queueDownload(path("openworld"));
 ImageHandler.queueDownload(path("hero"));
 ImageHandler.startDownload().then(() =>
 {
-	var gameCanvas = document.getElementById("gameWorld"); // Get the
-	var uiCanvas = document.getElementById("uiWorld");
-	var gameContext = gameCanvas.getContext("2d");
-	var uiContext = uiCanvas.getContext("2d");
-	var myGame = new GameEngine(gameContext, uiContext, ImageHandler.assets);
+	const gameCanvas = document.getElementById("gameWorld"); // Get the
+	const uiCanvas = document.getElementById("uiWorld");
+	const gameContext = gameCanvas.getContext("2d");
+	const uiContext = uiCanvas.getContext("2d");
+	const myGame = new GameEngine(gameContext, uiContext, ImageHandler.assets);
 
 	myGame.init();
 	myGame.run();

@@ -1,5 +1,6 @@
 export class World
 {
+
 	constructor(game, worldImage, tileMaps, sectionX, sectionY)
 	{
 		this.GAME = game;

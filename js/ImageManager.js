@@ -24,11 +24,11 @@ export class ImageManager
 
     /**
      * Starts all the downloads in the queue synchronously
-     * @returns {Promise<image>} a promise with resolve when all images are downloaded or reject when one or more images fail to download
+     * @returns {Promise<unknown[]>} a promise with resolve when all images are downloaded or reject when one or more images fail to download
      */
 	startDownload()
 	{
-		var self = this;
+		const self = this;
 
 		function loadImages()
 		{
