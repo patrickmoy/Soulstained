@@ -1,6 +1,14 @@
 class Collision {
+  /**
+   * TODO comments
+   */
   constructor() {}
 
+  /**
+   * TODO comments
+   * @param entitiesToCheck
+   * @returns {[]}
+   */
   detectCollide(entitiesToCheck) {
     var i, j, firstElement, secondElement;
     var entityCount = entitiesToCheck.length;
@@ -21,6 +29,4 @@ class Collision {
     }
     return currentCollisionPairs;
   }
-
-
 }
