@@ -44,6 +44,7 @@ export class GameEngine
 		this.pause = false; // Pauses other actions while we switch to a new map.
 		this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
 		this.currentEntities = []; // Stores entities at the current tile map
+		// Should we store the hero as its own object and have it entities or have it separate?
 
 		this.TIMER; // The Game Timer to keep track of virtual time
 		this.GAME_CANVAS_WIDTH; // The main canvas width
@@ -67,11 +68,12 @@ export class GameEngine
 		this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST[path("openworld")], 7, 7);
 
 		this.currentWorld = this.WORLDS["OpenWorld"]; 	// Set the current world to the open worlds
-		this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width; //
+		this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
 		this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
 		this.UI_CANVAS_WIDTH = this.UI_CONTEXT.canvas.width;
 		this.UI_CANVAS_HEIGHT = this.UI_CONTEXT.canvas.height;
 		this.TIMER = new GameTimer();
+
 		// If button is pressed and the button is a key we care about, set it to true.
 		this.GAME_CONTEXT.canvas.addEventListener("keydown", (key) =>
 		{
@@ -123,9 +125,8 @@ export class GameEngine
 		{
 
 		}
-		else if (this.transition)
+		else if (this.transition) // Transition is happening
 		{
-			// Transition is happening
 			this.currentWorld.update();
 			this.currentEntities[0].update();
 		}

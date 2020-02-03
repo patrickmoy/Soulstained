@@ -17,7 +17,7 @@ export class Hero extends Entity
 		this.animation = new Animation(spritesheet, 32, 48, 8, .150, 8, true, 1.75);
 		this.context = game.GAME_CONTEXT;
 		this.speed = 250;
-		this.direction = 1;
+		this.direction = 1; // Where the hero is facing. North = 0, South = 1, East = 2, West = 3. Reason for number order is based off of spritesheet row
 	}
 
 	update()
