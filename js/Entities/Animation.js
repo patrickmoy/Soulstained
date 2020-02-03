@@ -3,7 +3,7 @@
  */
 export class Animation
 {
-	// noinspection SpellCheckingInspection,SpellCheckingInspection
+	// TODO possibly include more parameters like reverse?
 	/**
 	 * Constructor to create Animation object. Class is written with a horizontally aligned sprite sheet in mind - please ensure sprite sheet is formatted as such through Aseprite or Marmoset Hexels.
 	 * @param {Image} spriteSheet   Filepath of sprite sheet.
@@ -24,9 +24,10 @@ export class Animation
 		this.sheetWidth = sheetWidth;
 		this.singleFrameTime = singleFrameTime;
 		this.frameCount = frameCount;
-		this.elapsedTime = 0;
 		this.looping = loop;
 		this.scale = scale;
+
+		this.elapsedTime = 0;
 		this.totalAnimTime = singleFrameTime * frameCount;
 	}
 

@@ -1,0 +1,1 @@
+// If collide, stop drawing
