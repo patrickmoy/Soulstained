@@ -2,10 +2,21 @@
 // and collision arrays
 class TileMap
 {
+  /**
+   *
+   * @param collisionArray
+   * @param entities
+   */
   constructor(collisionArray, entities)
   {
-    this.COLLISION_ARRAY = collisionArray;
+    this.createTileCollision(collisionArray); // Creates the tiles for collision and passes it into entities
     this.ENTITIES = entities;
+  }
+
+
+  createTileCollision(collisionArray)
+  {
+    // Create the tile collision here!
   }
 
   getEntities()

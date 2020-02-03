@@ -44,16 +44,45 @@ export class OpenWorld extends World
 	{
 		super(game, worldImage, sectionX, sectionY);
 
-		// Create open world tile maps here.
+		// Create open world tile maps here. 8 x 8 TileMaps
 		this.openWorldTileMaps =
-			[[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[],
-				[]
-			];
+		[
+			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
+			[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()]
+		];
+	}
+}
+
+class NecroDungeon extends World
+{
+	constructor(game, worldImage, sectionX, sectionY)
+	{
+		super(game, worldImage, sectionX, sectionY);
+
+		// Creates tile maps for the necromancer dungeon world. # x # Tilemaps
+		this.necroTileMaps =
+		[
+
+		];
+	}
+}
+
+class WolfDungeon extends World
+{
+	constructor(game, worldImage, sectionX, sectionY)
+	{
+		super(game, worldImage, sectionX, sectionY);
+
+		// Creates tile maps for the wolf dungeon world. # x # Tilemaps
+		this.wolfTileMaps =
+		[
+
+		];
 	}
 }
