@@ -7,8 +7,8 @@ export class Hero extends Entity
 {
 	/**
 	 *
-	 * @param game {GameEngine}
-	 * @param spritesheet {Image}
+	 * @param game {GameEngine} The engine of the game for accessing
+	 * @param spritesheet {Image} The image of the hero for animation and updating
 	 */
 	constructor(game, spritesheet)
 	{

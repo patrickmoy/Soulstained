@@ -1,7 +1,14 @@
-export class World
+class World
 {
 
-	constructor(game, worldImage, tileMaps, sectionX, sectionY)
+	/**
+	 *
+	 * @param game
+	 * @param worldImage
+	 * @param sectionX
+	 * @param sectionY
+	 */
+	constructor(game, worldImage, sectionX, sectionY)
 	{
 		this.GAME = game;
 		this.CONTEXT = game.GAME_CONTEXT;
@@ -10,7 +17,6 @@ export class World
 			x: sectionX,
 			y: sectionY
 		};
-		this.TileMaps = tileMaps;
 
 		this.SOURCE_SHIFT = 3; // Shifting amount (in px) every update();
 		this.SIZE = 192; // Pixel width and height to represent one section.
@@ -31,4 +37,23 @@ export class World
 			this.CONTEXT.canvas.width, this.CONTEXT.canvas.height);
 	}
 
+}
+export class OpenWorld extends World
+{
+	constructor(game, worldImage, sectionX, sectionY)
+	{
+		super(game, worldImage, sectionX, sectionY);
+
+		// Create open world tile maps here.
+		this.openWorldTileMaps =
+			[[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[],
+				[]
+			];
+	}
 }

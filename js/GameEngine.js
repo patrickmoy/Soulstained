@@ -4,17 +4,7 @@
  */
 import {path} from "./Main.js";
 import {Hero} from "./Entities/Hero.js";
-import {World} from "./Worlds/World.js";
-const openWorldTileMaps =
-	[[],
-		[],
-		[],
-		[],
-		[],
-		[],
-		[],
-		[]
-	];
+import {OpenWorld} from "./Worlds/World.js";
 
 // Requests the browser for when animation frame is ready.
 window.requestAnimFrame = (function ()
@@ -73,10 +63,8 @@ export class GameEngine
 
 		this.currentEntities.push(new Hero(this, this.IMAGES_LIST[path("hero")])); // Add hero to the entity list. Hero is always at index 0
 
-		// Create the tilemaps
-
 		// Create the worlds
-		this.WORLDS["OpenWorld"] = new World(this, this.IMAGES_LIST[path("openworld")], openWorldTileMaps, 5, 5);
+		this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST[path("openworld")], 7, 7);
 
 		this.currentWorld = this.WORLDS["OpenWorld"]; 	// Set the current world to the open worlds
 		this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width; //
@@ -116,7 +104,9 @@ export class GameEngine
 		gameLoop();
 	}
 
-	// Game loop to keep the game running by updating and drawing the game instance.
+	/**
+	 * Game loop to keep the game running by updating and drawing the game instance.
+	 */
 	loop()
 	{
 		this.clockTick = this.TIMER.tick();
@@ -141,11 +131,16 @@ export class GameEngine
 		}
 		else
 		{
-			// Player is now movable around the map
+			// Entities are now movable around the map
 			this.currentEntities.forEach(entity => entity.update());
+			// Check for collision
+			// Push update for valid movements
 		}
 	}
 
+	/**
+	 *
+	 */
 	draw()
 	{
 		this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
