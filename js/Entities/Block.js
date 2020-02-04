@@ -1,6 +1,2 @@
-import {Entity} from "./Entity.js";
-
-export class Block extends Entity
-{}
-export class InvisibleBlock extends Block
-{}
+class Block extends Entity {}
+class InvisibleBlock extends Block {}
