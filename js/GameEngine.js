@@ -57,14 +57,29 @@ class GameEngine {
    * Initializes the necessary starting objects to run the game.
    */
   init() {
+    /*
     this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
     this.UI_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
-    this.hero = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"]);
+    */
 
+    // hero initialization
+    this.hero = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"]);
+    // push hero to currentEntities
     this.currentEntities.push(this.hero); // Add hero to the entity list. Hero is always at index 0
 
     // Create the worlds
     this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
+    this.WORLDS["OpenWorld"].initializeTileMaps();
+    var tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
+    this.currentEntities.push.apply(this.currentEntities, tileMap.ALIVE_ENTITIES);
+    /*
+    for (var i=0; i<this.currentEntities.length; i++) {
+      console.log(this.currentEntitities[i]);
+    }
+    */
+    /*
+    this.WORLDS["NecromancerDungeon"] = new Dungeon(...);
+    */
 
     this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
     this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;

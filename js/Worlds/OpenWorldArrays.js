@@ -1,6 +1,5 @@
-class OverworldArrays {
+class OpenWorldArrays {
   constructor() {
-
     this.data = {
       section7_7: [
         [1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
@@ -8,7 +7,7 @@ class OverworldArrays {
         [1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1],
         [0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1],
         [1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1],
-        [1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+        [1, 1, 2, 0, 0, 1, 1, 0, 0, 0, 1, 1],
         [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
@@ -448,7 +447,9 @@ class OverworldArrays {
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
         [1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1],
-        [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1]
+        [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
       ],
       section7_3: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -899,5 +900,11 @@ class OverworldArrays {
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ],
     };
+  }
+  getEntityArray(sectionX, sectionY) {
+    var sectionString = "section" + sectionX + "_" + sectionY;
+    var currentSection = this.data[sectionString];
+
+    return currentSection;
   }
 }

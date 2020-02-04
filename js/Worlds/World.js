@@ -36,7 +36,16 @@ class World {
 class OpenWorld extends World {
   constructor(game, worldImage, sectionX, sectionY) {
     super(game, worldImage, sectionX, sectionY);
-
+    this.OpenWorldArrays = new OpenWorldArrays();
+    this.tileMaps = [[],
+                     [],
+                     [],
+                     [],
+                     [],
+                     [],
+                     [],
+                     []
+                   ];
     // Create open world tile maps here. 8 x 8 TileMaps
     // this.openWorldTileMaps =
     // [
@@ -50,6 +59,25 @@ class OpenWorld extends World {
     // 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()]
     // ];
   }
+  initializeTileMaps() {
+    for (var i = 0; i < 8; i++) {
+      for (var j = 0; j < 8; j++) {
+        var entityArray = this.OpenWorldArrays.getEntityArray(i, j);
+
+        var tileMap = new TileMap(this.GAME, entityArray);
+        this.tileMaps[i].push(tileMap);
+      }
+    }
+  }
+
+
+
+  getCurrentTileMap() {
+    return this.tileMaps[this.section.x][this.section.y];
+  }
+
+
+
 }
 
 class NecroDungeon extends World {
