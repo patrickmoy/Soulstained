@@ -12,9 +12,11 @@ ImageHandler.startDownload()
 
     myGame.init();
     const collisionData = new OverworldArrays();
-    const tileTest = new TileMap(myGame, collisionData.data.section7_7);
+    // TODO remove test case and move it to the openworld
+    var tileTest = new TileMap(myGame, collisionData.data.section7_7);
 
-    for (var i = 0; i < tileTest.ALIVE_ENTITIES.length; i++) {
+    for (var i = 0; i < tileTest.ALIVE_ENTITIES.length; i++)
+    {
       myGame.currentEntities.push(tileTest.ALIVE_ENTITIES[i]);
     }
     myGame.run();

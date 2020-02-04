@@ -6,7 +6,6 @@ class TileMap {
    * @param collisionArray an array that represents the tiles that the player can not collide
    * @param entities the entities in the respective tilemap
    */
-  // TODO figure out why entities are no longer a parameter?
   constructor(game, collisionArray) {
     this.game = game;
     this.ALIVE_ENTITIES = []; // Stores any alive entities
