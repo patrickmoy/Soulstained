@@ -27,7 +27,7 @@ class TileMap {
       for (var j = 0; j < column.length; j++) {
         if (column[j] === 1) {
           var newEntity = new InvisibleBlock(this.game, j * 60, i * 60, 60, 60);
-          console.log("Block created at " + j + " , " + i);
+          // console.log("Block created at " + j + " , " + i);
           this.ALIVE_ENTITIES.push(newEntity);
         }
       }
