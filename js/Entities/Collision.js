@@ -77,5 +77,4 @@ class Collision {
       entitiesToCheck[i].pushUpdate = true;
     }
   }
-
 }

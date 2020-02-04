@@ -12,7 +12,7 @@ ImageHandler.startDownload()
 
     myGame.init();
     const collisionData = new OverworldArrays();
-    var tileTest = new TileMap(myGame, collisionData.data.section7_7);
+    const tileTest = new TileMap(myGame, collisionData.data.section7_7);
 
     for (var i = 0; i < tileTest.ALIVE_ENTITIES.length; i++) {
       myGame.currentEntities.push(tileTest.ALIVE_ENTITIES[i]);
