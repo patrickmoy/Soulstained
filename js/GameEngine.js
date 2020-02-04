@@ -129,6 +129,7 @@ class GameEngine
 		}
 		else if (this.transition) // Transition is happening
 		{
+
 			this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
 			this.hero.automove(); // Moves the player when transitioning is happening
 		}
@@ -165,8 +166,13 @@ class GameEngine
 
 			this.currentEntities = []; // Remove all entities from the respective tilemap
 			this.currentEntities.push(this.hero); // re-add the hero
+			// -----------------------------------------------------------------------------------------------------------------------------
+			// BUG: When a player transitions to a new tilemap, it has not been changed. Instead we just wipe the entities.
+			// This bug is caused by not swapping tilemaps yet. This is an easy fix when TileMaps are fully completed.
+			// - Steven Tran
+			// -----------------------------------------------------------------------------------------------------------------------------
 
-			// this.currentEntities = // Grab the new entities from the new TileMap TODO waiting on @Yung 's implementation to add to this.
+			// this.currentEntities = // Grab the new entities from the new TileMap
 
 			this.transition = true; // Game Engine and other necessary components is now performing transition actions
 		}
