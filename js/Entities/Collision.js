@@ -42,14 +42,10 @@ class Collision {
   entitiesCollided(firstElement, secondElement) {
     var boxOne = firstElement.futureHitbox;
     var boxTwo = secondElement.futureHitbox;
-    if (boxOne.xMin < boxTwo.xMax &&
-      boxTwo.xMin < boxOne.xMax &&
-      boxOne.yMin < boxTwo.yMax &&
-      boxTwo.yMin < boxOne.yMax) {
-      return true;
-    } else {
-      return false;
-    }
+    return boxOne.xMin < boxTwo.xMax &&
+        boxTwo.xMin < boxOne.xMax &&
+        boxOne.yMin < boxTwo.yMax &&
+        boxTwo.yMin < boxOne.yMax;
   }
 
   /**
