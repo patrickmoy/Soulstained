@@ -52,8 +52,13 @@ class Hero extends Entity {
    */
   automove()
   {
-    const TRANSITION_AMOUNT_X = 10.7; // The amount of shift in the x direction when transitioning
-    const TRANSITION_AMOUNT_Y = 10.4; // The amount of shift in the y direction when transitioning
+    // Admittedly slightly tricky to tweak; you want to cross but there's also an occasional bug where if you just
+    // slightly tap the movement key to barely cross, you can get stuck in an infinite loop where it'll keep going back
+    // and forth. Also rare. 10.42 seems to be the upper limit for Y (10.44 no good). 10.7 procs it in 1/5 tests for me,
+    // so I will try 10.65.
+    // Update: 10.42/10.41 no good for Y in roughly 1/10 trials. 10.40 in 1/25 (all estimated). 
+    const TRANSITION_AMOUNT_X = 10.65; // The amount of shift in the x direction when transitioning
+    const TRANSITION_AMOUNT_Y = 10.37; // The amount of shift in the y direction when transitioning
     switch(this.transitionDirection)
     {
       case "up":
@@ -87,7 +92,9 @@ class Hero extends Entity {
    * Draws the hero.
    */
   draw() {
-    this.animation.drawFrame(this.game.clockTick, this.context, this.hitbox.xMin, this.hitbox.yMin, this.direction, this.status);
+    this.animation.drawFrame(this.game.clockTick, this.context,
+        this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+        this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.direction, this.status);
   }
 
   /**
