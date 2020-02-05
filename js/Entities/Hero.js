@@ -52,7 +52,7 @@ class Hero extends Entity {
    */
   automove()
   {
-    const TRANSITION_AMOUNT_X = 10.4; // The amount of shift in the x direction when transitioning
+    const TRANSITION_AMOUNT_X = 10.7; // The amount of shift in the x direction when transitioning
     const TRANSITION_AMOUNT_Y = 10.4; // The amount of shift in the y direction when transitioning
     switch(this.transitionDirection)
     {
