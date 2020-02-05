@@ -185,11 +185,20 @@ class GameEngine
 	 */
 	draw()
 	{
-		this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
-		this.GAME_CONTEXT.save(); // Saves any properties of the canvas
-		this.currentWorld.draw();
-		this.currentEntities.forEach(entity => entity.draw());
-		this.GAME_CONTEXT.restore();
+    if (!this.transition)
+    {
+  		this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
+  		this.GAME_CONTEXT.save(); // Saves any properties of the canvas
+  		this.currentWorld.draw();
+  		this.currentEntities.forEach(entity => entity.draw());
+  		this.GAME_CONTEXT.restore();
+    } else {
+      this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
+  		this.GAME_CONTEXT.save(); // Saves any properties of the canvas
+  		this.currentWorld.draw();
+      this.currentEntities[0].draw();
+      this.GAME_CONTEXT.restore();
+    }
 		// Transition is handled here
 		// There was a change that affects the UI so we update the UI
 		if (this.UI_CONTEXT.change)
