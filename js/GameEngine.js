@@ -71,7 +71,7 @@ class GameEngine
     this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
     this.WORLDS["OpenWorld"].initializeTileMaps();
     var tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
-    this.currentEntities.push.apply(this.currentEntities, tileMap.ALIVE_ENTITIES);
+    this.currentEntities.push.apply(this.currentEntities, tileMap.ENTITIES);
 
     this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
     this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
@@ -170,9 +170,11 @@ class GameEngine
 			// BUG: When a player transitions to a new tilemap, it has not been changed. Instead we just wipe the entities.
 			// This bug is caused by not swapping tilemaps yet. This is an easy fix when TileMaps are fully completed.
 			// - Steven Tran
+      // SOLVED: TileMaps are fully implemented. But they're not populated with anything other than Blocks at the moment.
+      // - YJ
 			// -----------------------------------------------------------------------------------------------------------------------------
 
-			// this.currentEntities = // Grab the new entities from the new TileMap
+			this.currentEntities.push.apply(this.currentEntities, this.WORLDS["OpenWorld"].getCurrentTileMap().ENTITIES);
 
 			this.transition = true; // Game Engine and other necessary components is now performing transition actions
 		}
