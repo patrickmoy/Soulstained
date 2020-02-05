@@ -83,8 +83,6 @@ class OpenWorld extends World {
     return this.tileMaps[this.section.x][this.section.y];
   }
 
-
-
 }
 
 class NecroDungeon extends World {
