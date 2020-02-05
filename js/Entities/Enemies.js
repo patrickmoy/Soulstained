@@ -29,7 +29,7 @@ class Zombie extends Enemy
     this.context.beginPath();
     this.context.rect(this.x, this.y, this.width, this.height);
     this.context.stroke();
-    this.animation.drawFrame(this.game.clockTick, this.context, this.hitbox.xMin, this.hitbox.yMin, 0);
+    this.animation.drawFrame(this.game.clockTick, this.context, this.hitbox.xMin, this.hitbox.yMin, 0, 'dancing');
   }
 
   pickDirection()

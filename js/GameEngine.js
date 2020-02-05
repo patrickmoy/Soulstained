@@ -63,14 +63,14 @@ class GameEngine
     this.UI_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
     // hero initialization
-    this.hero = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"]);
+    this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"]);
     // push hero to currentEntities
-    this.currentEntities.push(this.hero); // Add hero to the entity list. Hero is always at index 0
+    this.currentEntities.push(this.HERO); // Add hero to the entity list. Hero is always at index 0
 
     // Create the worlds
     this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
     this.WORLDS["OpenWorld"].initializeTileMaps();
-    var tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
+    let tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
     this.currentEntities.push.apply(this.currentEntities, tileMap.ENTITIES);
 
     this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
@@ -131,10 +131,21 @@ class GameEngine
 		{
 
 			this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
-			this.hero.automove(); // Moves the player when transitioning is happening
+			this.HERO.automove(); // Moves the player when transitioning is happening
 		}
 		else
 		{
+
+
+			/**
+			 * This is just here temporarily to test hitboxes. Hitting k prints hero's update prediction to console.
+			 */
+			if (this.INPUTS['KeyK']) {
+				console.log(this.HERO.futureHitbox);
+			}
+
+
+
 			// Entities are now movable around the map
 			// Reset all behavior flags for all entities. Can be expanded/diversified
 			this.PHYSICS.resetFlags(this.currentEntities);
@@ -158,14 +169,14 @@ class GameEngine
 	 */
 	checkTransition()
 	{
-		const currentBorder = this.hero.checkBorder();
+		const currentBorder = this.HERO.checkBorder();
 		if (currentBorder.changeInX || currentBorder.changeInY) // Checks if there is any border change in x or y direction
 		{
 			this.currentWorld.section.x += currentBorder.changeInX; // Change the x coordinate for the tilemap array
 			this.currentWorld.section.y += currentBorder.changeInY; // Change the y coordinate for the tilemap array
 
 			this.currentEntities = []; // Remove all entities from the respective tilemap
-			this.currentEntities.push(this.hero); // re-add the hero
+			this.currentEntities.push(this.HERO); // re-add the hero
 			// -----------------------------------------------------------------------------------------------------------------------------
 			// BUG: When a player transitions to a new tilemap, it has not been changed. Instead we just wipe the entities.
 			// This bug is caused by not swapping tilemaps yet. This is an easy fix when TileMaps are fully completed.
@@ -178,6 +189,17 @@ class GameEngine
 
 			this.transition = true; // Game Engine and other necessary components is now performing transition actions
 		}
+	}
+
+	/**
+	 * Method checks current input keys and returns whether movement inputs are
+	 * active.
+	 * @return {Boolean} Returns true if movement keys are pressed (WASD), and
+	 * false otherwise.
+	 */
+	hasMoveInputs() {
+		return (this.INPUTS['KeyW'] || this.INPUTS['KeyA'] || this.INPUTS['KeyS'] ||
+			this.INPUTS['KeyD']);
 	}
 
 	/**

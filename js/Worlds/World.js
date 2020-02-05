@@ -36,7 +36,7 @@ class World {
 
   draw() {
     this.CONTEXT.drawImage(this.WORLD_IMAGE, this.sourceX, this.sourceY, this.SIZE, this.SIZE, 0, 0,
-      this.CONTEXT.canvas.width, this.CONTEXT.canvas.height);
+        this.CONTEXT.canvas.width, this.CONTEXT.canvas.height);
   }
 
 }

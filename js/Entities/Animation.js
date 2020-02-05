@@ -36,15 +36,22 @@ class Animation {
    * @param gamePositionX {number}
    * @param gamePositionY {number}
    * @param imageRow {number}
+   * @param status {string}
    */
-  drawFrame(tick, context, gamePositionX, gamePositionY, imageRow) {
+  drawFrame(tick, context, gamePositionX, gamePositionY, imageRow, status) {
     this.elapsedTime += tick;
     if (this.isDone() && this.looping) {
       this.elapsedTime -= this.totalAnimTime;
     }
+
     const frame = this.currentFrame();
-    const xIndex = frame % this.spriteSheet.width;
-    context.drawImage(this.spriteSheet, xIndex * this.frameWidth, imageRow * this.frameHeight, this.frameWidth, this.frameHeight, gamePositionX, gamePositionY, this.frameWidth * this.scale, this.frameHeight * this.scale);
+    let xIndex = frame % this.sheetWidth;
+    if (status === 'idle') {
+      xIndex = 0;
+    }
+    context.drawImage(this.spriteSheet, xIndex * this.frameWidth, imageRow * this.frameHeight,
+        this.frameWidth, this.frameHeight, gamePositionX, gamePositionY,
+        this.frameWidth * this.scale, this.frameHeight * this.scale);
   }
 
   /**
