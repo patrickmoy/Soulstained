@@ -1,87 +1,53 @@
-class ImageManager
-{
-  constructor()
-  {
-    // this._failCount = 0;
-    // this._successCount = 0;
-    this._assetCache = [];
-    this._downloadQueue = [];
+/**
+ *
+ */
+class ImageManager {
+  /**
+   * Class that handles the queueing and caching of images.
+   */
+  constructor() {
+    this.assets = []; // Store cached images
+    this.downloadQueue = []; // Store images to be cached
   }
 
-  // TODO ask group if they would rather have an asset manager for both
-  // sound and images in one cache like preloaded like the one he provided or something else? I found that there is some libraries that will alleviate that. We can also try something else.
-  queueDownload(filePath)
-  {
+  /**
+   * Adds the file in the provided path into a download queue to cache when calling startDownload()
+   * @param filePath the path of the images to be cached
+   */
+  queueDownload(filePath) {
     console.log(filePath + ' has been added to the Download Queue.');
-    this._downloadQueue.push(filePath);
+    this.downloadQueue.push(filePath);
   }
 
-startDownload()
- {
-     var self = this;
-     function loadImages()
-     {
-       let promiseArray = [];
-       for (let i = 0; i < self._downloadQueue.length; i++)
-       {
-         let imagePromise = new Promise((resolve, reject) =>
-         {
-           let img = new Image();
-           img.addEventListener("load", () =>
-           {
-             console.log("Loaded image " + img.src);
-             resolve(img.src);
-           });
+  /**
+   * Starts all the downloads in the queue synchronously
+   * @returns {Promise<unknown[]>} a promise with resolve when all images are downloaded or reject when one or more images fail to download
+   */
+  startDownload() {
+    const self = this;
 
-           img.addEventListener("error", () =>
-           {
-             console.log("Error loading image " + img.src);
-             reject(img.src);
-           });
+    function loadImages() {
+      let promiseArray = []; // An array to keep track of promises
+      for (let i = 0; i < self.downloadQueue.length; i++) {
+        let imagePromise = new Promise((resolve, reject) => {
+          let img = new Image();
+          img.addEventListener("load", () => {
+            console.log("Loaded image " + img.src);
+            resolve(img.src);
+          });
 
-           img.src = self._downloadQueue[i];
-           self._assetCache[self._downloadQueue[i]] = img;
-         });
-         promiseArray.push(imagePromise);
-       }
-       return Promise.all(promiseArray);
-     }
-     return loadImages();
- }
+          img.addEventListener("error", () => {
+            console.log("Error loading image " + img.src);
+            reject(img.src);
+          });
 
-  // TODO compare performance
-  // startDownload(callbackFunction)
-  // {
-  //     var self = this;
-  //     for (let i = 0; i < self._downloadQueue.length; i++)
-  //     {
-  //       let img = new Image();
-  //       img.addEventListener("load", () =>
-  //       {
-  //         console.log("Loaded " + img.src);
-  //         self._successCount++;
-  //         if (self.isDone()) callbackFunction();
-  //       });
-  //
-  //       img.addEventListener("error", () =>
-  //       {
-  //         console.log("Error loading " + img.src);
-  //         self._failCount++;
-  //         if (self.isDone()) callbackFunction();
-  //       });
-  //       img.src = self._downloadQueue[i];
-  //       self._assetCache[self._downloadQueue[i]] = img;
-  //     }
-  // }
-  //
-  // isDone()
-  // {
-  //   return this._downloadQueue.length === this._failCount + this._successCount;
-  // }
-
-
-  getImage(filePath)
-  {
-    return this._assetCache[filePath];
+          img.src = self.downloadQueue[i];
+          self.assets[self.downloadQueue[i]] = img;
+        });
+        promiseArray.push(imagePromise);
+      }
+      return Promise.all(promiseArray);
+    }
+    return loadImages();
   }
 }
