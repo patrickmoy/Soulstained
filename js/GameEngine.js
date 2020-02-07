@@ -135,16 +135,12 @@ class GameEngine
 		}
 		else
 		{
-
-
 			/**
 			 * This is just here temporarily to test hitboxes. Hitting k prints hero's update prediction to console.
 			 */
 			if (this.INPUTS['KeyK']) {
 				console.log(this.HERO.futureHitbox);
 			}
-
-
 
 			// Entities are now movable around the map
 			// Reset all behavior flags for all entities. Can be expanded/diversified
