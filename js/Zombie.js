@@ -59,7 +59,6 @@ class Zombie extends Entity {
 
     draw() {
         this.animation.drawFrame(this.game.clockTick, this.ctx, this.x, this.y, 0);
-
     }
 
 
