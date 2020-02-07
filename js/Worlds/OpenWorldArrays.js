@@ -1,7 +1,13 @@
 // 2-6-2020 Steven Tran
 // Do we really need a class? We can just make it a constant object so we don't need to do new.
 class OpenWorldArrays {
+  /**
+   *
+   */
   constructor() {
+    // All the 2D arrays that are used to create TileMaps.
+    // Name of variable determines the map.
+    // For example, section7_7 is the bottom right of the open world map.
     this.data = {
       section7_7: [
         [1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1],
@@ -904,12 +910,7 @@ class OpenWorldArrays {
     };
   }
 
-  // 2-6-2020 Steven Tran
-  // What's the point of this method? This breaks our reason for a World class.
-  // The World class contains the TileMaps already but this method works under the assumption.
   getEntityArray(sectionX, sectionY) {
-    var sectionString = "section" + sectionX + "_" + sectionY;
-    var currentSection = this.data[sectionString];
-    return currentSection;
+    return this.data["section" + sectionX + "_" + sectionY];
   }
 }

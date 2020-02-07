@@ -48,7 +48,6 @@ class TileMap {
           this.ENTITIES.push(blockEntity);
         }
         if (entityArray[i][j] === 2) {
-          console.log(this.game);
           var zombieEntity = new Zombie(this.game, this.game.IMAGES_LIST["./res/img/zombie.png"], j*60, i*60, 60, 60);
           this.ENTITIES.push(zombieEntity);
         }

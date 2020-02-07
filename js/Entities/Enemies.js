@@ -25,7 +25,6 @@ class Zombie extends Enemy
 
   draw()
   {
-    //console.log(this.x + this.y + this.width + this.height);
     this.context.beginPath();
     this.context.rect(this.x, this.y, this.width, this.height);
     this.context.stroke();
