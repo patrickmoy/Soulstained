@@ -1,1 +1,1 @@
-// If collide, remove from entities list
+// If collide, set to off

@@ -52,8 +52,8 @@ class OpenWorld extends World {
                      [],
                      [],
                      []
-                   ];
-    // Create open world tile maps here. 8 x 8 TileMaps
+                   ];  // Create a foundation for open world tile maps here. 8 x 8 TileMaps
+
     // this.openWorldTileMaps =
     // [
     // 	[new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap(), new TileMap()],
