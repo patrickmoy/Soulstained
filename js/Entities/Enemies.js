@@ -1,42 +1,37 @@
 class Enemy extends Entity {
-  constructor(game, x, y, width, height)
-  {
-    super(game, x, y, width, height);
-  }
+    constructor(game, x, y, width, height) {
+        super(game, x, y, width, height);
+    }
 }
-class Zombie extends Enemy
-{
-  constructor(game, spritesheet, x, y, width, height)
-  {
-    super(game, x, y, width, height);
-    this.animation = new Animation(spritesheet, 16, 16, 2, .450, 2, true, 3.5);
-    this.context = game.GAME_CONTEXT;
-    this.speed = 100;
-    this.direction = 1;
-    this.health = 4;
-    this.pushUpdate = false;
-  }
+
+class Zombie extends Enemy {
+    constructor(game, spritesheet, x, y, width, height) {
+        super(game, x, y, width, height);
+        this.animation = new Animation(spritesheet, 16, 16, 2, .450, 2, true, 3.5);
+        this.context = game.GAME_CONTEXT;
+        this.speed = 100;
+        this.direction = 1;
+        this.health = 4;
+        this.pushUpdate = false;
+    }
 
 
-  prepdate()
-  {
-    
-  }
+    prepdate() {
 
-  draw()
-  {
-    this.context.beginPath();
-    this.context.rect(this.x, this.y, this.width, this.height);
-    this.context.stroke();
-    this.animation.drawFrame(this.game.clockTick, this.context,
-        this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-        this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 0, 'dancing');
-  }
+    }
 
-  pickDirection()
-  {
-    this.direction = Math.floor(Math.random() * Math.floor(5));
-  }
+    draw() {
+        this.context.beginPath();
+        this.context.rect(this.x, this.y, this.width, this.height);
+        this.context.stroke();
+        this.animation.drawFrame(this.game.clockTick, this.context,
+            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 0, 'dancing');
+    }
+
+    pickDirection() {
+        this.direction = Math.floor(Math.random() * Math.floor(5));
+    }
 
 }
 

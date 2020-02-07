@@ -1,13 +1,16 @@
 class CollisionDetection {
 
+    /**
+     * Handles all the collision detection between every entity in the entities array
+     */
     constructor() {
         this.entities = [];
     }
 
-    addEntity(entity) {
-        this.entities.push(entity);
-    }
-
+    /**
+     * Checks the collision between all the entities in the entities array
+     * @returns {[]} an array of entities that have collided. Each element is a set of 2 entities that have collided
+     */
     checkCollisions() {
         var i, j, firstElement, secondElement;
         const entityCount = this.entities.length;
@@ -28,6 +31,12 @@ class CollisionDetection {
         return collisions;
     }
 
+    /**
+     * Checks two entities against each other to see if they collide
+     * @param firstElement the first element to check collision
+     * @param secondElement the second element to check collision
+     * @returns {boolean|boolean} true if two entities have collided; false otherwise
+     */
     entitiesCollided(firstElement, secondElement) {
         const boxOne = firstElement.getCollisionBox();
         const boxTwo = secondElement.getCollisionBox();
@@ -37,6 +46,10 @@ class CollisionDetection {
             boxTwo.min[1] < boxOne.max[1];
     }
 
+    /**
+     * Updates all the collided entities to not update their position
+     * @param collisions an array of the collided entities
+     */
     processCollisions(collisions) {
         collisions.forEach(function (element) {
             element[0].skipUpdate = true;

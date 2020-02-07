@@ -31,8 +31,4 @@ class TileMap {
             }
         }
     }
-
-    getEntities() {
-        return this.ENTITIES;
-    }
 }

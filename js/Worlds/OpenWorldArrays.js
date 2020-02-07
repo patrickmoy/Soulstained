@@ -2,9 +2,14 @@
 // Do we really need a class? We can just make it a constant object so we don't need to do new.
 class OpenWorldArrays {
   /**
-   *
+   * Represents all the arrays for the tilemaps in the 'open world' world.
    */
   constructor() {
+
+    // 0 = walkable
+    // 1 = invisible block
+    // TODO add more
+
     // All the 2D arrays that are used to create TileMaps.
     // Name of variable determines the map.
     // For example, section7_7 is the bottom right of the open world map.
@@ -910,6 +915,12 @@ class OpenWorldArrays {
     };
   }
 
+  /**
+   * Returns the requested array given the sections
+   * @param sectionX the x section of the 2d array of arrays
+   * @param sectionY the y section of the 2d array of arrays
+   * @returns {*} the array of entities that corresponds to the given parameters
+   */
   getEntityArray(sectionX, sectionY) {
     return this.data["section" + sectionX + "_" + sectionY];
   }

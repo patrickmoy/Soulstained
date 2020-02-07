@@ -2,14 +2,16 @@
  *
  */
 class Entity {
+
     /**
-     *
+     * An object in the game that has some form of interaction. An example would be walls or the hero.
+     * A hero interacts with walls where he can't walk through them.
      * @param game {GameEngine} Current instance of the game
      * @param x {number} the x position of the entity relative to the canvas
      * @param y {number} the y position of the entity relative to the canvas
      * @param width {number} the width of the entity in pixels
      * @param height {number} the height of the entity in pixels
-     * @param layerLevel {number}
+     * @param layerLevel {number} TODO unsure yet
      */
     constructor(game, x, y, width, height, layerLevel) {
         this.HITBOX_SHRINK_FACTOR = .9;
@@ -64,9 +66,6 @@ class Entity {
             this.hitbox.yMin = this.futureHitbox.yMin; // Updates to the new top left y coordinate
             this.hitbox.xMax = this.futureHitbox.xMax; // Updates to the new bottom right x coordinate
             this.hitbox.yMax = this.futureHitbox.yMax; // Updates to the new bottom right y coordinate
-            // this.pushUpdate = false; // Resets push update for future checks
-            // PM: Shouldn't things update by default? And only set to false if they would
-            // update in a game-breaking way? Hence why I commented out this.pushUpdate.
         }
         else {
             this.futureHitbox.xMin = this.hitbox.xMin; // Resets future top left x coordinate
@@ -104,6 +103,9 @@ class Entity {
     }
 
 
+    /**
+     * Draws the entity
+     */
     draw() {
         // Do nothing, implemented by subclasses
     }
