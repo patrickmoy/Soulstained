@@ -42,12 +42,10 @@ class Entity {
     // Considering changing 'attacking' to "action" and then having action depend on the equippped
     // item, which should also be stored in Hero.
     this.isDead = false;
-    this.Dying = false; // ? What is this for ?. Used for death animation. Not sure yet.
+    this.Dying = false;
     this.moveable = true;
     this.pushUpdate = true; // Used for collision to check if entity's new Hitbox should be pushed for new update with the new hit box or not.
-    // Is changed by collision detection
-    // TODO need new name.
-
+                            // Is changed by collision detection
   }
 
   /**

@@ -70,7 +70,7 @@ class GameEngine
     // Create the worlds
     this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
     this.WORLDS["OpenWorld"].initializeTileMaps();
-    let tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
+    var tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
     this.currentEntities.push.apply(this.currentEntities, tileMap.ENTITIES);
 
     this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
@@ -131,7 +131,7 @@ class GameEngine
 		{
 
 			this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
-			this.HERO.automove(); // Moves the player when transitioning is happening
+			this.HERO.eventWalk(); // Moves the player when transitioning is happening
 		}
 		else
 		{
@@ -177,13 +177,6 @@ class GameEngine
 
 			this.currentEntities = []; // Remove all entities from the respective tilemap
 			this.currentEntities.push(this.HERO); // re-add the hero
-			// -----------------------------------------------------------------------------------------------------------------------------
-			// BUG: When a player transitions to a new tilemap, it has not been changed. Instead we just wipe the entities.
-			// This bug is caused by not swapping tilemaps yet. This is an easy fix when TileMaps are fully completed.
-			// - Steven Tran
-      // SOLVED: TileMaps are fully implemented. But they're not populated with anything other than Blocks at the moment.
-      // - YJ
-			// -----------------------------------------------------------------------------------------------------------------------------
 
 			this.currentEntities.push.apply(this.currentEntities, this.WORLDS["OpenWorld"].getCurrentTileMap().ENTITIES);
 

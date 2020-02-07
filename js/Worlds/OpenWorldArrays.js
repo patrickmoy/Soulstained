@@ -1,3 +1,5 @@
+// 2-6-2020 Steven Tran
+// Do we really need a class? We can just make it a constant object so we don't need to do new.
 class OpenWorldArrays {
   constructor() {
     this.data = {
@@ -901,6 +903,10 @@ class OpenWorldArrays {
       ],
     };
   }
+
+  // 2-6-2020 Steven Tran
+  // What's the point of this method? This breaks our reason for a World class.
+  // The World class contains the TileMaps already but this method works under the assumption.
   getEntityArray(sectionX, sectionY) {
     var sectionString = "section" + sectionX + "_" + sectionY;
     var currentSection = this.data[sectionString];
