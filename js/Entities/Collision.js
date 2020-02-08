@@ -1,5 +1,5 @@
 /**
- * [Collision description]
+ * Collision detects all the collision/interaction between several entities and tells others about the collision/interaction.
  */
 class Collision {
     /**
@@ -11,7 +11,7 @@ class Collision {
     /**
      * Returns an array of all unique pairs of colliding entities
      * @param {Array} entitiesToCheck List of entities to check for collision
-     * @returns {[]}
+     * @returns {[Entity, Entity]} a list of entity pairs that have collided
      */
     detectCollide(entitiesToCheck) {
         var i, j, firstElement, secondElement;
@@ -41,8 +41,8 @@ class Collision {
      * @return {Boolean} True if the two elements are colliding, false otherwise
      */
     entitiesCollided(firstElement, secondElement) {
-        var boxOne = firstElement.futureHitbox;
-        var boxTwo = secondElement.futureHitbox;
+        const boxOne = firstElement.futureHitbox;
+        const boxTwo = secondElement.futureHitbox;
         return boxOne.xMin < boxTwo.xMax &&
             boxTwo.xMin < boxOne.xMax &&
             boxOne.yMin < boxTwo.yMax &&

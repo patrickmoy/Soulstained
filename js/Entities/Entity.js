@@ -1,6 +1,3 @@
-/**
- *
- */
 class Entity {
 
     /**
@@ -51,14 +48,14 @@ class Entity {
     }
 
     /**
-     *
+     * Performs a update but does not actually push it. Will go through several phases until the update is pushed.
      */
     preUpdate() {
         // Do nothing, implemented by subclasses
     }
 
     /**
-     *
+     * Actually updates the game given that update is allowed to be pushed
      */
     update() {
         if (this.pushUpdate) {

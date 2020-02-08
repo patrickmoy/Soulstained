@@ -1,5 +1,7 @@
-// A single section of the screen that holds entities
-// and collision arrays
+/*
+ * A single section of the screen that holds entities
+ * and collision arrays
+ */
 class TileMap {
     /**
      *
@@ -21,11 +23,12 @@ class TileMap {
         for (var i = 0; i < 12; i++) {
             for (var j = 0; j < 12; j++) {
                 if (entityArray[i][j] === 1) {
-                    var blockEntity = new InvisibleBlock(this.game, j * 60, i * 60, 60, 60);
+                    // TODO update the invisible block with the new entity parameters - Steven Tran
+                    const blockEntity = new InvisibleBlock(this.game, j * 60, i * 60, 60, 60);
                     this.ENTITIES.push(blockEntity);
                 }
                 if (entityArray[i][j] === 2) {
-                    var zombieEntity = new Zombie(this.game, this.game.IMAGES_LIST["./res/img/zombie.png"], j * 60, i * 60, 60, 60);
+                    const zombieEntity = new Zombie(this.game, this.game.IMAGES_LIST["./res/img/zombie.png"], j * 60, i * 60, 60, 60);
                     this.ENTITIES.push(zombieEntity);
                 }
             }

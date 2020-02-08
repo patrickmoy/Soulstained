@@ -2,9 +2,9 @@
  *
  */
 class Animation {
-    // TODO possibly include more parameters like reverse?
     /**
-     * Constructor to create Animation object. Class is written with a horizontally aligned sprite sheet in mind - please ensure sprite sheet is formatted as such through Aseprite or Marmoset Hexels.
+     * Constructor to create Animation object.
+     * Class is written with a horizontally aligned sprite sheet in mind - please ensure sprite sheet is formatted as such through Aseprite or Marmoset Hexels.
      * @param {Image} spriteSheet   Filepath of sprite sheet.
      * @param {number} frameHeight X coordinate to begin pulling sprite
      * @param {number} frameWidth Y coordinate to begin pull
@@ -30,13 +30,13 @@ class Animation {
     }
 
     /**
-     *
-     * @param tick {number}
-     * @param context {CanvasRenderingContext2D}
-     * @param gamePositionX {number}
-     * @param gamePositionY {number}
-     * @param imageRow {number}
-     * @param status {string}
+     * Draws the current frame in the animation
+     * @param tick {number} current in game time change
+     * @param context {CanvasRenderingContext2D} the canvas to draw to
+     * @param gamePositionX {number} x position relative to the canvas
+     * @param gamePositionY {number} y position relative to the canvas
+     * @param imageRow {number} the row to select which image
+     * @param status {string} the status of the object
      */
     drawFrame(tick, context, gamePositionX, gamePositionY, imageRow, status) {
         this.elapsedTime += tick;

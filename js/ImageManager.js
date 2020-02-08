@@ -1,5 +1,5 @@
 /**
- *
+ * Handles all the image queueing and caching before game starts.
  */
 class ImageManager {
     /**
@@ -21,7 +21,7 @@ class ImageManager {
 
     /**
      * Starts all the downloads in the queue synchronously
-     * @returns {Promise<unknown[]>} a promise with resolve when all images are downloaded or reject when one or more images fail to download
+     * @returns {Promise<String[]>} a promise with resolve when all images are downloaded or reject when one or more images fail to download
      */
     startDownload() {
         const self = this;

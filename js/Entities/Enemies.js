@@ -1,3 +1,4 @@
+// TODO update the enemies with the new entity parameters - Steven Tran
 class Enemy extends Entity {
     constructor(game, x, y, width, height) {
         super(game, x, y, width, height);
@@ -5,6 +6,9 @@ class Enemy extends Entity {
 }
 
 class Zombie extends Enemy {
+    /**
+     *  A basic zombie enemy in the game. One of the more populated enemies that attacks the hero when.
+     */
     constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height);
         this.animation = new Animation(spritesheet, 16, 16, 2, .450, 2, true, 3.5);
@@ -15,10 +19,6 @@ class Zombie extends Enemy {
         this.pushUpdate = false;
     }
 
-
-    prepdate() {
-
-    }
 
     draw() {
         this.context.beginPath();
