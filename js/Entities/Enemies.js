@@ -3,27 +3,75 @@ class Enemy extends Entity {
     constructor(game, x, y, width, height) {
         super(game, x, y, width, height, 0);
         this.context = game.GAME_CONTEXT;
+        this.ORIGINAL_X = x; // Variable to keep track of where the entity started at in the x position
+        this.ORIGINAL_Y = y; // Variable to keep track of where the entity started at in the y position
+    }
+
+    /**
+     * Checks if the enemy is not on the screen
+     * @returns {boolean} return true if enemy is not on canvas; false otherwise.
+     */
+    notOnScreen()
+    {
+        return this.futureHitbox.xMax > this.game.GAME_CANVAS_WIDTH
+            || this.futureHitbox.yMax > this.game.GAME_CANVAS_HEIGHT
+            || this.futureHitbox.xMin < 0
+            || this.futureHitbox.yMin < 0;
+    }
+
+    /**
+     * Resets the position of an enemy (primarily used when transitioning)
+     */
+    resetPosition()
+    {
+        this.hitbox = this.originalHitbox;
+        this.futureHitbox = this.originalHitbox;
     }
 }
 
 class Crab extends Enemy {
 
+    /**
+     * The crab that spawns near the waters and is an enemy to the player.
+     * @param game the Game Engine
+     * @param spritesheet the spritesheet of the crab
+     * @param x the initial x position of the crab
+     * @param y the initial y position of the crab
+     * @param width the width of the crab for hitbox
+     * @param height the height of the crab for hitbox
+     */
     constructor(game, spritesheet, x, y, width, height)
     {
         super(game, x, y, width, height);
         this.spritesheet = new Animation(spritesheet, 16, 16, 2, .25, 2, true, 2.3);
         this.health = 2;
-        this.speed = 100;
-
-        this.direction;
-
+        this.speed = 85;
+        this.directionTime = 0;
+        this.direction = Math.floor(Math.random() * 4.5);
     }
 
     preUpdate()
     {
-        this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
-        console.log(this.direction);
-        this.walk(this.direction);
+        const maxTime = 50;
+        // Makes sure the direction is being updated when the crab moves in a certain direction within the max time.
+        if (this.directionTime < maxTime)
+        {
+            this.walk(this.direction);
+            if (this.notOnScreen()) { // Resets the crab position since he's trying to go out of border.
+                this.futureHitbox.xMin = this.hitbox.xMin;
+                this.futureHitbox.yMin = this.hitbox.yMin;
+                this.futureHitbox.xMax = this.hitbox.xMax;
+                this.futureHitbox.yMax = this.hitbox.yMax;
+                this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
+            }
+            this.directionTime++;
+        }
+        else
+        {
+            this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
+            this.directionTime = 0; // Resets time so new direction can move x amount of time.
+        }
+
     }
 
     draw()

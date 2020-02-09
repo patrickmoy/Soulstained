@@ -69,6 +69,11 @@ class GameEngine {
         this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
         this.WORLDS["OpenWorld"].initializeTileMaps();
         const tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
+        // ------------------------
+        // Steven Tran
+        // I think having seperate entities class would make it easier to handle certain.
+        // For example, enemies need to reset their position when we transition to a new tilemap; however, other entities like blocks or the hero don't.
+        // ------------------------
         this.currentEntities.push.apply(this.currentEntities, tileMap.ENTITIES);
 
         this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
@@ -161,7 +166,24 @@ class GameEngine {
             this.currentEntities.push(this.HERO); // re-add the hero
 
             this.currentEntities.push.apply(this.currentEntities, this.WORLDS["OpenWorld"].getCurrentTileMap().ENTITIES);
-
+            // ------------------------
+            // Steven Tran
+            // An issue with having entities in one array is that some entities have special functions when transitioning.
+            // For example, the enemies should reset, thus enemies are the only one who can reset with its reset function
+            //
+            // Reason:
+            // The reason this is an issue is when enemies decide to stand on the edge of the canvas and the player moves back,
+            // he gets caught with the enemy and can no longer move.
+            //
+            // Solution(s):
+            // This conflicts with blocks and the hero who do not have an enemy function.
+            // I propose two approaches, either separate the entities array into categories (e.g. blocks, enemies, etc.) and
+            // have enemies call their reset function. This works well with not having to create a new world every time we
+            // move to another world, rather we just call a "true" reset on everything. The other option is to search the
+            // elements individually and check if its an enemy with "instanceof" which is considered bad practice.
+            // This wouldn't be an issue if we allow the player to move into enemies but take damage. While it would suck,
+            // it would be amusing.
+            // ------------------------
             this.transition = true; // Game Engine and other necessary components is now performing transition actions
         }
     }
