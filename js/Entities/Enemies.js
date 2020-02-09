@@ -11,8 +11,7 @@ class Enemy extends Entity {
      * Checks if the enemy is not on the screen
      * @returns {boolean} return true if enemy is not on canvas; false otherwise.
      */
-    notOnScreen()
-    {
+    notOnScreen() {
         return this.futureHitbox.xMax > this.game.GAME_CANVAS_WIDTH
             || this.futureHitbox.yMax > this.game.GAME_CANVAS_HEIGHT
             || this.futureHitbox.xMin < 0
@@ -22,8 +21,7 @@ class Enemy extends Entity {
     /**
      * Resets the position of an enemy (primarily used when transitioning)
      */
-    resetPosition()
-    {
+    resetPosition() {
         this.hitbox = this.originalHitbox;
         this.futureHitbox = this.originalHitbox;
     }
@@ -40,8 +38,7 @@ class Crab extends Enemy {
      * @param width the width of the crab for hitbox
      * @param height the height of the crab for hitbox
      */
-    constructor(game, spritesheet, x, y, width, height)
-    {
+    constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height);
         this.spritesheet = new Animation(spritesheet, 16, 16, 2, .25, 2, true, 2.3);
         this.health = 2;
@@ -50,12 +47,10 @@ class Crab extends Enemy {
         this.direction = Math.floor(Math.random() * 4.5);
     }
 
-    preUpdate()
-    {
+    preUpdate() {
         const maxTime = 50;
         // Makes sure the direction is being updated when the crab moves in a certain direction within the max time.
-        if (this.directionTime < maxTime)
-        {
+        if (this.directionTime < maxTime) {
             this.walk(this.direction);
             if (this.notOnScreen()) { // Resets the crab position since he's trying to go out of border.
                 this.futureHitbox.xMin = this.hitbox.xMin;
@@ -66,16 +61,14 @@ class Crab extends Enemy {
             }
             this.directionTime++;
         }
-        else
-        {
+        else {
             this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
             this.directionTime = 0; // Resets time so new direction can move x amount of time.
         }
 
     }
 
-    draw()
-    {
+    draw() {
         this.spritesheet.drawFrame(this.game.clockTick, this.context,
             this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
             this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 0, 'moving');
