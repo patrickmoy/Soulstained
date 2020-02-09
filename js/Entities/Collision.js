@@ -56,7 +56,7 @@ class Collision {
      */
     flagImpassable(collisionPairs) {
         collisionPairs.forEach(function (element) {
-            element[0].pushUpdate = false;
+            element[0].as = false;
             element[1].pushUpdate = false;
             // TO-DO: Modify this system so multiple behaviors can work.
             // Projectiles might be allowed to collide completely/penetrate
