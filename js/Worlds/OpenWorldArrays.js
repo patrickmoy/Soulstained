@@ -8,7 +8,9 @@ class OpenWorldArrays {
 
     // 0 = walkable
     // 1 = invisible block
-    // TODO add more
+    // 3 = projectiles
+    // 4 = necromancer
+    // 5 = crab
 
     // All the 2D arrays that are used to create TileMaps.
     // Name of variable determines the map.

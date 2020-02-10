@@ -166,6 +166,13 @@ class GameEngine {
             this.currentEntities.push(this.HERO); // re-add the hero
 
             this.currentEntities.push.apply(this.currentEntities, this.WORLDS["OpenWorld"].getCurrentTileMap().ENTITIES);
+            this.currentEntities.forEach(entity => {
+                if (entity instanceof Enemy)
+                {
+                    entity.resetPosition();
+                }
+            });
+            // Confirmed to reset the world.
             // ------------------------
             // Steven Tran
             // An issue with having entities in one array is that some entities have special functions when transitioning.
@@ -183,6 +190,9 @@ class GameEngine {
             // elements individually and check if its an enemy with "instanceof" which is considered bad practice.
             // This wouldn't be an issue if we allow the player to move into enemies but take damage. While it would suck,
             // it would be amusing.
+            //
+            // Confirmed Solution:
+            // Going to have an entity array that contains a sublist of different types of entities
             // ------------------------
             this.transition = true; // Game Engine and other necessary components is now performing transition actions
         }

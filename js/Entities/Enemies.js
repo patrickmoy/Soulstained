@@ -22,8 +22,14 @@ class Enemy extends Entity {
      * Resets the position of an enemy (primarily used when transitioning)
      */
     resetPosition() {
-        this.hitbox = this.originalHitbox;
-        this.futureHitbox = this.originalHitbox;
+        this.hitbox.xMin = this.originalHitbox.xMin;
+        this.hitbox.xMax = this.originalHitbox.xMax;
+        this.hitbox.yMin = this.originalHitbox.yMin;
+        this.hitbox.yMax = this.originalHitbox.yMax;
+        this.futureHitbox.xMin = this.originalHitbox.xMin;
+        this.futureHitbox.xMax = this.originalHitbox.xMax;
+        this.futureHitbox.yMin = this.originalHitbox.yMin;
+        this.futureHitbox.yMax = this.originalHitbox.yMax;
     }
 }
 
@@ -77,7 +83,8 @@ class Crab extends Enemy {
 
 class Zombie extends Enemy {
     /**
-     *  A basic zombie enemy in the game. One of the more populated enemies that attacks the hero when.
+     *  A basic zombie enemy in the game. One of the more populated enemies that attacks the hero
+     *  and will follow the hero.
      */
     constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height);
@@ -86,6 +93,15 @@ class Zombie extends Enemy {
         this.direction = 1;
         this.health = 4;
         this.pushUpdate = false;
+    }
+
+    preUpdate()
+    {
+        const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2;
+        const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2;
+        const zombiePosX = (this.hitbox.xMin + this.hitbox.xMax) / 2;
+        const zombiePosY = (this.hitbox.yMin + this.hitbox.yMax) / 2;
+
     }
 
 
