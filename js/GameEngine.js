@@ -85,7 +85,7 @@ class GameEngine {
         this.UI_CANVAS_WIDTH = this.UI_CONTEXT.canvas.width;
         this.UI_CANVAS_HEIGHT = this.UI_CONTEXT.canvas.height;
         this.TIMER = new GameTimer();
-        this.PHYSICS = new Collision();
+        // this.PHYSICS = new Collision();
 
         // If button is pressed and the button is a key we care about, set it to true.
         this.GAME_CONTEXT.canvas.addEventListener("keydown", (key) => {
@@ -141,10 +141,14 @@ class GameEngine {
             // TODO have to update tilemaps to return different arrays of entities;
             // Entities are now movable around the map
             // Reset all behavior flags for all entities. Can be expanded/diversified
-            this.PHYSICS.resetFlags(this.currentEntities[0]); // Resets the hero's flag
-            this.PHYSICS.resetFlags(this.currentEntities[1]); // Reset the block's flag
-            this.PHYSICS.resetFlags(this.currentEntities[2]); // Resets the enemies' flag
-            this.PHYSICS.resetFlags(this.currentEntities[3]); // Resets the projectile's flag
+            // this.PHYSICS.resetFlags(this.currentEntities[0]); // Resets the hero's flag
+            // this.PHYSICS.resetFlags(this.currentEntities[1]); // Reset the block's flag
+            // this.PHYSICS.resetFlags(this.currentEntities[2]); // Resets the enemies' flag
+            // this.PHYSICS.resetFlags(this.currentEntities[3]); // Resets the projectile's flag
+            resetFlags(this.currentEntities[0]);
+            resetFlags(this.currentEntities[1]);
+            resetFlags(this.currentEntities[2]);
+            resetFlags(this.currentEntities[3]);
 
             // Predicts update for all the necessary entities
             this.currentEntities[0][0].preUpdate();
@@ -152,8 +156,8 @@ class GameEngine {
             this.currentEntities[3].forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
 
             // Flags entities for standard "impassable" behavior (mostly terrain)
-            this.PHYSICS.flagImpassable(this.PHYSICS.detectCollide([].concat.apply([], this.currentEntities)));
-
+            // this.PHYSICS.flagImpassable(this.PHYSICS.detectCollide([].concat.apply([], this.currentEntities)));
+            flagImpassable(detectCollide([].concat.apply([], this.currentEntities)));
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
             this.currentEntities[0][0].update(); // Updates hero

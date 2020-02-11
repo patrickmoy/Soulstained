@@ -5,6 +5,7 @@ class Enemy extends Entity {
         this.context = game.GAME_CONTEXT;
         this.ORIGINAL_X = x; // Variable to keep track of where the entity started at in the x position
         this.ORIGINAL_Y = y; // Variable to keep track of where the entity started at in the y position
+        this.ORIGINAL_HEALTH = 0;
     }
 
     /**
@@ -37,7 +38,10 @@ class Enemy extends Entity {
      */
     reset()
     {
-
+        this.resetPosition();
+        this.isDead = false;
+        // resets health to original health
+        // etc...
     }
 }
 
@@ -102,35 +106,63 @@ class Zombie extends Enemy {
         this.pushUpdate = false;
         this.directionTime = 0;
         this.direction = Math.floor(Math.random() * 4.5);
-        this.detectRange = 125;
+        this.detectRange = 200; // The range for the zombie to detect the hero
     }
 
     preUpdate()
     {
-
-        const maxTime = 50;
-
-        // TODO probably better to check for not near than near
         // Detects if Hero is near the zombie.
-        if () this.follow(zombiePosX, zombiePosY, heroPosX, heroPosY);
+        if (this.checkLOS())
+        {
+            // Actually perform the zombie movement.
+            const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
+            const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
+            const zombiePosX = (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2; // Gets the zombie's center x
+            const zombiePosY = (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2; // Gets the zombie's center y
+            // Difference between hero and zombie in x direction
+            var diffX = heroPosX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;
+            //Difference between hero and zombie in y direction
+            var diffY = heroPosY - (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2;
+            if (diffX < 0) {
+                this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+                this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+            }
+            if (diffX > 0) {
+                this.futureHitbox.xMin += this.game.clockTick * this.speed;
+                this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+            }
+            if (diffY < 0) {
+                this.futureHitbox.yMin -= this.game.clockTick * this.speed;
+                this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
+            }
+            if (diffY > 0) {
+                this.futureHitbox.yMin += this.game.clockTick * this.speed;
+                this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
+            }
+            this.movementCooldown = 5;
+        }
         else
         {
+            const maxTime = 50;
             // Makes sure the direction is being updated when the zombie moves in a certain direction within the max time.
-            if (this.directionTime < maxTime) {
-                this.walk(this.direction);
-                if (this.notOnScreen()) { // Resets the zombie position since he's trying to go out of border.
-                    this.futureHitbox.xMin = this.hitbox.xMin;
-                    this.futureHitbox.yMin = this.hitbox.yMin;
-                    this.futureHitbox.xMax = this.hitbox.xMax;
-                    this.futureHitbox.yMax = this.hitbox.yMax;
-                    this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
+            if (this.movementCooldown > 0) {
+                if (this.directionTime < maxTime) {
+                    this.walk(this.direction);
+                    if (this.notOnScreen()) { // Resets the zombie position since he's trying to go out of border.
+                        this.futureHitbox.xMin = this.hitbox.xMin;
+                        this.futureHitbox.yMin = this.hitbox.yMin;
+                        this.futureHitbox.xMax = this.hitbox.xMax;
+                        this.futureHitbox.yMax = this.hitbox.yMax;
+                        this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
+                    }
+                    this.directionTime++;
                 }
-                this.directionTime++;
+                else {
+                    this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
+                    this.directionTime = 0; // Resets time so new direction can move x amount of time.
+                }
             }
-            else {
-                this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
-                this.directionTime = 0; // Resets time so new direction can move x amount of time.
-            }
+            else this.movementCooldown--;
         }
     }
 
@@ -140,46 +172,78 @@ class Zombie extends Enemy {
      */
     checkLOS()
     {
-        const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2;
-        const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2;
-        const zombiePosX = (this.hitbox.xMin + this.hitbox.xMax) / 2;
-        const zombiePosY = (this.hitbox.yMin + this.hitbox.yMax) / 2;
+        const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
+        const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
+        const zombiePosX = (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2; // Gets the zombie's center x
+        const zombiePosY = (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2; // Gets the zombie's center y
+        // Detects if the player is within the detection range of the zombie
         const isInRadius = heroPosX > zombiePosX - this.detectRange && heroPosX < zombiePosX + this.detectRange &&
-            heroPosY > zombiePosY - this.detectRange && heroPosY < zombiePosY + this.detectRange;
-        if (isInRadius)
-        {
-            var originalPosition = {xMin: this.hitbox.xMin, xMax: this.hitbox.xMax, yMin: this.hitbox.yMin, yMax: this.hitbox.yMax};
-            var walkable = true;
-            while (walkable)
+                           heroPosY > zombiePosY - this.detectRange && heroPosY < zombiePosY + this.detectRange;
+
+        if (isInRadius) {
+
+            // Original future hitbox to reset future hitbox
+            const originalFutureHitbox = {xMin: this.futureHitbox.xMin, xMax: this.futureHitbox.xMax,
+                                          yMin: this.futureHitbox.yMin, yMax: this.futureHitbox.yMax};
+            var canMove = this.canWalkHere();
+            while(!entitiesCollided(this.game.HERO, this) && canMove)
             {
-                
+                // Difference between hero and zombie in x direction
+                var diffX = heroPosX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;
+                //Difference between hero and zombie in y direction
+                var diffY = heroPosY - (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2;
+                // Zombie is to the right of hero so move left
+                if (diffX < 0) {
+                    this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+                    this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+                }
+                // Zombie is to the left of hero so move right
+                if (diffX > 0) {
+                    this.futureHitbox.xMin += this.game.clockTick * this.speed;
+                    this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+                }
+                // Zombie is below the hero so move up
+                if (diffY < 0) {
+                    this.futureHitbox.yMin -= this.game.clockTick * this.speed;
+                    this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
+                }
+                // Zombie is above the hero so move down
+                if (diffY > 0) {
+                    this.futureHitbox.yMin += this.game.clockTick * this.speed;
+                    this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
+                }
+                // Checks if the movement was valid with walls
+                canMove = this.canWalkHere();
             }
+            // Resets the zombie's hitbox
+            this.futureHitbox.xMin = originalFutureHitbox.xMin;
+            this.futureHitbox.xMax = originalFutureHitbox.xMax;
+            this.futureHitbox.yMin = originalFutureHitbox.yMin;
+            this.futureHitbox.yMax = originalFutureHitbox.yMax;
+            return canMove;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
+    /**
+     * Checks if the zombie can move to the new position without conflict with the blocks
+     * @returns {boolean} true if zombie can move without colliding with blocks; false otherwise
+     */
     canWalkHere()
     {
         // TODO possibly rework collide to check the surrounding of the entity, seems inefficient to check only one.
-        var blocksWithEnemy = this.game.currentEntities[1];
-        blocksWithEnemy.push(this);
-        var collide = detectCollide(blocksWithEnemy);
-        blocksWithEnemy.pop();
-        return collide;
+        var blocksWithEnemy = this.game.currentEntities[1]; // Get the blocks
+        blocksWithEnemy.push(this); // Add the zombie to the blocks
+        var collide = detectCollide(blocksWithEnemy); // Check if there's any collision
+        blocksWithEnemy.pop(); // Remove zombie from blocks
+        return collide.length === 0; // Return if there was collision or not.
 
     }
-
 
     draw() {
         this.animation.drawFrame(this.game.clockTick, this.context,
             this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
             this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 0, 'dancing');
-        this.context.beginPath();
-        this.context.rect(this.zombiePosX - this.detectRange, this.zombiePosY - this.detectRange, this.detectRange * 2, this.detectRange * 2);
-        this.context.stroke();
     }
 }
 
