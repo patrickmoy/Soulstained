@@ -105,10 +105,25 @@ class Zombie extends Enemy {
 
     preUpdate()
     {
-        const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2;
-        const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2;
-        const zombiePosX = (this.hitbox.xMin + this.hitbox.xMax) / 2;
-        const zombiePosY = (this.hitbox.yMin + this.hitbox.yMax) / 2;
+        this.detectRange = 100;
+        this.heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2;
+        this.heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2;
+        this.zombiePosX = (this.hitbox.xMin + this.hitbox.xMax) / 2;
+        this.zombiePosY = (this.hitbox.yMin + this.hitbox.yMax) / 2;
+        // console.log(`(${this.heroPosX}, ${this.heroPosY})`);
+        // console.log(`(${this.zombiePosX - this.detectRange}, ${this.zombiePosX + this.detectRange}), (${this.zombiePosY - this.detectRange}, ${this.zombiePosY + this.detectRange})`);
+
+        // Hero is near the zombie.
+        // TODO probably better to check for not.
+        if (this.heroPosX < this.zombiePosX - this.detectRange && this.heroPosX < this.zombiePosX + this.detectRange &&
+            this.heroPosY > this.zombiePosY - this.detectRange && this.heroPosY < this.zombiePosY + this.detectRange)
+        {
+
+        }
+        else
+        {
+            // console.log("Within range");
+        }
 
     }
 
@@ -117,10 +132,9 @@ class Zombie extends Enemy {
         this.animation.drawFrame(this.game.clockTick, this.context,
             this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
             this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 0, 'dancing');
-    }
-
-    pickDirection() {
-        this.direction = Math.floor(Math.random() * Math.floor(5));
+        this.context.beginPath();
+        this.context.rect(this.zombiePosX - this.detectRange, this.zombiePosY - this.detectRange, this.detectRange * 2, this.detectRange * 2);
+        this.context.stroke();
     }
 }
 
