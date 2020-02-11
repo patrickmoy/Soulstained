@@ -42,6 +42,27 @@ class Enemy extends Entity {
         // resets health to original health
         // etc...
     }
+
+    randomWalk(maxTime, cooldown)
+    {
+        if (cooldown === 0 && this.directionTime < maxTime)
+        {
+            this.walk(this.direction);
+            if (this.notOnScreen()) { // Resets the crab position since he's trying to go out of border.
+                this.futureHitbox.xMin = this.hitbox.xMin;
+                this.futureHitbox.yMin = this.hitbox.yMin;
+                this.futureHitbox.xMax = this.hitbox.xMax;
+                this.futureHitbox.yMax = this.hitbox.yMax;
+                this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
+            }
+            this.directionTime++;
+        }
+        else
+        {
+            this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
+            this.directionTime = 0;
+        }
+    }
 }
 
 class Crab extends Enemy {
@@ -65,23 +86,7 @@ class Crab extends Enemy {
     }
 
     preUpdate() {
-        const maxTime = 25;
-        // Makes sure the direction is being updated when the crab moves in a certain direction within the max time.
-        if (this.directionTime < maxTime) {
-            this.walk(this.direction);
-            if (this.notOnScreen()) { // Resets the crab position since he's trying to go out of border.
-                this.futureHitbox.xMin = this.hitbox.xMin;
-                this.futureHitbox.yMin = this.hitbox.yMin;
-                this.futureHitbox.xMax = this.hitbox.xMax;
-                this.futureHitbox.yMax = this.hitbox.yMax;
-                this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
-            }
-            this.directionTime++;
-        }
-        else {
-            this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
-            this.directionTime = 0; // Resets time so new direction can move x amount of time.
-        }
+        this.randomWalk(25, 0);
     }
 
     draw() {
@@ -139,26 +144,8 @@ class Zombie extends Enemy {
             this.movementCooldown = 5;
         }
         else {
-            const maxTime = 50;
-            // Makes sure the direction is being updated when the zombie moves in a certain direction within the max time.
-            if (this.movementCooldown > 0) {
-                if (this.directionTime < maxTime) {
-                    this.walk(this.direction);
-                    if (this.notOnScreen()) { // Resets the zombie position since he's trying to go out of border.
-                        this.futureHitbox.xMin = this.hitbox.xMin;
-                        this.futureHitbox.yMin = this.hitbox.yMin;
-                        this.futureHitbox.xMax = this.hitbox.xMax;
-                        this.futureHitbox.yMax = this.hitbox.yMax;
-                        this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
-                    }
-                    this.directionTime++;
-                }
-                else {
-                    this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
-                    this.directionTime = 0; // Resets time so new direction can move x amount of time.
-                }
-            }
-            else this.movementCooldown--;
+            this.randomWalk(50, this.movementCooldown);
+            if (this.movementCooldown > 0) this.movementCooldown--;
         }
     }
 
