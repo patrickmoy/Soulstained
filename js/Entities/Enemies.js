@@ -62,7 +62,7 @@ class Crab extends Enemy {
     }
 
     preUpdate() {
-        const maxTime = 50;
+        const maxTime = 25;
         // Makes sure the direction is being updated when the crab moves in a certain direction within the max time.
         if (this.directionTime < maxTime) {
             this.walk(this.direction);
@@ -79,7 +79,6 @@ class Crab extends Enemy {
             this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
             this.directionTime = 0; // Resets time so new direction can move x amount of time.
         }
-
     }
 
     draw() {
@@ -101,29 +100,75 @@ class Zombie extends Enemy {
         this.direction = 1;
         this.health = 4;
         this.pushUpdate = false;
+        this.directionTime = 0;
+        this.direction = Math.floor(Math.random() * 4.5);
+        this.detectRange = 125;
     }
 
     preUpdate()
     {
-        this.detectRange = 100;
-        this.heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2;
-        this.heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2;
-        this.zombiePosX = (this.hitbox.xMin + this.hitbox.xMax) / 2;
-        this.zombiePosY = (this.hitbox.yMin + this.hitbox.yMax) / 2;
-        // console.log(`(${this.heroPosX}, ${this.heroPosY})`);
-        // console.log(`(${this.zombiePosX - this.detectRange}, ${this.zombiePosX + this.detectRange}), (${this.zombiePosY - this.detectRange}, ${this.zombiePosY + this.detectRange})`);
 
-        // Hero is near the zombie.
-        // TODO probably better to check for not.
-        if (this.heroPosX < this.zombiePosX - this.detectRange && this.heroPosX < this.zombiePosX + this.detectRange &&
-            this.heroPosY > this.zombiePosY - this.detectRange && this.heroPosY < this.zombiePosY + this.detectRange)
+        const maxTime = 50;
+
+        // TODO probably better to check for not near than near
+        // Detects if Hero is near the zombie.
+        if () this.follow(zombiePosX, zombiePosY, heroPosX, heroPosY);
+        else
         {
+            // Makes sure the direction is being updated when the zombie moves in a certain direction within the max time.
+            if (this.directionTime < maxTime) {
+                this.walk(this.direction);
+                if (this.notOnScreen()) { // Resets the zombie position since he's trying to go out of border.
+                    this.futureHitbox.xMin = this.hitbox.xMin;
+                    this.futureHitbox.yMin = this.hitbox.yMin;
+                    this.futureHitbox.xMax = this.hitbox.xMax;
+                    this.futureHitbox.yMax = this.hitbox.yMax;
+                    this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
+                }
+                this.directionTime++;
+            }
+            else {
+                this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
+                this.directionTime = 0; // Resets time so new direction can move x amount of time.
+            }
+        }
+    }
 
+    /**
+     * Checks the line of sight of the entity with the hero.
+     * @return {boolean} true if the enemy can see the hero within the detect range distance; false otherwise
+     */
+    checkLOS()
+    {
+        const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2;
+        const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2;
+        const zombiePosX = (this.hitbox.xMin + this.hitbox.xMax) / 2;
+        const zombiePosY = (this.hitbox.yMin + this.hitbox.yMax) / 2;
+        const isInRadius = heroPosX > zombiePosX - this.detectRange && heroPosX < zombiePosX + this.detectRange &&
+            heroPosY > zombiePosY - this.detectRange && heroPosY < zombiePosY + this.detectRange;
+        if (isInRadius)
+        {
+            var originalPosition = {xMin: this.hitbox.xMin, xMax: this.hitbox.xMax, yMin: this.hitbox.yMin, yMax: this.hitbox.yMax};
+            var walkable = true;
+            while (walkable)
+            {
+                
+            }
         }
         else
         {
-            // console.log("Within range");
+            return false;
         }
+    }
+
+    canWalkHere()
+    {
+        // TODO possibly rework collide to check the surrounding of the entity, seems inefficient to check only one.
+        var blocksWithEnemy = this.game.currentEntities[1];
+        blocksWithEnemy.push(this);
+        var collide = detectCollide(blocksWithEnemy);
+        blocksWithEnemy.pop();
+        return collide;
 
     }
 
