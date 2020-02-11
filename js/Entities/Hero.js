@@ -47,7 +47,6 @@ class Hero extends Entity {
 
     /**
      * Moves the hero automatically based on the transition direction. This makes it look like the camera is panning while the hero is in place.
-     *
      */
     eventWalk() {
         // Admittedly slightly tricky to tweak; you want to cross but there's also an occasional bug where if you just

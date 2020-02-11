@@ -31,6 +31,14 @@ class Enemy extends Entity {
         this.futureHitbox.yMin = this.originalHitbox.yMin;
         this.futureHitbox.yMax = this.originalHitbox.yMax;
     }
+
+    /**
+     * Resets the enemies (usually used when world transition)
+     */
+    reset()
+    {
+
+    }
 }
 
 class Crab extends Enemy {
