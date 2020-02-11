@@ -36,8 +36,7 @@ class Enemy extends Entity {
     /**
      * Resets the enemies (usually used when world transition)
      */
-    reset()
-    {
+    reset() {
         this.resetPosition();
         this.isDead = false;
         // resets health to original health
@@ -109,11 +108,9 @@ class Zombie extends Enemy {
         this.detectRange = 200; // The range for the zombie to detect the hero
     }
 
-    preUpdate()
-    {
+    preUpdate() {
         // Detects if Hero is near the zombie.
-        if (this.checkLOS())
-        {
+        if (this.checkLOS()) {
             // Actually perform the zombie movement.
             const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
             const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
@@ -141,8 +138,7 @@ class Zombie extends Enemy {
             }
             this.movementCooldown = 5;
         }
-        else
-        {
+        else {
             const maxTime = 50;
             // Makes sure the direction is being updated when the zombie moves in a certain direction within the max time.
             if (this.movementCooldown > 0) {
@@ -170,24 +166,24 @@ class Zombie extends Enemy {
      * Checks the line of sight of the entity with the hero.
      * @return {boolean} true if the enemy can see the hero within the detect range distance; false otherwise
      */
-    checkLOS()
-    {
+    checkLOS() {
         const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
         const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
         const zombiePosX = (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2; // Gets the zombie's center x
         const zombiePosY = (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2; // Gets the zombie's center y
         // Detects if the player is within the detection range of the zombie
         const isInRadius = heroPosX > zombiePosX - this.detectRange && heroPosX < zombiePosX + this.detectRange &&
-                           heroPosY > zombiePosY - this.detectRange && heroPosY < zombiePosY + this.detectRange;
+            heroPosY > zombiePosY - this.detectRange && heroPosY < zombiePosY + this.detectRange;
 
         if (isInRadius) {
 
             // Original future hitbox to reset future hitbox
-            const originalFutureHitbox = {xMin: this.futureHitbox.xMin, xMax: this.futureHitbox.xMax,
-                                          yMin: this.futureHitbox.yMin, yMax: this.futureHitbox.yMax};
+            const originalFutureHitbox = {
+                xMin: this.futureHitbox.xMin, xMax: this.futureHitbox.xMax,
+                yMin: this.futureHitbox.yMin, yMax: this.futureHitbox.yMax
+            };
             var canMove = this.canWalkHere();
-            while(!entitiesCollided(this.game.HERO, this) && canMove)
-            {
+            while (!entitiesCollided(this.game.HERO, this) && canMove) {
                 // Difference between hero and zombie in x direction
                 var diffX = heroPosX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;
                 //Difference between hero and zombie in y direction
@@ -229,8 +225,7 @@ class Zombie extends Enemy {
      * Checks if the zombie can move to the new position without conflict with the blocks
      * @returns {boolean} true if zombie can move without colliding with blocks; false otherwise
      */
-    canWalkHere()
-    {
+    canWalkHere() {
         // TODO possibly rework collide to check the surrounding of the entity, seems inefficient to check only one.
         var blocksWithEnemy = this.game.currentEntities[1]; // Get the blocks
         blocksWithEnemy.push(this); // Add the zombie to the blocks
