@@ -7,15 +7,15 @@ class Animation {
      * Class is written with a horizontally aligned sprite sheet in mind -
      * please ensure sprite sheet is formatted as such through Aseprite or Marmoset Hexels.
      * @param {Image} spriteSheet   Filepath of sprite sheet.
+     * @param entity
      * @param {number} frameHeight X coordinate to begin pulling sprite
      * @param {number} frameWidth Y coordinate to begin pull
-     * @param {number} sheetWidth  X coordinate to stop
      * @param {number} singleFrameTime  Y coordinate to stop
      * @param {number} frameCount of animation in ms
-     * @param {boolean} loop determine if the animation should loop
+     * @param frameIndices
      * @param {number} scale image scaling to increase or decrease size
      */
-    constructor(spriteSheet, entity, frameWidth, frameHeight, sheetWidth, singleFrameTime, frameCount, frameIndices, scale) {
+    constructor(spriteSheet, entity, frameWidth, frameHeight, singleFrameTime, scale, frameIndices = [2]) {
         this.spriteSheet = spriteSheet;
         this.entity = entity;
         this.frameWidth = frameWidth;
@@ -37,11 +37,11 @@ class Animation {
      * @param gamePositionY {number} y position relative to the canvas
      * @param imageRow {number} the row to select which image, pass
      * @param status {string} the status of the object
-     * TODO Make imageRow an optional parameter (at the end), defaulting to 0. Most enemies will ignore imageRow.
      */
-    drawFrame(tick, context, gamePositionX, gamePositionY, imageRow, status) {
+    drawFrame(tick, context, gamePositionX, gamePositionY, status, imageRow = 0) {
 
         let xIndex;
+        let yIndex = imageRow * this.frameHeight;
         if (status === 'walking') { // When walking, increment time by tick.
             this.walkTime += tick;
             if (this.walkTime >= this.walkDuration) { // Reset if we go over.
@@ -49,15 +49,23 @@ class Animation {
             }
         }
         if (status === 'walking' || status === 'idle') {
-            xIndex = Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0]; // 2 should be "WALK_FRAMES"
+            xIndex = this.frameWidth * Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0];
+            // 2 should be "WALK_FRAMES"
 
         } else if (status === 'attacking') {
-            xIndex = Math.floor(this.currentFrame(this.entity.actionElapsedTime)) % (this.frameIndices[1] - this.frameIndices[0]) +
-            this.frameIndices[0];
-            console.log(xIndex);
-            console.log(imageRow);
+            xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) %
+                (this.frameIndices[1] - this.frameIndices[0]) + this.frameIndices[0]);
+        } else if (status === 'weapon') {
+            xIndex = 0;
+            if (this.entity.direction <= 1) {
+                yIndex = this.frameHeight * this.entity.direction;
+            } else {
+                //yIndex = (this.frameHeight * (this.entity.direction - this.entity.WHIP_SPRITE_OFFSET) + (this.entity.WHIP_SPRITE_OFFSET * this.frameWidth));
+                yIndex = this.entity.WHIP_SPRITE_OFFSET * (this.frameWidth - this.frameHeight) + this.frameHeight * this.entity.direction;
+            }
+
         }
-        context.drawImage(this.spriteSheet, xIndex * this.frameWidth, imageRow * this.frameHeight,
+        context.drawImage(this.spriteSheet, xIndex, yIndex,
             this.frameWidth, this.frameHeight, gamePositionX, gamePositionY,
             this.frameWidth * this.scale, this.frameHeight * this.scale);
     }

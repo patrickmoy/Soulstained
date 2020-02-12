@@ -10,7 +10,7 @@ class Entity {
      * @param height {number} the height of the entity in pixels
      * @param layerLevel {number} TODO unsure yet
      */
-    constructor(game, x, y, width, height, layerLevel) {
+    constructor(game, x, y, width, height, layerLevel = 1) {
         this.HITBOX_SHRINK_FACTOR = .9;
         this.game = game;
         this.width = width;
@@ -19,6 +19,7 @@ class Entity {
         this.health = -1;
         this.ACTION_DURATION = 0;
         this.actionElapsedTime = 0;
+        this.invincibleCounter = 0;
         this.hitbox = // The entity's box to take be interacted with other entities or world components.
             {
                 xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -32,6 +33,7 @@ class Entity {
             xMax: x + width * this.HITBOX_SHRINK_FACTOR,
             yMax: y + height * this.HITBOX_SHRINK_FACTOR,
         };
+        this.layerLevel = layerLevel;
 
         this.direction = 1; // Looking down at default;
         // Where the hero is facing. North = 0, South = 1, East = 2, West = 3. //
@@ -41,10 +43,10 @@ class Entity {
         this.status = 'idle'; // PM: New parameter I'm adding to govern "state". Idle, attacking, walking. Firmly of the
         // belief that this should be stored in entity state -> animation can make use of this.
         // Acceptable states currently: 'idle', 'walking', 'attacking' (some enemies and hero).
-        // Considering changing 'attacking' to "action" and then having action depend on the equippped
+        // Considering changing 'attacking' to "action" and then having action depend on the equipped
         // item, which should also be stored in Hero.
 
-        this.alive = false; // {PM}: Should we use alive or dead as the default??
+        this.alive = false;
         this.Dying = false; // State of dying, for death animations/effects.
         this.moveable = true;
         this.pushDamage = false;
@@ -74,6 +76,19 @@ class Entity {
             this.futureHitbox.yMin = this.hitbox.yMin; // Resets future top left y coordinate
             this.futureHitbox.xMax = this.hitbox.xMax; // Resets future bottom right x coordinate
             this.futureHitbox.yMax = this.hitbox.yMax; // Resets future bottom right y coordinate
+        }
+        if (this.pushDamage) {
+            if (this.invincibleCounter === 0) {
+                this.takeDamage();
+            }
+            this.invincibleCounter += this.game.clockTick;
+            if (this.invincibleCounter > 2) {
+                this.invincibleCounter = 0;
+            }
+            this.pushDamage = false;
+        }
+        if (this.health === 0) {
+            this.alive = false;
         }
     }
 
@@ -125,7 +140,13 @@ class Entity {
      *  Directs entity to take damage. Takes 1 damage if no damage is specified.
      */
     takeDamage(damage = 1) {
-        this.health -= damage;
+        console.log(this.constructor.name + " just took damage!");
+        console.log(this.health  + " will be reduced by " + damage);
+        if (this.health - damage < 0) {
+            this.health = 0;
+        } else {
+            this.health -= damage;
+        }
     }
 
 

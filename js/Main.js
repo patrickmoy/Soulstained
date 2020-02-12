@@ -3,6 +3,7 @@ const ImageHandler = new ImageManager();
 ImageHandler.queueDownload("./res/img/openworld.png");
 ImageHandler.queueDownload("./res/img/hero.png");
 ImageHandler.queueDownload("./res/img/zombie.png");
+ImageHandler.queueDownload("./res/img/whip.png");
 ImageHandler.startDownload()
     .then(() => {
         const gameCanvas = document.getElementById("gameWorld"); // Get the

@@ -61,9 +61,10 @@ class GameEngine {
         this.UI_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
         // hero initialization
-        this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"]);
+        this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"], this.IMAGES_LIST["./res/img/whip.png"]);
         // push hero to currentEntities
         this.currentEntities.push(this.HERO); // Add hero to the entity list. Hero is always at index 0
+        this.currentEntities.push(this.HERO.whip);
 
         // Create the worlds
         this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
@@ -134,15 +135,18 @@ class GameEngine {
             // Reset all behavior flags for all entities. Can be expanded/diversified
             this.PHYSICS.resetFlags(this.currentEntities);
 
-            // Predicts update for all entities
-            this.currentEntities.forEach(entity => entity.preUpdate());
 
+
+            // Predicts update for all entities
+            this.currentEntities.filter(entity => entity.alive).forEach(entity => entity.preUpdate());
             // Flags entities for standard "impassable" behavior (mostly terrain)
-            this.PHYSICS.flagImpassable(this.PHYSICS.detectCollide(this.currentEntities));
+            const collisionPairs = this.PHYSICS.detectCollide(this.currentEntities.filter(entity => entity.alive));
+            this.PHYSICS.flagImpassable(collisionPairs);
+            this.PHYSICS.flagDamage(collisionPairs);
 
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
-            this.currentEntities.forEach(entity => entity.update());
+            this.currentEntities.filter(entity => entity.alive).forEach(entity => entity.update());
             this.checkTransition();
         }
     }
@@ -159,6 +163,7 @@ class GameEngine {
 
             this.currentEntities = []; // Remove all entities from the respective tilemap
             this.currentEntities.push(this.HERO); // re-add the hero
+            this.currentEntities.push(this.HERO.whip);
 
             this.currentEntities.push.apply(this.currentEntities, this.WORLDS["OpenWorld"].getCurrentTileMap().ENTITIES);
 
@@ -184,7 +189,9 @@ class GameEngine {
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
-            this.currentEntities.forEach(entity => entity.draw());
+            this.currentEntities.filter(entity => entity.alive && entity.layerLevel === 1).forEach(entity => entity.draw());
+            this.currentEntities.filter(entity => entity.alive && entity.layerLevel === 2).forEach(entity => entity.draw());
+            this.currentEntities.filter(entity => entity.alive && entity.layerLevel === 3).forEach(entity => entity.draw());
             this.GAME_CONTEXT.restore();
         }
         else {

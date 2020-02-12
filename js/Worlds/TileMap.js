@@ -24,11 +24,13 @@ class TileMap {
             for (var j = 0; j < 12; j++) {
                 if (entityArray[i][j] === 1) {
                     // TODO update the invisible block with the new entity parameters - Steven Tran
-                    const blockEntity = new InvisibleBlock(this.game, j * 60, i * 60, 60, 60);
+                    const blockEntity = new InvisibleBlock(this.game, j * 60, i * 60, 60, 60, 0);
+                    blockEntity.alive = true;
                     this.ENTITIES.push(blockEntity);
                 }
                 if (entityArray[i][j] === 2) {
                     const zombieEntity = new Zombie(this.game, this.game.IMAGES_LIST["./res/img/zombie.png"], j * 60, i * 60, 60, 60);
+                    zombieEntity.alive = true;
                     this.ENTITIES.push(zombieEntity);
                 }
             }

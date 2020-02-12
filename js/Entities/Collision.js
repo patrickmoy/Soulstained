@@ -53,11 +53,15 @@ class Collision {
      * Entities that are going to collide should not be allowed to update
      * Flags entities in collision pairs so they can't complete their update
      * @param  {Array} collisionPairs Array of pairs of collision
+     * TODO: Change this to only affect block to other entity interaction
      */
     flagImpassable(collisionPairs) {
         collisionPairs.forEach(function (element) {
-            element[0].pushUpdate = false;
-            element[1].pushUpdate = false;
+            if (!(element[0] instanceof Weapon) && !(element[1] instanceof Weapon)) {
+
+                    element[0].pushUpdate = false;
+                    element[1].pushUpdate = false;
+            }
             // TO-DO: Modify this system so multiple behaviors can work.
             // Projectiles might be allowed to collide completely/penetrate
             // How to split them up and classify?
@@ -76,9 +80,9 @@ class Collision {
                     element[0].pushDamage = true;
                 }
             }
-            if (element[0] instanceof Enemy) {
-                if (element[1] instanceof Weapon) {
-                    element[0].pushDamage = true;
+            if (element[1] instanceof Enemy) {
+                if (element[0] instanceof Weapon) {
+                    element[1].pushDamage = true;
                 }
             }
         })
