@@ -21,6 +21,16 @@ class World {
         this.sourceX = this.section.x * this.SIZE; // Used to update the sections position start.
         this.sourceY = this.section.y * this.SIZE;
 
+        // attributes used for fade animations during world transport
+        this.sx = this.sourceX;
+        this.sy = this.sourceY;
+        this.sWidth = 192;
+        this.sHeight = 192;
+        this.dx = 0;
+        this.dy = 0;
+        this.dWidth = 720;
+        this.dHeight = 720;
+
     }
 
     /**
@@ -37,12 +47,43 @@ class World {
         if (this.sourceX === newSourceX && this.sourceY === newSourceY) this.GAME.transition = false; // Transition is complete, turn off transitioning
     }
 
+    fade() {
+        this.sx += 1;
+        this.sy += 1;
+        this.sWidth -= 2;
+        this.sHeight -= 2;
+        this.dx += 3.75;
+        this.dy += 3.75;
+        this.dWidth -= 7.5;
+        this.dHeight -= 7.5;
+        //console.log(`sx: ${this.sx}, sy: ${this.sy}, sWidth: ${this.sWidth}, sHeight: ${this.sHeight}, dx: ${this.dx}, dy: ${this.dy}, dWidth: ${this.dWidth}, dHeight: ${this.dHeight}`);
+        if (this.dWidth < 1) {
+            this.GAME.pause = false;
+            this.sx = this.sourceX;
+            this.sy = this.sourceY;
+            this.sWidth = 192;
+            this.sHeight = 192;
+            this.dx = 0;
+            this.dy = 0;
+            this.dWidth = 720;
+            this.dHeight = 720;
+        }
+    }
+
     /**
      * Draws the current section of the world defined by section.x and section.y
      */
     draw() {
-        this.CONTEXT.drawImage(this.WORLD_IMAGE, this.sourceX, this.sourceY, this.SIZE, this.SIZE, 0, 0,
-            this.CONTEXT.canvas.width, this.CONTEXT.canvas.height);
+        if (!this.GAME.pause) {
+            this.CONTEXT.drawImage(this.WORLD_IMAGE, this.sourceX, this.sourceY, this.SIZE, this.SIZE, 0, 0,
+                this.CONTEXT.canvas.width, this.CONTEXT.canvas.height);
+        } else {
+            this.drawFade();
+        }
+    }
+
+    drawFade() {
+        this.CONTEXT.drawImage(this.WORLD_IMAGE, this.sx, this.sy, this.sWidth, this.sHeight, this.dx, this.dy, this.dWidth, this.dHeight);
     }
 
 }
@@ -100,7 +141,29 @@ class NecroDungeon extends World {
         super(game, worldImage, sectionX, sectionY);
 
         // Creates tile maps for the necromancer dungeon world. # x # Tilemaps
-        this.necroTileMaps = [];
+        this.NecroDungeonArrays = new NecroDungeonArrays();
+        this.tileMaps = [[],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ];
+    }
+    initializeTileMaps() {
+        for (var i = 0; i < 8; i++) {
+            for (var j = 0; j < 8; j++) {
+                var entityArray = this.NecroDungeonArrays.getEntityArray(i, j);
+
+                var tileMap = new TileMap(this.GAME, entityArray);
+                this.tileMaps[i].push(tileMap);
+            }
+        }
+    }
+    getCurrentTileMap() {
+        return this.tileMaps[this.section.x][this.section.y];
     }
 }
 

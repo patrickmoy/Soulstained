@@ -21,12 +21,14 @@ class Zombie extends Enemy {
 
 
     draw() {
-        this.context.beginPath();
-        this.context.rect(this.x, this.y, this.width, this.height);
-        this.context.stroke();
-        this.animation.drawFrame(this.game.clockTick, this.context,
-            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 0, 'dancing');
+        if (!this.game.pause) {
+            this.context.beginPath();
+            this.context.rect(this.x, this.y, this.width, this.height);
+            this.context.stroke();
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 0, 'dancing');
+        }
     }
 
     pickDirection() {

@@ -8,7 +8,7 @@ class Hero extends Entity {
      * @param spritesheet {Image} The image of the hero for animation and updating
      */
     constructor(game, spritesheet) {
-        super(game, 300, 420, 38, 55, 0);
+        super(game, 0, 360, 38, 55, 0);
         this.animation = new Animation(spritesheet, 16, 23, 2, .250, 2, true, 2.4);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
@@ -92,9 +92,11 @@ class Hero extends Entity {
      * Draws the hero.
      */
     draw() {
-        this.animation.drawFrame(this.game.clockTick, this.context,
-            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.direction, this.status);
+        if (!this.game.pause) {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.direction, this.status);
+        }
     }
 
     /**

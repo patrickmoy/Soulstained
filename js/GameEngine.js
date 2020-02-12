@@ -42,7 +42,7 @@ class GameEngine {
         this.pause = false; // Pauses other actions while we switch to a new map.
         this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
         this.currentEntities = []; // Stores entities at the current tile map
-
+        this.currentPortal;
         this.TIMER; // The Game Timer to keep track of virtual time
         this.PHYSICS; // The physics/collision detection and handling engine
         this.GAME_CANVAS_WIDTH; // The main canvas width
@@ -66,8 +66,10 @@ class GameEngine {
         this.currentEntities.push(this.HERO); // Add hero to the entity list. Hero is always at index 0
 
         // Create the worlds
-        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
+        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/OpenWorld.png"], 1, 6);
         this.WORLDS["OpenWorld"].initializeTileMaps();
+        this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
+        this.WORLDS["NecroDungeon"].initializeTileMaps();
         const tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
         this.currentEntities.push.apply(this.currentEntities, tileMap.ENTITIES);
 
@@ -129,6 +131,14 @@ class GameEngine {
             this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
             this.HERO.eventWalk(); // Moves the player when transitioning is happening
         }
+        else if (this.pause)
+        {
+            this.currentWorld.fade();
+            if (!this.pause)
+            {
+                this.transposeWorlds();
+            }
+        }
         else {
             // Entities are now movable around the map
             // Reset all behavior flags for all entities. Can be expanded/diversified
@@ -143,6 +153,7 @@ class GameEngine {
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
             this.currentEntities.forEach(entity => entity.update());
+            this.checkPortal();
             this.checkTransition();
         }
     }
@@ -164,6 +175,44 @@ class GameEngine {
 
             this.transition = true; // Game Engine and other necessary components is now performing transition actions
         }
+    }
+
+    /**
+     * Checks if the player is inside a portal
+     */
+    checkPortal() {
+        if (!this.pause) {
+            var portals = this.currentWorld.getCurrentTileMap().PORTALS;
+            for (var i=0; i < portals.length; i++) {
+                console.log("check portal");
+                if ((this.HERO.hitbox.yMin > portals[i].sy) &&
+                    (this.HERO.hitbox.yMax < (portals[i].sy + portals[i].height)) &&
+                    (this.HERO.hitbox.xMin > portals[i].sx) &&
+                    (this.HERO.hitbox.xMax < (portals[i].sx + portals[i].width))
+                ) {
+                    this.pause = true;
+                    this.currentPortal = portals[i];
+                }
+            }
+        }
+    }
+
+    /**
+     * Switches the game engine to the new world map and sets the hero's new coordinates
+     */
+    transposeWorlds() {
+        this.currentWorld = this.WORLDS[this.currentPortal.destination];
+        this.currentWorld.section.x = this.currentPortal.section.x;
+        this.currentWorld.section.y = this.currentPortal.section.y;
+        this.currentWorld.sourceX = this.currentPortal.section.x * 192;
+        this.currentWorld.sourceY = this.currentPortal.section.y * 192;
+        this.HERO.hitbox.xMin = this.currentPortal.dx;
+        this.HERO.hitbox.yMin = this.currentPortal.dy;
+        this.HERO.futureHitbox.xMin = this.currentPortal.dx;
+        this.HERO.futureHitbox.yMin = this.currentPortal.dy;
+        this.currentEntities = [];
+        this.currentEntities.push(this.HERO);
+        this.currentEntities.push.apply(this.currentEntities, this.currentWorld.getCurrentTileMap().ENTITIES);
     }
 
     /**
