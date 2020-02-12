@@ -41,10 +41,10 @@ class GameEngine {
         this.inInventory = false; // When player is in his inventory
         this.pause = false; // Pauses other actions while we switch to a new map.
         this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
-        this.currentEntities = []; // Stores entities at the current tile map
+        this.currentEntities = [[], [], [], [], []]; // Stores entities at the current tile map
 
         this.TIMER; // The Game Timer to keep track of virtual time
-        this.PHYSICS; // The physics/collision detection and handling engine
+        this.PHYSICS; // The physics/col[]lision detection and handling engine
         this.GAME_CANVAS_WIDTH; // The main canvas width
         this.GAME_CANVAS_HEIGHT; // The main canvas height
         this.UI_CANVAS_WIDTH; // The UI canvas width
@@ -62,19 +62,22 @@ class GameEngine {
 
         // hero initialization
         this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"]);
+
         // push hero to currentEntities
-        this.currentEntities.push(this.HERO); // Add hero to the entity list. Hero is always at index 0
+        this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
 
         // Create the worlds
         this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
-        this.WORLDS["OpenWorld"].initializeTileMaps();
-        const tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
+        this.WORLDS["OpenWorld"].initializeTileMaps(); // Have to do this with other maps every time? Steven Tran
+        // const tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap(); // TODO is this even useful?
         // ------------------------
         // Steven Tran
         // I think having seperate entities class would make it easier to handle certain.
         // For example, enemies need to reset their position when we transition to a new tilemap; however, other entities like blocks or the hero don't.
+        // Confirmed, we're doing that.
         // ------------------------
-        this.currentEntities.push.apply(this.currentEntities, tileMap.ENTITIES);
+        this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS;
+        this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES;
 
         this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
@@ -82,7 +85,7 @@ class GameEngine {
         this.UI_CANVAS_WIDTH = this.UI_CONTEXT.canvas.width;
         this.UI_CANVAS_HEIGHT = this.UI_CONTEXT.canvas.height;
         this.TIMER = new GameTimer();
-        this.PHYSICS = new Collision();
+        // this.PHYSICS = new Collision();
 
         // If button is pressed and the button is a key we care about, set it to true.
         this.GAME_CONTEXT.canvas.addEventListener("keydown", (key) => {
@@ -135,19 +138,31 @@ class GameEngine {
             this.HERO.eventWalk(); // Moves the player when transitioning is happening
         }
         else {
+            // TODO have to update tilemaps to return different arrays of entities;
             // Entities are now movable around the map
             // Reset all behavior flags for all entities. Can be expanded/diversified
-            this.PHYSICS.resetFlags(this.currentEntities);
+            // this.PHYSICS.resetFlags(this.currentEntities[0]); // Resets the hero's flag
+            // this.PHYSICS.resetFlags(this.currentEntities[1]); // Reset the block's flag
+            // this.PHYSICS.resetFlags(this.currentEntities[2]); // Resets the enemies' flag
+            // this.PHYSICS.resetFlags(this.currentEntities[3]); // Resets the projectile's flag
+            resetFlags(this.currentEntities[0]);
+            resetFlags(this.currentEntities[1]);
+            resetFlags(this.currentEntities[2]);
+            resetFlags(this.currentEntities[3]);
 
-            // Predicts update for all entities
-            this.currentEntities.forEach(entity => entity.preUpdate());
+            // Predicts update for all the necessary entities
+            this.currentEntities[0][0].preUpdate();
+            this.currentEntities[2].forEach(enemy => enemy.preUpdate());
+            this.currentEntities[3].forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
 
             // Flags entities for standard "impassable" behavior (mostly terrain)
-            this.PHYSICS.flagImpassable(this.PHYSICS.detectCollide(this.currentEntities));
-
+            // this.PHYSICS.flagImpassable(this.PHYSICS.detectCollide([].concat.apply([], this.currentEntities)));
+            flagImpassable(detectCollide([].concat.apply([], this.currentEntities)));
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
-            this.currentEntities.forEach(entity => entity.update());
+            this.currentEntities[0][0].update(); // Updates hero
+            this.currentEntities[2].forEach(enemy => enemy.update());
+            this.currentEntities[3].forEach(projectile => projectile.update());
             this.checkTransition();
         }
     }
@@ -162,10 +177,13 @@ class GameEngine {
             this.currentWorld.section.x += currentBorder.changeInX; // Change the x coordinate for the tilemap array
             this.currentWorld.section.y += currentBorder.changeInY; // Change the y coordinate for the tilemap array
 
-            this.currentEntities = []; // Remove all entities from the respective tilemap
-            this.currentEntities.push(this.HERO); // re-add the hero
+            this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS; // Replaces the current blocks with the ones in the new tilemap
+            this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES; // Replaces the current enemies with the ones in the new tilemap
+            this.currentEntities[2].forEach(enemy => enemy.resetPosition());
 
-            this.currentEntities.push.apply(this.currentEntities, this.WORLDS["OpenWorld"].getCurrentTileMap().ENTITIES);
+            this.currentEntities[3] = []; // Removes all projectiles
+
+            // Confirmed to reset the world.
             // ------------------------
             // Steven Tran
             // An issue with having entities in one array is that some entities have special functions when transitioning.
@@ -183,6 +201,9 @@ class GameEngine {
             // elements individually and check if its an enemy with "instanceof" which is considered bad practice.
             // This wouldn't be an issue if we allow the player to move into enemies but take damage. While it would suck,
             // it would be amusing.
+            //
+            // Confirmed Solution:
+            // Going to have an entity array that contains a sublist of different types of entities
             // ------------------------
             this.transition = true; // Game Engine and other necessary components is now performing transition actions
         }
@@ -206,17 +227,19 @@ class GameEngine {
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
-            this.currentEntities.forEach(entity => entity.draw());
+            this.currentEntities[0][0].draw(); // Draws the hero
+            this.currentEntities[2].forEach(enemy => enemy.draw()); // Draws the enemies
+            this.currentEntities[3].forEach(projectile => projectile.draw()); // Draws the projectiles
             this.GAME_CONTEXT.restore();
         }
-        else {
+        else { // Transition is handled here
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
-            this.currentEntities[0].draw();
+            this.currentEntities[0][0].draw();
             this.GAME_CONTEXT.restore();
         }
-        // Transition is handled here
+
         // There was a change that affects the UI so we update the UI
         if (this.UI_CONTEXT.change) {
             // When a change occurs, we just redraw. If nothing changes, the canvas should remain static
