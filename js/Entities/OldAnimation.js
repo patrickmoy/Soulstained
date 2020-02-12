@@ -1,7 +1,7 @@
 /**
  *
  */
-class Animation {
+class OldAnimation {
     /**
      * Constructor to create Animation object.
      * Class is written with a horizontally aligned sprite sheet in mind -
@@ -15,18 +15,16 @@ class Animation {
      * @param {boolean} loop determine if the animation should loop
      * @param {number} scale image scaling to increase or decrease size
      */
-    constructor(spriteSheet, entity, frameWidth, frameHeight, sheetWidth, singleFrameTime, frameCount, frameIndices, scale) {
+    constructor(spriteSheet, frameWidth, frameHeight, sheetWidth, singleFrameTime, frameCount, loop, scale) {
         this.spriteSheet = spriteSheet;
-        this.entity = entity;
         this.frameWidth = frameWidth;
         this.frameDuration = singleFrameTime;
         this.frameHeight = frameHeight;
-        this.frameIndices = frameIndices;
-        this.walkDuration = this.frameDuration * this.frameIndices[0];
-        this.attackDuration = this.frameDuration * this.frameIndices[1];
+        this.sheetWidth = sheetWidth; //
+        this.looping = loop;
         this.scale = scale;
-        this.walkTime = 0;
-
+        this.elapsedTime = 0;
+        this.totalAnimTime = singleFrameTime * frameCount;
     }
 
     /**
@@ -40,42 +38,34 @@ class Animation {
      * TODO Make imageRow an optional parameter (at the end), defaulting to 0. Most enemies will ignore imageRow.
      */
     drawFrame(tick, context, gamePositionX, gamePositionY, imageRow, status) {
-
-        let xIndex;
-        if (status === 'walking') { // When walking, increment time by tick.
-            this.walkTime += tick;
-            if (this.walkTime >= this.walkDuration) { // Reset if we go over.
-                this.walkTime -= this.walkDuration; // Should this value be "totalWalkDuration" or something?
-            }
+        this.elapsedTime += tick;
+        if (this.isDone() && this.looping) {
+            this.elapsedTime -= this.totalAnimTime;
         }
-        if (status === 'walking' || status === 'idle') {
-            xIndex = Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0]; // 2 should be "WALK_FRAMES"
 
-        } else if (status === 'attacking') {
-            xIndex = Math.floor(this.currentFrame(this.entity.actionElapsedTime)) % (this.frameIndices[1] - this.frameIndices[0]) +
-            this.frameIndices[0];
-            console.log(xIndex);
-            console.log(imageRow);
+        const frame = this.currentFrame();
+        let xIndex = frame % this.sheetWidth;
+        if (status === 'idle') {
+            xIndex = 0;
         }
         context.drawImage(this.spriteSheet, xIndex * this.frameWidth, imageRow * this.frameHeight,
             this.frameWidth, this.frameHeight, gamePositionX, gamePositionY,
             this.frameWidth * this.scale, this.frameHeight * this.scale);
     }
 
-
     /**
      * Gets the current frame of the animation
      * @returns {number} the current frame.
      */
-    currentFrame(time) {
-        return Math.floor(time / this.frameDuration);
+    currentFrame() {
+        return Math.floor(this.elapsedTime / this.frameDuration);
     }
 
-    // /**
-    //  * Checks if the animation is done
-    //  * @returns {boolean} true if animation has completed all frames, false otherwise
-    //  */
-    // isDone() {
-    //     return this.elapsedTime >= this.frameDuration * 2;
-    // }
+    /**
+     * Checks if the animation is done
+     * @returns {boolean} true if animation has completed all frames, false otherwise
+     */
+    isDone() {
+        return this.elapsedTime >= this.frameDuration * 2;
+    }
 }

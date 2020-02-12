@@ -66,6 +66,25 @@ class Collision {
     }
 
     /**
+     * Entities that are going to collide and are part of a damage pair should flag damage.
+     * @param collisionPairs
+     */
+    flagDamage(collisionPairs) {
+        collisionPairs.forEach(function (element) {
+            if (element[0] instanceof Hero) {
+                if (element[1] instanceof Enemy) {
+                    element[0].pushDamage = true;
+                }
+            }
+            if (element[0] instanceof Enemy) {
+                if (element[1] instanceof Weapon) {
+                    element[0].pushDamage = true;
+                }
+            }
+        })
+    }
+
+    /**
      * Resets flags for entities pre-loop.
      * @param {Array} entitiesToCheck
      */

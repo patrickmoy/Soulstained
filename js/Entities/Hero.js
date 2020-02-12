@@ -6,13 +6,15 @@ class Hero extends Entity {
      * The entity that the player can control and play the game with.
      * @param game {GameEngine} The engine of the game for accessing
      * @param spritesheet {Image} The image of the hero for animation and updating
+     * @param weaponSheet {Image} The image of the default weapon for animation.
      */
     constructor(game, spritesheet) {
         super(game, 300, 420, 38, 55, 0);
-        this.animation = new Animation(spritesheet, 16, 23, 2, .250, 2, true, 2.4);
+        this.animation = new Animation(spritesheet, this,16, 23, 7, .250, 7, [2, 7], 2.4);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
+        this.ACTION_DURATION = 1.25;
     }
 
     /**
@@ -20,7 +22,12 @@ class Hero extends Entity {
      */
     preUpdate() {
         if (!this.game.transition) {
-            if (this.game.hasMoveInputs()) {
+            if (this.status === 'attacking') {
+                this.attack();
+            } else if (this.status !== 'attacking' && this.game.INPUTS['KeyJ']) {
+                this.status = 'attacking';
+                this.attack();
+            } else if (this.game.hasMoveInputs()) {
                 this.status = 'walking';
                 if (this.game.INPUTS["KeyW"]) {
                     this.direction = 0;
@@ -144,5 +151,4 @@ class Hero extends Entity {
             changeInY: 0
         };
     }
-
 }
