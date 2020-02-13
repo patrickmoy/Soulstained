@@ -68,7 +68,7 @@ class GameEngine {
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
 
         // Create the worlds
-        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 1, 7);
+        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
         this.WORLDS["OpenWorld"].initializeTileMaps();
         this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
         this.WORLDS["NecroDungeon"].initializeTileMaps();
