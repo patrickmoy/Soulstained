@@ -68,7 +68,7 @@ class GameEngine {
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
 
         // Create the worlds
-        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 1, 6);
+        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 1, 7);
         this.WORLDS["OpenWorld"].initializeTileMaps();
         this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
         this.WORLDS["NecroDungeon"].initializeTileMaps();
@@ -200,7 +200,6 @@ class GameEngine {
         if (!this.pause) {
             var portals = this.currentWorld.getCurrentTileMap().PORTALS;
             for (var i=0; i < portals.length; i++) {
-                console.log("check portal");
                 if ((this.HERO.hitbox.yMin > portals[i].sy) &&
                     (this.HERO.hitbox.yMax < (portals[i].sy + portals[i].height)) &&
                     (this.HERO.hitbox.xMin > portals[i].sx) &&
@@ -226,9 +225,9 @@ class GameEngine {
         this.HERO.hitbox.yMin = this.currentPortal.dy;
         this.HERO.futureHitbox.xMin = this.currentPortal.dx;
         this.HERO.futureHitbox.yMin = this.currentPortal.dy;
-        this.currentEntities = [];
-        this.currentEntities.push(this.HERO);
-        this.currentEntities.push.apply(this.currentEntities, this.currentWorld.getCurrentTileMap().ENTITIES);
+        this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
+        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().BLOCKS;
+        this.currentEntities[3] = [];
     }
 
     /**
