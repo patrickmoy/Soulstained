@@ -226,7 +226,7 @@ class GameEngine {
         this.HERO.futureHitbox.xMin = this.currentPortal.dx;
         this.HERO.futureHitbox.yMin = this.currentPortal.dy;
         this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().BLOCKS;
+        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
         this.currentEntities[3] = [];
     }
 
