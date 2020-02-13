@@ -62,13 +62,12 @@ class GameEngine {
         this.UI_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
         // hero initialization
-        this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"]);
-
+        this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"], this.IMAGES_LIST["./res/img/whip.png"]);
         // push hero to currentEntities
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
 
         // Create the worlds
-        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 1, 7);
+        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
         this.WORLDS["OpenWorld"].initializeTileMaps();
         this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
         this.WORLDS["NecroDungeon"].initializeTileMaps();
@@ -157,17 +156,20 @@ class GameEngine {
 
             // Predicts update for all the necessary entities
             this.currentEntities[0][0].preUpdate();
-            this.currentEntities[2].forEach(enemy => enemy.preUpdate());
-            this.currentEntities[3].forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
+            this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.preUpdate());
+            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
 
-            // Flags entities for standard "impassable" behavior (mostly terrain)
+            const collisionPairs = detectCollide([].concat([], this.currentEntities));
+
+                // Flags entities for standard "impassable" behavior (mostly terrain)
             // this.PHYSICS.flagImpassable(this.PHYSICS.detectCollide([].concat.apply([], this.currentEntities)));
-            flagImpassable(detectCollide([].concat.apply([], this.currentEntities)));
+            flagImpassable(collisionPairs);
+            flagDamage(collisionPairs);
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
             this.currentEntities[0][0].update(); // Updates hero
-            this.currentEntities[2].forEach(enemy => enemy.update());
-            this.currentEntities[3].forEach(projectile => projectile.update());
+            this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
+            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.update());
             this.checkPortal();
             this.checkTransition();
         }
@@ -249,8 +251,8 @@ class GameEngine {
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
             this.currentEntities[0][0].draw(); // Draws the hero
-            this.currentEntities[2].forEach(enemy => enemy.draw()); // Draws the enemies
-            this.currentEntities[3].forEach(projectile => projectile.draw()); // Draws the projectiles
+            this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw()); // Draws the enemies
+            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw()); // Draws the projectiles
             this.GAME_CONTEXT.restore();
         }
         else { // Transition is handled here

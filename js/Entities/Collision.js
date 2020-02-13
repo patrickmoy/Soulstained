@@ -124,17 +124,35 @@
  * Entities that are going to collide should not be allowed to update
  * Flags entities in collision pairs so they can't complete their update
  * @param  {Array} collisionPairs Array of pairs of collision
+ * TODO: Change this to only affect block to other entity interaction
  */
 function flagImpassable(collisionPairs) {
     collisionPairs.forEach(function (element) {
-        element[0].pushUpdate = false;
-        element[1].pushUpdate = false;
-        // TO-DO: Modify this system so multiple behaviors can work.
-        // Projectiles might be allowed to collide completely/penetrate
-        // How to split them up and classify?
-        // Boolean flags for entity sub classes?
-    })
+        if (!(element[0] instanceof Weapon) && !(element[1] instanceof Weapon)) {
+            element[0].pushUpdate = false;
+            element[1].pushUpdate = false;
+        }
+    });
 }
+    /**
+     * Entities that are going to collide and are part of a damage pair should flag damage.
+     * @param collisionPairs
+     */
+function flagDamage(collisionPairs) {
+        collisionPairs.forEach(function (element) {
+            if (element[0] instanceof Hero) {
+                if (element[1] instanceof Enemy) {
+                    element[0].pushDamage = true;
+                }
+            }
+            if (element[1] instanceof Enemy) {
+                if (element[0] instanceof Weapon && element[0].active) {
+                    console.log(element[0].active);
+                    element[1].pushDamage = true;
+                }
+            }
+        })
+    }
 
 /**
  * Resets flags for entities pre-loop.

@@ -5,14 +5,20 @@ class Hero extends Entity {
     /**
      * The entity that the player can control and play the game with.
      * @param game {GameEngine} The engine of the game for accessing
-     * @param spritesheet {Image} The image of the hero for animation and updating
+     * @param spriteSheet {Image} The image of the hero for animation and updating
+     * @param weaponSheet {Image} The image of the default weapon for animation.
      */
-    constructor(game, spritesheet) {
-        super(game, 0, 360, 38, 55, 0);
-        this.animation = new Animation(spritesheet, 16, 23, 2, .250, 2, true, 2.4);
+    constructor(game, spriteSheet, weaponSheet) {
+        super(game, 300, 420, 38, 55, 1);
+        this.animation = new Animation(spriteSheet, this,16, 23, .250, 2.4, [2,7]);
+        this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
+        this.health = 3;
+        this.maxHealth = 3;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
+        this.ACTION_DURATION = 1.25;
+        this.alive = true;
     }
 
     /**
@@ -20,7 +26,13 @@ class Hero extends Entity {
      */
     preUpdate() {
         if (!this.game.transition) {
-            if (this.game.hasMoveInputs()) {
+            this.whip.active = this.actionElapsedTime >= .75 && this.status === 'attacking';
+            if (this.status === 'attacking') {
+                this.attack();
+            } else if (this.status !== 'attacking' && this.game.INPUTS['KeyJ']) {
+                this.status = 'attacking';
+                this.attack();
+            } else if (this.game.hasMoveInputs()) {
                 this.status = 'walking';
                 if (this.game.INPUTS["KeyW"]) {
                     this.direction = 0;
@@ -92,11 +104,9 @@ class Hero extends Entity {
      * Draws the hero.
      */
     draw() {
-        if (!this.game.pause) {
-            this.animation.drawFrame(this.game.clockTick, this.context,
-                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.direction, this.status);
-        }
+        this.animation.drawFrame(this.game.clockTick, this.context,
+            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
     }
 
     /**
@@ -147,4 +157,9 @@ class Hero extends Entity {
         };
     }
 
+    attack() {
+        this.whip.direction = this.direction;
+        super.attack();
+
+    }
 }
