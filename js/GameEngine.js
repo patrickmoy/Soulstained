@@ -169,6 +169,7 @@ class GameEngine {
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
             this.currentEntities[0][0].update(); // Updates hero
+            this.currentEntities[1].filter(block => block.alive).forEach(block => block.update());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.update());
             this.checkPortal();

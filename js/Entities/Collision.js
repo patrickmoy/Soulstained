@@ -89,8 +89,6 @@ function detectCollide(entitiesToCheck) {
     const entityCount = entitiesToCheck.length;
     const currentCollisionPairs = [];
 
-    // Dead entities don't need to collide
-    // DECISION: DO we check if an entity necessitates checking here or elsewhere?
     for (i = 0; i < entityCount; i++) {
         firstElement = entitiesToCheck[i];
 
@@ -134,10 +132,10 @@ function flagImpassable(collisionPairs) {
         }
     });
 }
-    /**
-     * Entities that are going to collide and are part of a damage pair should flag damage.
-     * @param collisionPairs
-     */
+/**
+ * Entities that are going to collide and are part of a damage pair should flag damage.
+ * @param collisionPairs
+ */
 function flagDamage(collisionPairs) {
         collisionPairs.forEach(function (element) {
             if (element[0] instanceof Hero) {
@@ -147,7 +145,6 @@ function flagDamage(collisionPairs) {
             }
             if (element[1] instanceof Enemy) {
                 if (element[0] instanceof Weapon && element[0].active) {
-                    console.log(element[0].active);
                     element[1].pushDamage = true;
                 }
             }

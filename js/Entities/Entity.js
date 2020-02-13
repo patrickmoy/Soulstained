@@ -161,8 +161,7 @@ class Entity {
      *  Directs entity to take damage. Takes 1 damage if no damage is specified.
      */
     takeDamage(damage = 1) {
-        console.log(this.constructor.name + " just took damage!");
-        console.log(this.health  + " will be reduced by " + damage);
+        console.log("Damage Taken");
         if (this.health - damage < 0) {
             this.health = 0;
         } else {
