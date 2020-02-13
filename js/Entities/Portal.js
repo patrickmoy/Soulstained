@@ -12,7 +12,5 @@ class Portal {
     };
     this.dx = dx;
     this.dy = dy;
-
-    //console.log("Portal created");
   }
 }

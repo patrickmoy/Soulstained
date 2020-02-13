@@ -65,6 +65,7 @@ class GameEngine {
         this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"], this.IMAGES_LIST["./res/img/whip.png"]);
         // push hero to currentEntities
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
+        this.currentEntities[0].push(this.HERO.whip);
 
         // Create the worlds
         this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
@@ -157,9 +158,9 @@ class GameEngine {
             // Predicts update for all the necessary entities
             this.currentEntities[0][0].preUpdate();
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.preUpdate());
-            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
+            // this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
 
-            const collisionPairs = detectCollide([].concat([], this.currentEntities));
+            const collisionPairs = detectCollide([].concat.apply([], this.currentEntities));
 
                 // Flags entities for standard "impassable" behavior (mostly terrain)
             // this.PHYSICS.flagImpassable(this.PHYSICS.detectCollide([].concat.apply([], this.currentEntities)));

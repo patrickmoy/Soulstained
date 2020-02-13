@@ -79,31 +79,31 @@
 //     }
 // }
 
- /**
+/**
  * Returns an array of all unique pairs of colliding entities
  * @param {Array} entitiesToCheck List of entities to check for collision
  * @returns {[Entity, Entity]} a list of entity pairs that have collided
  */
- function detectCollide(entitiesToCheck) {
-     var i, j, firstElement, secondElement;
-     const entityCount = entitiesToCheck.length;
-     const currentCollisionPairs = [];
+function detectCollide(entitiesToCheck) {
+    var i, j, firstElement, secondElement;
+    const entityCount = entitiesToCheck.length;
+    const currentCollisionPairs = [];
 
-     // Dead entities don't need to collide
-     // DECISION: DO we check if an entity necessitates checking here or elsewhere?
-     for (i = 0; i < entityCount; i++) {
-         firstElement = entitiesToCheck[i];
+    // Dead entities don't need to collide
+    // DECISION: DO we check if an entity necessitates checking here or elsewhere?
+    for (i = 0; i < entityCount; i++) {
+        firstElement = entitiesToCheck[i];
 
-         for (j = i + 1; j < entityCount; j++) {
-             secondElement = entitiesToCheck[j];
+        for (j = i + 1; j < entityCount; j++) {
+            secondElement = entitiesToCheck[j];
 
-             if (this.entitiesCollided(firstElement, secondElement)) {
-                 currentCollisionPairs.push([firstElement, secondElement]);
-             }
-         }
-     }
-     return currentCollisionPairs;
- }
+            if (this.entitiesCollided(firstElement, secondElement)) {
+                currentCollisionPairs.push([firstElement, secondElement]);
+            }
+        }
+    }
+    return currentCollisionPairs;
+}
 
 /**
  * Returns if two elements (entities) are colliding

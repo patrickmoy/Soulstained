@@ -143,7 +143,6 @@ class Entity {
     }
 
     attack() {
-        console.log("Attacking!");
         this.actionElapsedTime += this.game.clockTick;
         if (this.actionElapsedTime > this.ACTION_DURATION) {
             this.actionElapsedTime = 0;
