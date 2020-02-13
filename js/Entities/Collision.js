@@ -81,7 +81,8 @@ class Collision {
                 }
             }
             if (element[1] instanceof Enemy) {
-                if (element[0] instanceof Weapon) {
+                if (element[0] instanceof Weapon && element[0].active) {
+                    console.log(element[0].active);
                     element[1].pushDamage = true;
                 }
             }

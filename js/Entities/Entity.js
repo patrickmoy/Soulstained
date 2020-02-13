@@ -20,6 +20,7 @@ class Entity {
         this.ACTION_DURATION = 0;
         this.actionElapsedTime = 0;
         this.invincibleCounter = 0;
+        this.INVINCIBLE_TIME = 1.25;
         this.hitbox = // The entity's box to take be interacted with other entities or world components.
             {
                 xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -82,11 +83,20 @@ class Entity {
                 this.takeDamage();
             }
             this.invincibleCounter += this.game.clockTick;
-            if (this.invincibleCounter > 2) {
+            if (this.invincibleCounter > this.INVINCIBLE_TIME) {
                 this.invincibleCounter = 0;
             }
             this.pushDamage = false;
+        } else {
+            if (this.invincibleCounter > 0) {
+                this.invincibleCounter += this.game.clockTick;
+            }
+            if (this.invincibleCounter > this.INVINCIBLE_TIME) {
+                this.invincibleCounter = 0;
+            }
+
         }
+
         if (this.health === 0) {
             this.alive = false;
         }

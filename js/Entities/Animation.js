@@ -49,12 +49,13 @@ class Animation {
             }
         }
         if (status === 'walking' || status === 'idle') {
-            xIndex = this.frameWidth * Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0];
-            // 2 should be "WALK_FRAMES"
+            xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0]);
 
         } else if (status === 'attacking') {
+
             xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) %
                 (this.frameIndices[1] - this.frameIndices[0]) + this.frameIndices[0]);
+
         } else if (status === 'weapon') {
             xIndex = 0;
             if (this.entity.direction <= 1) {
