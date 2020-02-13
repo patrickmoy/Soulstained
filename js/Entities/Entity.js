@@ -15,6 +15,19 @@ class Entity {
         this.game = game;
         this.width = width;
         this.height = height;
+        // -------
+        // Steven Tran
+        // Instead of having a speed variable in every object, how about have it as a parameters since every entity has a speed.
+        // -------
+
+        this.originalHitbox =
+            {
+                xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
+                yMin: y + height * (1 - this.HITBOX_SHRINK_FACTOR),
+                xMax: x + width * this.HITBOX_SHRINK_FACTOR,
+                yMax: y + height * this.HITBOX_SHRINK_FACTOR,
+            };
+
         this.speed = 0;
         this.hitbox = // The entity's box to take be interacted with other entities or world components.
             {
@@ -75,23 +88,22 @@ class Entity {
     // Sets status of entity to walking for this update/render tick, and updates hitbox.
     walk(direction) {
         switch (direction) {
-            case 0:
+            case 0: // up
                 this.futureHitbox.yMin -= this.game.clockTick * this.speed;
                 this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
                 break;
-            case 1:
+            case 1: // down
                 this.futureHitbox.yMin += this.game.clockTick * this.speed;
                 this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
                 break;
-            case 2:
+            case 2: // left
                 this.futureHitbox.xMin -= this.game.clockTick * this.speed;
                 this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
                 break;
-            case 3:
+            case 3: // right
                 this.futureHitbox.xMin += this.game.clockTick * this.speed;
                 this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
                 break;
-
         }
         this.futureHitbox.xMin = Math.floor(this.futureHitbox.xMin); // Normalize the x min coordinate for consistency
         this.futureHitbox.xMax = Math.floor(this.futureHitbox.xMax); // Normalize the x max coordinate for consistency
