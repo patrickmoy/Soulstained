@@ -10,14 +10,21 @@ class Hero extends Entity {
      */
     constructor(game, spriteSheet, weaponSheet) {
         super(game, 300, 420, 38, 55, 1);
-        this.animation = new Animation(spriteSheet, this,16, 23, .250, 2.4, [2,7]);
+        // To modify whip speed, change last parameter here (.100 default, attackFrameTime parameter in Animation).
+        // Must be 1/5 of this.ACTION_DURATION (change that too).
+        this.animation = new Animation(spriteSheet, this,16, 23, .250,
+            2.4, [2,7], .100);
         this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
         this.health = 3;
         this.maxHealth = 3;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
-        this.ACTION_DURATION = 1.25;
+
+        // Change this to be 5x the attackFrameTime, and whip speed will update.
+        // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration.
+        this.ACTION_DURATION = .5;
+        this.WHIP_ACTIVE_RATIO = .6;
         this.alive = true;
     }
 
@@ -26,7 +33,7 @@ class Hero extends Entity {
      */
     preUpdate() {
         if (!this.game.transition) {
-            this.whip.active = this.actionElapsedTime >= .75 && this.status === 'attacking';
+            this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
             if (this.status === 'attacking') {
                 this.attack();
             } else if (this.status !== 'attacking' && this.game.INPUTS['KeyJ']) {

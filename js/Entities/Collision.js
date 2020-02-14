@@ -126,7 +126,12 @@ function detectCollide(entitiesToCheck) {
  */
 function flagImpassable(collisionPairs) {
     collisionPairs.forEach(function (element) {
-        if (!(element[0] instanceof Weapon) && !(element[1] instanceof Weapon)) {
+        // if (!(element[0] instanceof Weapon) && !(element[1] instanceof Weapon)) {
+        //     element[0].pushUpdate = false;
+        //     element[1].pushUpdate = false;
+        // }
+        // Previous code blocks everything but weapons. Switched to only invisible blocks impede.
+        if (element[0] instanceof InvisibleBlock || element[1] instanceof InvisibleBlock) {
             element[0].pushUpdate = false;
             element[1].pushUpdate = false;
         }

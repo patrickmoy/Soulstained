@@ -65,7 +65,7 @@ class GameEngine {
         this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"], this.IMAGES_LIST["./res/img/whip.png"]);
         // push hero to currentEntities
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
-        this.currentEntities[0].push(this.HERO.whip);
+        this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
 
         // Create the worlds
         this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
@@ -156,11 +156,11 @@ class GameEngine {
             resetFlags(this.currentEntities[3]);
 
             // Predicts update for all the necessary entities
-            this.currentEntities[0][0].preUpdate();
+            this.currentEntities[0].filter(hero => hero.alive).forEach(hero => hero.preUpdate());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.preUpdate());
             // this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
 
-            const collisionPairs = detectCollide([].concat.apply([], this.currentEntities));
+            const collisionPairs = detectCollide([].concat.apply([], this.currentEntities).filter(entity => entity.alive));
 
                 // Flags entities for standard "impassable" behavior (mostly terrain)
             // this.PHYSICS.flagImpassable(this.PHYSICS.detectCollide([].concat.apply([], this.currentEntities)));
@@ -168,8 +168,8 @@ class GameEngine {
             flagDamage(collisionPairs);
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
-            this.currentEntities[0][0].update(); // Updates hero
-            this.currentEntities[1].filter(block => block.alive).forEach(block => block.update());
+            this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.update()); // Updates hero
+            //this.currentEntities[1].filter(block => block.alive).forEach(block => block.update());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.update());
             this.checkPortal();
@@ -252,7 +252,7 @@ class GameEngine {
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
-            this.currentEntities[0][0].draw(); // Draws the hero
+            this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon.
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw()); // Draws the enemies
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw()); // Draws the projectiles
             this.GAME_CONTEXT.restore();

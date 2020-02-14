@@ -33,7 +33,7 @@ class Entity {
         this.ACTION_DURATION = 0;
         this.actionElapsedTime = 0;
         this.invincibleCounter = 0;
-        this.INVINCIBLE_TIME = 1.25;
+        this.INVINCIBLE_TIME = .5;
         this.hitbox = // The entity's box to take be interacted with other entities or world components.
             {
                 xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -161,7 +161,7 @@ class Entity {
      *  Directs entity to take damage. Takes 1 damage if no damage is specified.
      */
     takeDamage(damage = 1) {
-        console.log("Damage Taken");
+        console.log(this.constructor.name + ": damage taken");
         if (this.health - damage < 0) {
             this.health = 0;
         } else {

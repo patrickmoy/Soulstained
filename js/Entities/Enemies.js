@@ -106,6 +106,7 @@ class Zombie extends Enemy {
         this.context = game.GAME_CONTEXT;
         this.speed = 100;
         this.direction = 1;
+        this.status = 'walking';
         this.pushUpdate = false;
         this.directionTime = 0;
         this.direction = Math.floor(Math.random() * 4.5);

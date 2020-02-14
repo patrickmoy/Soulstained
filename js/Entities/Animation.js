@@ -11,22 +11,21 @@ class Animation {
      * @param {number} frameHeight X coordinate to begin pulling sprite
      * @param {number} frameWidth Y coordinate to begin pull
      * @param {number} singleFrameTime  Y coordinate to stop
-     * @param {number} frameCount of animation in ms
      * @param frameIndices
      * @param {number} scale image scaling to increase or decrease size
+     * @param attackFrameTime
      */
-    constructor(spriteSheet, entity, frameWidth, frameHeight, singleFrameTime, scale, frameIndices = [2]) {
+    constructor(spriteSheet, entity, frameWidth, frameHeight, singleFrameTime, scale, frameIndices = [2], attackFrameTime) {
         this.spriteSheet = spriteSheet;
         this.entity = entity;
         this.frameWidth = frameWidth;
-        this.frameDuration = singleFrameTime;
+        this.standardFrameTime = singleFrameTime;
+        this.attackFrameTime = attackFrameTime;
         this.frameHeight = frameHeight;
         this.frameIndices = frameIndices;
-        this.walkDuration = this.frameDuration * this.frameIndices[0];
-        this.attackDuration = this.frameDuration * this.frameIndices[1];
+        this.walkDuration = this.standardFrameTime * this.frameIndices[0]; // Total duration only needed for loops.
         this.scale = scale;
         this.walkTime = 0;
-
     }
 
     /**
@@ -50,12 +49,9 @@ class Animation {
         }
         if (status === 'walking' || status === 'idle') {
             xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0]);
-
         } else if (status === 'attacking') {
-
             xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) %
                 (this.frameIndices[1] - this.frameIndices[0]) + this.frameIndices[0]);
-
         } else if (status === 'weapon') {
             xIndex = 0;
             if (this.entity.direction <= 1) {
@@ -77,7 +73,10 @@ class Animation {
      * @returns {number} the current frame.
      */
     currentFrame(time) {
-        return Math.floor(time / this.frameDuration);
+        if (this.entity.status === 'attacking') {
+            return Math.floor(time / this.attackFrameTime);
+        }
+        return Math.floor(time / this.standardFrameTime);
     }
 
     // /**
