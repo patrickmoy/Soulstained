@@ -44,7 +44,11 @@ class World {
         else if (this.sourceY < newSourceY) this.sourceY += this.SOURCE_SHIFT; // Shift down since new Y is on down
         else if (this.sourceY > newSourceY) this.sourceY -= this.SOURCE_SHIFT; // Shift up  since new Y is on up
 
-        if (this.sourceX === newSourceX && this.sourceY === newSourceY) this.GAME.transition = false; // Transition is complete, turn off transitioning
+        if (this.sourceX === newSourceX && this.sourceY === newSourceY) {
+            this.GAME.transition = false;
+            this.sx = this.sourceX;
+            this.sy = this.sourceY;
+        } // Transition is complete, turn off transitioning
     }
 
     fade() {

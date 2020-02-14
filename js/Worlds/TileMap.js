@@ -39,6 +39,10 @@ class TileMap {
                         entityArray[i][j].dx * 60, entityArray[i][j].dy * 60);
                     this.PORTALS.push(portalEntity);
                 }
+                else if (entityArray[i][j].Class === 'FirePit') {
+                    const firePit = new FirePit(this.game, this.game.IMAGES_LIST["./res/img/fire.png"], j*60, i*60, 60, 60);
+                    this.ENEMIES.push(firePit);
+                }
             }
         }
     }

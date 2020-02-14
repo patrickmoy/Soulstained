@@ -13,6 +13,8 @@ class Hero extends Entity {
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
+        this.health = 7;
+        this.coins = 678;
     }
 
     /**

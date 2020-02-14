@@ -19,14 +19,12 @@ class GameEngine {
     /**
      * Creates a Game Engine with two different contexts and cached images.
      * @param gameContext {CanvasRenderingContext2D} 2d context of the gameplay
-     * @param uiContext {CanvasRenderingContext2D} 2d context of the ui
      * @param images {Image[]} array of cached images for the game
      */
-    constructor(gameContext, uiContext, images) {
+    constructor(gameContext, images) {
         this.IMAGES_LIST = images; // A list of images to be used for the game.
         this.GAME_CONTEXT = gameContext; // 2D Context of the main game section (where player movement occurs)
-        this.UI_CONTEXT = uiContext; // 2D Context of the UI section (where HP and other player info is shown)
-
+        //this.UI_CONTEXT = uiContext; // 2D Context of the UI section (where HP and other player info is shown)
         this.INPUTS = {
             "KeyW": false,
             "KeyA": false,
@@ -48,10 +46,12 @@ class GameEngine {
         this.PHYSICS; // The physics/collision detection and handling engine
         this.GAME_CANVAS_WIDTH; // The main canvas width
         this.GAME_CANVAS_HEIGHT; // The main canvas height
-        this.UI_CANVAS_WIDTH; // The UI canvas width
-        this.UI_CANVAS_HEIGHT; // The UI canvas height
+        //this.UI_CANVAS_WIDTH; // The UI canvas width
+        //this.UI_CANVAS_HEIGHT; // The UI canvas height
         this.HERO; // The main player of the game
         this.currentWorld; // Current world the player is in (e.g. Necromancer Dungeon or Open World)
+
+        this.UI;
     }
 
     /**
@@ -59,7 +59,7 @@ class GameEngine {
      */
     init() {
         this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
-        this.UI_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
+        //this.UI_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
         // hero initialization
         this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"]);
@@ -72,7 +72,6 @@ class GameEngine {
         this.WORLDS["OpenWorld"].initializeTileMaps();
         this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
         this.WORLDS["NecroDungeon"].initializeTileMaps();
-        const tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
 
         this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS;
         this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES;
@@ -80,11 +79,11 @@ class GameEngine {
         this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
-        this.UI_CANVAS_WIDTH = this.UI_CONTEXT.canvas.width;
-        this.UI_CANVAS_HEIGHT = this.UI_CONTEXT.canvas.height;
+        //this.UI_CANVAS_WIDTH = this.UI_CONTEXT.canvas.width;
+        //this.UI_CANVAS_HEIGHT = this.UI_CONTEXT.canvas.height;
         this.TIMER = new GameTimer();
         // this.PHYSICS = new Collision();
-
+        this.UI = new UserInterface(this, this.HERO, this.IMAGES_LIST);
         // If button is pressed and the button is a key we care about, set it to true.
         this.GAME_CONTEXT.canvas.addEventListener("keydown", (key) => {
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = true;
@@ -168,6 +167,7 @@ class GameEngine {
             this.currentEntities[0][0].update(); // Updates hero
             this.currentEntities[2].forEach(enemy => enemy.update());
             this.currentEntities[3].forEach(projectile => projectile.update());
+            this.UI.update();
             this.checkPortal();
             this.checkTransition();
         }
@@ -183,8 +183,8 @@ class GameEngine {
             this.currentWorld.section.x += currentBorder.changeInX; // Change the x coordinate for the tilemap array
             this.currentWorld.section.y += currentBorder.changeInY; // Change the y coordinate for the tilemap array
 
-            this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS; // Replaces the current blocks with the ones in the new tilemap
-            this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES; // Replaces the current enemies with the ones in the new tilemap
+            this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS; // Replaces the current blocks with the ones in the new tilemap
+            this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES; // Replaces the current enemies with the ones in the new tilemap
             this.currentEntities[2].forEach(enemy => enemy.resetPosition());
 
             this.currentEntities[3] = []; // Removes all projectiles
@@ -251,6 +251,7 @@ class GameEngine {
             this.currentEntities[0][0].draw(); // Draws the hero
             this.currentEntities[2].forEach(enemy => enemy.draw()); // Draws the enemies
             this.currentEntities[3].forEach(projectile => projectile.draw()); // Draws the projectiles
+            this.UI.draw();
             this.GAME_CONTEXT.restore();
         }
         else { // Transition is handled here
@@ -258,17 +259,20 @@ class GameEngine {
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
             this.currentEntities[0][0].draw();
+            this.UI.draw();
             this.GAME_CONTEXT.restore();
         }
 
+
         // There was a change that affects the UI so we update the UI
-        if (this.UI_CONTEXT.change) {
-            // When a change occurs, we just redraw. If nothing changes, the canvas should remain static
-            this.UI_CONTEXT.clearRect(0, 0, this.UI_CANVAS_WIDTH, this.UI_CANVAS_HEIGHT);
-            this.UI_CONTEXT.save();
-            /* Call the function to redraw the UI */ // Redraw the UI
-            this.UI_CONTEXT.restore();
-        }
+        //if (this.UI_CONTEXT.change) {
+        //    // When a change occurs, we just redraw. If nothing changes, the canvas should remain static
+        //    this.UI_CONTEXT.clearRect(0, 0, this.UI_CANVAS_WIDTH, this.UI_CANVAS_HEIGHT);
+        //    this.UI_CONTEXT.save();
+        //    /* Call the function to redraw the UI */ // Redraw the UI
+        //    this.UI_CONTEXT.restore();
+        //}
+
     }
 }
 
