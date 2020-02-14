@@ -19,4 +19,8 @@ class FirePit extends Entity {
             this.animation.drawFrame(this.game.clockTick, this.context, this.sx, this.sy, 0, 'dancing');
         }
     }
+
+    resetPosition() {
+        // do nothing
+    }
 }
