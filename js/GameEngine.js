@@ -190,7 +190,6 @@ class GameEngine {
 
             this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS; // Replaces the current blocks with the ones in the new tilemap
             this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES; // Replaces the current enemies with the ones in the new tilemap
-            console.log(this.currentEntities[2]);
             this.currentEntities[2].forEach(enemy => enemy.resetPosition());
 
             this.currentEntities[3] = []; // Removes all projectiles
