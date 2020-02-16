@@ -138,6 +138,7 @@ function flagImpassable(collisionPairs) {
     });
 }
 /**
+ * TODO: Maybe change so that this flags the amount of damage to take too? Based on the collision.
  * Entities that are going to collide and are part of a damage pair should flag damage.
  * @param collisionPairs
  */

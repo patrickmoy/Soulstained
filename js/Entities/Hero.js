@@ -23,7 +23,8 @@ class Hero extends Entity {
         this.coins = 678;
 
         // Change this to be 5x the attackFrameTime, and whip speed will update.
-        // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration.
+        // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration. (Not Hero's).
+        this.INVINCIBLE_TIME = 2;
         this.ACTION_DURATION = .5;
         this.WHIP_ACTIVE_RATIO = .6;
         this.alive = true;

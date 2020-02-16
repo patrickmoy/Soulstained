@@ -61,7 +61,7 @@ class Weapon extends Entity {
     }
 
     draw() {
-        if (this.active) {
+        if (this.active && this.hero.alive) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);

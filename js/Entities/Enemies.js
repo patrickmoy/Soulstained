@@ -78,9 +78,11 @@ class Crab extends Enemy {
      */
     constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height, 2);
-        this.spritesheet = new Animation(spritesheet, 16, 16, 2, .25, 2, true, 2.3);
+        this.spritesheet = new Animation(spritesheet, this, 16, 16, .25, 2.3);
         this.speed = 85;
         this.directionTime = 0;
+        this.alive = true;
+        this.health = 1;
         this.direction = Math.floor(Math.random() * 4.5);
     }
 
@@ -91,7 +93,7 @@ class Crab extends Enemy {
     draw() {
         this.spritesheet.drawFrame(this.game.clockTick, this.context,
             this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 0, 'moving');
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking');
     }
 }
 

@@ -6,16 +6,17 @@ class Animation {
      * Constructor to create Animation object.
      * Class is written with a horizontally aligned sprite sheet in mind -
      * please ensure sprite sheet is formatted as such through Aseprite or Marmoset Hexels.
-     * @param {Image} spriteSheet   Filepath of sprite sheet.
-     * @param entity
+     * @param {Image} spriteSheet Filepath of sprite sheet.
+     * @param {Entity} entity that has the animation (pass {this}).
      * @param {number} frameHeight X coordinate to begin pulling sprite
      * @param {number} frameWidth Y coordinate to begin pull
-     * @param {number} singleFrameTime  Y coordinate to stop
-     * @param frameIndices
-     * @param {number} scale image scaling to increase or decrease size
-     * @param attackFrameTime
+     * @param {number} singleFrameTime  Time for single frame of standard loop.
+     * @param {Array} frameIndices Array [x,y], where x is the frame at which the walk/default animation ends, and y is
+     * the frame at which the attack animation (if any) ends. Defaults to [2] (assuming only 2 frames, only walking).
+     * @param {number} scale Image scaling ratio to increase or decrease size.
+     * @param attackFrameTime Optional, attack frame time (if there is an attack animation).
      */
-    constructor(spriteSheet, entity, frameWidth, frameHeight, singleFrameTime, scale, frameIndices = [2], attackFrameTime) {
+    constructor(spriteSheet, entity, frameWidth, frameHeight, singleFrameTime, scale, frameIndices = [2], attackFrameTime = 0) {
         this.spriteSheet = spriteSheet;
         this.entity = entity;
         this.frameWidth = frameWidth;
