@@ -72,7 +72,7 @@ class GameEngine {
         this.WORLDS["OpenWorld"].initializeTileMaps();
         this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
         this.WORLDS["NecroDungeon"].initializeTileMaps();
-        const tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
+        // const tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
 
         this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS;
         this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES;
@@ -126,6 +126,7 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
+        this.UI.update();
         if (this.inInventory) // Player is in inventory so perform inventory actions.
         {
 

@@ -48,6 +48,7 @@ class TileMap {
                 }
                 else if (entityArray[i][j].Class === 'FirePit') {
                     const firePit = new FirePit(this.game, this.game.IMAGES_LIST["./res/img/fire.png"], j*60, i*60, 60, 60);
+                    firePit.alive = true;
                     this.ENEMIES.push(firePit);
                 }
             }

@@ -40,6 +40,7 @@ class UserInterface
          */
         var dx = 22;
         var dy = 0;
+
         for (var i=0; i < this.hp; i++) {
 
             this.ctx.drawImage(this.heartImage, 0, 0, 200, 167, dx, dy, 36, 30);
