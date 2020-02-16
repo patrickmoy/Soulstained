@@ -1,7 +1,7 @@
 // TODO update the enemies with the new entity parameters - Steven Tran
 class Enemy extends Entity {
     constructor(game, x, y, width, height, health) {
-        super(game, x, y, width, height, 0);
+        super(game, x, y, width, height, 1);
         this.context = game.GAME_CONTEXT;
         this.ORIGINAL_X = x; // Variable to keep track of where the entity started at in the x position
         this.ORIGINAL_Y = y; // Variable to keep track of where the entity started at in the y position
@@ -101,12 +101,12 @@ class Zombie extends Enemy {
      *  and will follow the hero.
      */
     constructor(game, spritesheet, x, y, width, height) {
-        super(game, x, y, width, height, 4);
-        this.animation = new Animation(spritesheet, 16, 16, 2, .450, 2, true, 3.5);
+        super(game, x, y, width, height, 2);
+        this.animation = new Animation(spritesheet, this, 16, 16, .450, 3.5);
         this.context = game.GAME_CONTEXT;
         this.speed = 100;
         this.direction = 1;
-        this.health = 4;
+        this.status = 'walking';
         this.pushUpdate = false;
         this.directionTime = 0;
         this.direction = Math.floor(Math.random() * 4.5);
@@ -228,7 +228,7 @@ class Zombie extends Enemy {
             this.context.stroke();
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 0, 'dancing');
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status);
         }
     }
 }

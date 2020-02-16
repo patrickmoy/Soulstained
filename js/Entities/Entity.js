@@ -10,7 +10,7 @@ class Entity {
      * @param height {number} the height of the entity in pixels
      * @param layerLevel {number} TODO unsure yet
      */
-    constructor(game, x, y, width, height, layerLevel) {
+    constructor(game, x, y, width, height, layerLevel = 1) {
         this.HITBOX_SHRINK_FACTOR = .9;
         this.game = game;
         this.width = width;
@@ -29,6 +29,11 @@ class Entity {
             };
 
         this.speed = 0;
+        this.health = -1;
+        this.ACTION_DURATION = 0;
+        this.actionElapsedTime = 0;
+        this.invincibleCounter = 0;
+        this.INVINCIBLE_TIME = .5;
         this.hitbox = // The entity's box to take be interacted with other entities or world components.
             {
                 xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -42,6 +47,7 @@ class Entity {
             xMax: x + width * this.HITBOX_SHRINK_FACTOR,
             yMax: y + height * this.HITBOX_SHRINK_FACTOR,
         };
+        this.layerLevel = layerLevel;
 
         this.direction = 1; // Looking down at default;
         // Where the hero is facing. North = 0, South = 1, East = 2, West = 3. //
@@ -51,11 +57,13 @@ class Entity {
         this.status = 'idle'; // PM: New parameter I'm adding to govern "state". Idle, attacking, walking. Firmly of the
         // belief that this should be stored in entity state -> animation can make use of this.
         // Acceptable states currently: 'idle', 'walking', 'attacking' (some enemies and hero).
-        // Considering changing 'attacking' to "action" and then having action depend on the equippped
+        // Considering changing 'attacking' to "action" and then having action depend on the equipped
         // item, which should also be stored in Hero.
-        this.isDead = false;
-        this.Dying = false;
+
+        this.alive = false;
+        this.Dying = false; // State of dying, for death animations/effects.
         this.moveable = true;
+        this.pushDamage = false;
         this.pushUpdate = true; // Used for collision to check if entity's new Hitbox should be pushed for new update with the new hit box or not.
                                 // Is changed by collision detection
     }
@@ -83,6 +91,28 @@ class Entity {
             this.futureHitbox.xMax = this.hitbox.xMax; // Resets future bottom right x coordinate
             this.futureHitbox.yMax = this.hitbox.yMax; // Resets future bottom right y coordinate
         }
+        if (this.pushDamage) {
+            if (this.invincibleCounter === 0) {
+                this.takeDamage();
+            }
+            this.invincibleCounter += this.game.clockTick;
+            if (this.invincibleCounter > this.INVINCIBLE_TIME) {
+                this.invincibleCounter = 0;
+            }
+            this.pushDamage = false;
+        } else {
+            if (this.invincibleCounter > 0) {
+                this.invincibleCounter += this.game.clockTick;
+            }
+            if (this.invincibleCounter > this.INVINCIBLE_TIME) {
+                this.invincibleCounter = 0;
+            }
+
+        }
+
+        if (this.health === 0) {
+            this.alive = false;
+        }
     }
 
     // Sets status of entity to walking for this update/render tick, and updates hitbox.
@@ -105,12 +135,20 @@ class Entity {
                 this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
                 break;
         }
-        this.futureHitbox.xMin = Math.floor(this.futureHitbox.xMin); // Normalize the x min coordinate for consistency
-        this.futureHitbox.xMax = Math.floor(this.futureHitbox.xMax); // Normalize the x max coordinate for consistency
-        this.futureHitbox.yMin = Math.floor(this.futureHitbox.yMin); // Normalize the y min coordinate for consistency
-        this.futureHitbox.yMax = Math.floor(this.futureHitbox.yMax); // Normalize the y max coordinate for consistency
+        // Removed since it causes speed disparities left to right and top to bottom. s
+        // this.futureHitbox.xMin = Math.floor(this.futureHitbox.xMin); // Normalize the x min coordinate for consistency
+        // this.futureHitbox.xMax = Math.floor(this.futureHitbox.xMax); // Normalize the x max coordinate for consistency
+        // this.futureHitbox.yMin = Math.floor(this.futureHitbox.yMin); // Normalize the y min coordinate for consistency
+        // this.futureHitbox.yMax = Math.floor(this.futureHitbox.yMax); // Normalize the y max coordinate for consistency
     }
 
+    attack() {
+        this.actionElapsedTime += this.game.clockTick;
+        if (this.actionElapsedTime > this.ACTION_DURATION) {
+            this.actionElapsedTime = 0;
+            this.status = 'idle';
+        }
+    }
 
     /**
      * Draws the entity
@@ -118,4 +156,18 @@ class Entity {
     draw() {
         // Do nothing, implemented by subclasses
     }
+
+    /**
+     *  Directs entity to take damage. Takes 1 damage if no damage is specified.
+     */
+    takeDamage(damage = 1) {
+        console.log(this.constructor.name + ": damage taken");
+        if (this.health - damage < 0) {
+            this.health = 0;
+        } else {
+            this.health -= damage;
+        }
+    }
+
+
 }

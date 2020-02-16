@@ -5,16 +5,28 @@ class Hero extends Entity {
     /**
      * The entity that the player can control and play the game with.
      * @param game {GameEngine} The engine of the game for accessing
-     * @param spritesheet {Image} The image of the hero for animation and updating
+     * @param spriteSheet {Image} The image of the hero for animation and updating
+     * @param weaponSheet {Image} The image of the default weapon for animation.
      */
-    constructor(game, spritesheet) {
-        super(game, 0, 360, 38, 55, 0);
-        this.animation = new Animation(spritesheet, 16, 23, 2, .250, 2, true, 2.4);
+    constructor(game, spriteSheet, weaponSheet) {
+        super(game, 300, 420, 38, 55, 1);
+        // To modify whip speed, change last parameter here (.100 default, attackFrameTime parameter in Animation).
+        // Must be 1/5 of this.ACTION_DURATION (change that too).
+        this.animation = new Animation(spriteSheet, this,16, 23, .250,
+            2.4, [2,7], .100);
+        this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
+        this.health = 3;
+        this.maxHealth = 3;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
-        this.health = 7;
         this.coins = 678;
+
+        // Change this to be 5x the attackFrameTime, and whip speed will update.
+        // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration.
+        this.ACTION_DURATION = .5;
+        this.WHIP_ACTIVE_RATIO = .6;
+        this.alive = true;
     }
 
     /**
@@ -22,7 +34,13 @@ class Hero extends Entity {
      */
     preUpdate() {
         if (!this.game.transition) {
-            if (this.game.hasMoveInputs()) {
+            this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
+            if (this.status === 'attacking') {
+                this.attack();
+            } else if (this.status !== 'attacking' && this.game.INPUTS['KeyJ']) {
+                this.status = 'attacking';
+                this.attack();
+            } else if (this.game.hasMoveInputs()) {
                 this.status = 'walking';
                 if (this.game.INPUTS["KeyW"]) {
                     this.direction = 0;
@@ -97,7 +115,7 @@ class Hero extends Entity {
         if (!this.game.pause) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.direction, this.status);
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.direction);
         }
     }
 
@@ -149,4 +167,9 @@ class Hero extends Entity {
         };
     }
 
+    attack() {
+        this.whip.direction = this.direction;
+        super.attack();
+
+    }
 }
