@@ -1,7 +1,7 @@
 class FirePit extends Enemy {
     constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height, 1);
-        this.animation = new Animation(spritesheet, 16, 16, 4, .1, 4, [4]);
+        this.animation = new Animation(spritesheet, this,16, 16, .1, 4, [4]);
         this.context = game.GAME_CONTEXT;
         this.sx = x;
         this.sy = y;
