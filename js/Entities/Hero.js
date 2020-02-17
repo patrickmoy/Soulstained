@@ -21,13 +21,16 @@ class Hero extends Entity {
         this.maxHealth = 3;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
         this.coins = 678;
+        this.jumpElapsedTime = 0;
+        this.alive = true;
 
         // Change this to be 5x the attackFrameTime, and whip speed will update.
         // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration. (Not Hero's).
         this.INVINCIBLE_TIME = 2;
         this.ACTION_DURATION = .5;
+        this.JUMP_DURATION = .75;
         this.WHIP_ACTIVE_RATIO = .6;
-        this.alive = true;
+
     }
 
     /**
@@ -166,6 +169,15 @@ class Hero extends Entity {
             changeInX: 0,
             changeInY: 0
         };
+    }
+
+    jump() {
+         //this.z = (this.game.GRAVITY * this.jumpElapsedTime * this.jumpElapsedTime) + this.game.GRAVITY * this.jumpElapsedTime
+        // a(x-h)^2 + k --> -64/9, .375, 1;
+        // customize
+        // Check border for pits
+        // If colliding, check deep collision (actual proximity to pit center)
+        //
     }
 
     attack() {

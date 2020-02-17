@@ -41,6 +41,7 @@ class GameEngine {
         this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
         this.currentEntities = [[], [], [], [], []]; // Stores entities at the current tile map
 
+        this.GRAVITY = -15;
         this.currentPortal;
         this.TIMER; // The Game Timer to keep track of virtual time
         this.PHYSICS; // The physics/collision detection and handling engine
@@ -68,7 +69,7 @@ class GameEngine {
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
 
         // Create the worlds
-        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 1, 7);
+        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
         this.WORLDS["OpenWorld"].initializeTileMaps();
         this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
         this.WORLDS["NecroDungeon"].initializeTileMaps();
