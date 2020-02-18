@@ -4,7 +4,7 @@ class Weapon extends Entity {
         super(game, hero.hitbox.xMin, hero.hitbox.yMin, width, height, 2);
         this.context = this.game.GAME_CONTEXT;
         this.scale = 2.4;
-        this.animation = new Animation(weaponSheet, this, 35, 35, .250, this.scale);
+        this.animation = new Animation(weaponSheet, this, 35, 35, .050, this.scale);
         this.hero = hero;
         this.status = 'weapon';
         this.WHIP_MAX_DIMENSION = 35;

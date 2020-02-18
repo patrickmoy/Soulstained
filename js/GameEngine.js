@@ -24,7 +24,7 @@ class GameEngine {
     constructor(gameContext, images) {
         this.IMAGES_LIST = images; // A list of images to be used for the game.
         this.GAME_CONTEXT = gameContext; // 2D Context of the main game section (where player movement occurs)
-        //this.UI_CONTEXT = uiContext; // 2D Context of the UI section (where HP and other player info is shown)
+        this.VISUAL_EFFECTS = new VisualEffectsEngine(this);
         this.INPUTS = {
             "KeyW": false,
             "KeyA": false,
@@ -47,8 +47,6 @@ class GameEngine {
         this.PHYSICS; // The physics/collision detection and handling engine
         this.GAME_CANVAS_WIDTH; // The main canvas width
         this.GAME_CANVAS_HEIGHT; // The main canvas height
-        //this.UI_CANVAS_WIDTH; // The UI canvas width
-        //this.UI_CANVAS_HEIGHT; // The UI canvas height
         this.HERO; // The main player of the game
         this.currentWorld; // Current world the player is in (e.g. Necromancer Dungeon or Open World)
 
@@ -60,7 +58,6 @@ class GameEngine {
      */
     init() {
         this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
-        //this.UI_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
         // hero initialization
         this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"], this.IMAGES_LIST["./res/img/whip.png"]);
@@ -73,7 +70,6 @@ class GameEngine {
         this.WORLDS["OpenWorld"].initializeTileMaps();
         this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
         this.WORLDS["NecroDungeon"].initializeTileMaps();
-        // const tileMap = this.WORLDS["OpenWorld"].getCurrentTileMap();
 
         this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS;
         this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES;
@@ -81,10 +77,9 @@ class GameEngine {
         this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
-        //this.UI_CANVAS_WIDTH = this.UI_CONTEXT.canvas.width;
-        //this.UI_CANVAS_HEIGHT = this.UI_CONTEXT.canvas.height;
+
         this.TIMER = new GameTimer();
-        // this.PHYSICS = new Collision();
+
         this.UI = new UserInterface(this, this.HERO, this.IMAGES_LIST);
         // If button is pressed and the button is a key we care about, set it to true.
         this.GAME_CONTEXT.canvas.addEventListener("keydown", (key) => {
@@ -148,10 +143,6 @@ class GameEngine {
         else {
             // Entities are now movable around the map
             // Reset all behavior flags for all entities. Can be expanded/diversified
-            // this.PHYSICS.resetFlags(this.currentEntities[0]); // Resets the hero's flag
-            // this.PHYSICS.resetFlags(this.currentEntities[1]); // Reset the block's flag
-            // this.PHYSICS.resetFlags(this.currentEntities[2]); // Resets the enemies' flag
-            // this.PHYSICS.resetFlags(this.currentEntities[3]); // Resets the projectile's flag
             resetFlags(this.currentEntities[0]);
             resetFlags(this.currentEntities[1]);
             resetFlags(this.currentEntities[2]);
@@ -164,8 +155,8 @@ class GameEngine {
 
             const collisionPairs = detectCollide([].concat.apply([], this.currentEntities).filter(entity => entity.alive));
 
-                // Flags entities for standard "impassable" behavior (mostly terrain)
-            // this.PHYSICS.flagImpassable(this.PHYSICS.detectCollide([].concat.apply([], this.currentEntities)));
+            // Flags entities for standard "impassable" behavior (mostly terrain)
+
             flagImpassable(collisionPairs);
             flagDamage(collisionPairs);
             // Updates accordingly w/ entity handler flags

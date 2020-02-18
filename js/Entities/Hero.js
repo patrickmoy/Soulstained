@@ -31,6 +31,10 @@ class Hero extends Entity {
         this.JUMP_DURATION = .75;
         this.WHIP_ACTIVE_RATIO = .6;
 
+        // hero damage animation control variables
+        this.hurting = false;
+        this.hurtCounter = 64;
+
     }
 
     /**
@@ -116,10 +120,25 @@ class Hero extends Entity {
      * Draws the hero.
      */
     draw() {
-        if (!this.game.pause) {
+        if (!this.game.pause && !this.hurting) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
+        }
+        if (this.hurting) {
+            if (this.hurtCounter % 8 === 0) {
+                this.animation.drawFrame(this.game.clockTick, this.context,
+                    this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                    this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
+            } else {
+                // draw nothing
+            }
+
+            this.hurtCounter -= 1;
+            if (this.hurtCounter === 0) {
+                this.hurting = false;
+                this.hurtCounter = 64;
+            }
         }
     }
 

@@ -62,6 +62,7 @@ class Entity {
         // item, which should also be stored in Hero.
 
         this.alive = false;
+        this.hurting = false;
         this.Dying = false; // State of dying, for death animations/effects.
         this.moveable = true;
         this.pushDamage = false;
@@ -95,6 +96,7 @@ class Entity {
         if (this.pushDamage) {
             if (this.invincibleCounter === 0) {
                 this.takeDamage();
+                this.hurting = true;
             }
             this.invincibleCounter += this.game.clockTick;
             if (this.invincibleCounter > this.INVINCIBLE_TIME) {
