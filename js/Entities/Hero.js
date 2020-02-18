@@ -33,7 +33,7 @@ class Hero extends Entity {
 
         // hero damage animation control variables
         this.hurting = false;
-        this.hurtCounter = 64;
+        this.hurtCounter = 80;
 
     }
 
@@ -137,7 +137,7 @@ class Hero extends Entity {
             this.hurtCounter -= 1;
             if (this.hurtCounter === 0) {
                 this.hurting = false;
-                this.hurtCounter = 64;
+                this.hurtCounter = 80;
             }
         }
     }
