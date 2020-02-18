@@ -255,6 +255,7 @@ class GameEngine {
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
             this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon.
+            this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw()); // Draws the enemies
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw()); // Draws the projectiles
             this.UI.draw();

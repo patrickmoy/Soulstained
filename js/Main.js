@@ -14,6 +14,7 @@ ImageHandler.queueDownload("./res/img/keyK.png");
 ImageHandler.queueDownload("./res/img/whipPrototype.png");
 ImageHandler.queueDownload("./res/img/swordPrototype.png");
 ImageHandler.queueDownload("./res/img/fire.png");
+ImageHandler.queueDownload("./res/img/letters.png");
 ImageHandler.startDownload()
     .then(() => {
         const gameCanvas = document.getElementById("gameWorld"); // Get the

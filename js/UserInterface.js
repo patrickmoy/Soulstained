@@ -8,10 +8,13 @@ class UserInterface
         this.currencyImage = this.images["./res/img/currency.png"];
         this.heartImage = this.images["./res/img/shinyHeart.png"];
         this.digitsFontImage = this.images["./res/img/digits.png"];
+        this.lettersFontImages = this.images["./res/img/letters.png"];
         this.keyJImage = this.images["./res/img/keyJ.png"];
         this.keyKImage = this.images["./res/img/keyK.png"];
         this.swordPrototype = this.images["./res/img/swordPrototype.png"];
         this.whipPrototype = this.images["./res/img/whipPrototype.png"];
+
+        this.currentDialogue = false;
 
         this.hp;
         this.currency;
@@ -32,6 +35,17 @@ class UserInterface
             if (i === 1) this.d10 = digit * 49.5;
             if (i === 2) this.d100 = digit * 49.5;
         }
+
+        /**
+         * Check for messages
+         *
+         *  this.game.
+         *
+         *
+         *
+         *
+         *
+         */
     }
 
     draw() {
