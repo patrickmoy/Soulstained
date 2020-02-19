@@ -33,6 +33,10 @@ class TileMap {
                     const zombieEntity = new Zombie(this.game, this.game.IMAGES_LIST["./res/img/zombie.png"],j * 60, i * 60, 60, 60);
                     zombieEntity.alive = true;
                     this.ENEMIES.push(zombieEntity);
+                }else if (entityArray[i][j] === 3) {
+                    const necEntity = new Necromancer(this.game, this.game.IMAGES_LIST["./res/img/NecroFireball.png"], 170, 50, 60, 60, this.ENEMIES);
+                    necEntity.alive = true;
+                    this.ENEMIES.push(necEntity);
                 }
                 else if (entityArray[i][j] === 5) {
                     const crabEntity = new Crab(this.game, this.game.IMAGES_LIST['./res/img/crab.png'],j * 60, i * 60, 40, 40);
