@@ -68,17 +68,19 @@ class GameEngine {
         // push hero to currentEntities
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
-
         // Create the worlds
-        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
-        this.WORLDS["OpenWorld"].initializeTileMaps();
-        this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
+        // this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
+        // this.WORLDS["OpenWorld"].initializeTileMaps();
+        this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 0);
         this.WORLDS["NecroDungeon"].initializeTileMaps();
 
-        this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES;
+        // this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS;
+        // this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES;
 
-        this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
+        this.currentEntities[1] = this.WORLDS["NecroDungeon"].getCurrentTileMap().BLOCKS;
+        this.currentEntities[2] = this.WORLDS["NecroDungeon"].getCurrentTileMap().ENEMIES;
+
+        this.currentWorld = this.WORLDS["NecroDungeon"]; // Set the current world to the open worlds
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
 
@@ -169,7 +171,7 @@ class GameEngine {
             this.currentEntities[0].filter(hero => hero.alive).forEach(hero => hero.preUpdate());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.preUpdate());
             // this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
-
+            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate());
             const collisionPairs = detectCollide([].concat.apply([], this.currentEntities).filter(entity => entity.alive));
 
             // Flags entities for standard "impassable" behavior (mostly terrain)
@@ -182,6 +184,8 @@ class GameEngine {
             //this.currentEntities[1].filter(block => block.alive).forEach(block => block.update());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.update());
+            this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
+            console.log(this.currentEntities[3]);
             this.checkPortal();
             this.checkTransition();
         }
