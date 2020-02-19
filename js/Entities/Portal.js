@@ -1,11 +1,11 @@
 class Portal {
   //TODO: Consider increasing portal collision area of detection, because there's a slight bug atm involving missing it.
-  constructor(game, sx, sy, sectionX, sectionY, destination, dx, dy) {
+  constructor(game, sx, sy, sectionX, sectionY, destination, dx, dy, width = 60, height = 60) {
     this.game = game;
     this.sx = sx;
     this.sy = sy;
-    this.width = 60;
-    this.height = 60;
+    this.width = width;
+    this.height = height;
     this.destination = destination;
     this.section = {
       x: sectionX,

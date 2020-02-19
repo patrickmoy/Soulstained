@@ -1,4 +1,3 @@
-// TODO update the enemies with the new entity parameters - Steven Tran
 class Enemy extends Entity {
     constructor(game, x, y, width, height, health) {
         super(game, x, y, width, height, 1);
@@ -7,6 +6,7 @@ class Enemy extends Entity {
         this.ORIGINAL_Y = y; // Variable to keep track of where the entity started at in the y position
         this.ORIGINAL_HEALTH = health;
         this.health = health;
+        this.alive = true;
     }
 
     /**

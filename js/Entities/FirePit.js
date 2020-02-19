@@ -6,7 +6,6 @@ class FirePit extends Enemy {
         this.sx = x;
         this.sy = y;
         this.status = 'walking';
-        console.log("firepit created");
     }
 
     update() {

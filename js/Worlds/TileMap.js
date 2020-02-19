@@ -54,9 +54,7 @@ class TileMap {
 
     createEntities()
     {
-        // // While this looks like O(n^4), it's actually O(nm) where n is the amount of tiles used and m is the amount of tilesets used. It won't be too inefficient.
-        // // For example, the house tiled map has 3 layers of 12 x 12 tiles and uses 2 tilesets. That would mean n = (12 * 12 * 3) * 2 = 864
-        // // Accesses arrays
+        // Creates all the collision walls
         for (var i = 0; i < this.info.layers.length; i++)
         {
             for (var j = 0; j < this.info.layers[i].length; j++)
@@ -91,7 +89,17 @@ class TileMap {
             }
             else if (entity.type === 'FirePit')
             {
-                this.ENEMIES.push(new FirePit(this.game, this.game.ASSETS_LIST['/res/img/fire.png'], 69, 69, 60, 60))
+                this.ENEMIES.push(new FirePit(this.game, this.game.ASSETS_LIST['./res/img/fire.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60));
+            }
+            else if (entity.type === 'Zombie')
+            {
+                this.ENEMIES.push(new Zombie(this.game, this.game.ASSETS_LIST['./res/img/zombie.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60));
+            }
+            else if (entity.type === 'Portal')
+            {
+                console.log("Portal created");
+                console.log(entity)
+                this.PORTALS.push(new Portal(this.game, entity.x * 60 / 16, entity.y * 60 / 16, entity.width, entity.height));
             }
         }
     }
