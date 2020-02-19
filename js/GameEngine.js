@@ -24,7 +24,6 @@ class GameEngine {
     constructor(gameContext, images) {
         this.IMAGES_LIST = images;
         this.GAME_CONTEXT = gameContext;
-        this.VISUAL_EFFECTS = new VisualEffectsEngine(this);
         this.INPUTS = {
             "KeyW": false,
             "KeyA": false,
@@ -55,6 +54,9 @@ class GameEngine {
         this.msg;
         this.newMsg = true;
         this.displayMessage = false;
+
+        this.HitQueue = [];
+        this.DeathQueue = [];
     }
 
     /**
@@ -62,7 +64,6 @@ class GameEngine {
      */
     init() {
         this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
-
         // hero initialization
         this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"], this.IMAGES_LIST["./res/img/whip.png"]);
         // push hero to currentEntities
@@ -95,7 +96,6 @@ class GameEngine {
         });
 
         this.msg = this.IMAGES_LIST["./res/text/test.txt"];
-
 
         console.log('Game initialized');
     }
@@ -266,6 +266,8 @@ class GameEngine {
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw()); // Draws the enemies
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw()); // Draws the projectiles
+            this.drawHits();
+            this.drawDeaths();
             this.UI.draw();
             this.GAME_CONTEXT.restore();
         }
@@ -278,7 +280,69 @@ class GameEngine {
             this.GAME_CONTEXT.restore();
         }
     }
+
+    drawHits() {
+        for (var i=0; i<this.HitQueue.length; i++)
+        {
+            this.HitQueue[i].counter -= 1;
+            this.HitQueue[i].spritesheet.drawThis(this.clockTick, this.GAME_CONTEXT, this.HitQueue[i].dx, this.HitQueue[i].dy, "walking");
+        }
+        this.HitQueue = this.HitQueue.filter(element => element.counter > 0);
+    }
+
+    drawDeaths() {
+        for (var i=0; i<this.DeathQueue.length; i++)
+        {
+            this.DeathQueue[i].counter -= 1;
+            this.DeathQueue[i].spritesheet.drawThis(this.clockTick, this.GAME_CONTEXT, this.DeathQueue[i].dx, this.DeathQueue[i].dy);
+        }
+        this.DeathQueue = this.DeathQueue.filter(element => element.counter > 0);
+    }
 }
+
+class Animation2 {
+    constructor(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
+        this.spriteSheet = spriteSheet;
+        this.frameWidth = frameWidth;
+        this.frameDuration = frameDuration;
+        this.frameHeight = frameHeight;
+        this.sheetWidth = sheetWidth;
+        this.frames = frames;
+        this.totalTime = frameDuration * frames;
+        this.elapsedTime = 0;
+        this.loop = loop;
+        this.scale = scale;
+    }
+
+    drawThis(tick, ctx, x, y) {
+        this.elapsedTime += tick;
+        if (this.isDone()) {
+            if (this.loop) this.elapsedTime = 0;
+        }
+        var frame = this.currentFrame();        // int
+        var xindex = 0;
+        var yindex = 0;
+        xindex = frame % this.sheetWidth;
+        yindex = Math.floor(frame / this.sheetWidth);
+
+        ctx.drawImage(this.spriteSheet,
+            xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
+            this.frameWidth, this.frameHeight,
+            x, y,
+            this.frameWidth * this.scale,
+            this.frameHeight * this.scale);
+    }
+
+    currentFrame() {
+        return Math.floor(this.elapsedTime / this.frameDuration);
+    }
+
+    isDone() {
+        return (this.elapsedTime >= this.totalTime);
+    }
+}
+
+
 
 class GameTimer {
     /**

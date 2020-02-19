@@ -95,6 +95,9 @@ class Entity {
             this.futureHitbox.yMax = this.hitbox.yMax; // Resets future bottom right y coordinate
         }
         if (this.pushDamage) {
+            var hitSprite = new Animation2(this.game.IMAGES_LIST["./res/img/hit.png"], 30, 30, 60, 0.05, 2, false, 2);
+            var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 10, spritesheet: hitSprite};
+            this.game.HitQueue.push(hitObject);
             if (this.invincibleCounter === 0) {
                 this.takeDamage();
                 this.hurting = true;
@@ -116,6 +119,9 @@ class Entity {
 
         if (this.health === 0) {
             this.alive = false;
+            var deathSprite = new Animation2(this.game.IMAGES_LIST["./res/img/death.png"], 30, 30, 120, 0.25, 4, false, 2);
+            var deathObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 50, entity: this, spritesheet: deathSprite};
+            this.game.DeathQueue.push(deathObject);
         }
     }
 
