@@ -17,8 +17,8 @@ class Hero extends Entity {
         this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
-        this.health = 3;
-        this.maxHealth = 3;
+        this.health = 10;
+        this.maxHealth = 10;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
         this.coins = 678;
         this.jumpElapsedTime = 0;
@@ -33,7 +33,7 @@ class Hero extends Entity {
 
         // hero damage animation control variables
         this.hurting = false;
-        this.hurtCounter = 80;
+        this.hurtCounter = 200;
 
     }
 
@@ -126,7 +126,7 @@ class Hero extends Entity {
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
         }
         if (this.hurting) {
-            if (this.hurtCounter % 8 === 0) {
+            if (this.hurtCounter % 10 === 0) {
                 this.animation.drawFrame(this.game.clockTick, this.context,
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                     this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
@@ -134,10 +134,10 @@ class Hero extends Entity {
                 // draw nothing
             }
 
-            this.hurtCounter -= 1;
+            this.hurtCounter -= 2;
             if (this.hurtCounter === 0) {
                 this.hurting = false;
-                this.hurtCounter = 80;
+                this.hurtCounter = 200;
             }
         }
     }

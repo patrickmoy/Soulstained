@@ -64,6 +64,7 @@ class Entity {
         this.alive = false;
         this.hurting = false;
         this.Dying = false; // State of dying, for death animations/effects.
+        this.deathTime;
         this.moveable = true;
         this.pushDamage = false;
         this.pushUpdate = true; // Used for collision to check if entity's new Hitbox should be pushed for new update with the new hit box or not.

@@ -22,8 +22,8 @@ class GameEngine {
      * @param images {Image[]} array of cached images for the game
      */
     constructor(gameContext, images) {
-        this.IMAGES_LIST = images; // A list of images to be used for the game.
-        this.GAME_CONTEXT = gameContext; // 2D Context of the main game section (where player movement occurs)
+        this.IMAGES_LIST = images;
+        this.GAME_CONTEXT = gameContext;
         this.VISUAL_EFFECTS = new VisualEffectsEngine(this);
         this.INPUTS = {
             "KeyW": false,
@@ -51,6 +51,10 @@ class GameEngine {
         this.currentWorld; // Current world the player is in (e.g. Necromancer Dungeon or Open World)
 
         this.UI;
+
+        this.msg;
+        this.newMsg = true;
+        this.displayMessage = false;
     }
 
     /**
@@ -87,8 +91,11 @@ class GameEngine {
         });
         // If button is lifted from press and the button is a key we care about, set it to false.
         this.GAME_CONTEXT.canvas.addEventListener("keyup", (key) => {
-            if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = false; // ! Interesting, when switching to modules, you no longer need self. You can just use this. Why? !
+            if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = false;
         });
+
+        this.msg = this.IMAGES_LIST["./res/text/test.txt"];
+
 
         console.log('Game initialized');
     }
@@ -122,6 +129,8 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
+        // hero - sign collision sets the newMsg property to true
+        // UI update checks each time for a new msg, in the positive event, it pauses the game
         this.UI.update();
         if (this.inInventory) // Player is in inventory so perform inventory actions.
         {
@@ -134,11 +143,19 @@ class GameEngine {
         }
         else if (this.pause)
         {
-            this.currentWorld.fade();
-            if (!this.pause)
+            if (this.displayMessage)
             {
-                this.transposeWorlds();
+                // nothing to update , just need to pause the game
+            } else {
+                this.currentWorld.fade();
+                if (!this.pause) {
+                    this.transposeWorlds();
+                }
             }
+        }
+        else if (this.newMsg)
+        {
+            this.UI.parseMessage();
         }
         else {
             // Entities are now movable around the map
@@ -260,17 +277,6 @@ class GameEngine {
             this.UI.draw();
             this.GAME_CONTEXT.restore();
         }
-
-
-        // There was a change that affects the UI so we update the UI
-        //if (this.UI_CONTEXT.change) {
-        //    // When a change occurs, we just redraw. If nothing changes, the canvas should remain static
-        //    this.UI_CONTEXT.clearRect(0, 0, this.UI_CANVAS_WIDTH, this.UI_CANVAS_HEIGHT);
-        //    this.UI_CONTEXT.save();
-        //    /* Call the function to redraw the UI */ // Redraw the UI
-        //    this.UI_CONTEXT.restore();
-        //}
-
     }
 }
 
