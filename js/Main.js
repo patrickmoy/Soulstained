@@ -15,12 +15,21 @@ AssetHandler.queueImage("./res/img/keyK.png");
 AssetHandler.queueImage("./res/img/whipPrototype.png");
 AssetHandler.queueImage("./res/img/swordPrototype.png");
 AssetHandler.queueImage("./res/img/fire.png");
-AssetHandler.queueJSON('./res/jsonderulo/section5_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/section4_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/section3_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/section5_1.json');
-AssetHandler.queueJSON('./res/jsonderulo/section4_1.json');
+AssetHandler.queueJSON('./res/jsonderulo/section1_1.json');
+AssetHandler.queueJSON('./res/jsonderulo/section1_2.json');
+AssetHandler.queueJSON('./res/jsonderulo/section1_3.json');
+AssetHandler.queueJSON('./res/jsonderulo/section1_4.json');
+AssetHandler.queueJSON('./res/jsonderulo/section1_5.json');
+AssetHandler.queueJSON('./res/jsonderulo/section2_1.json');
+AssetHandler.queueJSON('./res/jsonderulo/section2_2.json');
+AssetHandler.queueJSON('./res/jsonderulo/section2_3.json');
+AssetHandler.queueJSON('./res/jsonderulo/section2_4.json');
+AssetHandler.queueJSON('./res/jsonderulo/section2_5.json');
 AssetHandler.queueJSON('./res/jsonderulo/section3_1.json');
+AssetHandler.queueJSON('./res/jsonderulo/section3_2.json');
+AssetHandler.queueJSON('./res/jsonderulo/section3_3.json');
+AssetHandler.queueJSON('./res/jsonderulo/section3_4.json');
+AssetHandler.queueJSON('./res/jsonderulo/section3_5.json');
 AssetHandler.startDownload()
     .then(() => {
         const gameCanvas = document.getElementById("gameWorld"); // Get the

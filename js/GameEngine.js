@@ -66,10 +66,10 @@ class GameEngine {
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
 
         // Create the worlds
-        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 1);
+        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
         this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
-        this.currentEntities[1] =  this.WORLDS["OpenWorld"].tileMaps[2][1].BLOCKS;
-        this.currentEntities[2] =  this.WORLDS["OpenWorld"].tileMaps[2][1].ENEMIES;
+        this.currentEntities[1] =  this.currentWorld.getCurrentTileMap().BLOCKS;
+        this.currentEntities[2] =  this.currentWorld.getCurrentTileMap().ENEMIES;
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
 

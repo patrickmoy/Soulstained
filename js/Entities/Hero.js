@@ -132,8 +132,8 @@ class Hero extends Entity {
         if (this.hitbox.yMin < 0) {
             this.transitionDirection = "up";
             return {
-                changeInX: 0,
-                changeInY: -1
+                changeInX: -1,
+                changeInY: 0
             };
         }
 
@@ -141,8 +141,8 @@ class Hero extends Entity {
         if (this.hitbox.xMax > this.game.GAME_CANVAS_WIDTH) {
             this.transitionDirection = "right";
             return {
-                changeInX: 1,
-                changeInY: 0
+                changeInX: 0,
+                changeInY: 1
             };
         }
 
@@ -150,8 +150,8 @@ class Hero extends Entity {
         if (this.hitbox.yMax > this.game.GAME_CANVAS_HEIGHT) {
             this.transitionDirection = "down";
             return {
-                changeInX: 0,
-                changeInY: 1
+                changeInX: 1,
+                changeInY: 0
             };
         }
 
@@ -159,8 +159,8 @@ class Hero extends Entity {
         if (this.hitbox.xMin < 0) {
             this.transitionDirection = "left";
             return {
-                changeInX: -1,
-                changeInY: 0
+                changeInX: 0,
+                changeInY: -1
             };
         }
 
