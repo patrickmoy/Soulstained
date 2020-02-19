@@ -87,6 +87,7 @@ class Entity {
             this.hitbox.yMax = this.futureHitbox.yMax; // Updates to the new bottom right y coordinate
         }
         else {
+
             this.futureHitbox.xMin = this.hitbox.xMin; // Resets future top left x coordinate
             this.futureHitbox.yMin = this.hitbox.yMin; // Resets future top left y coordinate
             this.futureHitbox.xMax = this.hitbox.xMax; // Resets future bottom right x coordinate
