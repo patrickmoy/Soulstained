@@ -43,8 +43,9 @@ class GameEngine {
 
         this.GRAVITY = -15;
         this.currentPortal;
+        this.SUCK_RATE = 10;
         this.TIMER; // The Game Timer to keep track of virtual time
-        this.PHYSICS; // The physics/collision detection and handling engine
+        this.SUCK_RATE; // The physics/collision detection and handling engine
         this.GAME_CANVAS_WIDTH; // The main canvas width
         this.GAME_CANVAS_HEIGHT; // The main canvas height
         this.HERO; // The main player of the game
@@ -66,7 +67,7 @@ class GameEngine {
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
 
         // Create the worlds
-        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
+        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 0, 7);
         this.WORLDS["OpenWorld"].initializeTileMaps();
         this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 7);
         this.WORLDS["NecroDungeon"].initializeTileMaps();
@@ -151,14 +152,28 @@ class GameEngine {
             // Predicts update for all the necessary entities
             this.currentEntities[0].filter(hero => hero.alive).forEach(hero => hero.preUpdate());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.preUpdate());
-            // this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
+            // this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate());
+            // TODO projectiles should be added from somewhere else, not the world array
 
-            const collisionPairs = detectCollide([].concat.apply([], this.currentEntities).filter(entity => entity.alive));
+            const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2]).filter(entity => entity.alive);
+            
+            // Hero and enemies vs. blocks
+            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1]);
+                        
+            // Weapon vs enemies causes momentary flinching
+            const flinchEffect = detectCollide(this.currentEntities[0].filter(entity => entity.active), this.currentEntities[2]);
+
+            // Hero vs enemies
+            const damageCollisions = detectCollide(this.currentEntities[0].filter(entity => entity.alive),
+                this.currentEntities[2].filter(entity => entity.alive));
 
             // Flags entities for standard "impassable" behavior (mostly terrain)
+            flagGravitate(creatureToBlockCollisions);
+            flagImpassable(creatureToBlockCollisions);
+            flagImpassable(flinchEffect);
 
-            flagImpassable(collisionPairs);
-            flagDamage(collisionPairs);
+
+            flagDamage(damageCollisions);
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
             this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.update()); // Updates hero

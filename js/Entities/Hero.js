@@ -33,7 +33,7 @@ class Hero extends Entity {
 
         // hero damage animation control variables
         this.hurting = false;
-        this.hurtCounter = 80;
+        this.hurtCounter = this.INVINCIBLE_TIME;
 
     }
 
@@ -120,26 +120,31 @@ class Hero extends Entity {
      * Draws the hero.
      */
     draw() {
-        if (!this.game.pause && !this.hurting) {
-            this.animation.drawFrame(this.game.clockTick, this.context,
-                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
-        }
-        if (this.hurting) {
-            if (this.hurtCounter % 8 === 0) {
+        if (!this.game.pause) {
+            if (!this.hurting) {
                 this.animation.drawFrame(this.game.clockTick, this.context,
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                     this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
             } else {
-                // draw nothing
+                const hurtFlasher = Math.floor(this.hurtCounter * 1000);
+                if (hurtFlasher % 2 === 0) {
+                    this.animation.drawFrame(this.game.clockTick, this.context,
+                        this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                        this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
+                } else {
+                    // draw nothing
+                }
             }
-
-            this.hurtCounter -= 1;
-            if (this.hurtCounter === 0) {
+            this.hurtCounter -= this.game.clockTick;
+            if (this.hurtCounter <= 0) {
                 this.hurting = false;
-                this.hurtCounter = 80;
+                this.hurtCounter = this.INVINCIBLE_TIME;
             }
         }
+
+
+
+
     }
 
     /**

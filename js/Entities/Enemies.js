@@ -216,11 +216,11 @@ class Zombie extends Enemy {
      */
     canWalkHere() {
         var blocksWithEnemy = this.game.currentEntities[1]; // Get the blocks
-        blocksWithEnemy.push(this); // Add the zombie to the blocks
-        var collide = detectCollide(blocksWithEnemy); // Check if there's any collision
-        blocksWithEnemy.pop(); // Remove zombie from blocks
+        //Refactor given that detectCollide function takes two lists as arguments.
+        //blocksWithEnemy.push(this); // Add the zombie to the blocks
+        var collide = detectCollide(blocksWithEnemy, [this]); // Check if there's any collision
+        // locksWithEnemy.pop(); // Remove zombie from blocks
         return collide.length === 0; // Return if there was collision or not.
-
     }
 
     draw() {
@@ -238,6 +238,30 @@ class Zombie extends Enemy {
 
 class Knight extends Enemy {
 
+}
+
+class FirePit extends Enemy {
+    constructor(game, spritesheet, x, y, width, height) {
+        super(game, x, y, width, height, 1);
+        this.animation = new Animation(spritesheet, this,16, 16, .1, 4, [4]);
+        this.context = game.GAME_CONTEXT;
+        this.sx = x;
+        this.sy = y;
+        this.status = 'walking';
+        this.alive = true;
+        console.log("firepit created");
+    }
+    update() {
+        // do nothing
+    }
+
+    draw() {
+        if (!this.game.pause) {
+            this.context.beginPath();
+            this.context.stroke();
+            this.animation.drawFrame(this.game.clockTick, this.context, this.sx, this.sy, this.status);
+        }
+    }
 }
 
 class Skeleton extends Enemy {

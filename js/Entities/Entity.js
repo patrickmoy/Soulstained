@@ -61,6 +61,7 @@ class Entity {
         // Considering changing 'attacking' to "action" and then having action depend on the equipped
         // item, which should also be stored in Hero.
 
+        this.falling = false;
         this.alive = false;
         this.hurting = false;
         this.Dying = false; // State of dying, for death animations/effects.
@@ -87,12 +88,23 @@ class Entity {
             this.hitbox.xMax = this.futureHitbox.xMax; // Updates to the new bottom right x coordinate
             this.hitbox.yMax = this.futureHitbox.yMax; // Updates to the new bottom right y coordinate
         }
-        else {
+    else {
             this.futureHitbox.xMin = this.hitbox.xMin; // Resets future top left x coordinate
             this.futureHitbox.yMin = this.hitbox.yMin; // Resets future top left y coordinate
             this.futureHitbox.xMax = this.hitbox.xMax; // Resets future bottom right x coordinate
             this.futureHitbox.yMax = this.hitbox.yMax; // Resets future bottom right y coordinate
         }
+        if (this.falling) {
+            if (this.animation.scale > 0) {
+                this.animation.scale -= .25;
+            } else {
+                this.falling = false;
+                this.pushDamage = true;
+                this.futureHitbox = this.originalHitbox;
+                this.animation.scale = 2.4;
+            }
+        }
+
         if (this.pushDamage) {
             if (this.invincibleCounter === 0) {
                 this.takeDamage();
@@ -120,29 +132,31 @@ class Entity {
 
     // Sets status of entity to walking for this update/render tick, and updates hitbox.
     walk(direction) {
-        switch (direction) {
-            case 0: // up
-                this.futureHitbox.yMin -= this.game.clockTick * this.speed;
-                this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
-                break;
-            case 1: // down
-                this.futureHitbox.yMin += this.game.clockTick * this.speed;
-                this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
-                break;
-            case 2: // left
-                this.futureHitbox.xMin -= this.game.clockTick * this.speed;
-                this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
-                break;
-            case 3: // right
-                this.futureHitbox.xMin += this.game.clockTick * this.speed;
-                this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
-                break;
+        if (!this.falling) {
+            switch (direction) {
+                case 0: // up
+                    this.futureHitbox.yMin -= this.game.clockTick * this.speed;
+                    this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
+                    break;
+                case 1: // down
+                    this.futureHitbox.yMin += this.game.clockTick * this.speed;
+                    this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
+                    break;
+                case 2: // left
+                    this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+                    this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+                    break;
+                case 3: // right
+                    this.futureHitbox.xMin += this.game.clockTick * this.speed;
+                    this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+                    break;
+            }
+            // Removed since it causes speed disparities left to right and top to bottom. s
+            // this.futureHitbox.xMin = Math.floor(this.futureHitbox.xMin); // Normalize the x min coordinate for consistency
+            // this.futureHitbox.xMax = Math.floor(this.futureHitbox.xMax); // Normalize the x max coordinate for consistency
+            // this.futureHitbox.yMin = Math.floor(this.futureHitbox.yMin); // Normalize the y min coordinate for consistency
+            // this.futureHitbox.yMax = Math.floor(this.futureHitbox.yMax); // Normalize the y max coordinate for consistency
         }
-        // Removed since it causes speed disparities left to right and top to bottom. s
-        // this.futureHitbox.xMin = Math.floor(this.futureHitbox.xMin); // Normalize the x min coordinate for consistency
-        // this.futureHitbox.xMax = Math.floor(this.futureHitbox.xMax); // Normalize the x max coordinate for consistency
-        // this.futureHitbox.yMin = Math.floor(this.futureHitbox.yMin); // Normalize the y min coordinate for consistency
-        // this.futureHitbox.yMax = Math.floor(this.futureHitbox.yMax); // Normalize the y max coordinate for consistency
     }
 
     attack() {
@@ -171,6 +185,45 @@ class Entity {
             this.health -= damage;
         }
     }
+
+    gravitate(focusX, focusY, suckRate) {
+        var diffX = focusX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;
+        var diffY = focusY - (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2;
+        // var diffX = focusX - this.futureHitbox.xMin;
+        // var diffY = focusY - this.futureHitbox.yMin;
+
+
+        // To the right of target, so move left.
+        if (diffX < 0) {
+            this.futureHitbox.xMin -= this.game.clockTick * suckRate;
+            this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+        }
+
+        // To the left of target, so move right.
+        if (diffX > 0) {
+            this.futureHitbox.xMin += this.game.clockTick * suckRate;
+            this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+        }
+
+        // Beneath target, so move up.
+        if (diffY < 0) {
+            this.futureHitbox.yMin -= this.game.clockTick * suckRate;
+            this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
+        }
+
+        // Above target, so move down.
+        if (diffY > 0) {
+            this.futureHitbox.yMin += this.game.clockTick * suckRate;
+            this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
+        }
+        // this.hitbox.xMin = this.futureHitbox.xMin;
+        // this.hitbox.xMax = this.futureHitbox.xMax;
+        // this.hitbox.yMin = this.futureHitbox.yMin;
+        // this.hitbox.yMax = this.futureHitbox.yMax;
+    }
+
+
+
 
 
 }
