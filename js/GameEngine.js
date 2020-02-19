@@ -34,24 +34,36 @@ class GameEngine {
             "Space": false,
             "Enter": false
         };
-        this.transition = false; // When transitioning is happening
-        this.inInventory = false; // When player is in his inventory
-        this.pause = false; // Pauses other actions while we switch to a new map.
-        this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
-        this.currentEntities = [[], [], [], [], []]; // Stores entities at the current tile map
+        this.transition = false;
+        this.inInventory = false;
+        this.pause = false;
+        this.WORLDS = {};
+        this.currentEntities = [[], [], [], [], []];
 
         this.GRAVITY = -15;
         this.currentPortal;
-        this.TIMER; // The Game Timer to keep track of virtual time
-        this.PHYSICS; // The physics/collision detection and handling engine
-        this.GAME_CANVAS_WIDTH; // The main canvas width
-        this.GAME_CANVAS_HEIGHT; // The main canvas height
-        this.HERO; // The main player of the game
-        this.currentWorld; // Current world the player is in (e.g. Necromancer Dungeon or Open World)
+        this.TIMER;
+
+        this.GAME_CANVAS_WIDTH;
+        this.GAME_CANVAS_HEIGHT;
+        this.HERO;
+        this.currentWorld;
 
         this.UI;
 
-        this.msg;
+        this.msg = 'YOUR SHIP WAS WRECKED IN THE STORM\nYOU WERE SAFELY WASHED ASHORE\n' +
+                   'ON NECROMANCERS ISLAND CASTLE\n\n' +
+                   'TWAS ONCE A BEAUTIFUL AND PEACEFUL TOWN\n' +
+                   'INHABITED BY A GOOD NATURED PEOPLE\n' +
+                   'NOW CORRUPTED BY SIN LIES AND DECEIT\n\n' +
+                   'RAISED FROM THEIR MORTAL GRAVES\n' +
+                   'ZOMBIES ROAM ABOUT THE ISLAND TERRORIZING\n' +
+                   'THE REMAINING HUMAN INHABITANTS\n\n' +
+                   'THERE IS NO WAY OUT\n' +
+                   'DEFEAT THE NECROMANCER OR PERISH\n\n' +
+                   'USE WSAD FOR MOVEMENT\n' +
+                   'USE J AND K FOR ATTACKS\n\n' +
+                   'BON VOYAGE                PRESS K TO EXIT';
         this.newMsg = true;
         this.displayMessage = false;
 
@@ -59,46 +71,35 @@ class GameEngine {
         this.DeathQueue = [];
     }
 
-    /**
-     * Initializes the necessary starting objects to run the game.
-     */
+
     init() {
-        this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
-        // hero initialization
-        this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"], this.IMAGES_LIST["./res/img/whip.png"]);
-        // push hero to currentEntities
-        this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
-        this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
-        // Create the worlds
-        // this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
-        // this.WORLDS["OpenWorld"].initializeTileMaps();
-        this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 0);
-        this.WORLDS["NecroDungeon"].initializeTileMaps();
 
-        // this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS;
-        // this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES;
-
-        this.currentEntities[1] = this.WORLDS["NecroDungeon"].getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] = this.WORLDS["NecroDungeon"].getCurrentTileMap().ENEMIES;
-
-        this.currentWorld = this.WORLDS["NecroDungeon"]; // Set the current world to the open worlds
-        this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
-        this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
-
-        this.TIMER = new GameTimer();
-
-        this.UI = new UserInterface(this, this.HERO, this.IMAGES_LIST);
-        // If button is pressed and the button is a key we care about, set it to true.
+        this.GAME_CONTEXT.imageSmoothingEnabled = false;
         this.GAME_CONTEXT.canvas.addEventListener("keydown", (key) => {
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = true;
         });
-        // If button is lifted from press and the button is a key we care about, set it to false.
         this.GAME_CONTEXT.canvas.addEventListener("keyup", (key) => {
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = false;
         });
+        this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
+        this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
+        this.TIMER = new GameTimer();
 
-        this.msg = this.IMAGES_LIST["./res/text/test.txt"];
+        this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"], this.IMAGES_LIST["./res/img/whip.png"]);
+        this.UI = new UserInterface(this, this.HERO, this.IMAGES_LIST);
 
+        this.currentEntities[0][0] = this.HERO;
+        this.currentEntities[0][1] = this.HERO.whip;
+
+        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.IMAGES_LIST["./res/img/openworld.png"], 7, 7);
+        this.WORLDS["OpenWorld"].initializeTileMaps();
+        this.WORLDS["NecroDungeon"] = new NecroDungeon(this, this.IMAGES_LIST["./res/img/NecroDungeon.png"], 3, 0);
+        this.WORLDS["NecroDungeon"].initializeTileMaps();
+
+        this.currentEntities[1] = this.WORLDS["OpenWorld"].getCurrentTileMap().BLOCKS;
+        this.currentEntities[2] = this.WORLDS["OpenWorld"].getCurrentTileMap().ENEMIES;
+
+        this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
         console.log('Game initialized');
     }
 
@@ -131,14 +132,8 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
-        // hero - sign collision sets the newMsg property to true
-        // UI update checks each time for a new msg, in the positive event, it pauses the game
         this.UI.update();
-        if (this.inInventory) // Player is in inventory so perform inventory actions.
-        {
-
-        }
-        else if (this.transition) // Transition is happening
+        if (this.transition) // Transition is happening
         {
             this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
             this.HERO.eventWalk(); // Moves the player when transitioning is happening
@@ -147,8 +142,12 @@ class GameEngine {
         {
             if (this.displayMessage)
             {
-                // nothing to update , just need to pause the game
+                // PAUSE FOR MESSAGE
+            } else if (this.inInventory)
+            {
+                // PAUSE FOR INVENTORY
             } else {
+                // PAUSE FOR PORTAL
                 this.currentWorld.fade();
                 if (!this.pause) {
                     this.transposeWorlds();
@@ -157,35 +156,34 @@ class GameEngine {
         }
         else if (this.newMsg)
         {
-            this.UI.parseMessage();
+            this.UI.parseMessage(); // encodes string to numeric keys to index letter font sprite sheet
         }
         else {
-            // Entities are now movable around the map
-            // Reset all behavior flags for all entities. Can be expanded/diversified
+            // RESET ENTITIES
             resetFlags(this.currentEntities[0]);
             resetFlags(this.currentEntities[1]);
             resetFlags(this.currentEntities[2]);
             resetFlags(this.currentEntities[3]);
 
-            // Predicts update for all the necessary entities
+            // PRE-UPDATE ENTITIES
             this.currentEntities[0].filter(hero => hero.alive).forEach(hero => hero.preUpdate());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.preUpdate());
             // this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate());
+
+            // HANDLE COLLISIONS AND DAMAGE
             const collisionPairs = detectCollide([].concat.apply([], this.currentEntities).filter(entity => entity.alive));
-
-            // Flags entities for standard "impassable" behavior (mostly terrain)
-
             flagImpassable(collisionPairs);
             flagDamage(collisionPairs);
-            // Updates accordingly w/ entity handler flags
-            // Essentially, pushing update for valid movements.
+
+            // UPDATE ENTITIES
             this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.update()); // Updates hero
             //this.currentEntities[1].filter(block => block.alive).forEach(block => block.update());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.update());
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
-            console.log(this.currentEntities[3]);
+
+            // PORTAL AND BORDER TRANSITIONS
             this.checkPortal();
             this.checkTransition();
         }
@@ -289,7 +287,7 @@ class GameEngine {
         for (var i=0; i<this.HitQueue.length; i++)
         {
             this.HitQueue[i].counter -= 1;
-            this.HitQueue[i].spritesheet.drawThis(this.clockTick, this.GAME_CONTEXT, this.HitQueue[i].dx, this.HitQueue[i].dy, "walking");
+            this.HitQueue[i].spritesheet.drawFrame(this.clockTick, this.GAME_CONTEXT, this.HitQueue[i].dx, this.HitQueue[i].dy, "walking");
         }
         this.HitQueue = this.HitQueue.filter(element => element.counter > 0);
     }
@@ -298,55 +296,11 @@ class GameEngine {
         for (var i=0; i<this.DeathQueue.length; i++)
         {
             this.DeathQueue[i].counter -= 1;
-            this.DeathQueue[i].spritesheet.drawThis(this.clockTick, this.GAME_CONTEXT, this.DeathQueue[i].dx, this.DeathQueue[i].dy);
+            this.DeathQueue[i].spritesheet.drawFrame(this.clockTick, this.GAME_CONTEXT, this.DeathQueue[i].dx, this.DeathQueue[i].dy, "walking");
         }
         this.DeathQueue = this.DeathQueue.filter(element => element.counter > 0);
     }
 }
-
-class Animation2 {
-    constructor(spriteSheet, frameWidth, frameHeight, sheetWidth, frameDuration, frames, loop, scale) {
-        this.spriteSheet = spriteSheet;
-        this.frameWidth = frameWidth;
-        this.frameDuration = frameDuration;
-        this.frameHeight = frameHeight;
-        this.sheetWidth = sheetWidth;
-        this.frames = frames;
-        this.totalTime = frameDuration * frames;
-        this.elapsedTime = 0;
-        this.loop = loop;
-        this.scale = scale;
-    }
-
-    drawThis(tick, ctx, x, y) {
-        this.elapsedTime += tick;
-        if (this.isDone()) {
-            if (this.loop) this.elapsedTime = 0;
-        }
-        var frame = this.currentFrame();        // int
-        var xindex = 0;
-        var yindex = 0;
-        xindex = frame % this.sheetWidth;
-        yindex = Math.floor(frame / this.sheetWidth);
-
-        ctx.drawImage(this.spriteSheet,
-            xindex * this.frameWidth, yindex * this.frameHeight,  // source from sheet
-            this.frameWidth, this.frameHeight,
-            x, y,
-            this.frameWidth * this.scale,
-            this.frameHeight * this.scale);
-    }
-
-    currentFrame() {
-        return Math.floor(this.elapsedTime / this.frameDuration);
-    }
-
-    isDone() {
-        return (this.elapsedTime >= this.totalTime);
-    }
-}
-
-
 
 class GameTimer {
     /**

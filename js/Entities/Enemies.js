@@ -413,7 +413,6 @@ class Knight
 
     }
 
-
     preUpdate() {
         // Detects if Hero is near the zombie.
         if (this.checkLOS()) {

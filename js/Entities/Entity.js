@@ -1,5 +1,4 @@
 class Entity {
-
     /**
      * An object in the game that has some form of interaction. An example would be walls or the hero.
      * A hero interacts with walls where he can't walk through them.
@@ -16,10 +15,6 @@ class Entity {
         this.width = width;
         this.height = height;
         this.z = 0;
-        // -------
-        // Steven Tran
-        // Instead of having a speed variable in every object, how about have it as a parameters since every entity has a speed.
-        // -------
 
         this.originalHitbox =
             {
@@ -35,7 +30,8 @@ class Entity {
         this.actionElapsedTime = 0;
         this.invincibleCounter = 0;
         this.INVINCIBLE_TIME = .5;
-        this.hitbox = // The entity's box to take be interacted with other entities or world components.
+
+        this.hitbox =
             {
                 xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
                 yMin: y + height * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -62,9 +58,7 @@ class Entity {
         // item, which should also be stored in Hero.
 
         this.alive = false;
-        this.hurting = false;
-        this.Dying = false; // State of dying, for death animations/effects.
-        this.deathTime;
+
         this.moveable = true;
         this.pushDamage = false;
         this.pushUpdate = true; // Used for collision to check if entity's new Hitbox should be pushed for new update with the new hit box or not.
@@ -95,9 +89,11 @@ class Entity {
             this.futureHitbox.yMax = this.hitbox.yMax; // Resets future bottom right y coordinate
         }
         if (this.pushDamage) {
-            var hitSprite = new Animation2(this.game.IMAGES_LIST["./res/img/hit.png"], 30, 30, 60, 0.05, 2, false, 2);
-            var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 10, spritesheet: hitSprite};
+
+            var hitSprite = new Animation(this.game.IMAGES_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
+            var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 5, spritesheet: hitSprite};
             this.game.HitQueue.push(hitObject);
+
             if (this.invincibleCounter === 0) {
                 this.takeDamage();
                 this.hurting = true;
@@ -116,10 +112,9 @@ class Entity {
             }
 
         }
-
         if (this.health === 0) {
             this.alive = false;
-            var deathSprite = new Animation2(this.game.IMAGES_LIST["./res/img/death.png"], 30, 30, 120, 0.25, 4, false, 2);
+            var deathSprite = new Animation(this.game.IMAGES_LIST["./res/img/death.png"], this,30, 30,  0.25, 2, [4]);
             var deathObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 50, entity: this, spritesheet: deathSprite};
             this.game.DeathQueue.push(deathObject);
         }

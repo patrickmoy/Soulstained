@@ -17,16 +17,10 @@ class FireballProjectile extends Entity {
         this.att2 = secondary;
         this.origX = x;
         // this.xMin = this.futureHitbox.xMin;
-
-
-
-
     }
 
     //Update constantly calls the down direction and selects the attack passed in by the entity.
     preUpdate() {
-
-
         this.futureHitbox.yMin += this.game.clockTick * this.speed;
         this.futureHitbox.yMax += this.game.clockTick * this.speed;
         this.selectAttack(this.att);
@@ -45,8 +39,6 @@ class FireballProjectile extends Entity {
 
     //Selects attack method.
     selectAttack(attack) {
-
-
         switch (attack) {
             case 0:
                 this.double();
@@ -64,8 +56,6 @@ class FireballProjectile extends Entity {
                 this.expand();
                 break;
         }
-
-
     }
 
     //Two fireballs: Down and left fireball or down and right fireball ONLY.
@@ -137,7 +127,6 @@ class FireballProjectile extends Entity {
 
     //A fireball that is scaled by 3 times its size.
     expand() {
-
         if (this.trajectory === 'down') {
             this.animation.scale = 3;
             this.futureHitbox.xMin = this.origX * .65; //hard coded for now but places fireball ~beneath necromancer.
@@ -146,7 +135,6 @@ class FireballProjectile extends Entity {
         } else if (this.trajectory === 'right') {
             this.alive = false;
         }
-
     }
     projectileNotOnScreen() {
 

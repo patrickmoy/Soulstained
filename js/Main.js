@@ -19,7 +19,6 @@ AssetHandler.queueImage("./res/img/fire.png");
 AssetHandler.queueImage("./res/img/letters.png");
 AssetHandler.queueImage("./res/img/death.png");
 AssetHandler.queueImage("./res/img/hit.png");
-AssetHandler.queueTextFile("./res/text/test.txt");
 AssetHandler.startDownload()
     .then(() => {
         const gameCanvas = document.getElementById("gameWorld");
