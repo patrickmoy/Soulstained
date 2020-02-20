@@ -24,7 +24,7 @@ class GameEngine {
     constructor(gameContext, images) {
         this.IMAGES_LIST = images; // A list of images to be used for the game.
         this.GAME_CONTEXT = gameContext; // 2D Context of the main game section (where player movement occurs)
-        this.VISUAL_EFFECTS = new VisualEffectsEngine(this);
+        //this.VISUAL_EFFECTS = new VisualEffectsEngine(this);
         this.INPUTS = {
             "KeyW": false,
             "KeyA": false,
@@ -134,7 +134,7 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
-        console.log(this.HERO.equipJ + " " + this.HERO.equipK);
+        // console.log(this.HERO.equipJ + " " + this.HERO.equipK);
         if (this.INPUTS["Digit1"]) {
             this.HERO.equipJ = "empty";
             this.HERO.equipK = "empty";
@@ -202,6 +202,7 @@ class GameEngine {
             flagGravitate(creatureToBlockCollisions);
             flagImpassable(creatureToBlockCollisions);
             flagImpassable(flinchEffect);
+            flagMessages(creatureToBlockCollisions);
 
 
             flagDamage(damageCollisions);

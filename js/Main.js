@@ -2,6 +2,8 @@ const AssetHandler = new AssetManager();
 AssetHandler.queueTextFile("./res/text/test.txt");
 AssetHandler.queueImage("./res/img/openworld.png");
 AssetHandler.queueImage("./res/img/hero.png");
+AssetHandler.queueImage("./res/img/hero_extra.png");
+AssetHandler.queueImage("./res/img/hit.png");
 AssetHandler.queueImage("./res/img/zombie.png");
 AssetHandler.queueImage("./res/img/fireball.png");
 AssetHandler.queueImage("./res/img/sniper.png");

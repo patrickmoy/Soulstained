@@ -159,6 +159,8 @@ function flagMessages(collisionPairs) {
         }
     });
 
+}
+
 
 /**
  * Resets flags for entities pre-loop.

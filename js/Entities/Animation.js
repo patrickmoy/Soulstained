@@ -68,11 +68,8 @@ class Animation {
                 this.frameWidth, this.frameHeight, gamePositionX, gamePositionY,
                 this.frameWidth * this.scale, this.frameHeight * this.scale);
         } else if (this.entity.jumping) {
-            console.log("branch hit");
             xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.jumpElapsedTime)) % this.frameIndices[2]);
             yIndex = 4 * this.frameHeight + this.entity.JUMP_SPRITE_FRAME_HEIGHT * imageRow;
-            console.log(yIndex);
-            console.log(xIndex);
             context.drawImage(this.spriteSheet, xIndex, yIndex,
                 this.frameWidth, this.entity.JUMP_SPRITE_FRAME_HEIGHT, gamePositionX, gamePositionY,
                 this.frameWidth * this.scale, this.entity.JUMP_SPRITE_FRAME_HEIGHT * this.scale);

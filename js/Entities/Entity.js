@@ -99,12 +99,15 @@ class Entity {
                 if (this.invincibleCounter === 0) {
                     this.takeDamage();
                     this.hurting = true;
+                    console.log("hurt!");
                 }
                 this.invincibleCounter += this.game.clockTick;
                 if (this.invincibleCounter > this.INVINCIBLE_TIME) {
                     this.invincibleCounter = 0;
+                    this.pushDamage = false;
+                    console.log("not hurt anymore!");
                 }
-                this.pushDamage = false;
+
             } else {
                 if (this.invincibleCounter > 0) {
                     this.invincibleCounter += this.game.clockTick;
@@ -184,25 +187,8 @@ class Entity {
             this.health -= damage;
         }
     }
-}
 
-class Sign extends Entity {
-    constructor(game, x, y, width, height, message) {
-        super(game, x, y, width, height);
-        this.msg = message;
-        this.pushMessage = false;
-    }
 
-    //override Entity update
-    update() {
-        if (this.pushMessage) {
-            if (this.game.newMsg === false) {
-                    this.game.newMsg = true;
-                    this.game.msg = this.msg;
-                    this.pushMessage = false;
-            }
-        }
-    }
 
     gravitate(focusX, focusY, suckRate) {
         var diffX = focusX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;
@@ -244,4 +230,25 @@ class Sign extends Entity {
 
 
 
+
+}
+
+class Sign extends Entity {
+    constructor(game, x, y, width, height, message) {
+        super(game, x, y, width, height);
+        this.msg = message;
+        this.pushMessage = false;
+    }
+
+    //override Entity update
+    update() {
+        if (this.pushMessage) {
+            console.log("message push");
+            if (this.game.newMsg === false) {
+                this.game.newMsg = true;
+                this.game.msg = this.msg;
+                this.pushMessage = false;
+            }
+        }
+    }
 }

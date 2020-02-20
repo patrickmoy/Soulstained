@@ -19,7 +19,7 @@ class AssetManager {
         this.downloadQueue.push({src: filePath, type: 'img'});
     }
 
-    /*
+
     queueTextFile(filePath) {
         console.log(filePath + ' has been added to the Download Queue.');
         this.downloadQueue.push({src: filePath, type: 'txt'});
@@ -32,7 +32,7 @@ class AssetManager {
             self.assets[filePath] = textData;
         });
     }
-    */
+
 
     queueJSON(filePath)
     {
