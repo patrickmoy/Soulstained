@@ -33,8 +33,8 @@ class World {
         this.sourceY = this.section.y * this.SIZE;
 
         // attributes used for fade animations during world transport
-        this.sx = this.sourceX;
-        this.sy = this.sourceY;
+        this.sx = this.sourceY;
+        this.sy = this.sourceX;
         this.sWidth = 192;
         this.sHeight = 192;
         this.dx = 0;
