@@ -26,6 +26,7 @@ class GameEngine {
         this.GAME_CONTEXT = gameContext; // 2D Context of the main game section (where player movement occurs)
         this.VISUAL_EFFECTS = new VisualEffectsEngine(this);
         this.INPUTS = {
+
             "KeyW": false,
             "KeyA": false,
             "KeyS": false,
@@ -33,7 +34,11 @@ class GameEngine {
             "KeyJ": false,
             "KeyK": false,
             "Space": false,
-            "Enter": false
+            "Enter": false,
+            "Digit1": false,
+            "Digit2": false,
+            "Digit3": false
+
         };
         this.transition = false; // When transitioning is happening
         this.inInventory = false; // When player is in his inventory
@@ -61,7 +66,7 @@ class GameEngine {
         this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
         // hero initialization
-        this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero.png"], this.IMAGES_LIST["./res/img/whip.png"]);
+        this.HERO = new Hero(this, this.IMAGES_LIST["./res/img/hero_extra.png"], this.IMAGES_LIST["./res/img/whip.png"]);
         // push hero to currentEntities
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
@@ -123,6 +128,19 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
+        console.log(this.HERO.equipJ + " " + this.HERO.equipK);
+        if (this.INPUTS["Digit1"]) {
+            this.HERO.equipJ = "empty";
+            this.HERO.equipK = "empty";
+        }
+        if (this.INPUTS["Digit2"]) {
+            this.HERO.equipJ = "whip";
+            this.HERO.equipK = "empty";
+        }
+        if (this.INPUTS["Digit3"]) {
+            this.HERO.equipJ = "empty";
+            this.HERO.equipK = "whip";
+        }
         this.UI.update();
         if (this.inInventory) // Player is in inventory so perform inventory actions.
         {

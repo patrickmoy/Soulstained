@@ -2,6 +2,7 @@ const ImageHandler = new ImageManager();
 
 ImageHandler.queueDownload("./res/img/openworld.png");
 ImageHandler.queueDownload("./res/img/hero.png");
+ImageHandler.queueDownload("./res/img/hero_extra.png");
 ImageHandler.queueDownload("./res/img/zombie.png");
 ImageHandler.queueDownload("./res/img/whip.png");
 ImageHandler.queueDownload("./res/img/crab.png");

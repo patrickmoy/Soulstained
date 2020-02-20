@@ -31,6 +31,7 @@ class Entity {
 
         this.speed = 0;
         this.health = -1;
+        this.jumpElapsedTime = 0;
         this.ACTION_DURATION = 0;
         this.actionElapsedTime = 0;
         this.invincibleCounter = 0;
@@ -63,12 +64,14 @@ class Entity {
 
         this.falling = false;
         this.alive = false;
+        this.jumping = false;
         this.hurting = false;
         this.Dying = false; // State of dying, for death animations/effects.
         this.moveable = true;
         this.pushDamage = false;
         this.pushUpdate = true; // Used for collision to check if entity's new Hitbox should be pushed for new update with the new hit box or not.
                                 // Is changed by collision detection
+
     }
 
     /**

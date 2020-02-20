@@ -118,7 +118,7 @@ function flagGravitate(collisionPairs) {
             if (boxOne.xMin < boxTwo.xMax &&
                 boxTwo.xMin < boxOne.xMax &&
                 boxOne.yMin < boxTwo.yMax &&
-                boxTwo.yMin < boxOne.yMax) {
+                boxTwo.yMin < boxOne.yMax && element[0].z === 0) {
                 console.log("FALLING!");
                 element[0].gravitate(element[1].focusX, element[1].focusY, element[1].plungeRate);
                 element[0].falling = true;
