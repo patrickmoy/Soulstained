@@ -1,6 +1,39 @@
-class FireballProjectile extends Entity {
+class Projectile extends Entity {
 
-    // constructor(game, spritesheet, x, y, trajectory, attack, secondary) {
+    constructor(game, x, y, width, height, layerLevel = 2) {
+        super(game, x, y, width, height, 1);
+        this.context = game.GAME_CONTEXT;
+        this.width = width;
+        this.height = height;
+    }
+
+    projectileNotOnScreen() {
+
+        return (this.hitbox.xMin > this.game.GAME_CANVAS_WIDTH
+            || this.hitbox.yMin > this.game.GAME_CANVAS_HEIGHT
+            || this.hitbox.xMin < 0
+            || this.hitbox.yMin < 0);
+        // return (this.futureHitbox.xMin > this.game.GAME_CANVAS_WIDTH
+        //     || this.futureHitbox.yMin > this.game.GAME_CANVAS_HEIGHT
+        //     || this.futureHitbox.xMin < 0
+        //     || this.futureHitbox.yMin < 0);
+
+    }
+
+    /**
+     * Resets the position of an enemy (primarily used when transitioning)
+     */
+    // resetFireBallPosition(x , y, x2, y2) {
+    //     this.futureHitbox.xMin = x;
+    //     this.futureHitbox.yMin = y;
+    //     this.futureHitbox.xMax = x2;
+    //     this.futureHitbox.yMax = y2;
+    //
+    // }
+}
+
+
+class FireballProjectile extends Projectile {
     constructor(game, spritesheet, x, y, trajectory, attack, secondary) {
         super(game, x, y, 56, 56, 2);
         this.animation = new Animation(spritesheet, this, 97, 103, .15, 1, [15]);
@@ -16,10 +49,6 @@ class FireballProjectile extends Entity {
         this.att = attack;
         this.att2 = secondary;
         this.origX = x;
-        // this.xMin = this.futureHitbox.xMin;
-
-
-
 
     }
 
@@ -39,8 +68,6 @@ class FireballProjectile extends Entity {
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
         }
-
-
     }
 
     //Selects attack method.
@@ -148,29 +175,104 @@ class FireballProjectile extends Entity {
         }
 
     }
-    projectileNotOnScreen() {
 
-        return (this.hitbox.xMin > this.game.GAME_CANVAS_WIDTH
-            || this.hitbox.yMin > this.game.GAME_CANVAS_HEIGHT
-            || this.hitbox.xMin < 0
-            || this.hitbox.yMin < 0);
-        // return (this.futureHitbox.xMin > this.game.GAME_CANVAS_WIDTH
-        //     || this.futureHitbox.yMin > this.game.GAME_CANVAS_HEIGHT
-        //     || this.futureHitbox.xMin < 0
-        //     || this.futureHitbox.yMin < 0);
+}
+
+class Arrow extends Projectile {
+
+    constructor(game, spritesheet, x, y, trajectory) {
+        super(game, x, y, 56, 56, 2);
+        this.animation = new Animation(spritesheet, this, 96, 96, .10, 1, [1]);
+        this.context = game.GAME_CONTEXT;
+        this.alive = true; //Every projectile is spawned dead.
+        this.trajectory = trajectory; //A flight direction path of either: left, right or down.
+        this.speed = 300; //Speed of each projectile, presently hard-coded in.
+
 
     }
 
-    /**
-     * Resets the position of an enemy (primarily used when transitioning)
-     */
-    // resetFireBallPosition(x , y, x2, y2) {
-    //     this.futureHitbox.xMin = x;
-    //     this.futureHitbox.yMin = y;
-    //     this.futureHitbox.xMax = x2;
-    //     this.futureHitbox.yMax = y2;
+    preUpdate() {
+
+        this.selectPosition(this.trajectory);
+
+    };
+
+    //Draws the projectile
+    draw() {
+        if (this.alive && this.trajectory === 'SOUTH') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 8);
+        }
+        if (this.alive && this.trajectory === 'NORTH') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
+        }
+        if (this.alive && this.trajectory === 'EAST') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 4);
+        }
+        if (this.alive && this.trajectory === 'WEST') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 12);
+        }
+    }
+
+    south() {
+
+        this.futureHitbox.yMin += this.game.clockTick * this.speed;
+        this.futureHitbox.yMax += this.game.clockTick * this.speed;
+    }
+
+    north() {
+
+        this.futureHitbox.yMin -= this.game.clockTick * this.speed;
+        this.futureHitbox.yMax -= this.game.clockTick * this.speed;
+    }
+
+    east() {
+
+        this.futureHitbox.xMin += this.game.clockTick * this.speed;
+        this.futureHitbox.xMax += this.game.clockTick * this.speed;
+    }
+
+    west() {
+
+        this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+        this.futureHitbox.xMax -= this.game.clockTick * this.speed;
+    }
+
+    // checkArrowStatus() {
+    //
+    //     if (this.game.currentEntities[3].every(arrow => arrow.projectileNotOnScreen())) {
+    //
+    //         this.arrow.alive = false;
+    //         this.arrow.count = 0;
+    //     }
     //
     // }
 
+    selectPosition(direction) {
 
+        switch (direction) {
+            case 'SOUTH':
+                this.south();
+                break;
+
+            case 'NORTH':
+                this.north();
+                break;
+
+            case 'EAST':
+                this.east();
+                break;
+            case 'WEST':
+                this.west();
+                break;
+        }
+
+    }
 }

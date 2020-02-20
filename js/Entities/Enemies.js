@@ -534,3 +534,77 @@ class Knight
 
 }
 
+class Sniper extends Enemy {
+
+    constructor(game, spritesheet, x, y, width, height, position) {
+        super(game, x, y, width, height, 2);
+        this.alive = true;
+        this.animation = new Animation(spritesheet, this, 20, 19, .1, 4, [5], 0);
+        this.context = game.GAME_CONTEXT;
+        this.position = position; // Variable to hold the direction the sniper is pointing.
+        this.detectRange = 200;
+        this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, this.position);
+        this.game.currentEntities[3].push(this.arrow);
+
+
+    }
+
+    preUpdate() {
+
+        this.pickAttack(this.position);
+
+    }
+
+    pickAttack(position) {
+
+        if (position === 'SOUTH') {
+            if (this.arrow.projectileNotOnScreen()) {
+
+                this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
+                this.game.currentEntities[3].push(this.arrow);
+            }
+        } else if (position === "NORTH") {
+            if (this.arrow.projectileNotOnScreen()) {
+
+                this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
+                this.game.currentEntities[3].push(this.arrow);
+            }
+        } else if (position === "EAST") {
+            if (this.arrow.projectileNotOnScreen()) {
+
+                this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
+                this.game.currentEntities[3].push(this.arrow);
+            }
+        } else if (position === "WEST") {
+            if (this.arrow.projectileNotOnScreen()) {
+
+                this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
+                this.game.currentEntities[3].push(this.arrow);
+            }
+        }
+    }
+
+    draw() {
+
+        if (!this.game.pause) {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
+        }
+    }
+
+    checkLOS() {
+        const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
+        const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
+        const sniperPosX = (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2; // Gets the knights's center x
+        const sniperPosY = (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2; // Gets the knights's center y
+        // Detects if the player is within the detection range.
+        const isInRadius = heroPosX > sniperPosX - this.detectRange && heroPosX < sniperPosX + this.detectRange &&
+            heroPosY > sniperPosY - this.detectRange && heroPosY < sniperPosY + this.detectRange;
+
+        return isInRadius;
+
+    }
+}
+
+

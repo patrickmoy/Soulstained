@@ -28,20 +28,22 @@ class TileMap {
                     const blockEntity = new InvisibleBlock(this.game, j * 60, i * 60, 60, 60);
                     blockEntity.alive = true;
                     this.BLOCKS.push(blockEntity);
-                }
-                else if (entityArray[i][j] === 2) {
-                    const zombieEntity = new Zombie(this.game, this.game.IMAGES_LIST["./res/img/zombie.png"],j * 60, i * 60, 60, 60);
+                } else if (entityArray[i][j] === 2) {
+                    const zombieEntity = new Zombie(this.game, this.game.IMAGES_LIST["./res/img/zombie.png"], j * 60, i * 60, 60, 60);
                     zombieEntity.alive = true;
                     this.ENEMIES.push(zombieEntity);
-                }else if (entityArray[i][j] === 3) {
+                } else if (entityArray[i][j] === 3) {
                     const necEntity = new Necromancer(this.game, this.game.IMAGES_LIST["./res/img/NecroFireball.png"], 170, 50, 60, 60, this.ENEMIES);
                     necEntity.alive = true;
                     this.ENEMIES.push(necEntity);
-                }
-                else if (entityArray[i][j] === 5) {
-                    const crabEntity = new Crab(this.game, this.game.IMAGES_LIST['./res/img/crab.png'],j * 60, i * 60, 40, 40);
+                } else if (entityArray[i][j] === 5) {
+                    const crabEntity = new Crab(this.game, this.game.IMAGES_LIST['./res/img/crab.png'], j * 60, i * 60, 40, 40);
                     crabEntity.alive = true;
                     this.ENEMIES.push(crabEntity);
+                } else if (entityArray[i][j] === 6) {
+                    const snipEntity = new Sniper(this.game, this.game.IMAGES_LIST['./res/img/sniper.png'], j * 60, i * 60, 40, 40, 'SOUTH');
+                    snipEntity.alive = true;
+                    this.ENEMIES.push(snipEntity);
                 }
                 if (entityArray[i][j].Class === 'Portal') {
                     var portalEntity = new Portal(this.game, j * 60, i * 60, entityArray[i][j].Section.x,
@@ -49,9 +51,8 @@ class TileMap {
                         entityArray[i][j].Destination,
                         entityArray[i][j].dx * 60, entityArray[i][j].dy * 60);
                     this.PORTALS.push(portalEntity);
-                }
-                else if (entityArray[i][j].Class === 'FirePit') {
-                    const firePit = new FirePit(this.game, this.game.IMAGES_LIST["./res/img/fire.png"], j*60, i*60, 60, 60);
+                } else if (entityArray[i][j].Class === 'FirePit') {
+                    const firePit = new FirePit(this.game, this.game.IMAGES_LIST["./res/img/fire.png"], j * 60, i * 60, 60, 60);
                     firePit.alive = true;
                     this.BLOCKS.push(firePit);
                 }
