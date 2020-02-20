@@ -22,7 +22,20 @@ class OpenWorldArrays {
         [1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1],
         [0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1],
         [1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1],
-        [1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
+        [1, {Class: 'Sign', Message: 'YOUR SHIP WAS WRECKED IN THE STORM\nYOU WERE SAFELY WASHED ASHORE\n' +
+              'ON NECROMANCERS ISLAND CASTLE\n\n' +
+              'TWAS ONCE A BEAUTIFUL AND PEACEFUL TOWN\n' +
+              'INHABITED BY A GOOD NATURED PEOPLE\n' +
+              'NOW CORRUPTED BY SIN LIES AND DECEIT\n\n' +
+              'RAISED FROM THEIR MORTAL GRAVES\n' +
+              'ZOMBIES ROAM ABOUT THE ISLAND TERRORIZING\n' +
+              'THE REMAINING HUMAN INHABITANTS\n\n' +
+              'THERE IS NO WAY OUT\n' +
+              'DEFEAT THE NECROMANCER OR PERISH\n\n' +
+              'USE WSAD FOR MOVEMENT\n' +
+              'USE J AND K FOR ATTACKS\n\n' +
+              'BON VOYAGE                PRESS K TO EXIT'},
+               0, 0, 0, 1, 1, 0, 0, 0, 1, 1],
         [0, 0, 0, 0, 0, 1, 1, 0, 2, 0, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],

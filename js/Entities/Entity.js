@@ -150,3 +150,24 @@ class Entity {
         }
     }
 }
+
+class Sign extends Entity {
+    constructor(game, x, y, width, height, message) {
+        super(game, x, y, width, height);
+        this.msg = message;
+        this.pushMessage = false;
+    }
+
+    //override Entity update
+    update() {
+        if (this.pushMessage) {
+            if (this.game.newMsg === false) {
+                    this.game.newMsg = true;
+                    this.game.msg = this.msg;
+                    this.pushMessage = false;
+            }
+        }
+    }
+
+
+}

@@ -51,20 +51,8 @@ class GameEngine {
 
         this.UI;
 
-        this.msg = 'YOUR SHIP WAS WRECKED IN THE STORM\nYOU WERE SAFELY WASHED ASHORE\n' +
-                   'ON NECROMANCERS ISLAND CASTLE\n\n' +
-                   'TWAS ONCE A BEAUTIFUL AND PEACEFUL TOWN\n' +
-                   'INHABITED BY A GOOD NATURED PEOPLE\n' +
-                   'NOW CORRUPTED BY SIN LIES AND DECEIT\n\n' +
-                   'RAISED FROM THEIR MORTAL GRAVES\n' +
-                   'ZOMBIES ROAM ABOUT THE ISLAND TERRORIZING\n' +
-                   'THE REMAINING HUMAN INHABITANTS\n\n' +
-                   'THERE IS NO WAY OUT\n' +
-                   'DEFEAT THE NECROMANCER OR PERISH\n\n' +
-                   'USE WSAD FOR MOVEMENT\n' +
-                   'USE J AND K FOR ATTACKS\n\n' +
-                   'BON VOYAGE                PRESS K TO EXIT';
-        this.newMsg = true;
+        this.msg;
+        this.newMsg = false;
         this.displayMessage = false;
 
         this.HitQueue = [];
@@ -167,18 +155,19 @@ class GameEngine {
 
             // PRE-UPDATE ENTITIES
             this.currentEntities[0].filter(hero => hero.alive).forEach(hero => hero.preUpdate());
+            this.currentEntities[1].filter(block => block.alive).forEach(block => block.preUpdate());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.preUpdate());
-            // this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
-            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate());
+            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
 
             // HANDLE COLLISIONS AND DAMAGE
             const collisionPairs = detectCollide([].concat.apply([], this.currentEntities).filter(entity => entity.alive));
             flagImpassable(collisionPairs);
             flagDamage(collisionPairs);
+            flagMessages(collisionPairs);
 
             // UPDATE ENTITIES
             this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.update()); // Updates hero
-            //this.currentEntities[1].filter(block => block.alive).forEach(block => block.update());
+            this.currentEntities[1].filter(block => block.alive).forEach(block => block.update());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.update());
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));

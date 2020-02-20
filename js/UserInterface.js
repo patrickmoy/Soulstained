@@ -51,6 +51,7 @@ class UserInterface
             if (this.game.INPUTS["KeyK"]) {
                 this.game.pause = false;
                 this.game.displayMessage = false;
+                this.msgEncoded = [];
             }
         }
     }
