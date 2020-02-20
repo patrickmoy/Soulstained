@@ -45,7 +45,7 @@ class TileMap {
                     snipEntity.alive = true;
                     this.ENEMIES.push(snipEntity);
                 }
-                if (entityArray[i][j].Class === 'Portal') {
+                else if (entityArray[i][j].Class === 'Portal') {
                     var portalEntity = new Portal(this.game, j * 60, i * 60, entityArray[i][j].Section.x,
                         entityArray[i][j].Section.y,
                         entityArray[i][j].Destination,
@@ -54,7 +54,13 @@ class TileMap {
                 } else if (entityArray[i][j].Class === 'FirePit') {
                     const firePit = new FirePit(this.game, this.game.IMAGES_LIST["./res/img/fire.png"], j * 60, i * 60, 60, 60);
                     firePit.alive = true;
-                    this.BLOCKS.push(firePit);
+                    this.ENEMIES.push(firePit);
+                } else if(entityArray[i][j].Class === 'Pit') {
+                    const pit = new Pit(this.game, j*60, i*60);
+                    console.log(i);
+                    console.log(j);
+                    pit.alive = true;
+                    this.BLOCKS.push(pit);
                 }
             }
         }

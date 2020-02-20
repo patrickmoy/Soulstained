@@ -42,30 +42,43 @@ class Animation {
 
         let xIndex;
         let yIndex = imageRow * this.frameHeight;
-        if (status === 'walking') { // When walking, increment time by tick.
-            this.walkTime += tick;
-            if (this.walkTime >= this.walkDuration) { // Reset if we go over.
-                this.walkTime -= this.walkDuration; // Should this value be "totalWalkDuration" or something?
+        if (!this.entity.jumping) {
+            if (status === 'walking') { // When walking, increment time by tick.
+                this.walkTime += tick;
+                if (this.walkTime >= this.walkDuration) { // Reset if we go over.
+                    this.walkTime -= this.walkDuration; // Should this value be "totalWalkDuration" or something?
+                }
             }
-        }
-        if (status === 'walking' || status === 'idle') {
-            xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0]);
-        } else if (status === 'attacking') {
-            xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) %
-                (this.frameIndices[1] - this.frameIndices[0]) + this.frameIndices[0]);
-        } else if (status === 'weapon') {
-            xIndex = 0;
-            if (this.entity.direction <= 1) {
-                yIndex = this.frameHeight * this.entity.direction;
-            } else {
-                //yIndex = (this.frameHeight * (this.entity.direction - this.entity.WHIP_SPRITE_OFFSET) + (this.entity.WHIP_SPRITE_OFFSET * this.frameWidth));
-                yIndex = this.entity.WHIP_SPRITE_OFFSET * (this.frameWidth - this.frameHeight) + this.frameHeight * this.entity.direction;
+            if (status === 'walking' || status === 'idle') {
+                xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0]);
+            } else if (status === 'attacking') {
+                xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) %
+                    (this.frameIndices[1] - this.frameIndices[0]) + this.frameIndices[0]);
+            } else if (status === 'weapon') {
+                xIndex = 0;
+                if (this.entity.direction <= 1) {
+                    yIndex = this.frameHeight * this.entity.direction;
+                } else {
+                    //yIndex = (this.frameHeight * (this.entity.direction - this.entity.WHIP_SPRITE_OFFSET) + (this.entity.WHIP_SPRITE_OFFSET * this.frameWidth));
+                    yIndex = this.entity.WHIP_SPRITE_OFFSET * (this.frameWidth - this.frameHeight) + this.frameHeight * this.entity.direction;
+                }
+
             }
+            context.drawImage(this.spriteSheet, xIndex, yIndex,
+                this.frameWidth, this.frameHeight, gamePositionX, gamePositionY,
+                this.frameWidth * this.scale, this.frameHeight * this.scale);
+        } else if (this.entity.jumping) {
+            console.log("branch hit");
+            xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.jumpElapsedTime)) % this.frameIndices[2]);
+            yIndex = 4 * this.frameHeight + this.entity.JUMP_SPRITE_FRAME_HEIGHT * imageRow;
+            console.log(yIndex);
+            console.log(xIndex);
+            context.drawImage(this.spriteSheet, xIndex, yIndex,
+                this.frameWidth, this.entity.JUMP_SPRITE_FRAME_HEIGHT, gamePositionX, gamePositionY,
+                this.frameWidth * this.scale, this.entity.JUMP_SPRITE_FRAME_HEIGHT * this.scale);
 
         }
-        context.drawImage(this.spriteSheet, xIndex, yIndex,
-            this.frameWidth, this.frameHeight, gamePositionX, gamePositionY,
-            this.frameWidth * this.scale, this.frameHeight * this.scale);
+
     }
 
 
@@ -77,8 +90,11 @@ class Animation {
         if (this.entity.status === 'attacking') {
             return Math.floor(time / this.attackFrameTime);
         }
+        if (this.entity.jumping) {
+            return Math.floor(time / (this.attackFrameTime / 2));
+        }
         return Math.floor(time / this.standardFrameTime);
-    }
+}
 
     // /**
     //  * Checks if the animation is done

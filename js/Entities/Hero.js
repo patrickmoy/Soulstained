@@ -13,7 +13,7 @@ class Hero extends Entity {
         // To modify whip speed, change last parameter here (.100 default, attackFrameTime parameter in Animation).
         // Must be 1/5 of this.ACTION_DURATION (change that too).
         this.animation = new Animation(spriteSheet, this,16, 23, .250,
-            2.4, [2,7], .100);
+            2.4, [2, 7, 11], .100);
         this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
@@ -21,15 +21,18 @@ class Hero extends Entity {
         this.maxHealth = 10;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
         this.coins = 678;
-        this.jumpElapsedTime = 0;
         this.alive = true;
+        this.equipJ = "whip";
+        this.equipK = "boots";
+        this.inventory = ["whip"];
 
         // Change this to be 5x the attackFrameTime, and whip speed will update.
         // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration. (Not Hero's).
         this.INVINCIBLE_TIME = 2;
         this.ACTION_DURATION = .5;
-        this.JUMP_DURATION = .75;
+        this.JUMP_DURATION = .650;
         this.WHIP_ACTIVE_RATIO = .6;
+        this.JUMP_SPRITE_FRAME_HEIGHT = 27;
 
         // hero damage animation control variables
         this.hurting = false;
@@ -43,9 +46,15 @@ class Hero extends Entity {
     preUpdate() {
         if (!this.game.transition) {
             this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
+            if (this.jumping) {
+                this.jump();
+            } else if (!this.jumping && this.beingUsed("boots")) {
+                this.jumping = true;
+                this.jump();
+            }
             if (this.status === 'attacking') {
                 this.attack();
-            } else if (this.status !== 'attacking' && this.game.INPUTS['KeyJ']) {
+            } else if (this.status !== 'attacking' && this.beingUsed("whip")) {
                 this.status = 'attacking';
                 this.attack();
             } else if (this.game.hasMoveInputs()) {
@@ -191,7 +200,15 @@ class Hero extends Entity {
     }
 
     jump() {
-         //this.z = (this.game.GRAVITY * this.jumpElapsedTime * this.jumpElapsedTime) + this.game.GRAVITY * this.jumpElapsedTime
+        this.jumpElapsedTime += this.game.clockTick;
+        this.z = 1;
+        if (this.jumpElapsedTime > this.JUMP_DURATION) {
+            this.jumpElapsedTime = 0;
+            this.jumping = false;
+            this.z = 0;
+        }
+
+        //this.z = (this.game.GRAVITY * this.jumpElapsedTime * this.jumpElapsedTime) + this.game.GRAVITY * this.jumpElapsedTime
         // a(x-h)^2 + k --> -64/9, .375, 1;
         // customize
         // Check border for pits
@@ -202,6 +219,9 @@ class Hero extends Entity {
     attack() {
         this.whip.direction = this.direction;
         super.attack();
+    }
 
+    beingUsed(itemName) {
+        return (this.equipJ === itemName && this.game.INPUTS["KeyJ"]) || (this.equipK === itemName && this.game.INPUTS["KeyK"]);
     }
 }

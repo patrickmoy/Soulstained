@@ -43,8 +43,10 @@ class Enemy extends Entity {
         this.health = this.ORIGINAL_HEALTH;
     }
 
-    randomWalk(maxTime, cooldown) {
-        if (cooldown === 0 && this.directionTime < maxTime) {
+    randomWalk(maxTime, cooldown)
+    {
+        if (cooldown === 0 && this.directionTime < maxTime)
+        {
             this.walk(this.direction);
             if (this.notOnScreen()) { // Resets the crab position since he's trying to go out of border.
                 this.futureHitbox.xMin = this.hitbox.xMin;
@@ -54,7 +56,9 @@ class Enemy extends Entity {
                 this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
             }
             this.directionTime++;
-        } else {
+        }
+        else
+        {
             this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
             this.directionTime = 0;
         }
@@ -140,7 +144,8 @@ class Zombie extends Enemy {
                 this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
             }
             this.movementCooldown = 5;
-        } else {
+        }
+        else {
             this.randomWalk(50, this.movementCooldown);
             if (this.movementCooldown > 0) this.movementCooldown--;
         }
@@ -211,11 +216,11 @@ class Zombie extends Enemy {
      */
     canWalkHere() {
         var blocksWithEnemy = this.game.currentEntities[1]; // Get the blocks
-        blocksWithEnemy.push(this); // Add the zombie to the blocks
-        var collide = detectCollide(blocksWithEnemy); // Check if there's any collision
-        blocksWithEnemy.pop(); // Remove zombie from blocks
+        //Refactor given that detectCollide function takes two lists as arguments.
+        //blocksWithEnemy.push(this); // Add the zombie to the blocks
+        var collide = detectCollide(blocksWithEnemy, [this]); // Check if there's any collision
+        // locksWithEnemy.pop(); // Remove zombie from blocks
         return collide.length === 0; // Return if there was collision or not.
-
     }
 
     draw() {
@@ -530,6 +535,33 @@ class Knight
     //     this.direction = Math.floor(Math.random() * Math.floor(5));
     // }
 
+
+}
+class FirePit extends Enemy {
+    constructor(game, spritesheet, x, y, width, height) {
+        super(game, x, y, width, height, 1);
+        this.animation = new Animation(spritesheet, this,16, 16, .1, 4, [4]);
+        this.context = game.GAME_CONTEXT;
+        this.sx = x;
+        this.sy = y;
+        this.status = 'walking';
+        this.alive = true;
+        console.log("firepit created");
+    }
+    update() {
+        // do nothing
+    }
+
+    draw() {
+        if (!this.game.pause) {
+            this.context.beginPath();
+            this.context.stroke();
+            this.animation.drawFrame(this.game.clockTick, this.context, this.sx, this.sy, this.status);
+        }
+    }
+}
+
+class Skeleton extends Enemy {
 
 }
 
