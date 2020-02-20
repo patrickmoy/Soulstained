@@ -215,7 +215,7 @@ class GameEngine {
         this.HERO.hitbox.yMax = this.HERO.hitbox.yMin + this.HERO.height;
         this.HERO.futureHitbox.xMin = this.HERO.hitbox.xMin;
         this.HERO.futureHitbox.yMin = this.HERO.hitbox.yMin;
-        this.HERO.futureHitbox.xMax = this.HERO.hitbox.xMin;
+        this.HERO.futureHitbox.xMax = this.HERO.hitbox.xMax;
         this.HERO.futureHitbox.yMax = this.HERO.hitbox.yMax;
         this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
         this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
