@@ -17,41 +17,6 @@ class TileMap {
         this.createEntities(); // Creates the tiles for collision and passes it into entities
     }
 
-    // createEntities(entityArray) {
-    //
-    //     for (var i = 0; i < 12; i++) {
-    //         for (var j = 0; j < 12; j++) {
-    //             if (entityArray[i][j] === 1) {
-    //                 const blockEntity = new InvisibleBlock(this.game, j * 60, i * 60, 60, 60);
-    //                 blockEntity.alive = true;
-    //                 this.BLOCKS.push(blockEntity);
-    //             }
-    //             else if (entityArray[i][j] === 2) {
-    //                 const zombieEntity = new Zombie(this.game, this.game.ASSETS_LIST["./res/img/zombie.png"], j * 60, i * 60, 60, 60);
-    //                 zombieEntity.alive = true;
-    //                 this.ENEMIES.push(zombieEntity);
-    //             }
-    //             else if (entityArray[i][j] === 5) {
-    //                 const crabEntity = new Crab(this.game, this.game.ASSETS_LIST['./res/img/crab.png'], j * 60, i * 60, 40, 40);
-    //                 crabEntity.alive = true;
-    //                 this.ENEMIES.push(crabEntity);
-    //             }
-    //             if (entityArray[i][j].Class === 'Portal') {
-    //                 var portalEntity = new Portal(this.game, j * 60, i * 60, entityArray[i][j].Section.x,
-    //                     entityArray[i][j].Section.y,
-    //                     entityArray[i][j].Destination,
-    //                     entityArray[i][j].dx * 60, entityArray[i][j].dy * 60);
-    //                 this.PORTALS.push(portalEntity);
-    //             }
-    //             else if (entityArray[i][j].Class === 'FirePit') {
-    //                 const firePit = new FirePit(this.game, this.game.ASSETS_LIST["./res/img/fire.png"], j*60, i*60, 60, 60);
-    //                 firePit.alive = true;
-    //                 this.ENEMIES.push(firePit);
-    //             }
-    //         }
-    //     }
-    // }
-
     createEntities()
     {
         // Creates all the collision walls
@@ -100,7 +65,6 @@ class TileMap {
                 this.PORTALS.push(new Portal(this.game, entity.x * 60 / 16, entity.y * 60 / 16, entity.customProperties.width * 4,
                     entity.customProperties.height * 4, entity.customProperties.destination, entity.customProperties.TMX,
                     entity.customProperties.TMY, entity.customProperties.destinationX, entity.customProperties.destinationY));
-                console.log(this.PORTALS);
             }
         }
     }

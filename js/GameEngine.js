@@ -66,8 +66,10 @@ class GameEngine {
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
 
         // Create the worlds
-        this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 3);
+        this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
         this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
+        this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
+
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
         this.currentEntities[1] =  this.currentWorld.getCurrentTileMap().BLOCKS;
         this.currentEntities[2] =  this.currentWorld.getCurrentTileMap().ENEMIES;
@@ -128,9 +130,11 @@ class GameEngine {
             this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
             this.HERO.eventWalk(); // Moves the player when transitioning is happening
         }
-        else if (this.pause) {
+        else if (this.pause)
+        {
             this.currentWorld.fade();
-            if (!this.pause) {
+            if (!this.pause)
+            {
                 this.transposeWorlds();
             }
         }
@@ -203,7 +207,6 @@ class GameEngine {
      * Switches the game engine to the new world map and sets the hero's new coordinates
      */
     transposeWorlds() {
-        console.log("TRANPOSING YO")
         this.currentWorld = this.WORLDS[this.currentPortal.destinationWorld];
         this.currentWorld.section.x = this.currentPortal.destinationSection.x;
         this.currentWorld.section.y = this.currentPortal.destinationSection.y;
