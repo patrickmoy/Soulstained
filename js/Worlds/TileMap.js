@@ -61,6 +61,11 @@ class TileMap {
                     console.log(j);
                     pit.alive = true;
                     this.BLOCKS.push(pit);
+                }      else if (entityArray[i][j].Class === 'Sign') {
+                    const signEntity = new Sign(this.game, j*60, i*60, 60, 60, entityArray[i][j].Message);
+                    signEntity.alive = true;
+                    console.log(signEntity);
+                    this.BLOCKS.push(signEntity);
                 }
             }
         }
