@@ -66,8 +66,9 @@ class GameEngine {
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
 
         // Create the worlds
-        this.WORLDS["OpenWorld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
-        this.currentWorld = this.WORLDS["OpenWorld"]; // Set the current world to the open worlds
+        this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 3);
+        this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
+        this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
         this.currentEntities[1] =  this.currentWorld.getCurrentTileMap().BLOCKS;
         this.currentEntities[2] =  this.currentWorld.getCurrentTileMap().ENEMIES;
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
@@ -185,11 +186,12 @@ class GameEngine {
         if (!this.pause) {
             var portals = this.currentWorld.getCurrentTileMap().PORTALS;
             for (var i = 0; i < portals.length; i++) {
-                if ((this.HERO.hitbox.yMin > portals[i].sy) &&
-                    (this.HERO.hitbox.yMax < (portals[i].sy + portals[i].height)) &&
-                    (this.HERO.hitbox.xMin > portals[i].sx) &&
-                    (this.HERO.hitbox.xMax < (portals[i].sx + portals[i].width))
-                ) {
+                var portal = portals[i];
+                if (this.HERO.hitbox.xMin < portal.x + portal.width &&
+                    portal.x < this.HERO.hitbox.xMax &&
+                    this.HERO.hitbox.yMin < portal.y + portal.height &&
+                    portal.y < this.HERO.hitbox.yMax)
+                {
                     this.pause = true;
                     this.currentPortal = portals[i];
                 }
@@ -201,15 +203,20 @@ class GameEngine {
      * Switches the game engine to the new world map and sets the hero's new coordinates
      */
     transposeWorlds() {
-        this.currentWorld = this.WORLDS[this.currentPortal.destination];
-        this.currentWorld.section.x = this.currentPortal.section.x;
-        this.currentWorld.section.y = this.currentPortal.section.y;
-        this.currentWorld.sourceX = this.currentPortal.section.x * 192;
-        this.currentWorld.sourceY = this.currentPortal.section.y * 192;
-        this.HERO.hitbox.xMin = this.currentPortal.dx;
-        this.HERO.hitbox.yMin = this.currentPortal.dy;
-        this.HERO.futureHitbox.xMin = this.currentPortal.dx;
-        this.HERO.futureHitbox.yMin = this.currentPortal.dy;
+        console.log("TRANPOSING YO")
+        this.currentWorld = this.WORLDS[this.currentPortal.destinationWorld];
+        this.currentWorld.section.x = this.currentPortal.destinationSection.x;
+        this.currentWorld.section.y = this.currentPortal.destinationSection.y;
+        this.currentWorld.sourceX = this.currentWorld.section.x * 192;
+        this.currentWorld.sourceY = this.currentWorld.section.y * 192;
+        this.HERO.hitbox.xMin = this.currentPortal.destinationX;
+        this.HERO.hitbox.yMin = this.currentPortal.destinationY;
+        this.HERO.hitbox.xMax = this.HERO.hitbox.xMin + this.HERO.width;
+        this.HERO.hitbox.yMax = this.HERO.hitbox.yMin + this.HERO.height;
+        this.HERO.futureHitbox.xMin = this.HERO.hitbox.xMin;
+        this.HERO.futureHitbox.yMin = this.HERO.hitbox.yMin;
+        this.HERO.futureHitbox.xMax = this.HERO.hitbox.xMin;
+        this.HERO.futureHitbox.yMax = this.HERO.hitbox.yMax;
         this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
         this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
         this.currentEntities[3] = [];

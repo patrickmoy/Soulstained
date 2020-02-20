@@ -97,8 +97,10 @@ class TileMap {
             }
             else if (entity.type === 'Portal')
             {
-                // Not functioning at the moment :/
-                this.PORTALS.push(new Portal(this.game, entity.x * 60 / 16, entity.y * 60 / 16, entity.width, entity.height));
+                this.PORTALS.push(new Portal(this.game, entity.x * 60 / 16, entity.y * 60 / 16, entity.customProperties.width * 4,
+                    entity.customProperties.height * 4, entity.customProperties.destination, entity.customProperties.TMX,
+                    entity.customProperties.TMY, entity.customProperties.destinationX, entity.customProperties.destinationY));
+                console.log(this.PORTALS);
             }
         }
     }

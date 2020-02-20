@@ -1,4 +1,13 @@
-const jsonPath = (world = "", x = 0, y = 0) => `./res/jsonderulo/${world}section${x}_${y}.json`;
+const jsonPath = (world = "", x = 0, y = 0) => {
+    if (world === "")
+    {
+        return `./res/jsonderulo/section${x}_${y}.json`;
+    }
+    else
+    {
+        return `./res/jsonderulo/${world}_section${x}_${y}.json`;
+    }
+};
 class World {
     /**
      * The world that the hero is able to move around. Examples of World are Open World, Dungeons, Houses, etc.
@@ -136,6 +145,23 @@ class OpenWorld extends World {
         return this.tileMaps[this.section.x][this.section.y];
     }
 
+}
+
+class CaveBasic extends World {
+    constructor(game, worldImage, sectionX, sectionY)
+    {
+        super(game, worldImage, sectionX, sectionY);
+        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("cave", 1, 1)])]];
+    }
+
+    /**
+     * Returns the current tile map.
+     *
+     * @returns {TileMap} the current tilemap of the world
+     */
+    getCurrentTileMap() {
+        return this.tileMaps[this.section.x][this.section.y];
+    }
 }
 
 class NecroDungeon extends World {

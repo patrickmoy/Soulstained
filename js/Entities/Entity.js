@@ -16,10 +16,6 @@ class Entity {
         this.width = width;
         this.height = height;
         this.z = 0;
-        // -------
-        // Steven Tran
-        // Instead of having a speed variable in every object, how about have it as a parameters since every entity has a speed.
-        // -------
 
         this.originalHitbox =
             {
