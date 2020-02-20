@@ -165,7 +165,6 @@ class Zombie extends Enemy {
             heroPosY > zombiePosY - this.detectRange && heroPosY < zombiePosY + this.detectRange;
 
         if (isInRadius) {
-
             // Original future hitbox to reset future hitbox
             const originalFutureHitbox = {
                 xMin: this.futureHitbox.xMin, xMax: this.futureHitbox.xMax,

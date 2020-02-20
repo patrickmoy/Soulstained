@@ -113,7 +113,7 @@ class OpenWorld extends World {
      */
     constructor(game, worldImage, layeredImage, sectionX, sectionY) {
         super(game, worldImage, layeredImage, sectionX, sectionY);
-        // Create a foundation for open world tile maps here. 8 x 8 TileMaps
+        // Create a foundation for open world tile maps here. 3 x 5 TileMaps
         this.tileMaps =
         [
             [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 3)]),

@@ -98,8 +98,6 @@ class TileMap {
             else if (entity.type === 'Portal')
             {
                 // Not functioning at the moment :/
-                console.log("Portal created");
-                console.log(entity)
                 this.PORTALS.push(new Portal(this.game, entity.x * 60 / 16, entity.y * 60 / 16, entity.width, entity.height));
             }
         }
