@@ -16,7 +16,7 @@ class Animation {
      * @param {number} scale Image scaling ratio to increase or decrease size.
      * @param attackFrameTime Optional, attack frame time (if there is an attack animation).
      */
-    constructor(spriteSheet, entity, frameWidth, frameHeight, singleFrameTime, scale, frameIndices = [4], attackFrameTime = 0) {
+    constructor(spriteSheet, entity, frameWidth, frameHeight, singleFrameTime, scale, frameIndices = [2], attackFrameTime = 0) {
         this.spriteSheet = spriteSheet;
         this.entity = entity;
         this.frameWidth = frameWidth;

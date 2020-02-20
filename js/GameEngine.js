@@ -189,9 +189,6 @@ class GameEngine {
         }
     }
 
-    /**
-     * Checks if the player is currently in a spot for transition to occur
-     */
     checkTransition() {
         const currentBorder = this.HERO.checkBorder();
         if (currentBorder.changeInX || currentBorder.changeInY) // Checks if there is any border change in x or y direction
@@ -209,9 +206,6 @@ class GameEngine {
         }
     }
 
-    /**
-     * Checks if the player is inside a portal
-     */
     checkPortal() {
         if (!this.pause) {
             var portals = this.currentWorld.getCurrentTileMap().PORTALS;
@@ -228,9 +222,6 @@ class GameEngine {
         }
     }
 
-    /**
-     * Switches the game engine to the new world map and sets the hero's new coordinates
-     */
     transposeWorlds() {
         this.currentWorld = this.WORLDS[this.currentPortal.destination];
         this.currentWorld.section.x = this.currentPortal.section.x;
@@ -246,28 +237,20 @@ class GameEngine {
         this.currentEntities[3] = [];
     }
 
-    /**
-     * Method checks current input keys and returns whether movement inputs are
-     * active.
-     * @return {Boolean} Returns true if movement keys are pressed (WASD), and false otherwise.
-     */
     hasMoveInputs() {
         return (this.INPUTS['KeyW'] || this.INPUTS['KeyA'] || this.INPUTS['KeyS'] ||
             this.INPUTS['KeyD']);
     }
 
-    /**
-     *
-     */
     draw() {
         if (!this.transition) {
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
-            this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon.
+            this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw());
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());
-            this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw()); // Draws the enemies
-            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw()); // Draws the projectiles
+            this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw());
+            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw());
             this.drawHits();
             this.drawDeaths();
             this.UI.draw();
@@ -303,19 +286,12 @@ class GameEngine {
 }
 
 class GameTimer {
-    /**
-     * A virtual timer to update the game properly with relation to the instance rather than real time.
-     */
     constructor() {
         this.gameTime = 0; // Keep track of the game time
         this.maxStep = 0.05;
         this.lastTimeStamp = 0;
     }
 
-    /**
-     *
-     * @returns {number}
-     */
     tick() {
         const currentTime = Date.now();
         const delta = (currentTime - this.lastTimeStamp) / 1000;
