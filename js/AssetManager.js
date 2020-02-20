@@ -19,6 +19,7 @@ class AssetManager {
         this.downloadQueue.push({src: filePath, type: 'img'});
     }
 
+    /*
     queueTextFile(filePath) {
         console.log(filePath + ' has been added to the Download Queue.');
         this.downloadQueue.push({src: filePath, type: 'txt'});
@@ -31,6 +32,7 @@ class AssetManager {
             self.assets[filePath] = textData;
         });
     }
+    */
 
     queueJSON(filePath)
     {
@@ -80,12 +82,14 @@ class AssetManager {
                     let jsonPromise = self.getJSON(self.downloadQueue[i].src);
                     promiseArray.push(jsonPromise);
                 }
+                /*
                 else if (self.downloadQueue[i].type === 'txt')
                 {
                     // self.downloadQueue[i].src => file path of the text file
                     let filePromise = self.getTextFile(self.downloadQueue[i].src);
                     promiseArray.push(filePromise);
                 }
+                */
             }
             return Promise.all(promiseArray);
         }

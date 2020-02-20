@@ -1,5 +1,4 @@
 class Entity {
-
     /**
      * An object in the game that has some form of interaction. An example would be walls or the hero.
      * A hero interacts with walls where he can't walk through them.
@@ -16,10 +15,6 @@ class Entity {
         this.width = width;
         this.height = height;
         this.z = 0;
-        // -------
-        // Steven Tran
-        // Instead of having a speed variable in every object, how about have it as a parameters since every entity has a speed.
-        // -------
 
         this.originalHitbox =
             {
@@ -35,7 +30,8 @@ class Entity {
         this.actionElapsedTime = 0;
         this.invincibleCounter = 0;
         this.INVINCIBLE_TIME = .5;
-        this.hitbox = // The entity's box to take be interacted with other entities or world components.
+
+        this.hitbox =
             {
                 xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
                 yMin: y + height * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -49,40 +45,21 @@ class Entity {
             yMax: y + height * this.HITBOX_SHRINK_FACTOR,
         };
         this.layerLevel = layerLevel;
-
-        this.direction = 1; // Looking down at default;
-        // Where the hero is facing. North = 0, South = 1, East = 2, West = 3. //
-        // PM: Spritesheet convention (only some entities have diff animations for directions)
-        // Therefore, only those such entities should pass this.direction in.
-
-        this.status = 'idle'; // PM: New parameter I'm adding to govern "state". Idle, attacking, walking. Firmly of the
-        // belief that this should be stored in entity state -> animation can make use of this.
-        // Acceptable states currently: 'idle', 'walking', 'attacking' (some enemies and hero).
-        // Considering changing 'attacking' to "action" and then having action depend on the equipped
-        // item, which should also be stored in Hero.
-
+        this.direction = 1;
+        this.status = 'idle';
         this.alive = false;
-        this.hurting = false;
-        this.Dying = false; // State of dying, for death animations/effects.
-        this.deathTime;
         this.moveable = true;
         this.pushDamage = false;
-        this.pushUpdate = true; // Used for collision to check if entity's new Hitbox should be pushed for new update with the new hit box or not.
-                                // Is changed by collision detection
+        this.pushUpdate = true;
     }
 
-    /**
-     * Performs a update but does not actually push it. Will go through several phases until the update is pushed.
-     */
     preUpdate() {
         // Do nothing, implemented by subclasses
     }
 
-    /**
-     * Actually updates the game given that update is allowed to be pushed
-     */
     update() {
-        if (this.pushUpdate) {
+        if (this.pushUpdate)
+        {
             this.hitbox.xMin = this.futureHitbox.xMin; // Updates to new top left x coordinate
             this.hitbox.yMin = this.futureHitbox.yMin; // Updates to the new top left y coordinate
             this.hitbox.xMax = this.futureHitbox.xMax; // Updates to the new bottom right x coordinate
@@ -94,7 +71,12 @@ class Entity {
             this.futureHitbox.xMax = this.hitbox.xMax; // Resets future bottom right x coordinate
             this.futureHitbox.yMax = this.hitbox.yMax; // Resets future bottom right y coordinate
         }
-        if (this.pushDamage) {
+        if (this.pushDamage)
+        {
+            var hitSprite = new Animation(this.game.IMAGES_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
+            var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 5, spritesheet: hitSprite};
+            this.game.HitQueue.push(hitObject);
+
             if (this.invincibleCounter === 0) {
                 this.takeDamage();
                 this.hurting = true;
@@ -105,23 +87,28 @@ class Entity {
             }
             this.pushDamage = false;
         } else {
-            if (this.invincibleCounter > 0) {
+            if (this.invincibleCounter > 0)
+            {
                 this.invincibleCounter += this.game.clockTick;
             }
-            if (this.invincibleCounter > this.INVINCIBLE_TIME) {
+            if (this.invincibleCounter > this.INVINCIBLE_TIME)
+            {
                 this.invincibleCounter = 0;
             }
-
         }
 
-        if (this.health === 0) {
+        if (this.health === 0)
+        {
             this.alive = false;
+            var deathSprite = new Animation(this.game.IMAGES_LIST["./res/img/death.png"], this,30, 30,  0.25, 2, [4]);
+            var deathObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 50, entity: this, spritesheet: deathSprite};
+            this.game.DeathQueue.push(deathObject);
         }
     }
 
-    // Sets status of entity to walking for this update/render tick, and updates hitbox.
     walk(direction) {
-        switch (direction) {
+        switch (direction)
+        {
             case 0: // up
                 this.futureHitbox.yMin -= this.game.clockTick * this.speed;
                 this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
@@ -139,11 +126,6 @@ class Entity {
                 this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
                 break;
         }
-        // Removed since it causes speed disparities left to right and top to bottom. s
-        // this.futureHitbox.xMin = Math.floor(this.futureHitbox.xMin); // Normalize the x min coordinate for consistency
-        // this.futureHitbox.xMax = Math.floor(this.futureHitbox.xMax); // Normalize the x max coordinate for consistency
-        // this.futureHitbox.yMin = Math.floor(this.futureHitbox.yMin); // Normalize the y min coordinate for consistency
-        // this.futureHitbox.yMax = Math.floor(this.futureHitbox.yMax); // Normalize the y max coordinate for consistency
     }
 
     attack() {
@@ -154,22 +136,36 @@ class Entity {
         }
     }
 
-    /**
-     * Draws the entity
-     */
     draw() {
         // Do nothing, implemented by subclasses
     }
 
-    /**
-     *  Directs entity to take damage. Takes 1 damage if no damage is specified.
-     */
     takeDamage(damage = 1) {
         console.log(this.constructor.name + ": damage taken");
-        if (this.health - damage < 0) {
+        if (this.health - damage < 0)
+        {
             this.health = 0;
         } else {
             this.health -= damage;
+        }
+    }
+}
+
+class Sign extends Entity {
+    constructor(game, x, y, width, height, message) {
+        super(game, x, y, width, height);
+        this.msg = message;
+        this.pushMessage = false;
+    }
+
+    //override Entity update
+    update() {
+        if (this.pushMessage) {
+            if (this.game.newMsg === false) {
+                    this.game.newMsg = true;
+                    this.game.msg = this.msg;
+                    this.pushMessage = false;
+            }
         }
     }
 
