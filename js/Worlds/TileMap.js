@@ -43,6 +43,12 @@ class TileMap {
                         }
                     }
                 }
+                else if (entityArray[i][j].Class === 'Merchant') {
+                    const merchantEntity = new Merchant(this.game, this.game.IMAGES_LIST["./res/img/merchant.png"], j*60, i*60, entityArray[i][j].Items);
+                    merchantEntity.alive = true;
+                    console.log(merchantEntity);
+                    this.BLOCKS.push(merchantEntity);
+                }
             }
         }
         for (var i = 0; i < this.info.realEntities.length; i++)
