@@ -5,16 +5,39 @@ class Hero extends Entity {
     /**
      * The entity that the player can control and play the game with.
      * @param game {GameEngine} The engine of the game for accessing
-     * @param spritesheet {Image} The image of the hero for animation and updating
+     * @param spriteSheet {Image} The image of the hero for animation and updating
+     * @param weaponSheet {Image} The image of the default weapon for animation.
      */
-    constructor(game, spritesheet) {
-        super(game, 0, 360, 38, 55, 0);
-        this.animation = new Animation(spritesheet, 16, 23, 2, .250, 2, true, 2.4);
+    constructor(game, spriteSheet, weaponSheet) {
+        super(game, 300, 420, 38, 55, 1);
+        // To modify whip speed, change last parameter here (.100 default, attackFrameTime parameter in Animation).
+        // Must be 1/5 of this.ACTION_DURATION (change that too).
+        this.animation = new Animation(spriteSheet, this, 16, 23, .250,
+            2.4, [2, 7, 11], .100);
+        this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
+        this.health = 10;
+        this.maxHealth = 10;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
-        this.health = 7;
         this.coins = 678;
+        this.alive = true;
+        this.equipJ = "whip"; // Item equipped in J key.
+        this.equipK = "boots"; // Item equipped in K key.
+        this.inventory = ["whip", "boots"];
+
+        // Change this to be 5x the attackFrameTime, and whip speed will update.
+        // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration. (Not Hero's).
+        this.INVINCIBLE_TIME = 2;
+        this.ACTION_DURATION = .5;
+        this.JUMP_DURATION = .650;
+        this.WHIP_ACTIVE_RATIO = .6;
+        this.JUMP_SPRITE_FRAME_HEIGHT = 27;
+
+        // hero damage animation control variables
+        this.hurting = false;
+        this.hurtCounter = this.INVINCIBLE_TIME;
+
     }
 
     /**
@@ -22,7 +45,19 @@ class Hero extends Entity {
      */
     preUpdate() {
         if (!this.game.transition) {
-            if (this.game.hasMoveInputs()) {
+            this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
+            if (this.jumping) {
+                this.jump();
+            } else if (!this.jumping && this.beingUsed("boots")) {
+                this.jumping = true;
+                this.jump();
+            }
+            if (this.status === 'attacking') {
+                this.attack();
+            } else if (this.status !== 'attacking' && this.beingUsed("whip")) {
+                this.status = 'attacking';
+                this.attack();
+            } else if (this.game.hasMoveInputs()) {
                 this.status = 'walking';
                 if (this.game.INPUTS["KeyW"]) {
                     this.direction = 0;
@@ -40,8 +75,7 @@ class Hero extends Entity {
                     this.direction = 3;
                     this.walk(this.direction);
                 }
-            }
-            else {
+            } else {
                 this.status = 'idle';
             }
         }
@@ -51,15 +85,7 @@ class Hero extends Entity {
      * Moves the hero automatically based on the transition direction. This makes it look like the camera is panning while the hero is in place.
      */
     eventWalk() {
-        // Admittedly slightly tricky to tweak; you want to cross but there's also an occasional bug where if you just
-        // slightly tap the movement key to barely cross, you can get stuck in an infinite loop where it'll keep going back
-        // and forth. Also rare. 10.42 seems to be the upper limit for Y (10.44 no good). 10.7 procs it in 1/5 tests for me,
-        // so I will try 10.65.
-        // Update: 10.42/10.41 no good for Y in roughly 1/10 trials. 10.40 in 1/25 (all estimated).
 
-        // Steven Tran 2/6/2020
-        // A straightforward fix for the slight tap would be to when the player reaches a border, set a hard coordinate point.
-        // For example, player reaches border on left side, the y remains the same but x would be hard set to a value so transitioning doesn't have any weird rounding issues.
         const TRANSITION_AMOUNT_X = 10.65; // The amount of shift in the x direction when transitioning
         const TRANSITION_AMOUNT_Y = 10.37; // The amount of shift in the y direction when transitioning
         switch (this.transitionDirection) {
@@ -94,10 +120,27 @@ class Hero extends Entity {
      * Draws the hero.
      */
     draw() {
-        if (!this.game.pause) {
+        if (!this.game.pause && !this.hurting) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.direction, this.status);
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
+        }
+        if (this.hurting) {
+            console.log("OWWW");
+            if (Math.floor(this.hurtCounter * 1000) % 3 !== 0) {
+                this.animation.drawFrame(this.game.clockTick, this.context,
+                    this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                    this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
+            } else {
+                // draw nothing
+            }
+
+            this.hurtCounter -= this.game.clockTick;
+            if (this.hurtCounter <= 0) {
+                this.hurting = false;
+                this.hurtCounter = this.INVINCIBLE_TIME;
+                console.log("HEALED!");
+            }
         }
     }
 
@@ -110,8 +153,8 @@ class Hero extends Entity {
         if (this.hitbox.yMin < 0) {
             this.transitionDirection = "up";
             return {
-                changeInX: 0,
-                changeInY: -1
+                changeInX: -1,
+                changeInY: 0
             };
         }
 
@@ -119,8 +162,8 @@ class Hero extends Entity {
         if (this.hitbox.xMax > this.game.GAME_CANVAS_WIDTH) {
             this.transitionDirection = "right";
             return {
-                changeInX: 1,
-                changeInY: 0
+                changeInX: 0,
+                changeInY: 1
             };
         }
 
@@ -128,8 +171,8 @@ class Hero extends Entity {
         if (this.hitbox.yMax > this.game.GAME_CANVAS_HEIGHT) {
             this.transitionDirection = "down";
             return {
-                changeInX: 0,
-                changeInY: 1
+                changeInX: 1,
+                changeInY: 0
             };
         }
 
@@ -137,8 +180,8 @@ class Hero extends Entity {
         if (this.hitbox.xMin < 0) {
             this.transitionDirection = "left";
             return {
-                changeInX: -1,
-                changeInY: 0
+                changeInX: 0,
+                changeInY: -1
             };
         }
 
@@ -149,4 +192,23 @@ class Hero extends Entity {
         };
     }
 
+    jump() {
+        this.jumpElapsedTime += this.game.clockTick;
+        this.z = 1;
+        if (this.jumpElapsedTime > this.JUMP_DURATION) {
+            this.jumpElapsedTime = 0;
+            this.jumping = false;
+            this.z = 0;
+        }
+
+    }
+
+    attack() {
+        this.whip.direction = this.direction;
+        super.attack();
+    }
+
+    beingUsed(itemName) {
+        return (this.equipJ === itemName && this.game.INPUTS["KeyJ"]) || (this.equipK === itemName && this.game.INPUTS["KeyK"]);
+    }
 }

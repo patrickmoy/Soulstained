@@ -10,5 +10,5 @@ Current Entities Array Structure:
 1 = Block
 2 = Enemy
 3 = Projectile
-4 =
+4 = Passives
 to be continued...

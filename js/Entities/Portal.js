@@ -1,18 +1,18 @@
 class Portal {
-  constructor(game, sx, sy, sectionX, sectionY, destination, dx, dy) {
+  constructor(game, x, y, width = 60, height = 60, destinationWorld,
+              destinationTMX, destinationTMY, destinationX, destinationY, ) {
     this.game = game;
-    this.sx = sx;
-    this.sy = sy;
-    this.width = 60;
-    this.height = 60;
-    this.destination = destination;
-    this.section = {
-      x: sectionX,
-      y: sectionY
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.destinationWorld = destinationWorld;
+    this.destinationSection =
+    {
+      x: destinationTMX,
+      y: destinationTMY
     };
-    this.dx = dx;
-    this.dy = dy;
-
-    //console.log("Portal created");
+    this.destinationX = destinationX;
+    this.destinationY = destinationY;
   }
 }
