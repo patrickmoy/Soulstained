@@ -19,7 +19,7 @@ class GameEngine {
     /**
      * Creates a Game Engine with two different contexts and cached images.
      * @param gameContext {CanvasRenderingContext2D} 2d context of the gameplay
-     * @param images {Image[]} array of cached images for the game
+     * @param assets {Image[]} array of cached images for the game
      */
     constructor(gameContext, assets) {
         this.ASSETS_LIST = assets; // A list of images to be used for the game.
@@ -38,12 +38,10 @@ class GameEngine {
         this.inInventory = false; // When player is in his inventory
         this.pause = false; // Pauses other actions while we switch to a new map.
         this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
-        this.currentEntities = [[], [], [], [], []]; // Stores entities at the current tile map
+        this.currentEntities = [[], [], [], [], [], []]; // Stores entities at the current tile map
 
-        this.GRAVITY = -15;
         this.currentPortal;
         this.TIMER; // The Game Timer to keep track of virtual time
-        this.PHYSICS; // The physics/collision detection and handling engine
         this.GAME_CANVAS_WIDTH; // The main canvas width
         this.GAME_CANVAS_HEIGHT; // The main canvas height
         this.HERO; // The main player of the game
@@ -57,7 +55,6 @@ class GameEngine {
      */
     init() {
         this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
-        //this.UI_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
         // hero initialization
         this.HERO = new Hero(this, this.ASSETS_LIST["./res/img/hero.png"], this.ASSETS_LIST["./res/img/whip.png"]);
@@ -73,6 +70,7 @@ class GameEngine {
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
         this.currentEntities[1] =  this.currentWorld.getCurrentTileMap().BLOCKS;
         this.currentEntities[2] =  this.currentWorld.getCurrentTileMap().ENEMIES;
+        this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
 
@@ -145,6 +143,7 @@ class GameEngine {
             resetFlags(this.currentEntities[1]);
             resetFlags(this.currentEntities[2]);
             resetFlags(this.currentEntities[3]);
+            resetFlags(this.currentEntities[4]);
 
             // Predicts update for all the necessary entities
             this.currentEntities[0].filter(hero => hero.alive).forEach(hero => hero.preUpdate());
@@ -177,7 +176,7 @@ class GameEngine {
             this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS; // Replaces the current blocks with the ones in the new tilemap
             this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES; // Replaces the current enemies with the ones in the new tilemap
             this.currentEntities[2].forEach(enemy => enemy.resetPosition());
-
+            this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
             this.currentEntities[3] = []; // Removes all projectiles
             this.transition = true; // Game Engine and other necessary components is now performing transition actions
         }
@@ -222,6 +221,7 @@ class GameEngine {
         this.HERO.futureHitbox.yMax = this.HERO.hitbox.yMax;
         this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
         this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
+        this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
         this.currentEntities[3] = [];
     }
 
@@ -243,8 +243,10 @@ class GameEngine {
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
+            this.currentEntities[4].forEach(passive => passive.draw());
             this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon.
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw()); // Draws the enemies
+
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw()); // Draws the projectiles
             this.currentWorld.drawLayer();
             this.UI.draw();

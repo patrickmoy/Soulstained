@@ -50,7 +50,7 @@ function flagImpassable(collisionPairs) {
         //     element[1].pushUpdate = false;
         // }
         // Previous code blocks everything but weapons. Switched to only invisible blocks impede.
-        if (element[0] instanceof InvisibleBlock || element[1] instanceof InvisibleBlock) {
+        if (element[0] instanceof Block || element[1] instanceof Block) {
             element[0].pushUpdate = false;
             element[1].pushUpdate = false;
         }

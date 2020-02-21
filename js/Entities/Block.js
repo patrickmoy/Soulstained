@@ -5,5 +5,6 @@ class Block extends Entity {
     }
 }
 
-class InvisibleBlock extends Block {
+class InvisibleBlock extends Block
+{
 }
