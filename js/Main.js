@@ -25,10 +25,10 @@ AssetHandler.queueImage("./res/img/letters.png");
 AssetHandler.queueImage("./res/img/death.png");
 AssetHandler.startDownload()
     .then(() => {
-        const gameCanvas = document.getElementById("gameWorld");
-        const uiCanvas = document.getElementById("uiWorld");
+        const gameCanvas = document.getElementById("gameWorld"); // Get the
         const gameContext = gameCanvas.getContext("2d");
         const myGame = new GameEngine(gameContext, AssetHandler.assets);
+
         myGame.init();
         myGame.run();
     });

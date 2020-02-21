@@ -97,8 +97,6 @@ class Entity {
         if (this.pushDamage) {
             if (this.invincibleCounter === 0) {
                 this.takeDamage();
-                this.hurting = true;
-                console.log("hurt!");
             }
             this.invincibleCounter += this.game.clockTick;
             if (this.invincibleCounter > this.INVINCIBLE_TIME) {

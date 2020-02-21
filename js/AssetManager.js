@@ -1,5 +1,5 @@
 /**
- * Handles all the image queueing and caching before game starts.
+ * Handles all the asset queueing and caching before game starts.
  */
 class AssetManager {
     /**
@@ -40,11 +40,9 @@ class AssetManager {
         this.downloadQueue.push({src: filePath, type: 'json'});
     }
 
-    getJSON(filePath)
-    {
+    getJSON(filePath) {
         var self = this;
-        return fetch(filePath).then(response => response.json()).then(data =>
-        {
+        return fetch(filePath).then(response => response.json()).then(data => {
             self.assets[filePath] = data;
         });
     }
@@ -58,8 +56,7 @@ class AssetManager {
         function loadAssets() {
             let promiseArray = []; // An array to keep track of promises
             for (let i = 0; i < self.downloadQueue.length; i++) {
-                if (self.downloadQueue[i].type === 'img')
-                {
+                if (self.downloadQueue[i].type === 'img') {
                     let imagePromise = new Promise((resolve, reject) => {
                         let img = new Image();
                         img.addEventListener("load", () => {
@@ -77,19 +74,10 @@ class AssetManager {
                     });
                     promiseArray.push(imagePromise);
                 }
-                else if (self.downloadQueue[i].type === 'json')
-                {
+                else if (self.downloadQueue[i].type === 'json') {
                     let jsonPromise = self.getJSON(self.downloadQueue[i].src);
                     promiseArray.push(jsonPromise);
                 }
-                /*
-                else if (self.downloadQueue[i].type === 'txt')
-                {
-                    // self.downloadQueue[i].src => file path of the text file
-                    let filePromise = self.getTextFile(self.downloadQueue[i].src);
-                    promiseArray.push(filePromise);
-                }
-                */
             }
             return Promise.all(promiseArray);
         }
