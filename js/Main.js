@@ -27,6 +27,7 @@ AssetHandler.queueImage("./res/img/whipPrototype.png");
 AssetHandler.queueImage("./res/img/swordPrototype.png");
 AssetHandler.queueImage("./res/img/fountainAnimation.png");
 AssetHandler.queueImage("./res/img/worm.png");
+AssetHandler.queueImage("./res/img/flower.png");
 AssetHandler.queueImage("./res/img/fire.png");
 AssetHandler.queueImage("./res/img/letters.png");
 AssetHandler.queueImage("./res/img/death.png");

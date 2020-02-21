@@ -68,12 +68,15 @@ class TileMap {
             }
             else if (entity.type === 'Fountain')
             {
-                // TODO these random values somehow align it. Need to figure out why eventually maybe - S.T.
-                this.PASSIVES.push(new Fountain(this.game, this.game.ASSETS_LIST['./res/img/fountainAnimation.png'], entity.x * 4 - 18, entity.y * 4 - 24, 48, 47))
+                this.PASSIVES.push(new Fountain(this.game, this.game.ASSETS_LIST['./res/img/fountainAnimation.png'], entity.x * 60 / 16 , entity.y * 60 / 16, 48, 47))
             }
             else if (entity.type === 'worm')
             {
-                this.COOLSTUFF.push(new Worm(this.game, this.game.ASSETS_LIST['./res/img/worm.png'], entity.x * 4, entity.y * 4))
+                this.COOLSTUFF.push(new WorldAnimation(this.game, this.game.ASSETS_LIST['./res/img/worm.png'], entity.x * 60 / 16, entity.y * 60 / 16, 2.3, [3]))
+            }
+            else if (entity.type === 'Flower')
+            {
+                this.COOLSTUFF.push(new WorldAnimation(this.game, this.game.ASSETS_LIST['./res/img/flower.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60 / 16, [4]))
             }
         }
     }

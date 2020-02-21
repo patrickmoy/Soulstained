@@ -37,24 +37,20 @@ class Fountain extends Block
     }
 }
 
-// TODO should not be entity but with how the code works, it has to be...
-// TODO remove entity parent and store worm into its own array in game engine
-class Worm extends Entity
-{
-    constructor(game, spritesheet, x, y)
+class WorldAnimation {
+    constructor(game, spritesheet, x , y, scale, frameCount)
     {
-        super(game, 0, 0, 0, 0);
         this.game = game;
         this.context = game.GAME_CONTEXT;
         this.spritesheet = spritesheet;
         this.x = x;
         this.y = y;
-        this.animation = new Animation(this.spritesheet, this, 16, 16, .16, 2.3, [3])
+        this.animation = new Animation(this.spritesheet, this, 16, 16, .16, scale, frameCount);
     }
-
     draw()
     {
-        if (!this.game.pause) {
+        if (!this.game.pause)
+        {
             this.animation.drawFrame(this.game.clockTick, this.context, this.x, this.y, 'walking', 0);
         }
     }
