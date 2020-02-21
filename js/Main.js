@@ -25,6 +25,8 @@ AssetHandler.queueImage("./res/img/keyJ.png");
 AssetHandler.queueImage("./res/img/keyK.png");
 AssetHandler.queueImage("./res/img/whipPrototype.png");
 AssetHandler.queueImage("./res/img/swordPrototype.png");
+AssetHandler.queueImage("./res/img/fountainAnimation.png");
+AssetHandler.queueImage("./res/img/worm.png");
 AssetHandler.queueImage("./res/img/fire.png");
 AssetHandler.queueImage("./res/img/letters.png");
 AssetHandler.queueImage("./res/img/death.png");
@@ -44,6 +46,7 @@ AssetHandler.queueJSON('./res/jsonderulo/section3_3.json');
 AssetHandler.queueJSON('./res/jsonderulo/section3_4.json');
 AssetHandler.queueJSON('./res/jsonderulo/section3_5.json');
 AssetHandler.queueJSON('./res/jsonderulo/cave_section1_1.json');
+AssetHandler.queueJSON('./res/jsonderulo/bluehouse_section1_1.json');
 AssetHandler.startDownload()
     .then(() => {
             const gameCanvas = document.getElementById("gameWorld"); // Get the

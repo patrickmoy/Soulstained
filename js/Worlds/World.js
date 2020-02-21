@@ -24,22 +24,21 @@ class World {
             x: sectionX,
             y: sectionY
         };
+        this.tileMaps = [[]];
 
         this.SOURCE_SHIFT = 3; // Shifting amount (in px) every update();
         this.SIZE = 192; // Pixel width and height to represent one section.
         this.sourceX = this.section.x * this.SIZE; // Used to update the sections position start.
         this.sourceY = this.section.y * this.SIZE;
-
         // attributes used for fade animations during world transport
-        this.sx = this.sourceY;
-        this.sy = this.sourceX;
+        this.sx = this.section.x * this.SIZE;
+        this.sy = this.section.y * this.SIZE;
         this.sWidth = 192;
         this.sHeight = 192;
         this.dx = 0;
         this.dy = 0;
         this.dWidth = 720;
         this.dHeight = 720;
-
     }
 
     /**
@@ -54,10 +53,21 @@ class World {
         else if (this.sourceY > newSourceY) this.sourceY -= this.SOURCE_SHIFT; // Shift up  since new Y is on up
 
         if (this.sourceX === newSourceX && this.sourceY === newSourceY) {
+
             this.GAME.transition = false;
             this.sx = this.sourceX;
             this.sy = this.sourceY;
         } // Transition is complete, turn off transitioning
+    }
+
+
+    /**
+     * Returns the current tile map.
+     *
+     * @returns {TileMap} the current tilemap of the world
+     */
+    getCurrentTileMap() {
+        return this.tileMaps[this.section.x][this.section.y];
     }
 
     fade() {
@@ -102,8 +112,8 @@ class World {
     }
 
     drawFade() {
-        this.CONTEXT.drawImage(this.WORLD_IMAGE, this.sx, this.sy, this.sWidth, this.sHeight, this.dx, this.dy, this.dWidth, this.dHeight);
-        this.CONTEXT.drawImage(this.layeredImage, this.sx, this.sy, this.sWidth, this.sHeight, this.dx, this.dy, this.dWidth, this.dHeight);
+        this.CONTEXT.drawImage(this.WORLD_IMAGE, this.sy, this.sx, this.sWidth, this.sHeight, this.dx, this.dy, this.dWidth, this.dHeight);
+        this.CONTEXT.drawImage(this.layeredImage, this.sy, this.sx, this.sWidth, this.sHeight, this.dx, this.dy, this.dWidth, this.dHeight);
     }
 
 }
@@ -120,8 +130,6 @@ class OpenWorld extends World {
     constructor(game, worldImage, layeredImage, sectionX, sectionY) {
         super(game, worldImage, layeredImage, sectionX, sectionY);
         // Create a foundation for open world tile maps here. 3 x 5 TileMaps
-        console.log(this.GAME);
-        console.log(this.GAME.ASSETS_LIST);
         this.tileMaps =
             [
                 [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 3)]),
@@ -134,31 +142,19 @@ class OpenWorld extends World {
                     new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 5)])],
             ];
     }
-
-    /**
-     * Returns the current tile map.
-     *
-     * @returns {TileMap} the current tilemap of the world
-     */
-    getCurrentTileMap() {
-        return this.tileMaps[this.section.x][this.section.y];
-    }
-
 }
 
 class CaveBasic extends World {
-    constructor(game, worldImage, sectionX, sectionY) {
-        super(game, worldImage, sectionX, sectionY);
+    constructor(game, worldImage, layeredImage, sectionX, sectionY) {
+        super(game, worldImage, layeredImage, sectionX, sectionY);
         this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("cave", 1, 1)])]];
     }
+}
 
-    /**
-     * Returns the current tile map.
-     *
-     * @returns {TileMap} the current tilemap of the world
-     */
-    getCurrentTileMap() {
-        return this.tileMaps[this.section.x][this.section.y];
+class BlueHouse extends World {
+    constructor(game, worldImage, layeredImage, sectionX, sectionY) {
+        super(game, worldImage, layeredImage, sectionX, sectionY);
+        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("bluehouse", 1, 1)])]];
     }
 }
 

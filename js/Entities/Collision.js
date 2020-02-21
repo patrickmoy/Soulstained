@@ -82,7 +82,7 @@ function flagImpassable(collisionPairs) {
         //     element[1].pushUpdate = false;
         // }
         // Assuming convention of ordering of parameters (heros and enemies first, blocks/traps after)
-        if (element[1] instanceof InvisibleBlock) { // Check if element[0] is hero or an enemy instead (non ghost).
+        if (element[1] instanceof Block) { // Check if element[0] is hero or an enemy instead (non ghost).
             element[0].pushUpdate = false;
         }
         if (element[0] instanceof Weapon && element[0].active && element[1] instanceof Enemy) {

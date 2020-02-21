@@ -85,15 +85,7 @@ class Hero extends Entity {
      * Moves the hero automatically based on the transition direction. This makes it look like the camera is panning while the hero is in place.
      */
     eventWalk() {
-        // Admittedly slightly tricky to tweak; you want to cross but there's also an occasional bug where if you just
-        // slightly tap the movement key to barely cross, you can get stuck in an infinite loop where it'll keep going back
-        // and forth. Also rare. 10.42 seems to be the upper limit for Y (10.44 no good). 10.7 procs it in 1/5 tests for me,
-        // so I will try 10.65.
-        // Update: 10.42/10.41 no good for Y in roughly 1/10 trials. 10.40 in 1/25 (all estimated).
 
-        // Steven Tran 2/6/2020
-        // A straightforward fix for the slight tap would be to when the player reaches a border, set a hard coordinate point.
-        // For example, player reaches border on left side, the y remains the same but x would be hard set to a value so transitioning doesn't have any weird rounding issues.
         const TRANSITION_AMOUNT_X = 10.65; // The amount of shift in the x direction when transitioning
         const TRANSITION_AMOUNT_Y = 10.37; // The amount of shift in the y direction when transitioning
         switch (this.transitionDirection) {

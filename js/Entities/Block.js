@@ -1,4 +1,5 @@
 class Block extends Entity {
+
     draw() {
         // do nothing
     }
