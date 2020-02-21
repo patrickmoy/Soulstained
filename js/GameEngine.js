@@ -45,9 +45,7 @@ class GameEngine {
         this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
         this.currentEntities = [[], [], [], [], []]; // Stores entities at the current tile map
 
-        this.GRAVITY = -15;
         this.currentPortal;
-        this.SUCK_RATE = 10;
         this.TIMER; // The Game Timer to keep track of virtual time
         this.SUCK_RATE; // The physics/collision detection and handling engine
         this.GAME_CANVAS_WIDTH; // The main canvas width

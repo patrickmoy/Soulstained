@@ -36,7 +36,7 @@ class Hero extends Entity {
 
         // hero damage animation control variables
         this.hurting = false;
-        this.hurtCounter = 200;
+        this.hurtCounter = this.INVINCIBLE_TIME;
 
     }
 
@@ -135,7 +135,7 @@ class Hero extends Entity {
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
         }
         if (this.hurting) {
-            if (this.hurtCounter % 10 === 0) {
+            if (Math.floor(this.hurtCounter * 1000) % 3 !== 0) {
                 this.animation.drawFrame(this.game.clockTick, this.context,
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                     this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
@@ -143,10 +143,10 @@ class Hero extends Entity {
                 // draw nothing
             }
 
-            this.hurtCounter -= 2;
-            if (this.hurtCounter === 0) {
+            this.hurtCounter -= this.game.clockTick;
+            if (this.hurtCounter <= 0) {
                 this.hurting = false;
-                this.hurtCounter = 200;
+                this.hurtCounter = this.INVINCIBLE_TIME;
             }
         }
     }
@@ -208,12 +208,6 @@ class Hero extends Entity {
             this.z = 0;
         }
 
-        //this.z = (this.game.GRAVITY * this.jumpElapsedTime * this.jumpElapsedTime) + this.game.GRAVITY * this.jumpElapsedTime
-        // a(x-h)^2 + k --> -64/9, .375, 1;
-        // customize
-        // Check border for pits
-        // If colliding, check deep collision (actual proximity to pit center)
-        //
     }
 
     attack() {

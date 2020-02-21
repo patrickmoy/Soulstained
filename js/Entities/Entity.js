@@ -79,59 +79,55 @@ class Entity {
             this.futureHitbox.xMax = this.hitbox.xMax; // Resets future bottom right x coordinate
             this.futureHitbox.yMax = this.hitbox.yMax; // Resets future bottom right y coordinate
         }
-        if (this.pushDamage) {
+        if (this.pushDamage && !(this instanceof Hero)) {
             var hitSprite = new Animation(this.game.IMAGES_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
             var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 5, spritesheet: hitSprite};
             this.game.HitQueue.push(hitObject);
-
-            if (this.falling) {
-                if (this.animation.scale > 0) {
-                    this.animation.scale -= .25;
-                } else {
-                    this.falling = false;
-                    this.pushDamage = true;
-                    this.futureHitbox = this.originalHitbox;
-                    this.animation.scale = 2.4;
-                }
-            }
-
-            if (this.pushDamage) {
-                if (this.invincibleCounter === 0) {
-                    this.takeDamage();
-                    this.hurting = true;
-                    console.log("hurt!");
-                }
-                this.invincibleCounter += this.game.clockTick;
-                if (this.invincibleCounter > this.INVINCIBLE_TIME) {
-                    this.invincibleCounter = 0;
-                    this.pushDamage = false;
-                    console.log("not hurt anymore!");
-                }
-
+        }
+        if (this.falling) {
+            if (this.animation.scale > 0) {
+                this.animation.scale -= .25;
             } else {
-                if (this.invincibleCounter > 0) {
-                    this.invincibleCounter += this.game.clockTick;
-                }
-                if (this.invincibleCounter > this.INVINCIBLE_TIME) {
-                    this.invincibleCounter = 0;
-                }
-
-            }
-
-            if (this.health === 0) {
-                this.alive = false;
-                var deathSprite = new Animation(this.game.IMAGES_LIST["./res/img/death.png"], this, 30, 30, 0.25, 2, [4]);
-                var deathObject = {
-                    dx: this.hitbox.xMin,
-                    dy: this.hitbox.yMin,
-                    counter: 50,
-                    entity: this,
-                    spritesheet: deathSprite
-                };
-                this.game.DeathQueue.push(deathObject);
+                this.falling = false;
+                this.pushDamage = true;
+                this.futureHitbox = this.originalHitbox;
+                this.animation.scale = 2.4;
             }
         }
+        if (this.pushDamage) {
+            if (this.invincibleCounter === 0) {
+                this.takeDamage();
+                this.hurting = true;
+                console.log("hurt!");
+            }
+            this.invincibleCounter += this.game.clockTick;
+            if (this.invincibleCounter > this.INVINCIBLE_TIME) {
+                this.invincibleCounter = 0;
+                this.pushDamage = false;
+                console.log("not hurt anymore!");
+            }
+        } else {
+            if (this.invincibleCounter > 0) {
+                this.invincibleCounter += this.game.clockTick;
+            }
+            if (this.invincibleCounter > this.INVINCIBLE_TIME) {
+                this.invincibleCounter = 0;
+            }
+        }
+        if (this.health === 0) {
+            this.alive = false;
+            var deathSprite = new Animation(this.game.IMAGES_LIST["./res/img/death.png"], this, 30, 30, 0.25, 2, [4]);
+            var deathObject = {
+                dx: this.hitbox.xMin,
+                dy: this.hitbox.yMin,
+                counter: 50,
+                entity: this,
+                spritesheet: deathSprite
+            };
+            this.game.DeathQueue.push(deathObject);
+        }
     }
+
     // Sets status of entity to walking for this update/render tick, and updates hitbox.
     walk(direction) {
         if (!this.falling) {
@@ -189,7 +185,6 @@ class Entity {
     }
 
 
-
     gravitate(focusX, focusY, suckRate) {
         var diffX = focusX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;
         var diffY = focusY - (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2;
@@ -225,10 +220,6 @@ class Entity {
         // this.hitbox.yMin = this.futureHitbox.yMin;
         // this.hitbox.yMax = this.futureHitbox.yMax;
     }
-
-
-
-
 
 
 }
