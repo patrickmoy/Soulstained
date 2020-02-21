@@ -52,27 +52,20 @@ class TileMap {
     //     }
     // }
 
-    createEntities()
-    {
+    createEntities() {
         // Creates all the collision walls
-        for (var i = 0; i < this.info.layers.length; i++)
-        {
-            for (var j = 0; j < this.info.layers[i].length; j++)
-            {
-                for (var k = 0; k < this.info.layers[i][j].length; k++)
-                {
+        for (var i = 0; i < this.info.layers.length; i++) {
+            for (var j = 0; j < this.info.layers[i].length; j++) {
+                for (var k = 0; k < this.info.layers[i][j].length; k++) {
 
                     var currentID = this.info.layers[i][j][k];
 
-                    if (currentID !== 0)
-                    {
-                        for (var l = 0; l < this.info.calcTiles.length; l++)
-                        {
+                    if (currentID !== 0) {
+                        for (var l = 0; l < this.info.calcTiles.length; l++) {
                             var calculationTiles = this.info.calcTiles[l];
-                            if (calculationTiles.min <= currentID && currentID <= calculationTiles.max)
-                            {
+                            if (calculationTiles.min <= currentID && currentID <= calculationTiles.max) {
                                 var collisionInfo = this.info.collisionSets[calculationTiles.name][currentID - calculationTiles.min];
-                                this.BLOCKS.push(new InvisibleBlock(this.game, k*60 + 3.75 * collisionInfo.x, j*60 + 3.75 *
+                                this.BLOCKS.push(new InvisibleBlock(this.game, k * 60 + 3.75 * collisionInfo.x, j * 60 + 3.75 *
                                     collisionInfo.y, collisionInfo.width * 3.75, collisionInfo.height * 3.75));
                             }
                         }
@@ -80,23 +73,15 @@ class TileMap {
                 }
             }
         }
-        for (var i = 0; i < this.info.realEntities.length; i++)
-        {
+        for (var i = 0; i < this.info.realEntities.length; i++) {
             var entity = this.info.realEntities[i];
-            if (entity.type === 'Crab')
-            {
+            if (entity.type === 'Crab') {
                 this.ENEMIES.push(new Crab(this.game, this.game.ASSETS_LIST['./res/img/crab.png'], entity.x * 60 / 16, entity.y * 60 / 16, 40, 40));
-            }
-            else if (entity.type === 'FirePit')
-            {
+            } else if (entity.type === 'FirePit') {
                 this.ENEMIES.push(new FirePit(this.game, this.game.ASSETS_LIST['./res/img/fire.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60));
-            }
-            else if (entity.type === 'Zombie')
-            {
+            } else if (entity.type === 'Zombie') {
                 this.ENEMIES.push(new Zombie(this.game, this.game.ASSETS_LIST['./res/img/zombie.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60));
-            }
-            else if (entity.type === 'Portal')
-            {
+            } else if (entity.type === 'Portal') {
                 this.PORTALS.push(new Portal(this.game, entity.x * 60 / 16, entity.y * 60 / 16, entity.customProperties.width * 4,
                     entity.customProperties.height * 4, entity.customProperties.destination, entity.customProperties.TMX,
                     entity.customProperties.TMY, entity.customProperties.destinationX, entity.customProperties.destinationY));

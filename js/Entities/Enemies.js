@@ -43,10 +43,8 @@ class Enemy extends Entity {
         this.health = this.ORIGINAL_HEALTH;
     }
 
-    randomWalk(maxTime, cooldown)
-    {
-        if (cooldown === 0 && this.directionTime < maxTime)
-        {
+    randomWalk(maxTime, cooldown) {
+        if (cooldown === 0 && this.directionTime < maxTime) {
             this.walk(this.direction);
             if (this.notOnScreen()) { // Resets the crab position since he's trying to go out of border.
                 this.futureHitbox.xMin = this.hitbox.xMin;
@@ -56,9 +54,7 @@ class Enemy extends Entity {
                 this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
             }
             this.directionTime++;
-        }
-        else
-        {
+        } else {
             this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
             this.directionTime = 0;
         }
@@ -91,9 +87,11 @@ class Crab extends Enemy {
     }
 
     draw() {
-        this.spritesheet.drawFrame(this.game.clockTick, this.context,
-            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking');
+        if (!this.game.pause) {
+            this.spritesheet.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking');
+        }
     }
 }
 
@@ -144,8 +142,7 @@ class Zombie extends Enemy {
                 this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
             }
             this.movementCooldown = 5;
-        }
-        else {
+        } else {
             this.randomWalk(50, this.movementCooldown);
             if (this.movementCooldown > 0) this.movementCooldown--;
         }
@@ -536,10 +533,11 @@ class Knight
 
 
 }
+
 class FirePit extends Enemy {
     constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height, 1);
-        this.animation = new Animation(spritesheet, this,16, 16, .1, 4, [4]);
+        this.animation = new Animation(spritesheet, this, 16, 16, .1, 4, [4]);
         this.context = game.GAME_CONTEXT;
         this.sx = x;
         this.sy = y;
@@ -547,6 +545,7 @@ class FirePit extends Enemy {
         this.alive = true;
         console.log("firepit created");
     }
+
     update() {
         // do nothing
     }

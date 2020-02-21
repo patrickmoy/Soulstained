@@ -1,6 +1,6 @@
-class UserInterface
-{
+class UserInterface {
     pages;
+
     constructor(game, hero, images) {
         // constructor properties
         this.game = game;
@@ -38,7 +38,7 @@ class UserInterface
         var coins = this.currency;
 
         // Encode numbers to index digits font sprite sheet
-        for (var i=0; i<3; i++) {
+        for (var i = 0; i < 3; i++) {
             var digit = coins % 10;
             coins = Math.floor(coins / 10);
             if (i === 0) this.d1 = digit * 49.5;
@@ -61,17 +61,13 @@ class UserInterface
      */
     parseMessage() {
         var msgString = this.game.msg;
-        for (var i=0; i<msgString.length; i++)
-        {
+        for (var i = 0; i < msgString.length; i++) {
             var ch = msgString[i];
             var letterIndex = ch.charCodeAt(0);
 
-            if (letterIndex > 64 && letterIndex < 91)
-            {
+            if (letterIndex > 64 && letterIndex < 91) {
                 letterIndex -= 65;
-            }
-            else if (letterIndex === 10)
-            {
+            } else if (letterIndex === 10) {
                 letterIndex = 30;
             } else {
                 letterIndex = 29;
@@ -87,7 +83,7 @@ class UserInterface
     displayMessage() {
 
         // Message Display "Board" coordinates and dimensions
-        var dx =  120;
+        var dx = 120;
         var dy = 240;
         var width = 60;
         var height = 60;
@@ -102,16 +98,14 @@ class UserInterface
         this.ctx.fillStyle = 'black';
         this.ctx.fillRect(leftMargin - 20, topMargin - 20, 520, 280);
 
-        for (var i=0; i<this.msgEncoded.length; i++) {
+        for (var i = 0; i < this.msgEncoded.length; i++) {
             var ch = this.msgEncoded[i];
             if (ch === 30) {
                 dy += 13;
                 dx = leftMargin;
-            }
-            else if (ch === 29) {
+            } else if (ch === 29) {
                 dx += 12;
-            }
-            else {
+            } else {
                 this.ctx.drawImage(this.lettersFontImage, ch * step, 0, 60, 60, dx, dy, 12, 12);
                 dx += 12;
             }
@@ -124,7 +118,7 @@ class UserInterface
          */
         var dx = 22;
         var dy = 0;
-        for (var i=0; i < this.hp; i++) {
+        for (var i = 0; i < this.hp; i++) {
             this.ctx.drawImage(this.heartImage, 0, 0, 200, 167, dx, dy, 36, 30);
             dx += 40;
             if (i === 4) {

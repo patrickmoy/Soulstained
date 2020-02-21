@@ -12,7 +12,7 @@ class Hero extends Entity {
         super(game, 300, 420, 38, 55, 1);
         // To modify whip speed, change last parameter here (.100 default, attackFrameTime parameter in Animation).
         // Must be 1/5 of this.ACTION_DURATION (change that too).
-        this.animation = new Animation(spriteSheet, this,16, 23, .250,
+        this.animation = new Animation(spriteSheet, this, 16, 23, .250,
             2.4, [2, 7, 11], .100);
         this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
@@ -22,9 +22,9 @@ class Hero extends Entity {
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
         this.coins = 678;
         this.alive = true;
-        this.equipJ = "whip";
-        this.equipK = "boots";
-        this.inventory = ["whip"];
+        this.equipJ = "whip"; // Item equipped in J key.
+        this.equipK = "boots"; // Item equipped in K key.
+        this.inventory = ["whip", "boots"];
 
         // Change this to be 5x the attackFrameTime, and whip speed will update.
         // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration. (Not Hero's).
@@ -75,8 +75,7 @@ class Hero extends Entity {
                     this.direction = 3;
                     this.walk(this.direction);
                 }
-            }
-            else {
+            } else {
                 this.status = 'idle';
             }
         }
@@ -133,8 +132,10 @@ class Hero extends Entity {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
+            console.log("I'm fine!");
         }
         if (this.hurting) {
+            console.log("OWWW");
             if (Math.floor(this.hurtCounter * 1000) % 3 !== 0) {
                 this.animation.drawFrame(this.game.clockTick, this.context,
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -147,6 +148,7 @@ class Hero extends Entity {
             if (this.hurtCounter <= 0) {
                 this.hurting = false;
                 this.hurtCounter = this.INVINCIBLE_TIME;
+                console.log("HEALED!");
             }
         }
     }

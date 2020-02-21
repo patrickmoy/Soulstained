@@ -1,13 +1,11 @@
 const jsonPath = (world = "", x = 0, y = 0) => {
-    if (world === "")
-    {
+    if (world === "") {
         return `./res/jsonderulo/section${x}_${y}.json`;
-    }
-    else
-    {
+    } else {
         return `./res/jsonderulo/${world}_section${x}_${y}.json`;
     }
 };
+
 class World {
     /**
      * The world that the hero is able to move around. Examples of World are Open World, Dungeons, Houses, etc.
@@ -96,8 +94,7 @@ class World {
         }
     }
 
-    drawLayer()
-    {
+    drawLayer() {
         if (!this.GAME.pause) {
             this.CONTEXT.drawImage(this.layeredImage, this.sourceY, this.sourceX, this.SIZE, this.SIZE, 0, 0,
                 this.CONTEXT.canvas.width, this.CONTEXT.canvas.height);
@@ -123,17 +120,19 @@ class OpenWorld extends World {
     constructor(game, worldImage, layeredImage, sectionX, sectionY) {
         super(game, worldImage, layeredImage, sectionX, sectionY);
         // Create a foundation for open world tile maps here. 3 x 5 TileMaps
+        console.log(this.GAME);
+        console.log(this.GAME.ASSETS_LIST);
         this.tileMaps =
-        [
-            [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 3)]),
-                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 5)])],
+            [
+                [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 3)]),
+                    new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 5)])],
 
-            [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 3)]),
-                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 5)])],
+                [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 3)]),
+                    new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 5)])],
 
-            [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 3)]),
-                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 5)])],
-        ];
+                [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 3)]),
+                    new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 5)])],
+            ];
     }
 
     /**
@@ -148,8 +147,7 @@ class OpenWorld extends World {
 }
 
 class CaveBasic extends World {
-    constructor(game, worldImage, sectionX, sectionY)
-    {
+    constructor(game, worldImage, sectionX, sectionY) {
         super(game, worldImage, sectionX, sectionY);
         this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("cave", 1, 1)])]];
     }
@@ -180,6 +178,7 @@ class NecroDungeon extends World {
             []
         ];
     }
+
     initializeTileMaps() {
         for (var i = 0; i < 8; i++) {
             for (var j = 0; j < 8; j++) {
@@ -190,6 +189,7 @@ class NecroDungeon extends World {
             }
         }
     }
+
     getCurrentTileMap() {
         return this.tileMaps[this.section.x][this.section.y];
     }

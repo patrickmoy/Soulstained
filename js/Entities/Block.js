@@ -17,11 +17,11 @@ class Pit extends Block {
         this.focusX = (this.hitbox.xMin + this.hitbox.xMax) / 2;
         this.focusY = (this.hitbox.yMin + this.hitbox.yMax) / 2;
         this.hitbox = {
-                xMin: x + this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                yMin: y + this.height * (1 - this.HITBOX_SHRINK_FACTOR),
-                xMax: x + this.width * this.HITBOX_SHRINK_FACTOR,
-                yMax: y + this.height * this.HITBOX_SHRINK_FACTOR,
-            };
+            xMin: x + this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            yMin: y + this.height * (1 - this.HITBOX_SHRINK_FACTOR),
+            xMax: x + this.width * this.HITBOX_SHRINK_FACTOR,
+            yMax: y + this.height * this.HITBOX_SHRINK_FACTOR,
+        };
         this.futureHitbox = {
             xMin: x + this.width * (1 - this.HITBOX_SHRINK_FACTOR),
             yMin: y + this.height * (1 - this.HITBOX_SHRINK_FACTOR),

@@ -74,8 +74,8 @@ class GameEngine {
         this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 3);
         this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
-        this.currentEntities[1] =  this.currentWorld.getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] =  this.currentWorld.getCurrentTileMap().ENEMIES;
+        this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
+        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
 
@@ -127,19 +127,14 @@ class GameEngine {
         if (this.inInventory) // Player is in inventory so perform inventory actions.
         {
 
-        }
-        else if (this.transition) // Transition is happening
+        } else if (this.transition) // Transition is happening
         {
             this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
             this.HERO.eventWalk(); // Moves the player when transitioning is happening
-        }
-        else if (this.pause)
-        {
-            if (this.displayMessage)
-            {
+        } else if (this.pause) {
+            if (this.displayMessage) {
                 // PAUSE FOR MESSAGE
-            } else if (this.inInventory)
-            {
+            } else if (this.inInventory) {
                 // PAUSE FOR INVENTORY
             } else {
                 // PAUSE FOR PORTAL
@@ -148,12 +143,9 @@ class GameEngine {
                     this.transposeWorlds();
                 }
             }
-        }
-        else if (this.newMsg)
-        {
+        } else if (this.newMsg) {
             this.UI.parseMessage(); // encodes string to numeric keys to index letter font sprite sheet
-        }
-        else {
+        } else {
             // Entities are now movable around the map
             // Reset all behavior flags for all entities. Can be expanded/diversified
             resetFlags(this.currentEntities[0]);
@@ -229,8 +221,7 @@ class GameEngine {
                 if (this.HERO.hitbox.xMin < portal.x + portal.width &&
                     portal.x < this.HERO.hitbox.xMax &&
                     this.HERO.hitbox.yMin < portal.y + portal.height &&
-                    portal.y < this.HERO.hitbox.yMax)
-                {
+                    portal.y < this.HERO.hitbox.yMax) {
                     this.pause = true;
                     this.currentPortal = portals[i];
                 }
@@ -242,7 +233,7 @@ class GameEngine {
      * Switches the game engine to the new world map and sets the hero's new coordinates
      */
     transposeWorlds() {
-        console.log("TRANPOSING YO")
+        console.log("TRANSPOSING YO");
         this.currentWorld = this.WORLDS[this.currentPortal.destinationWorld];
         this.currentWorld.section.x = this.currentPortal.destinationSection.x;
         this.currentWorld.section.y = this.currentPortal.destinationSection.y;
@@ -288,8 +279,7 @@ class GameEngine {
             this.currentWorld.drawLayer();
             this.UI.draw();
             this.GAME_CONTEXT.restore();
-        }
-        else { // Transition is handled here
+        } else { // Transition is handled here
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
@@ -301,8 +291,7 @@ class GameEngine {
     }
 
     drawHits() {
-        for (var i=0; i<this.HitQueue.length; i++)
-        {
+        for (var i = 0; i < this.HitQueue.length; i++) {
             this.HitQueue[i].counter -= 1;
             this.HitQueue[i].spritesheet.drawFrame(this.clockTick, this.GAME_CONTEXT, this.HitQueue[i].dx, this.HitQueue[i].dy, "walking");
         }
@@ -310,8 +299,7 @@ class GameEngine {
     }
 
     drawDeaths() {
-        for (var i=0; i<this.DeathQueue.length; i++)
-        {
+        for (var i = 0; i < this.DeathQueue.length; i++) {
             this.DeathQueue[i].counter -= 1;
             this.DeathQueue[i].spritesheet.drawFrame(this.clockTick, this.GAME_CONTEXT, this.DeathQueue[i].dx, this.DeathQueue[i].dy, "walking");
         }

@@ -27,15 +27,13 @@ class AssetManager {
 
     getTextFile(filePath) {
         var self = this;
-        return fetch(filePath).then(response => response.text()).then(textData =>
-        {
+        return fetch(filePath).then(response => response.text()).then(textData => {
             self.assets[filePath] = textData;
         });
     }
 
 
-    queueJSON(filePath)
-    {
+    queueJSON(filePath) {
         console.log(filePath + ' has been added to the Download Queue.');
         this.downloadQueue.push({src: filePath, type: 'json'});
     }
@@ -53,6 +51,7 @@ class AssetManager {
      */
     startDownload() {
         const self = this;
+
         function loadAssets() {
             let promiseArray = []; // An array to keep track of promises
             for (let i = 0; i < self.downloadQueue.length; i++) {
@@ -73,14 +72,14 @@ class AssetManager {
                         self.assets[self.downloadQueue[i].src] = img;
                     });
                     promiseArray.push(imagePromise);
-                }
-                else if (self.downloadQueue[i].type === 'json') {
+                } else if (self.downloadQueue[i].type === 'json') {
                     let jsonPromise = self.getJSON(self.downloadQueue[i].src);
                     promiseArray.push(jsonPromise);
                 }
             }
             return Promise.all(promiseArray);
         }
+
         return loadAssets();
     }
 }

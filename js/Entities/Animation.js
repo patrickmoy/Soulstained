@@ -91,7 +91,7 @@ class Animation {
             return Math.floor(time / (this.attackFrameTime / 2));
         }
         return Math.floor(time / this.standardFrameTime);
-}
+    }
 
     // /**
     //  * Checks if the animation is done

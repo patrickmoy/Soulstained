@@ -128,30 +128,23 @@ function flagGravitate(collisionPairs) {
                 element[0].gravitate(element[1].focusX, element[1].focusY, element[1].plungeRate);
                 element[0].falling = true;
             }
-
         }
     })
 }
 
 function flagMessages(collisionPairs) {
     collisionPairs.forEach(function (element) {
-        if (element[0] instanceof Sign)
-        {
-            if (element[1] instanceof Hero)
-            {
-                if (element[1].direction === 0)
-                {
+        if (element[0] instanceof Sign) {
+            if (element[1] instanceof Hero) {
+                if (element[1].direction === 0) {
                     element[0].pushMessage = true;
                     console.log("message!")
                 }
             }
         }
-        if (element[0] instanceof Hero)
-        {
-            if (element[1] instanceof Sign)
-            {
-                if (element[0].direction === 0)
-                {
+        if (element[0] instanceof Hero) {
+            if (element[1] instanceof Sign) {
+                if (element[0].direction === 0) {
                     element[1].pushMessage = true;
                     console.log("message");
                 }

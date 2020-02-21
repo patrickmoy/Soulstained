@@ -80,7 +80,7 @@ class Entity {
             this.futureHitbox.yMax = this.hitbox.yMax; // Resets future bottom right y coordinate
         }
         if (this.pushDamage && !(this instanceof Hero)) {
-            var hitSprite = new Animation(this.game.IMAGES_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
+            var hitSprite = new Animation(this.game.ASSETS_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
             var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 5, spritesheet: hitSprite};
             this.game.HitQueue.push(hitObject);
         }
@@ -97,6 +97,7 @@ class Entity {
         if (this.pushDamage) {
             if (this.invincibleCounter === 0) {
                 this.takeDamage();
+                this.hurting = true;
             }
             this.invincibleCounter += this.game.clockTick;
             if (this.invincibleCounter > this.INVINCIBLE_TIME) {
@@ -114,7 +115,7 @@ class Entity {
         }
         if (this.health === 0) {
             this.alive = false;
-            var deathSprite = new Animation(this.game.IMAGES_LIST["./res/img/death.png"], this, 30, 30, 0.25, 2, [4]);
+            var deathSprite = new Animation(this.game.ASSETS_LIST["./res/img/death.png"], this, 30, 30, 0.25, 2, [4]);
             var deathObject = {
                 dx: this.hitbox.xMin,
                 dy: this.hitbox.yMin,
