@@ -166,7 +166,7 @@ class GameEngine {
             const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2]).filter(entity => entity.alive);
 
             // Hero and enemies vs. blocks
-            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1]);
+            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1].concat(this.currentEntities[4]));
 
             // Weapon vs enemies causes momentary flinching
             const flinchEffect = detectCollide(this.currentEntities[0].filter(entity => entity.active), this.currentEntities[2]);
@@ -274,6 +274,7 @@ class GameEngine {
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
+            this.currentWorld.getCurrentTileMap().COOLSTUFF.forEach(coolio => coolio.draw());
             this.currentEntities[4].forEach(passive => passive.draw());
             this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon.
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());

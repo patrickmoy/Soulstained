@@ -124,7 +124,6 @@ class Hero extends Entity {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
-            console.log("I'm fine!");
         }
         if (this.hurting) {
             console.log("OWWW");

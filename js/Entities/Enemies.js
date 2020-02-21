@@ -626,5 +626,4 @@ class Sniper extends Enemy {
         return isInRadius;
     }
 }
-}
 
