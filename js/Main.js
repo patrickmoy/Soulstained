@@ -1,4 +1,8 @@
 const AssetHandler = new AssetManager();
+AssetHandler.queueImage('./res/img/worlds/testBossRoom.png');
+AssetHandler.queueImage('./res/img/worlds/testBossRoom2.png');
+AssetHandler.queueJSON('./res/jsonderulo/testBossRoom.json');
+
 AssetHandler.queueTextFile("./res/text/test.txt");
 AssetHandler.queueImage("./res/img/worlds/openworld.png");
 AssetHandler.queueImage("./res/img/worlds/openworld2.png");
@@ -10,6 +14,9 @@ AssetHandler.queueImage("./res/img/hero.png");
 AssetHandler.queueImage("./res/img/hero_extra.png");
 AssetHandler.queueImage("./res/img/hit.png");
 AssetHandler.queueImage("./res/img/zombie.png");
+AssetHandler.queueImage("./res/img/necro.png");
+AssetHandler.queueImage("./res/img/mage.png");
+AssetHandler.queueImage("./res/img/beast.png");
 AssetHandler.queueImage("./res/img/fireball.png");
 AssetHandler.queueImage("./res/img/sniper.png");
 AssetHandler.queueImage("./res/img/NecroFireball.png");

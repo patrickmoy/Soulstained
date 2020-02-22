@@ -105,6 +105,8 @@ function flagDamage(collisionPairs) {
     collisionPairs.forEach(function (element) {
         if (element[0] instanceof Hero && element[1] instanceof Enemy) {
             element[0].pushDamage = true;
+        } else if (element[0] instanceof Hero && element[1] instanceof Projectile) {
+            element[0].pushDamage = true;
         } else if (element[0] instanceof Weapon && element[0].active && element[1] instanceof Enemy) {
             element[1].pushDamage = true;
         }

@@ -71,11 +71,11 @@ class GameEngine {
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
 
         // Create the worlds
-        this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
-        this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
-        this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
-
-        this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
+        // this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
+        // this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
+        // this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
+         this.WORLDS["bossroom"] = new NecroDungeon(this, this.ASSETS_LIST['./res/img/worlds/testBossRoom.png'], this.ASSETS_LIST['./res/img/worlds/testBossRoom2.png'], 0, 0);
+        this.currentWorld = this.WORLDS["bossroom"]; // Set the current world to the open worlds
         this.currentEntities[1] =  this.currentWorld.getCurrentTileMap().BLOCKS;
         this.currentEntities[2] =  this.currentWorld.getCurrentTileMap().ENEMIES;
         this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
@@ -171,6 +171,8 @@ class GameEngine {
             // Weapon vs enemies causes momentary flinching
             const flinchEffect = detectCollide(this.currentEntities[0].filter(entity => entity.active), this.currentEntities[2]);
 
+            const projectileCollision = detectCollide(this.currentEntities[0].filter(entity => entity.alive), this.currentEntities[3].filter(entity => entity.alive));
+
             // Hero vs enemies
             const damageCollisions = detectCollide(this.currentEntities[0].filter(entity => entity.alive),
                 this.currentEntities[2].filter(entity => entity.alive));
@@ -180,6 +182,7 @@ class GameEngine {
             flagImpassable(creatureToBlockCollisions);
             flagImpassable(flinchEffect);
             flagMessages(creatureToBlockCollisions);
+            flagDamage(projectileCollision);
 
 
             flagDamage(damageCollisions);

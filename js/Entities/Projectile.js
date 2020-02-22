@@ -129,7 +129,6 @@ class FireballProjectile extends Projectile {
 
             this.futureHitbox.xMin += ((this.futureHitbox.yMin - this.b) / this.m);
             this.futureHitbox.xMax += ((this.futureHitbox.yMax - this.b) / this.m);
-            console.log(this.futureHitbox.xMin);
 
         } else if (this.trajectory === 'right') {
 
