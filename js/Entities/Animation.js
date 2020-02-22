@@ -7,7 +7,7 @@ class Animation {
      * Class is written with a horizontally aligned sprite sheet in mind -
      * please ensure sprite sheet is formatted as such through Aseprite or Marmoset Hexels.
      * @param {Image} spriteSheet Filepath of sprite sheet.
-     * @param {Worm} entity that has the animation (pass {this}).
+     * @param {Entity} entity that has the animation (pass {this}).
      * @param {number} frameHeight X coordinate to begin pulling sprite
      * @param {number} frameWidth Y coordinate to begin pull
      * @param {number} singleFrameTime  Time for single frame of standard loop.

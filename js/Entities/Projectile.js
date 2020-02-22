@@ -129,7 +129,6 @@ class FireballProjectile extends Projectile {
 
             this.futureHitbox.xMin += ((this.futureHitbox.yMin - this.b) / this.m);
             this.futureHitbox.xMax += ((this.futureHitbox.yMax - this.b) / this.m);
-            console.log(this.futureHitbox.xMin);
 
         } else if (this.trajectory === 'right') {
 
@@ -186,7 +185,7 @@ class Arrow extends Projectile {
         this.context = game.GAME_CONTEXT;
         this.alive = true; //Every projectile is spawned dead.
         this.trajectory = trajectory; //A flight direction path of either: left, right or down.
-        this.speed = 300; //Speed of each projectile, presently hard-coded in.
+        this.speed = 50; //Speed of each projectile, presently hard-coded in.
 
 
     }

@@ -72,17 +72,9 @@ function entitiesCollided(firstElement, secondElement) {
  */
 function flagImpassable(collisionPairs) {
     collisionPairs.forEach(function (element) {
-        // if (!(element[0] instanceof Weapon) && !(element[1] instanceof Weapon)) {
-        //     element[0].pushUpdate = false;
-        //     element[1].pushUpdate = false;
-        // }
-        // Previous code blocks everything but weapons. Switched to only invisible blocks impede.
-        // if (element[0] instanceof InvisibleBlock || element[1] instanceof InvisibleBlock) {
-        //     element[0].pushUpdate = false;
-        //     element[1].pushUpdate = false;
-        // }
+
         // Assuming convention of ordering of parameters (heros and enemies first, blocks/traps after)
-        if (element[1] instanceof Block) { // Check if element[0] is hero or an enemy instead (non ghost).
+        if (element[1] instanceof InvisibleBlock && !(element[1] instanceof Pit)) { // Check if element[0] is hero or an enemy instead (non ghost).
             element[0].pushUpdate = false;
         }
         if (element[0] instanceof Weapon && element[0].active && element[1] instanceof Enemy) {
@@ -92,6 +84,11 @@ function flagImpassable(collisionPairs) {
         if (element[0] instanceof Sign || element[1] instanceof Sign) {
             element[0].pushUpdate = false;
             element[1].pushUpdate = false;
+        }
+
+        if (element[1] instanceof DestructibleBlock)
+        {
+            element[0].pushUpdate = false;
         }
     });
 }
@@ -105,7 +102,7 @@ function flagDamage(collisionPairs) {
     collisionPairs.forEach(function (element) {
         if (element[0] instanceof Hero && element[1] instanceof Enemy) {
             element[0].pushDamage = true;
-        } else if (element[0] instanceof Weapon && element[0].active && element[1] instanceof Enemy) {
+        } else if (element[0] instanceof Weapon && element[0].active && (element[1] instanceof Enemy || element[1] instanceof DestructibleBlock)) {
             element[1].pushDamage = true;
         }
     })
@@ -152,6 +149,13 @@ function flagMessages(collisionPairs) {
         }
     });
 
+}
+
+function flagPickup(collisionPairs) {
+    collisionPairs.forEach(element =>
+    {
+        element[1].add(element[0])
+    });
 }
 
 

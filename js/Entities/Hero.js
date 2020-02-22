@@ -20,7 +20,7 @@ class Hero extends Entity {
         this.health = 10;
         this.maxHealth = 10;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
-        this.coins = 678;
+        this.coins = 0;
         this.alive = true;
         this.equipJ = "whip"; // Item equipped in J key.
         this.equipK = "boots"; // Item equipped in K key.
@@ -114,6 +114,10 @@ class Hero extends Entity {
                 this.futureHitbox.xMax = this.hitbox.xMax;
                 break;
         }
+        this.originalHitbox.xMin = this.hitbox.xMin;
+        this.originalHitbox.xMax = this.hitbox.xMax;
+        this.originalHitbox.yMin = this.hitbox.yMin;
+        this.originalHitbox.yMax = this.hitbox.yMax;
     }
 
     /**

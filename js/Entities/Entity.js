@@ -17,12 +17,12 @@ class Entity {
         this.z = 0;
 
         this.originalHitbox =
-            {
-                xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
-                yMin: y + height * (1 - this.HITBOX_SHRINK_FACTOR),
-                xMax: x + width * this.HITBOX_SHRINK_FACTOR,
-                yMax: y + height * this.HITBOX_SHRINK_FACTOR,
-            };
+        {
+            xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
+            yMin: y + height * (1 - this.HITBOX_SHRINK_FACTOR),
+            xMax: x + width * this.HITBOX_SHRINK_FACTOR,
+            yMax: y + height * this.HITBOX_SHRINK_FACTOR,
+        };
 
         this.speed = 0;
         this.health = -1;
@@ -90,7 +90,10 @@ class Entity {
             } else {
                 this.falling = false;
                 this.pushDamage = true;
-                this.futureHitbox = this.originalHitbox;
+                this.futureHitbox.xMin = this.originalHitbox.xMin;
+                this.futureHitbox.xMax = this.originalHitbox.xMax;
+                this.futureHitbox.yMin = this.originalHitbox.yMin;
+                this.futureHitbox.yMax = this.originalHitbox.yMax;
                 this.animation.scale = 2.4;
             }
         }

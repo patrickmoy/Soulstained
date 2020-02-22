@@ -11,11 +11,12 @@ class TileMap {
     constructor(game, info) {
         this.game = game;
         this.info = info;
-        this.BLOCKS = []; // Will contain all the blocks in the entity array
+        this.BLOCKS = []; // Will contain all the invisible blocks in the entity array
         this.ENEMIES = []; // Will contain all the enemies in the entity array
         this.PORTALS = []; // Will contain portals to move to other worlds
-        this.PASSIVES = []; // Will contain animated blocks that can be collided
-        this.COOLSTUFF = []; // Will contain animated stuff
+        this.PASSIVES = []; // Will contain blocks that can be collided or has an image to display
+        this.WORLDANIMATIONS = []; // Will contain animated stuff
+        this.DESTRUCTIBLES = [];
         this.createEntities(); // Creates the tiles for collision and passes it into entities
     }
 
@@ -54,7 +55,7 @@ class TileMap {
             }
             else if (entity.type === 'FirePit')
             {
-                this.PASSIVES.push(new FirePit(this.game, this.game.ASSETS_LIST['./res/img/fire.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60));
+                this.PASSIVES.push(new Block(this.game, this.game.ASSETS_LIST['./res/img/fire.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, 16, 16, .1, 4, [4]));
             }
             else if (entity.type === 'Zombie')
             {
@@ -68,15 +69,28 @@ class TileMap {
             }
             else if (entity.type === 'Fountain')
             {
-                this.PASSIVES.push(new Fountain(this.game, this.game.ASSETS_LIST['./res/img/fountainAnimation.png'], entity.x * 60 / 16 , entity.y * 60 / 16, 48, 47))
+                this.PASSIVES.push(new Block(this.game, this.game.ASSETS_LIST['./res/img/fountainAnimation.png'], entity.x * 60 / 16, entity.y * 60 / 16, 0, 0, 48, 47, .125, 3.756, [3]))
             }
             else if (entity.type === 'worm')
             {
-                this.COOLSTUFF.push(new WorldAnimation(this.game, this.game.ASSETS_LIST['./res/img/worm.png'], entity.x * 60 / 16, entity.y * 60 / 16, 2.3, [3]))
+                this.WORLDANIMATIONS.push(new WorldAnimation(this.game, this.game.ASSETS_LIST['./res/img/worm.png'], entity.x * 60 / 16, entity.y * 60 / 16, 2.3, [3]))
             }
             else if (entity.type === 'Flower')
             {
-                this.COOLSTUFF.push(new WorldAnimation(this.game, this.game.ASSETS_LIST['./res/img/flower.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60 / 16, [4]))
+                this.WORLDANIMATIONS.push(new WorldAnimation(this.game, this.game.ASSETS_LIST['./res/img/flower.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60 / 16, [4]))
+            }
+            else if (entity.type === 'Crate')
+            {
+                this.DESTRUCTIBLES.push(new DestructibleBlock(this.game, this.game.ASSETS_LIST['./res/img/crate.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, 16, 16, 1, 4, [1]));
+            }
+            else if (entity.type === 'Pit')
+            {
+
+                this.BLOCKS.push(new Pit(this.game, entity.x * 60 / 16, entity.y * 60 / 16));
+            }
+            else if (entity.type === 'Archer')
+            {
+                this.ENEMIES.push(new Sniper(this.game, this.game.ASSETS_LIST['./res/img/sniper.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, "SOUTH"));
             }
         }
     }

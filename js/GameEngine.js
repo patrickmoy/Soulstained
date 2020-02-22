@@ -166,22 +166,25 @@ class GameEngine {
             const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2]).filter(entity => entity.alive);
 
             // Hero and enemies vs. blocks
-            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1].concat(this.currentEntities[4]));
+            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1].concat(this.currentEntities[4].concat(this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.filter(destroy => destroy.alive))));
 
             // Weapon vs enemies causes momentary flinching
             const flinchEffect = detectCollide(this.currentEntities[0].filter(entity => entity.active), this.currentEntities[2]);
 
             // Hero vs enemies
             const damageCollisions = detectCollide(this.currentEntities[0].filter(entity => entity.alive),
-                this.currentEntities[2].filter(entity => entity.alive));
+                this.currentEntities[2].concat(this.currentWorld.getCurrentTileMap().DESTRUCTIBLES).filter(entity => entity.alive));
+            // Hero vs pickups
+            const pickups = detectCollide([this.currentEntities[0][0]], this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.filter(destroy => destroy instanceof Pickup))
+
+
 
             // Flags entities for standard "impassable" behavior (mostly terrain)
             flagGravitate(creatureToBlockCollisions);
             flagImpassable(creatureToBlockCollisions);
             flagImpassable(flinchEffect);
             flagMessages(creatureToBlockCollisions);
-
-
+            flagPickup(pickups);
             flagDamage(damageCollisions);
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
@@ -189,7 +192,7 @@ class GameEngine {
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.update());
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
-
+            this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.filter(destroy => destroy.alive).forEach(destroy => destroy.update());
             // PORTAL AND BORDER TRANSITIONS
             this.checkPortal();
             this.checkTransition();
@@ -210,7 +213,7 @@ class GameEngine {
             this.currentEntities[2].forEach(enemy => enemy.resetPosition());
             this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
             this.currentEntities[3] = []; // Removes all projectiles
-            this.transition = true; // Game Engine and other necessary components is now performing transition actions
+            this.transition = true; // Game Engine and other necessary components is now performing transition action
         }
     }
 
@@ -271,15 +274,19 @@ class GameEngine {
      */
     draw() {
         if (!this.transition) {
+            console.log(this.currentEntities[3]);
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
-            this.currentWorld.getCurrentTileMap().COOLSTUFF.forEach(coolio => coolio.draw());
+            this.currentWorld.getCurrentTileMap().WORLDANIMATIONS.forEach(coolio => coolio.draw());
             this.currentEntities[4].forEach(passive => passive.draw());
+            this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.forEach(destroy => destroy.draw());
             this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon.
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw());
+            this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive == false))
+            console.log(this.currentEntities[3]);
             this.drawHits();
             this.drawDeaths();
             this.currentWorld.drawLayer();

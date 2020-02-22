@@ -65,13 +65,12 @@ class Enemy extends Entity {
      * @param detectRange {number} the range in pixels for the enemy to detect the player
      * @return {boolean} true if the enemy can see the hero within the detect range distance; false otherwise
      */
-    LOSSearch(detectRange)
-    {
+    LOSSearch(detectRange) {
         const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
         const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
         const enemyPosX = (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2; // Gets the enemy's center x
         const enemyPosY = (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2; // Gets the enemy's center y
-        // Detects if the player is within the detection range of the zombie
+        // Detects if the player is within the detection range of the enemy
         const isInRadius = heroPosX > enemyPosX - detectRange && heroPosX < enemyPosX + detectRange &&
             heroPosY > enemyPosY - detectRange && heroPosY < enemyPosY + detectRange;
 
@@ -120,8 +119,7 @@ class Enemy extends Entity {
         return false;
     }
 
-    followHero()
-    {
+    followHero() {
         const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
         const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
         // Difference between hero and enemy in x direction
@@ -204,8 +202,7 @@ class Zombie extends Enemy {
             // Actually perform the zombie movement.
             this.followHero();
             this.movementCooldown = 5;
-        }
-        else {
+        } else {
             this.randomWalk(50, this.movementCooldown);
             if (this.movementCooldown > 0) this.movementCooldown--;
         }
@@ -540,18 +537,15 @@ class Knight
 }
 
 class Ghost extends Enemy {
-    constructor(game, spritesheet, x, y, width, height)
-    {
+    constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height);
     }
 
-    preUpdate()
-    {
+    preUpdate() {
 
     }
 
-    update()
-    {
+    update() {
     }
 }
 
@@ -564,9 +558,8 @@ class Sniper extends Enemy {
         this.context = game.GAME_CONTEXT;
         this.position = position; // Variable to hold the direction the sniper is pointing.
         this.detectRange = 200;
-        this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, this.position);
-        this.game.currentEntities[3].push(this.arrow);
-
+        this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, this.position);
+        // this.game.currentEntities[3].push(this.arrow);
 
     }
 
@@ -577,29 +570,27 @@ class Sniper extends Enemy {
     }
 
     pickAttack(position) {
-
         if (position === 'SOUTH') {
-            if (this.arrow.projectileNotOnScreen()) {
-
-                this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
+            // if (this.arrow.projectileNotOnScreen()) {
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
                 this.game.currentEntities[3].push(this.arrow);
-            }
+            // }
         } else if (position === "NORTH") {
             if (this.arrow.projectileNotOnScreen()) {
 
-                this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
                 this.game.currentEntities[3].push(this.arrow);
             }
         } else if (position === "EAST") {
             if (this.arrow.projectileNotOnScreen()) {
 
-                this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
                 this.game.currentEntities[3].push(this.arrow);
             }
         } else if (position === "WEST") {
             if (this.arrow.projectileNotOnScreen()) {
 
-                this.arrow = new Arrow(this.game, this.game.IMAGES_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
                 this.game.currentEntities[3].push(this.arrow);
             }
         }
