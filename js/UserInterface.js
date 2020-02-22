@@ -7,8 +7,8 @@ class UserInterface {
         this.images = images;
 
         // UI resources
-        this.currencyImage = this.images["./res/img/currency.png"];
-        this.heartImage = this.images["./res/img/shinyHeart.png"];
+        this.coinImage = this.images["./res/img/coin.png"];
+        this.heartImage = this.images["./res/img/heart.png"];
         this.digitsFontImage = this.images["./res/img/digits.png"];
         this.lettersFontImage = this.images["./res/img/letters.png"];
         this.keyJImage = this.images["./res/img/keyJ.png"];
@@ -17,8 +17,8 @@ class UserInterface {
         this.whipPrototype = this.images["./res/img/whipPrototype.png"];
 
         // HERO's health and currency properties
-        this.hp;
-        this.currency;
+        this.health;
+        this.coins;
 
         // encoded digits for indexing sprite sheet
         this.d1;
@@ -43,9 +43,9 @@ class UserInterface {
 
     update() {
         // Fetch Hero's health and currency properties
-        this.hp = this.hero.health;
-        this.currency = this.hero.coins;
-        var coins = this.currency;
+        this.health = this.hero.health;
+        this.coins = this.hero.coins;
+        var coins = this.coins;
 
         // Encode numbers to index digits font sprite sheet
         for (var i=0; i<3; i++) {
@@ -108,18 +108,29 @@ class UserInterface {
                 }
                 if (this.game.INPUTS["KeyJ"])   // buy
                 {
-                    this.game.INPUTS["KeyJ"] = false;
-                    // use the selectionBoxY value to translate to an array index
-                    // index the this.game.goods to access the price
-                    // this.hero.coins - price
-                    this.strokeStyle = 'yellow';
-                    this.transactionState = 'browse';
-
-                    //280, 328, 376, 424, 472
                     var itemIndex = (this.selectionBoxY - 280) / 48;
-                    var purchasedItem = this.game.goods[itemIndex];
-                    this.hero.inventory.push(itemIndex);
+                    var purchasedItem = this.game.goods[itemIndex].name;
+                    if (this.hero.coins >= this.game.goods[itemIndex].price) {
 
+                        this.game.INPUTS["KeyJ"] = false;
+                        // use the selectionBoxY value to translate to an array index
+                        // index the this.game.goods to access the price
+                        // this.hero.coins - price
+                        this.strokeStyle = 'yellow';
+                        this.transactionState = 'browse';
+                        this.hero.coins -= this.game.goods[itemIndex].price;
+                        //280, 328, 376, 424, 472
+                        if (purchasedItem === 'heart') {
+                            this.hero.health += 1;
+                        } else {
+                            this.hero.inventory.push(purchasedItem);
+                        }
+                        console.log(this.hero.inventory);
+                    } else {
+                        this.game.INPUTS["KeyJ"] = false;
+                        this.strokeStyle = 'yellow';
+                        this.transactionState = 'browse';
+                    }
                 }
             }
         }
@@ -302,7 +313,7 @@ class UserInterface {
             }
 
             // draw coin
-            this.ctx.drawImage(this.currencyImage, 0, 0, 11, 11, dx, dy, 12, 12);
+            this.ctx.drawImage(this.coinImage, 0, 0, 11, 11, dx, dy, 12, 12);
             dx+=12;
             this.ctx.drawImage(this.digitsFontImage, d100, 0, 49.5, 45, dx, dy, 12, 10.9);
             dx+=12;
@@ -327,7 +338,7 @@ class UserInterface {
         var dx = 22;
         var dy = 0;
         for (var i = 0; i < this.hp; i++) {
-            this.ctx.drawImage(this.heartImage, 0, 0, 200, 167, dx, dy, 36, 30);
+            this.ctx.drawImage(this.heartImage, 0, 0, 30, 30, dx, dy, 30, 30);
             dx += 40;
             if (i === 4) {
                 dy += 30;
@@ -336,7 +347,7 @@ class UserInterface {
         }
 
         // draw coin and amount
-        this.ctx.drawImage(this.currencyImage, 0, 0, 11, 11, 345, 0, 30, 30);
+        this.ctx.drawImage(this.coinImage, 0, 0, 11, 11, 345, 0, 30, 30);
         this.ctx.drawImage(this.digitsFontImage, this.d100, 0, 49.5, 45, 327, 30, 22, 20);
         this.ctx.drawImage(this.digitsFontImage, this.d10, 0, 49.5, 45, 349, 30, 22, 20);
         this.ctx.drawImage(this.digitsFontImage, this.d1, 0, 49.5, 45, 371, 30, 22, 20);

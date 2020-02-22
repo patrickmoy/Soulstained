@@ -190,7 +190,6 @@ class GameEngine {
             flagImpassable(flinchEffect);
             flagMessages(creatureToBlockCollisions);
 
-
             flagDamage(damageCollisions);
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.

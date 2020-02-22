@@ -23,8 +23,8 @@ class Hero extends Entity {
         this.coins = 678;
         this.alive = true;
         this.equipJ = "whip"; // Item equipped in J key.
-        this.equipK = "boots"; // Item equipped in K key.
-        this.inventory = ["whip", "boots"];
+        this.equipK; // Item equipped in K key.
+        this.inventory = ["whip"];
 
         // Change this to be 5x the attackFrameTime, and whip speed will update.
         // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration. (Not Hero's).

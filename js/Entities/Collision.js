@@ -93,6 +93,13 @@ function flagImpassable(collisionPairs) {
             element[0].pushUpdate = false;
             element[1].pushUpdate = false;
         }
+
+        if (element[0] instanceof Merchant || element[1] instanceof Hero) {
+            element[1].pushUpdate = false;
+        }
+        if (element[0] instanceof Hero || element[1] instanceof Merchant) {
+            element[0].pushUpdate = false;
+        }
     });
 }
 
