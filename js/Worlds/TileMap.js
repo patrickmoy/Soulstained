@@ -82,24 +82,7 @@ class TileMap {
                 this.BLOCKS.push(new Sign(this.game, entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, entity.customProperties.msg));
             }
             else if (entity.type === 'merchant') {
-                var items = [];
-                if (entity.customProperties.item1 != undefined) {
-                    var itemObject = {name: entity.customProperties.item1, price: entity.customProperties.price1, encoded: []};
-                    items.push(itemObject);
-                }
-                if (entity.customProperties.item2 != undefined) {
-                    var itemObject = {name: entity.customProperties.item2, price: entity.customProperties.price2, encoded: []}
-                    items.push(itemObject);
-                }
-                if (entity.customProperties.item3 != undefined) {
-                    var itemObject = {name: entity.customProperties.item3, price: entity.customProperties.price3, encoded: []}
-                    items.push(itemObject);
-                }
-                if (entity.customProperties.item4 != undefined) {
-                    var itemObject = {name: entity.customProperties.item4, price: entity.customProperties.price4, encoded: []}
-                    items.push(itemObject);
-                }
-                console.log(items);
+                var items = JSON.parse(entity.customProperties.items);
                 this.BLOCKS.push(new Merchant(this.game, this.game.ASSETS_LIST['./res/img/merchant.png'], entity.x * 60 / 16, entity.y * 60 / 16, items));
             }
         }
