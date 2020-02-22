@@ -11,6 +11,7 @@ class Block extends InvisibleBlock {
         this.spritesheet = spritesheet;
         this.x = x;
         this.y = y;
+
         this.animation = new Animation(this.spritesheet, this, frameWidth, frameHeight, speed, scale, indices);
     }
     draw()
@@ -35,7 +36,7 @@ class DestructibleBlock extends Block
     {
         if (this.pushDamage) this.health -= 1;
         if (this.health <= 0) this.alive = false;
-        if (!this.lootDropped && this.item && !this.alive) this.game.currentWorld.getCurrentTileMap().DESTRUCTIBLES.push(this.item);
+        if (!this.lootDropped && this.item && !this.alive) this.game.currentEntities[5].push(this.item);
     }
 
     randomizeItems()
@@ -121,7 +122,7 @@ class Pickup extends Entity
             }
             if (this.type === 'coin')
             {
-                if (!coinPickup.playing()) coinPickup.play();
+                coinPickup.play();
                 hero.coins += this.amount;
             }
             this.alive = false;

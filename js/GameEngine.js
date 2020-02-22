@@ -122,6 +122,19 @@ class GameEngine {
         this.draw();
     }
 
+    /*
+     * Resets the current entities subarrays to the current tilemaps entities (simply moved duplicate codes to one function - Steven)
+     */
+    changeEntitiesToCurrent()
+    {
+        const currentMap = this.currentWorld.getCurrentTileMap();
+        this.currentEntities[1] = currentMap.BLOCKS;
+        this.currentEntities[2] = currentMap.ENEMIES;
+        this.currentEntities[3] = currentMap.PROJECTILES;
+        this.currentEntities[4] = currentMap.PASSIVES;
+        this.currentEntities[5] = currentMap.DESTRUCTIBLES;
+    }
+
     /**
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
@@ -158,25 +171,25 @@ class GameEngine {
             resetFlags(this.currentEntities[4]);
 
             // Predicts update for all the necessary entities
-            this.currentEntities[0].filter(hero => hero.alive).forEach(hero => hero.preUpdate());
+            this.currentEntities[0].forEach(hero => hero.preUpdate());
             this.currentEntities[1].filter(block => block.alive).forEach(block => block.preUpdate());
-            this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.preUpdate());
-            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
+            this.currentEntities[2].forEach(enemy => enemy.preUpdate());
+            this.currentEntities[3].forEach(projectile => projectile.preUpdate());
 
-            const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2]).filter(entity => entity.alive);
+            const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2]);
 
             // Hero and enemies vs. blocks
-            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1].concat(this.currentEntities[4].concat(this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.filter(destroy => destroy.alive))));
+            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1].concat(this.currentEntities[4], this.currentEntities[5]));
 
             // Weapon vs enemies causes momentary flinching
-            const flinchEffect = detectCollide(this.currentEntities[0].filter(entity => entity.active), this.currentEntities[2]);
+            const flinchEffect = detectCollide(this.currentEntities[0], this.currentEntities[2]);
 
             // Hero vs enemies
-            const damageCollisions = detectCollide(this.currentEntities[0].filter(entity => entity.alive),
-                this.currentEntities[2].concat(this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.concat(this.currentEntities[3])).filter(entity => entity.alive));
+            const damageCollisions = detectCollide(this.currentEntities[0],
+                this.currentEntities[2].concat(this.currentEntities[3], this.currentEntities[5]));
 
             // Hero vs pickups
-            const pickups = detectCollide([this.currentEntities[0][0]], this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.filter(destroy => destroy instanceof Pickup))
+            const pickups = detectCollide([this.currentEntities[0][0]], this.currentEntities[5].filter(destroy => destroy instanceof Pickup));
             // Flags entities for standard "impassable" behavior (mostly terrain)
             flagGravitate(creatureToBlockCollisions);
             flagImpassable(creatureToBlockCollisions);
@@ -186,11 +199,18 @@ class GameEngine {
             flagDamage(damageCollisions);
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
-            this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.update()); // Updates hero
+            this.currentEntities[0].forEach(entity => entity.update()); // Updates hero
+            // TODO weird bug where the smoke still appears on the enemy's death location when transitioning back into the tilemap. Requires a filter for alive.
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
-            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.update());
+            this.currentEntities[3].forEach(projectile => projectile.update());
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
-            this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.filter(destroy => destroy.alive).forEach(destroy => destroy.update());
+            this.currentEntities[5].forEach(destructible => destructible.update());
+
+            this.currentEntities[0] = this.currentEntities[0].filter(hero => hero.alive);
+            this.currentEntities[2] = this.currentEntities[2].filter(enemy => enemy.alive);
+            this.currentEntities[3] = this.currentEntities[3].filter(projectile => projectile.alive);
+            this.currentEntities[5] = this.currentEntities[5].filter(destructible => destructible.alive);
+
             // PORTAL AND BORDER TRANSITIONS
             this.checkPortal();
             this.checkTransition();
@@ -206,11 +226,8 @@ class GameEngine {
         {
             this.currentWorld.section.x += currentBorder.changeInX; // Change the x coordinate for the tilemap array
             this.currentWorld.section.y += currentBorder.changeInY; // Change the y coordinate for the tilemap array
-            this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS; // Replaces the current blocks with the ones in the new tilemap
-            this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES; // Replaces the current enemies with the ones in the new tilemap
+            this.changeEntitiesToCurrent();
             this.currentEntities[2].forEach(enemy => enemy.resetPosition());
-            this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
-            this.currentEntities[3] = []; // Removes all projectiles
             this.transition = true; // Game Engine and other necessary components is now performing transition action
         }
     }
@@ -251,10 +268,8 @@ class GameEngine {
         this.HERO.futureHitbox.yMin = this.HERO.hitbox.yMin;
         this.HERO.futureHitbox.xMax = this.HERO.hitbox.xMax;
         this.HERO.futureHitbox.yMax = this.HERO.hitbox.yMax;
-        this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
-        this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
-        this.currentEntities[3] = [];
+        this.changeEntitiesToCurrent();
+        this.currentEntities[2].forEach(enemy => enemy.reset());
     }
 
     /**
@@ -275,9 +290,9 @@ class GameEngine {
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
-            this.currentWorld.getCurrentTileMap().WORLDANIMATIONS.forEach(coolio => coolio.draw());
+            this.currentWorld.getCurrentTileMap().WORLDANIMATIONS.forEach(animations => animations.draw());
             this.currentEntities[4].forEach(passive => passive.draw());
-            this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.forEach(destroy => destroy.draw());
+            this.currentEntities[5].forEach(destructible => destructible.draw());
             this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon.
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw());

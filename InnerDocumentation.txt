@@ -6,9 +6,10 @@ Array Number Meaning:
 5 = crab
 
 Current Entities Array Structure:
-0 = Hero
-1 = Block
-2 = Enemy
-3 = Projectile
+0 = Hero and his weapons
+1 = Invisible Blocks
+2 = Enemies
+3 = Projectiles
 4 = Passives
+5 = Destructibles
 to be continued...

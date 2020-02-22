@@ -15,8 +15,9 @@ class TileMap {
         this.ENEMIES = []; // Will contain all the enemies in the entity array
         this.PORTALS = []; // Will contain portals to move to other worlds
         this.PASSIVES = []; // Will contain blocks that can be collided or has an image to display
-        this.WORLDANIMATIONS = []; // Will contain animated stuff
-        this.DESTRUCTIBLES = [];
+        this.PROJECTILES = []; // Will contain any projectiles
+        this.WORLDANIMATIONS = []; // Will contain animated stuff. Does not store into any entities subarray, just called and drawn.
+        this.DESTRUCTIBLES = []; // Stores any destructibles (e.g. crates)
         this.createEntities(); // Creates the tiles for collision and passes it into entities
     }
 
@@ -90,7 +91,7 @@ class TileMap {
             }
             else if (entity.type === 'Archer')
             {
-                this.ENEMIES.push(new Sniper(this.game, this.game.ASSETS_LIST['./res/img/sniper.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, "SOUTH"));
+                this.ENEMIES.push(new Sniper(this.game, this.game.ASSETS_LIST['./res/img/sniper.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, entity.customProperties.direction));
             }
         }
     }

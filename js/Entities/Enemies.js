@@ -39,7 +39,7 @@ class Enemy extends Entity {
      */
     reset() {
         this.resetPosition();
-        this.isDead = false;
+        this.alive = true;
         this.health = this.ORIGINAL_HEALTH;
     }
 
@@ -157,12 +157,11 @@ class Crab extends Enemy {
      * @param height the height of the crab for hitbox
      */
     constructor(game, spritesheet, x, y, width, height) {
-        super(game, x, y, width, height, 2);
+        super(game, x, y, width, height, 1);
         this.spritesheet = new Animation(spritesheet, this, 16, 16, .25, 2.3);
         this.speed = 85;
         this.directionTime = 0;
         this.alive = true;
-        this.health = 1;
         this.direction = Math.floor(Math.random() * 4.5);
     }
 
@@ -551,7 +550,7 @@ class Ghost extends Enemy {
 
 class Sniper extends Enemy {
 
-    constructor(game, spritesheet, x, y, width, height, position) {
+    constructor(game, spritesheet, x, y, width, height, position = "SOUTH") {
         super(game, x, y, width, height, 2);
         this.alive = true;
         this.animation = new Animation(spritesheet, this, 20, 19, .1, 4, [5], 0);

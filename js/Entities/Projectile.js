@@ -191,9 +191,7 @@ class Arrow extends Projectile {
     }
 
     preUpdate() {
-
         this.selectPosition(this.trajectory);
-
     };
 
     //Draws the projectile
