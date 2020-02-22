@@ -54,6 +54,11 @@ AssetHandler.queueJSON('./res/jsonderulo/cave_section1_1.json');
 AssetHandler.queueJSON('./res/jsonderulo/bluehouse_section1_1.json');
 AssetHandler.startDownload()
     .then(() => {
+        // var sound = new Howl({
+        //     src: ['./res/sound/war.mp3'],
+        //     loop: true
+        // });
+        // sound.play();
             const gameCanvas = document.getElementById("gameWorld"); // Get the
             const gameContext = gameCanvas.getContext("2d");
             const myGame = new GameEngine(gameContext, AssetHandler.assets);

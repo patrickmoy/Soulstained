@@ -1,5 +1,5 @@
 
-
+var coinPickup = new Howl({src:['./res/sound/coinPickup.mp3']});
 class InvisibleBlock extends Entity {
 }
 
@@ -78,8 +78,6 @@ class Pit extends InvisibleBlock {
             yMin: y + this.height * (1 - this.ABYSS_FACTOR),
             yMax: y + this.height * this.ABYSS_FACTOR
         };
-        console.log(this.abyssHitbox);
-
     };
 }
 class WorldAnimation {
@@ -123,6 +121,7 @@ class Pickup extends Entity
             }
             if (this.type === 'coin')
             {
+                if (!coinPickup.playing()) coinPickup.play();
                 hero.coins += this.amount;
             }
             this.alive = false;

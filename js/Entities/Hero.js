@@ -1,6 +1,4 @@
-/**
- *
- */
+
 class Hero extends Entity {
     /**
      * The entity that the player can control and play the game with.
@@ -37,6 +35,7 @@ class Hero extends Entity {
         // hero damage animation control variables
         this.hurting = false;
         this.hurtCounter = this.INVINCIBLE_TIME;
+        this.attackSound = new Howl({src: ['./res/sound/war.mp3']});
 
     }
 
@@ -47,6 +46,8 @@ class Hero extends Entity {
         if (!this.game.transition) {
             this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
             if (this.jumping) {
+                if (!this.attackSound.playing())
+                    this.attackSound.play();
                 this.jump();
             } else if (!this.jumping && this.beingUsed("boots")) {
                 this.jumping = true;

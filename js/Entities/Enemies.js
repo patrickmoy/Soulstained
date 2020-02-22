@@ -559,6 +559,14 @@ class Sniper extends Enemy {
         this.position = position; // Variable to hold the direction the sniper is pointing.
         this.detectRange = 200;
         this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, this.position);
+        this.arrow.hitbox.xMin = Infinity;
+        this.arrow.hitbox.xMax = Infinity;
+        this.arrow.hitbox.yMin = Infinity;
+        this.arrow.hitbox.yMax = Infinity;
+        this.arrow.futureHitbox.xMin = Infinity;
+        this.arrow.futureHitbox.xMax = Infinity;
+        this.arrow.futureHitbox.yMin = Infinity;
+        this.arrow.futureHitbox.yMax = Infinity;
         // this.game.currentEntities[3].push(this.arrow);
 
     }
@@ -571,10 +579,10 @@ class Sniper extends Enemy {
 
     pickAttack(position) {
         if (position === 'SOUTH') {
-            // if (this.arrow.projectileNotOnScreen()) {
+            if (this.arrow.projectileNotOnScreen()) {
                 this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
                 this.game.currentEntities[3].push(this.arrow);
-            // }
+            }
         } else if (position === "NORTH") {
             if (this.arrow.projectileNotOnScreen()) {
 

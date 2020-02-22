@@ -185,7 +185,7 @@ class Arrow extends Projectile {
         this.context = game.GAME_CONTEXT;
         this.alive = true; //Every projectile is spawned dead.
         this.trajectory = trajectory; //A flight direction path of either: left, right or down.
-        this.speed = 50; //Speed of each projectile, presently hard-coded in.
+        this.speed = 200; //Speed of each projectile, presently hard-coded in.
 
 
     }

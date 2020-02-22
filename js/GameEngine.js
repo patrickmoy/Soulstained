@@ -173,12 +173,10 @@ class GameEngine {
 
             // Hero vs enemies
             const damageCollisions = detectCollide(this.currentEntities[0].filter(entity => entity.alive),
-                this.currentEntities[2].concat(this.currentWorld.getCurrentTileMap().DESTRUCTIBLES).filter(entity => entity.alive));
+                this.currentEntities[2].concat(this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.concat(this.currentEntities[3])).filter(entity => entity.alive));
+
             // Hero vs pickups
             const pickups = detectCollide([this.currentEntities[0][0]], this.currentWorld.getCurrentTileMap().DESTRUCTIBLES.filter(destroy => destroy instanceof Pickup))
-
-
-
             // Flags entities for standard "impassable" behavior (mostly terrain)
             flagGravitate(creatureToBlockCollisions);
             flagImpassable(creatureToBlockCollisions);
@@ -274,7 +272,6 @@ class GameEngine {
      */
     draw() {
         if (!this.transition) {
-            console.log(this.currentEntities[3]);
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
@@ -286,7 +283,6 @@ class GameEngine {
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw());
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive == false))
-            console.log(this.currentEntities[3]);
             this.drawHits();
             this.drawDeaths();
             this.currentWorld.drawLayer();
