@@ -38,6 +38,8 @@ class Hero extends Entity {
         this.hurting = false;
         this.hurtCounter = this.INVINCIBLE_TIME;
 
+        this.sound;
+
     }
 
     /**
@@ -206,6 +208,7 @@ class Hero extends Entity {
     attack() {
         this.whip.direction = this.direction;
         super.attack();
+        this.sound.play();
     }
 
     beingUsed(itemName) {

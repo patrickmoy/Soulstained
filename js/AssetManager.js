@@ -19,20 +19,6 @@ class AssetManager {
         this.downloadQueue.push({src: filePath, type: 'img'});
     }
 
-
-    queueTextFile(filePath) {
-        console.log(filePath + ' has been added to the Download Queue.');
-        this.downloadQueue.push({src: filePath, type: 'txt'});
-    }
-
-    getTextFile(filePath) {
-        var self = this;
-        return fetch(filePath).then(response => response.text()).then(textData => {
-            self.assets[filePath] = textData;
-        });
-    }
-
-
     queueJSON(filePath) {
         console.log(filePath + ' has been added to the Download Queue.');
         this.downloadQueue.push({src: filePath, type: 'json'});

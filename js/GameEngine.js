@@ -60,6 +60,8 @@ class GameEngine {
 
         this.HitQueue = [];
         this.DeathQueue = [];
+
+        this.backgroundMusic;
     }
 
     /**
@@ -96,6 +98,19 @@ class GameEngine {
         // If button is lifted from press and the button is a key we care about, set it to false.
         this.GAME_CONTEXT.canvas.addEventListener("keyup", (key) => {
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = false; // ! Interesting, when switching to modules, you no longer need self. You can just use this. Why? !
+        });
+
+        this.GAME_CONTEXT.canvas.addEventListener("mousedown", e => {
+            this.backgroundMusic = new Howl({
+                src: ["./res/sound/silenthill.mp3"],
+                loop: true,
+                volume: 0.5
+            });
+            this.HERO.sound = new Howl({
+                src: ["./res/sound/whip.mp3"]
+                }
+            );
+            this.backgroundMusic.play();
         });
 
         console.log('Game initialized');

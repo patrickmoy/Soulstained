@@ -337,7 +337,7 @@ class UserInterface {
          */
         var dx = 22;
         var dy = 0;
-        for (var i = 0; i < this.hp; i++) {
+        for (var i = 0; i < this.health; i++) {
             this.ctx.drawImage(this.heartImage, 0, 0, 30, 30, dx, dy, 30, 30);
             dx += 40;
             if (i === 4) {

@@ -1,5 +1,4 @@
 const AssetHandler = new AssetManager();
-AssetHandler.queueTextFile("./res/text/test.txt");
 AssetHandler.queueImage("./res/img/worlds/openworld.png");
 AssetHandler.queueImage("./res/img/worlds/openworld2.png");
 AssetHandler.queueImage("./res/img/worlds/cavebasic.png");
