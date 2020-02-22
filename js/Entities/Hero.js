@@ -9,7 +9,7 @@ class Hero extends Entity {
      * @param weaponSheet {Image} The image of the default weapon for animation.
      */
     constructor(game, spriteSheet, weaponSheet) {
-        super(game, 300, 360, 38, 55, 1);
+        super(game, 300, 420, 38, 55, 1);
         // To modify whip speed, change last parameter here (.100 default, attackFrameTime parameter in Animation).
         // Must be 1/5 of this.ACTION_DURATION (change that too).
         this.animation = new Animation(spriteSheet, this, 16, 23, .250,
@@ -37,10 +37,6 @@ class Hero extends Entity {
         // hero damage animation control variables
         this.hurting = false;
         this.hurtCounter = this.INVINCIBLE_TIME;
-
-        this.equipJ = "whip";
-        this.equipK = "boots";
-        this.inventory = ["whip", "boots"];
 
     }
 

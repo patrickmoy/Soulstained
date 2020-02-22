@@ -1,3 +1,4 @@
+
 class Enemy extends Entity {
     constructor(game, x, y, width, height, health) {
         super(game, x, y, width, height, 1);
@@ -626,4 +627,3 @@ class Sniper extends Enemy {
         return isInRadius;
     }
 }
-

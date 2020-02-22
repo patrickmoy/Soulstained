@@ -1,3 +1,4 @@
+
 /*
  * A single section of the screen that holds entities
  * and collision arrays
@@ -43,12 +44,6 @@ class TileMap {
                         }
                     }
                 }
-                else if (entityArray[i][j].Class === 'Merchant') {
-                    const merchantEntity = new Merchant(this.game, this.game.IMAGES_LIST["./res/img/merchant.png"], j*60, i*60, entityArray[i][j].Items);
-                    merchantEntity.alive = true;
-                    console.log(merchantEntity);
-                    this.BLOCKS.push(merchantEntity);
-                }
             }
         }
         for (var i = 0; i < this.info.realEntities.length; i++)
@@ -80,6 +75,32 @@ class TileMap {
             else if (entity.type === 'worm')
             {
                 this.COOLSTUFF.push(new Worm(this.game, this.game.ASSETS_LIST['./res/img/worm.png'], entity.x * 4, entity.y * 4))
+            }
+            else if (entity.type === 'Sign')
+            {
+                console.log(entity.customProperties.msg);
+                this.BLOCKS.push(new Sign(this.game, entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, entity.customProperties.msg));
+            }
+            else if (entity.type === 'merchant') {
+                var items = [];
+                if (entity.customProperties.item1 != undefined) {
+                    var itemObject = {name: entity.customProperties.item1, price: entity.customProperties.price1, encoded: []};
+                    items.push(itemObject);
+                }
+                if (entity.customProperties.item2 != undefined) {
+                    var itemObject = {name: entity.customProperties.item2, price: entity.customProperties.price2, encoded: []}
+                    items.push(itemObject);
+                }
+                if (entity.customProperties.item3 != undefined) {
+                    var itemObject = {name: entity.customProperties.item3, price: entity.customProperties.price3, encoded: []}
+                    items.push(itemObject);
+                }
+                if (entity.customProperties.item4 != undefined) {
+                    var itemObject = {name: entity.customProperties.item4, price: entity.customProperties.price4, encoded: []}
+                    items.push(itemObject);
+                }
+                console.log(items);
+                this.BLOCKS.push(new Merchant(this.game, this.game.ASSETS_LIST['./res/img/merchant.png'], entity.x * 60 / 16, entity.y * 60 / 16, items));
             }
         }
     }

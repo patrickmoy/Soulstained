@@ -17,7 +17,6 @@ AssetHandler.queueImage("./res/img/knight.png");
 AssetHandler.queueImage("./res/img/whip.png");
 AssetHandler.queueImage("./res/img/crab.png");
 AssetHandler.queueImage("./res/img/FIREARROW.png");
-AssetHandler.queueImage("./res/img/merchant.png")
 AssetHandler.queueImage("./res/img/NecroDungeon.png");
 AssetHandler.queueImage("./res/img/shinyHeart.png");
 AssetHandler.queueImage("./res/img/currency.png");
@@ -31,6 +30,12 @@ AssetHandler.queueImage("./res/img/worm.png");
 AssetHandler.queueImage("./res/img/fire.png");
 AssetHandler.queueImage("./res/img/letters.png");
 AssetHandler.queueImage("./res/img/death.png");
+AssetHandler.queueImage("./res/img/boots.png");
+AssetHandler.queueImage("./res/img/ring.png");
+AssetHandler.queueImage("./res/img/key.png");
+AssetHandler.queueImage("./res/img/lantern.png");
+AssetHandler.queueImage("./res/img/arrows.png");
+AssetHandler.queueImage("./res/img/merchant.png");
 AssetHandler.queueJSON('./res/jsonderulo/section1_1.json');
 AssetHandler.queueJSON('./res/jsonderulo/section1_2.json');
 AssetHandler.queueJSON('./res/jsonderulo/section1_3.json');
@@ -48,17 +53,12 @@ AssetHandler.queueJSON('./res/jsonderulo/section3_4.json');
 AssetHandler.queueJSON('./res/jsonderulo/section3_5.json');
 AssetHandler.queueJSON('./res/jsonderulo/cave_section1_1.json');
 AssetHandler.queueJSON('./res/jsonderulo/bluehouse_section1_1.json');
-AssetHandler.queueImage("./res/img/hit.png");
-AssetHandler.queueImage("./res/img/ItemKey.png");
-AssetHandler.queueImage("./res/img/ItemArrows.png");
-AssetHandler.queueImage("./res/img/ItemRing.png");
-AssetHandler.queueImage("./res/img/ItemLantern.png");
 AssetHandler.startDownload()
     .then(() => {
-            const gameCanvas = document.getElementById("gameWorld"); // Get the
-            const gameContext = gameCanvas.getContext("2d");
-            const myGame = new GameEngine(gameContext, AssetHandler.assets);
+        const gameCanvas = document.getElementById("gameWorld"); // Get the
+        const gameContext = gameCanvas.getContext("2d");
+        const myGame = new GameEngine(gameContext, AssetHandler.assets);
 
-            myGame.init();
-            myGame.run();
+        myGame.init();
+        myGame.run();
     });

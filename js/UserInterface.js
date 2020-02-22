@@ -1,5 +1,4 @@
-class UserInterface
-{
+class UserInterface {
     constructor(game, hero, images) {
         // constructor properties
         this.game = game;
@@ -40,7 +39,6 @@ class UserInterface
          * if browse press j -> select
          * if select press j -> pay
          */
-
     }
 
     update() {
@@ -100,7 +98,6 @@ class UserInterface
                     this.game.INPUTS["KeyK"] = false;
                     this.game.pause = false;
                     this.game.displayTransaction = false;
-                    this.msgEncoded = [];
                 }
             } else if (this.transactionState === 'select') {
                 if (this.game.INPUTS["KeyK"])   // deselect
@@ -121,8 +118,7 @@ class UserInterface
                     //280, 328, 376, 424, 472
                     var itemIndex = (this.selectionBoxY - 280) / 48;
                     var purchasedItem = this.game.goods[itemIndex];
-
-
+                    this.hero.inventory.push(itemIndex);
 
                 }
             }
@@ -151,6 +147,23 @@ class UserInterface
         return stringEncoded;
     }
 
+    parseTransaction() {
+
+        for (var i=0; i<this.game.goods.length; i++)
+        {
+            var itemName = this.game.goods[i].name;
+            this.game.goods[i].encoded = this.parse(itemName);
+            while (this.game.goods[i].encoded.length < 20) {
+                this.game.goods[i].encoded.push(29);
+            }
+        }
+
+        this.game.newTransaction = false;
+        this.game.pause = true;
+        this.game.displayTransaction = true;
+
+    }
+
     /**
      * Fetches the message from the game engine and encodes the message to indexes of the letters font sprite sheet
      */
@@ -173,6 +186,7 @@ class UserInterface
         this.game.newMsg = false;
         this.game.pause = true;
         this.game.displayMessage = true;
+        console.log("message parsed");
     }
 
     displayMessage() {
@@ -205,23 +219,6 @@ class UserInterface
                 dx += 12;
             }
         }
-    }
-
-    parseTransaction() {
-
-        for (var i=0; i<this.game.goods.length; i++)
-        {
-            var itemName = this.game.goods[i].name.slice(4);
-            this.game.goods[i].encoded = this.parse(itemName);
-            while (this.game.goods[i].encoded.length < 20) {
-                this.game.goods[i].encoded.push(29);
-            }
-        }
-
-        this.game.newTransaction = false;
-        this.game.pause = true;
-        this.game.displayTransaction = true;
-
     }
 
     displayTransaction() {
@@ -269,7 +266,7 @@ class UserInterface
         {
             // IMAGE
             var path = "./res/img/" + this.game.goods[k].name + ".png";
-            var img = this.game.IMAGES_LIST[path];
+            var img = this.game.ASSETS_LIST[path];
             this.ctx.drawImage(img, 0, 0, 30, 30, dx, dy, 48, 48);
             this.ctx.strokeStyle = 'gray';
             this.ctx.strokeRect(dx, dy, 48, 48);
