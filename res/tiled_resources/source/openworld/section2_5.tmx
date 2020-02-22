@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="65">
+ <editorsettings>
+  <export target="../../finished/openworld/section2_5.json" format="soulstain"/>
+ </editorsettings>
+ <tileset firstgid="1" source="../../tilesets/openworld_extra.tsx"/>
+ <tileset firstgid="481" source="../../tilesets/openworld.tsx"/>
+ <tileset firstgid="961" source="../../tilesets/hero.tsx"/>
+ <tileset firstgid="969" source="../../tilesets/fire.tsx"/>
+ <tileset firstgid="973" source="../../tilesets/crab.tsx"/>
+ <tileset firstgid="975" source="../../tilesets/barf_dungeon.tsx"/>
+ <tileset firstgid="1231" source="../../tilesets/ghost.tsx"/>
+ <tileset firstgid="1239" source="../../tilesets/gray_dungeon32x32.tsx"/>
+ <tileset firstgid="1559" source="../../tilesets/green_world.tsx"/>
+ <tileset firstgid="1728" source="../../tilesets/knight.tsx"/>
+ <tileset firstgid="1749" source="../../tilesets/pit.tsx"/>
+ <tileset firstgid="1813" source="../../tilesets/red_dungeon.tsx"/>
+ <tileset firstgid="2083" source="../../tilesets/stone_comfy_house.tsx"/>
+ <tileset firstgid="2167" source="../../tilesets/zombie.tsx"/>
+ <tileset firstgid="2171" source="../../tilesets/openworld_realistic.tsx"/>
+ <layer id="1" name="floor" width="12" height="12">
+  <data encoding="csv">
+482,482,885,885,885,885,885,482,482,482,482,482,
+482,482,885,885,885,885,885,482,482,482,1,1,
+482,482,885,885,885,885,482,482,482,482,1,2,
+482,482,885,885,482,482,885,1,482,482,1,292,
+482,482,482,482,513,482,482,482,482,1,1,292,
+513,513,513,513,513,482,482,482,482,1,1,2,
+513,513,486,482,482,482,482,482,1,1,292,292,
+1,1,482,482,482,482,482,487,1,1,292,292,
+1,1,1,482,482,482,482,1,1,1,292,2,
+1,1,1,1,1,482,1,1,1,1,292,292,
+1,1,1,1,1,1,1,1,1,1,2,292,
+1,1,1,1,1,1,1,1,1,1,292,292
+</data>
+ </layer>
+ <layer id="3" name="level" width="12" height="12">
+  <data encoding="csv">
+696,699,699,699,700,701,701,701,704,0,0,0,
+728,729,730,731,732,733,734,735,736,0,643,643,
+760,761,762,763,764,765,766,767,768,525,643,0,
+792,793,794,795,483,797,798,799,800,0,644,0,
+0,709,709,0,523,0,709,709,0,749,676,0,
+0,0,0,0,0,0,0,0,0,781,708,0,
+0,0,0,0,2553,2554,2555,0,749,644,0,0,
+0,783,0,0,2593,2594,2595,0,0,676,0,0,
+0,0,751,0,2633,2634,2635,749,0,708,0,0,
+0,0,0,750,751,0,749,0,0,644,0,0,
+0,0,0,0,0,750,0,0,0,676,0,0,
+895,896,895,896,895,896,895,896,0,708,0,0
+</data>
+ </layer>
+ <objectgroup id="4" name="entities">
+  <object id="59" type="Portal" x="64" y="54" width="16" height="10">
+   <properties>
+    <property name="TMX" type="int" value="0"/>
+    <property name="TMY" type="int" value="0"/>
+    <property name="destination" value="bluehouse"/>
+    <property name="destinationX" type="int" value="375"/>
+    <property name="destinationY" type="int" value="610"/>
+    <property name="height" type="int" value="10"/>
+    <property name="width" type="int" value="16"/>
+   </properties>
+  </object>
+  <object id="64" gid="2553" x="64" y="112" width="16" height="16"/>
+ </objectgroup>
+ <layer id="8" name="sky" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="7" name="second image" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+863,864,863,864,863,864,863,864,0,0,0,0,
+863,864,863,864,863,864,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="10" name="dividers" width="12" height="12" visible="0" opacity="0.4">
+  <data encoding="csv">
+925,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

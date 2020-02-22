@@ -1,0 +1,23 @@
+{
+	"maps": [
+		{"fileName": "section1_1.tmx", "x": 0, "y": 0},
+		{"fileName": "section1_2.tmx", "x": 192, "y": 0},
+		{"fileName": "section1_3.tmx", "x": 384, "y": 0},
+		{"fileName": "section1_4.tmx", "x": 576, "y": 0},
+		{"fileName": "section1_5.tmx", "x": 768, "y": 0},
+		
+		{"fileName": "section2_1.tmx", "x": 0, "y": 192},
+		{"fileName": "section2_2.tmx", "x": 192, "y": 192},
+		{"fileName": "section2_3.tmx", "x": 384, "y": 192},
+		{"fileName": "section2_4.tmx", "x": 576, "y": 192},
+		{"fileName": "section2_5.tmx", "x": 768, "y": 192},
+		
+		{"fileName": "section3_1.tmx", "x": 0, "y": 384},
+		{"fileName": "section3_2.tmx", "x": 192, "y": 384},
+		{"fileName": "section3_3.tmx", "x": 384, "y": 384},
+		{"fileName": "section3_4.tmx", "x": 576, "y": 384},
+		{"fileName": "section3_5.tmx", "x": 768, "y": 384}
+		
+	],
+	"type": "world"
+}

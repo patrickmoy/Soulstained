@@ -38,7 +38,9 @@ class Hero extends Entity {
         this.hurting = false;
         this.hurtCounter = this.INVINCIBLE_TIME;
 
-        this.sound;
+        this.attackSound = new Howl({src: ['./res/sound/whip.mp3'],
+                                     loop: false,
+                                    volume: 0.2});
 
     }
 
@@ -208,7 +210,14 @@ class Hero extends Entity {
     attack() {
         this.whip.direction = this.direction;
         super.attack();
-        this.sound.play();
+        var sound = new Howl({
+                src: ["./res/sound/whip.mp3"]
+            }
+        );
+        if (!this.attackSound.playing()) {
+            this.attackSound.play();
+        }
+
     }
 
     beingUsed(itemName) {

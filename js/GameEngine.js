@@ -100,6 +100,16 @@ class GameEngine {
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = false; // ! Interesting, when switching to modules, you no longer need self. You can just use this. Why? !
         });
 
+        this.backgroundMusic = new Howl({
+            src: ["./res/sound/hurrianhymn.mp3"],
+            loop: true,
+            volume: 0.6
+            });
+
+        if (!this.backgroundMusic.playing()){
+            this.backgroundMusic.play();
+        }
+        /*
         this.GAME_CONTEXT.canvas.addEventListener("mousedown", e => {
             this.backgroundMusic = new Howl({
                 src: ["./res/sound/silenthill.mp3"],
@@ -107,11 +117,13 @@ class GameEngine {
                 volume: 0.5
             });
             this.HERO.sound = new Howl({
-                src: ["./res/sound/whip.mp3"]
-                }
-            );
+                src: ["./res/sound/whip.mp3"],
+                loop: false,
+                volume: 0.8
+            });
             this.backgroundMusic.play();
         });
+         */
 
         console.log('Game initialized');
     }
