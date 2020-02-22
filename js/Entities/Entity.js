@@ -178,7 +178,6 @@ class Entity {
      *  Directs entity to take damage. Takes 1 damage if no damage is specified.
      */
     takeDamage(damage = 1) {
-        console.log(this.constructor.name + ": damage taken");
         if (this.health - damage < 0) {
             this.health = 0;
         } else {
@@ -231,6 +230,7 @@ class Sign extends Entity {
         super(game, x, y, width, height);
         this.msg = message;
         this.pushMessage = false;
+        this.alive = true;
     }
 
     //override Entity update
@@ -243,5 +243,36 @@ class Sign extends Entity {
                 this.pushMessage = false;
             }
         }
+    }
+}
+
+class NPC extends Entity {
+    constructor(game, x, y, width, height) {
+        super(game, x, y, width, height);
+    }
+}
+
+class Merchant extends NPC {
+    constructor(game, spritesheet, x, y, width, height, items = []) {
+        super(game, x, y, width, height);
+        this.animation = new Animation(spritesheet, this, 30, 45, 1, 1.4, [2], 0);
+        this.items = items;
+        this.pushTransaction = false;
+        this.alive = true;
+    }
+
+    update() {
+        if (this.pushTransaction) {
+            if (!this.game.newTransaction)
+            {
+                this.game.newTransaction = !this.game.newTransaction;
+                this.game.goods = this.items;
+                this.pushTransaction = false;
+            }
+        }
+    }
+
+    draw() {
+        this.animation.drawFrame(this.game.clockTick, this.game.GAME_CONTEXT, this.hitbox.xMin, this.hitbox.yMin, "walking");
     }
 }

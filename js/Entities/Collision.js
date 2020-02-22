@@ -81,7 +81,7 @@ function flagImpassable(collisionPairs) {
             element[1].pushUpdate = false;
         }
 
-        if (element[0] instanceof Sign || element[1] instanceof Sign) {
+        if (element[0] instanceof Sign || element[1] instanceof Sign || element[1] instanceof Merchant || element[0] instanceof Merchant) {
             element[0].pushUpdate = false;
             element[1].pushUpdate = false;
         }
@@ -135,7 +135,7 @@ function flagMessages(collisionPairs) {
             if (element[1] instanceof Hero) {
                 if (element[1].direction === 0) {
                     element[0].pushMessage = true;
-                    console.log("message!")
+                    console.log("message1")
                 }
             }
         }
@@ -143,7 +143,24 @@ function flagMessages(collisionPairs) {
             if (element[1] instanceof Sign) {
                 if (element[0].direction === 0) {
                     element[1].pushMessage = true;
-                    console.log("message");
+                    console.log("message2");
+                }
+            }
+        }
+
+        if (element[0] instanceof Merchant) {
+            if (element[1] instanceof Hero) {
+                if (element[1].direction === 0) {
+                    element[0].pushTransaction = true;
+                    console.log("transaction1");
+                }
+            }
+        }
+        if (element[0] instanceof Hero) {
+            if (element[1] instanceof Merchant) {
+                if (element[0].direction === 0) {
+                    element[1].pushTransaction = true;
+                    console.log("transaction2");
                 }
             }
         }

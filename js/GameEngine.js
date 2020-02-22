@@ -54,6 +54,10 @@ class GameEngine {
         this.newMsg = false;
         this.displayMessage = false;
 
+        this.goods = [];
+        this.newTransaction = false;
+        this.displayTransaction = false;
+
         this.HitQueue = [];
         this.DeathQueue = [];
     }
@@ -152,7 +156,9 @@ class GameEngine {
                 // PAUSE FOR MESSAGE
             } else if (this.inInventory) {
                 // PAUSE FOR INVENTORY
-            } else {
+            } else if (this.displayTransaction) {
+                // PAUSE FOR TRANSACTION
+            }else {
                 // PAUSE FOR PORTAL
                 this.currentWorld.fade();
                 if (!this.pause) {
@@ -161,7 +167,10 @@ class GameEngine {
             }
         } else if (this.newMsg) {
             this.UI.parseMessage(); // encodes string to numeric keys to index letter font sprite sheet
-        } else {
+        } else if (this.newTransaction)
+        {
+            this.UI.parseTransaction();
+        }else {
             // Entities are now movable around the map
             // Reset all behavior flags for all entities. Can be expanded/diversified
             resetFlags(this.currentEntities[0]);
@@ -201,11 +210,14 @@ class GameEngine {
             // Essentially, pushing update for valid movements.
             this.currentEntities[0].forEach(entity => entity.update()); // Updates hero
             // TODO weird bug where the smoke still appears on the enemy's death location when transitioning back into the tilemap. Requires a filter for alive.
+            this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.update());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
             this.currentEntities[3].forEach(projectile => projectile.update());
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
             this.currentEntities[5].forEach(destructible => destructible.update());
 
+
+            // Removes dead things (did this because we did it for every action in update(). Might as well just do it once.)
             this.currentEntities[0] = this.currentEntities[0].filter(hero => hero.alive);
             this.currentEntities[2] = this.currentEntities[2].filter(enemy => enemy.alive);
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => projectile.alive);

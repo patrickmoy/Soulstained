@@ -1,5 +1,5 @@
+console.log("MOSHI")
 const AssetHandler = new AssetManager();
-AssetHandler.queueTextFile("./res/text/test.txt");
 AssetHandler.queueImage("./res/img/worlds/openworld.png");
 AssetHandler.queueImage("./res/img/worlds/openworld2.png");
 AssetHandler.queueImage("./res/img/worlds/cavebasic.png");
@@ -18,8 +18,8 @@ AssetHandler.queueImage("./res/img/whip.png");
 AssetHandler.queueImage("./res/img/crab.png");
 AssetHandler.queueImage("./res/img/FIREARROW.png");
 AssetHandler.queueImage("./res/img/NecroDungeon.png");
-AssetHandler.queueImage("./res/img/shinyHeart.png");
-AssetHandler.queueImage("./res/img/currency.png");
+AssetHandler.queueImage("./res/img/heart.png");
+AssetHandler.queueImage("./res/img/coin.png");
 AssetHandler.queueImage("./res/img/digits.png");
 AssetHandler.queueImage("./res/img/keyJ.png");
 AssetHandler.queueImage("./res/img/keyK.png");
@@ -35,6 +35,12 @@ AssetHandler.queueImage("./res/img/letters.png");
 AssetHandler.queueImage("./res/img/death.png");
 AssetHandler.queueImage('./res/img/heartAnimation.png');
 AssetHandler.queueImage('./res/img/coinAnimation.png');
+AssetHandler.queueImage("./res/img/boots.png");
+AssetHandler.queueImage("./res/img/ring.png");
+AssetHandler.queueImage("./res/img/key.png");
+AssetHandler.queueImage("./res/img/lantern.png");
+AssetHandler.queueImage("./res/img/arrows.png");
+AssetHandler.queueImage("./res/img/merchant.png");
 AssetHandler.queueJSON('./res/jsonderulo/section1_1.json');
 AssetHandler.queueJSON('./res/jsonderulo/section1_2.json');
 AssetHandler.queueJSON('./res/jsonderulo/section1_3.json');
@@ -54,15 +60,11 @@ AssetHandler.queueJSON('./res/jsonderulo/cave_section1_1.json');
 AssetHandler.queueJSON('./res/jsonderulo/bluehouse_section1_1.json');
 AssetHandler.startDownload()
     .then(() => {
-        // var sound = new Howl({
-        //     src: ['./res/sound/war.mp3'],
-        //     loop: true
-        // });
-        // sound.play();
-            const gameCanvas = document.getElementById("gameWorld"); // Get the
-            const gameContext = gameCanvas.getContext("2d");
-            const myGame = new GameEngine(gameContext, AssetHandler.assets);
 
-            myGame.init();
-            myGame.run();
+        const gameCanvas = document.getElementById("gameWorld"); // Get the
+        const gameContext = gameCanvas.getContext("2d");
+        const myGame = new GameEngine(gameContext, AssetHandler.assets);
+
+        myGame.init();
+        myGame.run();
     });

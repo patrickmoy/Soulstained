@@ -1,3 +1,4 @@
+
 /*
  * A single section of the screen that holds entities
  * and collision arrays
@@ -92,6 +93,15 @@ class TileMap {
             else if (entity.type === 'Archer')
             {
                 this.ENEMIES.push(new Sniper(this.game, this.game.ASSETS_LIST['./res/img/sniper.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, entity.customProperties.direction));
+            }
+            else if (entity.type === 'Sign')
+            {
+                this.BLOCKS.push(new Sign(this.game, entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, entity.customProperties.msg));
+            }
+            else if (entity.type === 'merchant')
+            {
+                var items = JSON.parse(entity.customProperties.items);
+                this.BLOCKS.push(new Merchant(this.game, this.game.ASSETS_LIST['./res/img/merchant.png'], entity.x * 60 / 16, entity.y * 60 / 16,60, 60,  items));
             }
         }
     }
