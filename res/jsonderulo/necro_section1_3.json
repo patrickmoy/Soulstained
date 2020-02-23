@@ -1,0 +1,1232 @@
+{
+  "width": 12,
+  "height": 12,
+  "collisionSets": {
+    "stone_comfy_house": {
+      "13": {
+        "width": 4,
+        "height": 9,
+        "x": 7,
+        "y": 0
+      },
+      "14": {
+        "width": 9,
+        "height": 1,
+        "x": 4,
+        "y": 15
+      },
+      "15": {
+        "width": 11,
+        "height": 6,
+        "x": 2,
+        "y": 10
+      },
+      "18": {
+        "width": 8,
+        "height": 5,
+        "x": 8,
+        "y": 11
+      },
+      "19": {
+        "width": 9,
+        "height": 5,
+        "x": 0,
+        "y": 11
+      },
+      "21": {
+        "width": 11,
+        "height": 16,
+        "x": 3,
+        "y": 0
+      },
+      "22": {
+        "width": 11,
+        "height": 16,
+        "x": 2,
+        "y": 0
+      },
+      "23": {
+        "width": 11,
+        "height": 16,
+        "x": 3,
+        "y": 0
+      },
+      "24": {
+        "width": 11,
+        "height": 16,
+        "x": 2,
+        "y": 0
+      },
+      "25": {
+        "width": 9,
+        "height": 16,
+        "x": 7,
+        "y": 0
+      },
+      "26": {
+        "width": 10,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "28": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "29": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "30": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "31": {
+        "width": 16,
+        "height": 5,
+        "x": 0,
+        "y": 11
+      },
+      "32": {
+        "width": 16,
+        "height": 12,
+        "x": 0,
+        "y": 4
+      },
+      "35": {
+        "width": 5,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "37": {
+        "width": 5,
+        "height": 16,
+        "x": 11,
+        "y": 0
+      },
+      "38": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "39": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "45": {
+        "width": 10,
+        "height": 13,
+        "x": 6,
+        "y": 3
+      },
+      "46": {
+        "width": 10,
+        "height": 13,
+        "x": 0,
+        "y": 3
+      },
+      "52": {
+        "width": 10,
+        "height": 14,
+        "x": 6,
+        "y": 0
+      },
+      "53": {
+        "width": 10,
+        "height": 14,
+        "x": 0,
+        "y": 0
+      },
+      "56": {
+        "width": 10,
+        "height": 6,
+        "x": 6,
+        "y": 10
+      },
+      "60": {
+        "width": 10,
+        "height": 6,
+        "x": 0,
+        "y": 10
+      },
+      "63": {
+        "width": 10,
+        "height": 16,
+        "x": 6,
+        "y": 0
+      },
+      "67": {
+        "width": 10,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "70": {
+        "width": 10,
+        "height": 16,
+        "x": 6,
+        "y": 0
+      },
+      "74": {
+        "width": 10,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "77": {
+        "width": 10,
+        "height": 15,
+        "x": 6,
+        "y": 0
+      },
+      "78": {
+        "width": 16,
+        "height": 15,
+        "x": 0,
+        "y": 0
+      },
+      "79": {
+        "width": 16,
+        "height": 15,
+        "x": 0,
+        "y": 0
+      },
+      "80": {
+        "width": 16,
+        "height": 15,
+        "x": 0,
+        "y": 0
+      },
+      "81": {
+        "width": 10,
+        "height": 15,
+        "x": 0,
+        "y": 0
+      }
+    },
+    "dungeon pit": {},
+    "pit": {},
+    "zelda_inspired_dungeon": {
+      "0": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "1": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "2": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "4": {
+        "width": 16,
+        "height": 8,
+        "x": 0,
+        "y": 8
+      },
+      "7": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "8": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "10": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "12": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "14": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "15": {
+        "width": 12,
+        "height": 16,
+        "x": 4,
+        "y": 0
+      },
+      "16": {
+        "width": 12,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "20": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "21": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "22": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "25": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "26": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "27": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "28": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "30": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "31": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "40": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "41": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "46": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "47": {
+        "width": 8,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "49": {
+        "width": 8,
+        "height": 16,
+        "x": 8,
+        "y": 0
+      },
+      "50": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "51": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "56": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "57": {
+        "width": 8,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "58": {
+        "width": 16,
+        "height": 8,
+        "x": 0,
+        "y": 8
+      },
+      "59": {
+        "width": 8,
+        "height": 16,
+        "x": 8,
+        "y": 0
+      },
+      "60": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "61": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "66": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  "calcTiles": [
+    {
+      "name": "stone_comfy_house",
+      "min": 1,
+      "max": 84
+    },
+    {
+      "name": "dungeon pit",
+      "min": 85,
+      "max": 100
+    },
+    {
+      "name": "pit",
+      "min": 101,
+      "max": 164
+    },
+    {
+      "name": "zelda_inspired_dungeon",
+      "min": 165,
+      "max": 244
+    }
+  ],
+  "layers": [
+    [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    [
+      [
+        165,
+        166,
+        166,
+        166,
+        166,
+        193,
+        193,
+        166,
+        166,
+        166,
+        166,
+        167
+      ],
+      [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        177
+      ],
+      [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        177
+      ],
+      [
+        190,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        192
+      ],
+      [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        177
+      ],
+      [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        177
+      ],
+      [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        177
+      ],
+      [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        177
+      ],
+      [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        177
+      ],
+      [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        177
+      ],
+      [
+        175,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        177
+      ],
+      [
+        185,
+        186,
+        186,
+        186,
+        186,
+        0,
+        0,
+        186,
+        186,
+        186,
+        186,
+        187
+      ]
+    ]
+  ],
+  "realEntities": [
+    {
+      "type": "",
+      "originalX": 32,
+      "originalY": 16,
+      "x": 32,
+      "y": 0,
+      "customProperties": {}
+    },
+    {
+      "type": "",
+      "originalX": 144,
+      "originalY": 16,
+      "x": 144,
+      "y": 0,
+      "customProperties": {}
+    },
+    {
+      "type": "",
+      "originalX": 176,
+      "originalY": 64,
+      "x": 176,
+      "y": 48,
+      "customProperties": {}
+    },
+    {
+      "type": "",
+      "originalX": 16,
+      "originalY": 80,
+      "x": 16,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 16,
+      "originalY": 112,
+      "x": 16,
+      "y": 96,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 32,
+      "originalY": 112,
+      "x": 32,
+      "y": 96,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 48,
+      "originalY": 112,
+      "x": 48,
+      "y": 96,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 64,
+      "originalY": 112,
+      "x": 64,
+      "y": 96,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 64,
+      "originalY": 96,
+      "x": 64,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 48,
+      "originalY": 96,
+      "x": 48,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 32,
+      "originalY": 96,
+      "x": 32,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 16,
+      "originalY": 96,
+      "x": 16,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 16,
+      "originalY": 80,
+      "x": 16,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 32,
+      "originalY": 80,
+      "x": 32,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 48,
+      "originalY": 80,
+      "x": 48,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 64,
+      "originalY": 80,
+      "x": 64,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 80,
+      "originalY": 80,
+      "x": 80,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 80,
+      "originalY": 96,
+      "x": 80,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 96,
+      "originalY": 96,
+      "x": 96,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 96,
+      "originalY": 80,
+      "x": 96,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 112,
+      "originalY": 80,
+      "x": 112,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 128,
+      "originalY": 80,
+      "x": 128,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 112,
+      "originalY": 96,
+      "x": 112,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 128,
+      "originalY": 96,
+      "x": 128,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 112,
+      "originalY": 112,
+      "x": 112,
+      "y": 96,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 128,
+      "originalY": 112,
+      "x": 128,
+      "y": 96,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 144,
+      "originalY": 112,
+      "x": 144,
+      "y": 96,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 144,
+      "originalY": 96,
+      "x": 144,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 160,
+      "originalY": 96,
+      "x": 160,
+      "y": 80,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 160,
+      "originalY": 112,
+      "x": 160,
+      "y": 96,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 160,
+      "originalY": 64,
+      "x": 160,
+      "y": 48,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 144,
+      "originalY": 64,
+      "x": 144,
+      "y": 48,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 128,
+      "originalY": 64,
+      "x": 128,
+      "y": 48,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 112,
+      "originalY": 64,
+      "x": 112,
+      "y": 48,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 96,
+      "originalY": 64,
+      "x": 96,
+      "y": 48,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 80,
+      "originalY": 64,
+      "x": 80,
+      "y": 48,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 64,
+      "originalY": 64,
+      "x": 64,
+      "y": 48,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 16,
+      "originalY": 64,
+      "x": 16,
+      "y": 48,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 16,
+      "originalY": 48,
+      "x": 16,
+      "y": 32,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 16,
+      "originalY": 32,
+      "x": 16,
+      "y": 16,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 32,
+      "originalY": 32,
+      "x": 32,
+      "y": 16,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 32,
+      "originalY": 48,
+      "x": 32,
+      "y": 32,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 48,
+      "originalY": 48,
+      "x": 48,
+      "y": 32,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 48,
+      "originalY": 32,
+      "x": 48,
+      "y": 16,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 64,
+      "originalY": 48,
+      "x": 64,
+      "y": 32,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 80,
+      "originalY": 48,
+      "x": 80,
+      "y": 32,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 96,
+      "originalY": 48,
+      "x": 96,
+      "y": 32,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 96,
+      "originalY": 32,
+      "x": 96,
+      "y": 16,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 112,
+      "originalY": 32,
+      "x": 112,
+      "y": 16,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 128,
+      "originalY": 32,
+      "x": 128,
+      "y": 16,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 144,
+      "originalY": 32,
+      "x": 144,
+      "y": 16,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 160,
+      "originalY": 32,
+      "x": 160,
+      "y": 16,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 160,
+      "originalY": 48,
+      "x": 160,
+      "y": 32,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 144,
+      "originalY": 48,
+      "x": 144,
+      "y": 32,
+      "customProperties": {}
+    },
+    {
+      "type": "",
+      "originalX": 80,
+      "originalY": 32,
+      "x": 80,
+      "y": 16,
+      "customProperties": {}
+    }
+  ]
+}

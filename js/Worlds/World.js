@@ -67,6 +67,7 @@ class World {
      * @returns {TileMap} the current tilemap of the world
      */
     getCurrentTileMap() {
+        console.log(this.tileMaps);
         return this.tileMaps[this.section.x][this.section.y];
     }
 
@@ -163,7 +164,50 @@ class NecroDungeon extends World {
         super(game, worldImage, layeredImage, sectionX, sectionY);
 
         // Creates tile maps for the necromancer dungeon world. # x # Tilemaps
-        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST['./res/jsonderulo/testBossRoom.json'])]];
+        this.tileMaps = [
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 5)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 5)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 5)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 5)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 5)])
+            ],
+
+        ];
+
+
     }
 }
 

@@ -1,4 +1,3 @@
-
 /*
  * A single section of the screen that holds entities
  * and collision arrays
@@ -74,6 +73,7 @@ class TileMap {
             else if (entity.type === 'worm')
             {
                 this.WORLDANIMATIONS.push(new WorldAnimation(this.game, this.game.ASSETS_LIST['./res/img/worm.png'], entity.x * 60 / 16, entity.y * 60 / 16, 2.3, [3]))
+            }
             else if (entity.type === 'Mage') {
                 this.ENEMIES.push(new Mage(this.game, this.game.ASSETS_LIST['./res/img/mage.png'], 100, 100, 56, 56));
             } else if (entity.type === 'Necromancer') {
