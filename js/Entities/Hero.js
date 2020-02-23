@@ -36,6 +36,12 @@ class Hero extends Entity {
         this.hurting = false;
         this.hurtCounter = this.INVINCIBLE_TIME;
         this.attackSound = new Howl({src: ['./res/sound/war.mp3']});
+        this.key = {
+        };
+        this.bossKey = {
+        };
+        this.smallKeyCounter = 0;
+        this.bossKeyCounter = 0;
 
     }
 
@@ -43,6 +49,7 @@ class Hero extends Entity {
      * Predicts future hitbox based on inputs.
      */
     preUpdate() {
+
         if (!this.game.transition) {
             this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
             if (this.jumping) {
@@ -214,5 +221,29 @@ class Hero extends Entity {
 
     beingUsed(itemName) {
         return (this.equipJ === itemName && this.game.INPUTS["KeyJ"]) || (this.equipK === itemName && this.game.INPUTS["KeyK"]);
+    }
+
+    checkSmallKeyInventory() {
+
+        let smallKeyCount = Object.keys(this.key).length;
+        console.log(smallKeyCount);
+
+    }
+    checkBossKeyInventory() {
+
+        let bossKeyCount = Object.keys(this.bossKey).length;
+        console.log(bossKeyCount);
+    }
+    acquireSmallKey() {
+
+        this.key[this.smallKeyCounter] = 'key';
+        this.smallKeyCounter++;
+
+    }
+    acquireBossKey() {
+
+        this.key[this.bossKeyCounter] = 'Bkey';
+        this.bossKeyCounter++;
+
     }
 }

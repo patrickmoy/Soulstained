@@ -233,7 +233,8 @@ class Zombie extends Enemy {
     }
 }
 
-class Necromancer extends Enemy {
+class Necromancer
+    extends Enemy {
 
     constructor(game, spritesheet, x, y, width, height, array) {
         super(game, x, y, width, height, 2);
@@ -256,12 +257,12 @@ class Necromancer extends Enemy {
         this.totalSpawned = 0; // Counter for total number of spawned knights.
         this.teleportAnimation = false;
         this.teleportMove = false;
-        //  this.condition = false;
 
     }
 
     preUpdate() {
         this.count += this.game.clockTick;
+        this.actionElapsedTime += this.game.clockTick;
 
         if (this.knightSpawned === 0) {
             this.spawnKnight();
@@ -285,10 +286,10 @@ class Necromancer extends Enemy {
         } else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
             this.count = 0;
 
-            if (this.attackCount < 2) {
+            if (this.attackCount < 5) {
                 this.fireBallAttack();
                 this.attackCount++;
-            } else if (this.attackCount === 2) {
+            } else if (this.attackCount === 4) {
 
                 this.teleportAnimation = true;
                 this.checkKnightCount();
@@ -327,12 +328,6 @@ class Necromancer extends Enemy {
         return this.futureHitbox.xMin === 300 && this.futureHitbox.yMin === 100;
     }
 
-// pickSpot(currentSpot) {
-//     let validSpots = [0, 1, 2, 3];
-//     validSpots.splice(currentSpot, 1);
-//     return validSpots[Math.floor(Math.random() * 4)];
-//
-// }
 //Constructs fireball entity. (right now all attacks are randomly generated)
     fireBallAttack() {
 
@@ -386,16 +381,6 @@ class Necromancer extends Enemy {
         }
     }
 
-// checkProjectileLocation() {
-//     if (this.fireball1.projectileNotOnScreen() || this.fireball2.projectileNotOnScreen() || this.fireball3.projectileNotOnScreen()) {
-//         // this.fireball1.resetFireBallPosition(this.tempCoordX, this.tempCoordY, this.futureHitbox.xMin, this.futureHitbox.yMax);
-//         // this.fireball2.resetFireBallPosition(this.tempCoordX, this.tempCoordY, this.futureHitbox.xMin, this.futureHitbox.yMax);
-//         // this.fireball3.resetFireBallPosition(this.tempCoordX, this.tempCoordY, this.futureHitbox.xMin, this.futureHitbox.yMax);
-//         this.clear = true;
-//     }
-
-//}
-
 }
 
 class Knight
@@ -407,39 +392,16 @@ class Knight
         this.context = game.GAME_CONTEXT;
         this.speed = 100;
         this.count = 0;
-        this.detectRange = 200;
+        this.detectRange = 250;
         this.alive = true;
 
     }
 
     preUpdate() {
         // Detects if Hero is near the zombie.
-        if (this.checkLOS()) {
+        if (this.LOSSearch(200)) {
             // Actually perform the zombie movement.
-            const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
-            const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
-            const knightPosX = (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2; // Gets the knight's center x
-            const knightPosY = (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2; // Gets the knight's center y
-            // Difference between hero and zombie in x direction
-            var diffX = heroPosX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;
-            //Difference between hero and knight in y direction
-            var diffY = heroPosY - (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2;
-            if (diffX < 0) {
-                this.futureHitbox.xMin -= this.game.clockTick * this.speed;
-                this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
-            }
-            if (diffX > 0) {
-                this.futureHitbox.xMin += this.game.clockTick * this.speed;
-                this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
-            }
-            if (diffY < 0) {
-                this.futureHitbox.yMin -= this.game.clockTick * this.speed;
-                this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
-            }
-            if (diffY > 0) {
-                this.futureHitbox.yMin += this.game.clockTick * this.speed;
-                this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
-            }
+            this.followHero();
             this.movementCooldown = 5;
         } else {
             this.randomWalk(50, this.movementCooldown);
@@ -448,183 +410,101 @@ class Knight
     }
 
     /**
-     * Checks the line of sight of the entity with the hero.
-     * @return {boolean} true if the enemy can see the hero within the detect range distance; false otherwise
-     */
-    checkLOS() {
-        const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
-        const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
-        const knightPosX = (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2; // Gets the knights's center x
-        const knightPosY = (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2; // Gets the knights's center y
-        // Detects if the player is within the detection range of the zombie
-        const isInRadius = heroPosX > knightPosX - this.detectRange && heroPosX < knightPosX + this.detectRange &&
-            heroPosY > knightPosY - this.detectRange && heroPosY < knightPosY + this.detectRange;
-
-        if (isInRadius) {
-
-            // Original future hitbox to reset future hitbox
-            const originalFutureHitbox = {
-                xMin: this.futureHitbox.xMin, xMax: this.futureHitbox.xMax,
-                yMin: this.futureHitbox.yMin, yMax: this.futureHitbox.yMax
-            };
-            var canMove = this.canWalkHere();
-            while (!entitiesCollided(this.game.HERO, this) && canMove) {
-                // Difference between hero and knight in x direction
-                var diffX = heroPosX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;
-                //Difference between hero and knight in y direction
-                var diffY = heroPosY - (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2;
-                // Knight is to the right of hero so move left
-                if (diffX < 0) {
-                    this.futureHitbox.xMin -= this.game.clockTick * this.speed;
-                    this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
-                }
-                // Knight is to the left of hero so move right
-                if (diffX > 0) {
-                    this.futureHitbox.xMin += this.game.clockTick * this.speed;
-                    this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
-                }
-                // Knight is below the hero so move up
-                if (diffY < 0) {
-                    this.futureHitbox.yMin -= this.game.clockTick * this.speed;
-                    this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
-                }
-                // Knight is above the hero so move down
-                if (diffY > 0) {
-                    this.futureHitbox.yMin += this.game.clockTick * this.speed;
-                    this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
-                }
-                // Checks if the movement was valid with walls
-                canMove = this.canWalkHere();
-            }
-            // Resets the zombie's hitbox
-            this.futureHitbox.xMin = originalFutureHitbox.xMin;
-            this.futureHitbox.xMax = originalFutureHitbox.xMax;
-            this.futureHitbox.yMin = originalFutureHitbox.yMin;
-            this.futureHitbox.yMax = originalFutureHitbox.yMax;
-            return canMove;
-        }
-        return false;
-    }
-
-    /**
      * Checks if the zombie can move to the new position without conflict with the blocks
      * @returns {boolean} true if zombie can move without colliding with blocks; false otherwise
      */
     canWalkHere() {
         var blocksWithEnemy = this.game.currentEntities[1]; // Get the blocks
-        blocksWithEnemy.push(this); // Add the knight to the blocks
-        var collide = detectCollide([this], this.game.currentEntities[1]); // Check if there's any collision
-        blocksWithEnemy.pop(); // Remove knight from blocks
+        //Refactor given that detectCollide function takes two lists as arguments.
+        //blocksWithEnemy.push(this); // Add the zombie to the blocks
+        var collide = detectCollide(blocksWithEnemy, [this]); // Check if there's any collision
+        // locksWithEnemy.pop(); // Remove zombie from blocks
         return collide.length === 0; // Return if there was collision or not.
-
     }
 
     draw() {
-        this.animation.drawFrame(this.game.clockTick, this.context,
-            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
+        if (!this.game.pause) {
+            this.context.beginPath();
+            this.context.rect(this.x, this.y, this.width, this.height);
+            this.context.stroke();
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status);
+        }
     }
-
-    // pickDirection() {
-    //     this.direction = Math.floor(Math.random() * Math.floor(5));
-    // }
-
 
 }
 
-class Ghost extends Enemy {
-    constructor(game, spritesheet, x, y, width, height) {
-        super(game, x, y, width, height);
-    }
-
-    preUpdate() {
-
-    }
-
-    update() {
-    }
-}
 
 class Sniper extends Enemy {
 
     constructor(game, spritesheet, x, y, width, height, position) {
         super(game, x, y, width, height, 2);
         this.alive = true;
-        this.animation = new Animation(spritesheet, this, 20, 19, .1, 4, [5], 0);
+        this.animation = new Animation(spritesheet, this, 14, 17, .3, 5, [5], 1);
         this.context = game.GAME_CONTEXT;
         this.position = position; // Variable to hold the direction the sniper is pointing.
-        this.detectRange = 200;
-        this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, this.position);
-        this.arrow.hitbox.xMin = Infinity;
-        this.arrow.hitbox.xMax = Infinity;
-        this.arrow.hitbox.yMin = Infinity;
-        this.arrow.hitbox.yMax = Infinity;
-        this.arrow.futureHitbox.xMin = Infinity;
-        this.arrow.futureHitbox.xMax = Infinity;
-        this.arrow.futureHitbox.yMin = Infinity;
-        this.arrow.futureHitbox.yMax = Infinity;
-        // this.game.currentEntities[3].push(this.arrow);
-
+        this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * 2), this.futureHitbox.yMin, this.position);
+        //this.game.currentEntities[3].push(this.arrow);
+        this.firstArrow = true;
     }
+
 
     preUpdate() {
 
-        this.pickAttack(this.position);
 
-    }
+        if (this.arrow.projectileNotOnScreen() || this.firstArrow) {
 
-    pickAttack(position) {
-        if (position === 'SOUTH') {
-            if (this.arrow.projectileNotOnScreen()) {
+            if (this.position === "SOUTH") {
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * 1.5), this.futureHitbox.yMin, this.position);
+                this.game.currentEntities[3].push(this.arrow);
 
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
+            } else if (this.position === "NORTH") {
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width), this.futureHitbox.yMin - (this.height * 2), this.position);
+                this.game.currentEntities[3].push(this.arrow);
+
+            } else if (this.position === "EAST") {
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin + (this.width), this.futureHitbox.yMin - this.height, this.position);
+                this.game.currentEntities[3].push(this.arrow);
+
+            } else if (this.position === "WEST") {
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * 3), this.futureHitbox.yMin - (this.height), this.position);
                 this.game.currentEntities[3].push(this.arrow);
             }
-        } else if (position === "NORTH") {
-            if (this.arrow.projectileNotOnScreen()) {
-
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
-                this.game.currentEntities[3].push(this.arrow);
-            }
-        } else if (position === "EAST") {
-            if (this.arrow.projectileNotOnScreen()) {
-
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
-                this.game.currentEntities[3].push(this.arrow);
-            }
-        } else if (position === "WEST") {
-            if (this.arrow.projectileNotOnScreen()) {
-
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
-                this.game.currentEntities[3].push(this.arrow);
-            }
+            this.firstArrow = false;
         }
+
     }
 
     draw() {
 
-        if (!this.game.pause) {
+
+        if (!this.game.pause && this.position === "NORTH") {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
+        } else if (!this.game.pause && this.position === "EAST") {
+
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 2);
+        } else if (!this.game.pause && this.position === "WEST") {
+
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 3);
+        } else if (!this.game.pause && this.position === "SOUTH") {
+
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
         }
     }
 
-    checkLOS() {
-        const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
-        const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
-        const sniperPosX = (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2; // Gets the knights's center x
-        const sniperPosY = (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2; // Gets the knights's center y
-        // Detects if the player is within the detection range.
-        const isInRadius = heroPosX > sniperPosX - this.detectRange && heroPosX < sniperPosX + this.detectRange &&
-            heroPosY > sniperPosY - this.detectRange && heroPosY < sniperPosY + this.detectRange;
-
-        return isInRadius;
-
-    }
 }
 
-class Beast extends Enemy {
+class Beast
+    extends Enemy {
 
     constructor(game, spritesheet, x, y, width, height, position) {
         super(game, x, y, width, height, 2);
@@ -641,8 +521,7 @@ class Beast extends Enemy {
     preUpdate() {
 
         this.selectDirection(this.position);
-
-        this.checkCollision();
+        this.checkWallCollision();
 
         if (this.reverseDirection === true) {
 
@@ -653,7 +532,7 @@ class Beast extends Enemy {
 
             } else if (this.position === "WEST") {
 
-                this.position = "EAST"
+                this.position = "EAST";
                 this.reverseDirection = false;
             } else if (this.position === "SOUTH") {
 
@@ -661,7 +540,7 @@ class Beast extends Enemy {
                 this.reverseDirection = false;
             } else if (this.position === "NORTH") {
 
-                this.position = "SOUTH"
+                this.position = "SOUTH";
                 this.reverseDirection = false;
             }
 
@@ -691,12 +570,10 @@ class Beast extends Enemy {
         }
     }
 
-    checkCollision() {
+    checkWallCollision() {
 
         let wallCollision = detectCollide(this.entityArray, this.game.currentEntities[1]);
-
         if (wallCollision.length >= 1) {
-
             this.reverseDirection = true;
         }
 
@@ -758,8 +635,6 @@ class Mage extends Enemy {
         // this.detectRange = 200;
         this.count = 0;
         this.startPull = false;
-
-
     }
 
     preUpdate() {
@@ -773,9 +648,7 @@ class Mage extends Enemy {
                 this.count = 0;
                 this.startPull = false;
             }
-
         }
-
     }
 
     draw() {
@@ -783,8 +656,6 @@ class Mage extends Enemy {
         this.animation.drawFrame(this.game.clockTick, this.context,
             this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
             this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
-
-
     }
 
     pullAttack() {
@@ -795,6 +666,3 @@ class Mage extends Enemy {
     }
 
 }
-
-
-
