@@ -661,7 +661,7 @@ class Mage extends Enemy {
     pullAttack() {
 
         if (this.startPull === true) {
-            this.game.HERO.gravitate(this.futureHitbox.xMin, this.futureHitbox.yMin, 150);
+            this.game.HERO.gravitate(this.futureHitbox.xMin, this.futureHitbox.yMin, 125);
         }
     }
 
