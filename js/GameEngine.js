@@ -185,13 +185,15 @@ class GameEngine {
             this.currentEntities[2].forEach(enemy => enemy.preUpdate());
             this.currentEntities[3].forEach(projectile => projectile.preUpdate());
 
-            const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2]);
+            const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2]).filter(entity => entity.alive);
 
             // Hero and enemies vs. blocks
             const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1].concat(this.currentEntities[4], this.currentEntities[5]));
 
             // Weapon vs enemies causes momentary flinching
-            const flinchEffect = detectCollide(this.currentEntities[0], this.currentEntities[2]);
+            const flinchEffect = detectCollide(this.currentEntities[0].filter(entity => entity.active), this.currentEntities[2]);
+
+            const projectileCollision = detectCollide(this.currentEntities[0].filter(entity => entity.alive), this.currentEntities[3].filter(entity => entity.alive));
 
             // Hero vs enemies
             const damageCollisions = detectCollide(this.currentEntities[0],

@@ -22,8 +22,7 @@ class TileMap {
         this.createEntities(); // Creates the tiles for collision and passes it into entities
     }
 
-    createEntities()
-    {
+    createEntities() {
         // Creates all the collision walls
         for (var i = 0; i < this.info.layers.length; i++)
         {
@@ -40,7 +39,7 @@ class TileMap {
                             if (calculationTiles.min <= currentID && currentID <= calculationTiles.max)
                             {
                                 var collisionInfo = this.info.collisionSets[calculationTiles.name][currentID - calculationTiles.min];
-                                this.BLOCKS.push(new InvisibleBlock(this.game, k*60 + 3.75 * collisionInfo.x, j*60 + 3.75 *
+                                this.BLOCKS.push(new InvisibleBlock(this.game, k * 60 + 3.75 * collisionInfo.x, j * 60 + 3.75 *
                                     collisionInfo.y, collisionInfo.width * 3.75, collisionInfo.height * 3.75));
                             }
                         }
@@ -48,8 +47,7 @@ class TileMap {
                 }
             }
         }
-        for (var i = 0; i < this.info.realEntities.length; i++)
-        {
+        for (var i = 0; i < this.info.realEntities.length; i++) {
             var entity = this.info.realEntities[i];
             if (entity.type === 'Crab')
             {
@@ -76,7 +74,16 @@ class TileMap {
             else if (entity.type === 'worm')
             {
                 this.WORLDANIMATIONS.push(new WorldAnimation(this.game, this.game.ASSETS_LIST['./res/img/worm.png'], entity.x * 60 / 16, entity.y * 60 / 16, 2.3, [3]))
-            }
+            else if (entity.type === 'Mage') {
+                this.ENEMIES.push(new Mage(this.game, this.game.ASSETS_LIST['./res/img/mage.png'], 100, 100, 56, 56));
+            } else if (entity.type === 'Necromancer') {
+                    this.ENEMIES.push(new Necromancer(this.game, this.game.ASSETS_LIST['./res/img/necro.png'], 300, 100, 56, 56, this.ENEMIES));
+                }
+                else if (entity.type === 'Beast') {
+                    this.ENEMIES.push(new Beast(this.game, this.game.ASSETS_LIST['./res/img/beast.png'], 600, 300, 56, 56, "WEST"));
+                }
+
+
             else if (entity.type === 'Flower')
             {
                 this.WORLDANIMATIONS.push(new WorldAnimation(this.game, this.game.ASSETS_LIST['./res/img/flower.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60 / 16, [4]))
@@ -103,6 +110,7 @@ class TileMap {
                 var items = JSON.parse(entity.customProperties.items);
                 this.BLOCKS.push(new Merchant(this.game, this.game.ASSETS_LIST['./res/img/merchant.png'], entity.x * 60 / 16, entity.y * 60 / 16,60, 60,  items));
             }
+
         }
     }
 }

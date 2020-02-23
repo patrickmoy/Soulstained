@@ -193,6 +193,7 @@ class Zombie extends Enemy {
         this.pushUpdate = false;
         this.directionTime = 0;
         this.direction = Math.floor(Math.random() * 4.5);
+        this.detectRange = 200; // The range for the zombie to detect the hero
     }
 
     preUpdate() {
@@ -239,7 +240,7 @@ class Necromancer extends Enemy {
         this.tempCoordX = this.futureHitbox.xMin; // Stores the x-coord beneath the necormancer.
         this.tempCoordY = this.futureHitbox.yMin; // Stores the y-coord beneath the necromancer.
         this.alive = true;
-        this.animation = new Animation(spritesheet, this, 66, 60, .17, 3, [16], 0); // Necromancer sprite
+        this.animation = new Animation(spritesheet, this, 191, 157, .1, 1, [13], 1); // Necromancer sprite
         this.context = game.GAME_CONTEXT;
         this.enemiesArray = array; // Passing in ENEMIES array.
         this.location = { //Necromancer teleport locations.
@@ -248,99 +249,100 @@ class Necromancer extends Enemy {
             2: [50, 100],
             3: [500, 100]
         };
-        this.knightCount = 0; // Counter used in for loop to generate sequential knight output.
-        this.knightSpawned = 0; // Counter used to reset conditional.
+        this.knightCount = 1; // Counter to generate how many knights per respawn.
+        this.knightSpawned = 0; // Counter number of spawned knights on screen, used to reset conditional.
         this.count = 0; // Stores the elapsed game clock time
         this.attackCount = 0; // Use to count the completion of attack cycles.
         this.totalSpawned = 0; // Counter for total number of spawned knights.
-
+        this.teleportAnimation = false;
+        this.teleportMove = false;
+        //  this.condition = false;
 
     }
 
     preUpdate() {
-
         this.count += this.game.clockTick;
 
-        if (this.count >= 3.5) { // HARD CODED VALUE FOR NOW... NOT FINAL
-
-            if (this.attackCount < 4) {
-                this.fireBallAttack();
-            }
-            this.count = 0;
-            this.attackCount++;
-
-            if (this.attackCount === 4) {
-
-                this.checkKnightCount();
-                // this.spot = this.pickSpot(this.spot);
-                let spot = Math.floor(Math.random() * 4);
-                this.futureHitbox.xMin = this.location[spot][0]; // teleports necromancer to this x coordinate.
-                this.futureHitbox.yMin = this.location[spot][1]; // teleports necromancer to this y coordinate.
-                this.tempCoordX = this.location[spot][0]; // Returns the x - coordinate to be used to determine where to spawn new projectile after teleport.
-                this.tempCoordY = this.location[spot][1]; // Returns the y - coordinate to be used to determine where to spawn new projectile after teleport.
-
-                if (this.knightSpawned === 0) {
-
-                    this.spawnKnight();
-
-                    if (spot === 0) {
-
-                        this.attackAndSet();
-
-                    } else if (spot === 1) {
-
-                        this.attackAndSet();
-
-                    } else if (spot === 2) {
-
-                        this.attackAndSet();
-
-                    } else if (spot === 3) {
-
-                        this.attackAndSet();
-
-                    }
-                }
-                    // else if(this.knightSpawned === -1) {
-                    //
-                    //     this.futureHitbox.xMin = 300;
-                    //     this.futureHitbox.yMin = 100;
-                // }
-                else {
-
-                    this.attackCount = 0;
-                }
+        if (this.knightSpawned === 0) {
+            this.spawnKnight();
+            if (this.knightSpawned === -1) {
+                this.futureHitbox.xMin = 300;
+                this.futureHitbox.yMin = 100;
+                this.teleportMove = false;
             }
         }
+        if (this.teleportMove === true) {
 
+            this.teleportAnimation = false;
+            this.teleportMove = false;
+            let spot = Math.floor(Math.random() * 4);
+            this.futureHitbox.xMin = this.location[spot][0]; // teleports necromancer to this x coordinate.
+            this.futureHitbox.yMin = this.location[spot][1]; // teleports necromancer to this y coordinate.
+            this.tempCoordX = this.location[spot][0]; // Returns the x - coordinate to be used to determine where to spawn new projectile after teleport.
+            this.tempCoordY = this.location[spot][1]; // Returns the y - coordinate to be used to determine where to spawn new projectile after teleport.
+            this.attackAndSet();
+
+        } else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
+            this.count = 0;
+
+            if (this.attackCount < 2) {
+                this.fireBallAttack();
+                this.attackCount++;
+            } else if (this.attackCount === 2) {
+
+                this.teleportAnimation = true;
+                this.checkKnightCount();
+                this.attackCount = 0;
+            }
+        }
     }
 
     draw() {
 
-        if (this.knightSpawned !== -1 || !this.game.pause) {
+        if (this.teleportAnimation === true && this.actionElapsedTime <= 1.3) {
+            this.actionElapsedTime += this.game.clockTick;
+            if (this.actionElapsedTime >= 1.3) {
+                this.teleportMove = true;
+                this.actionElapsedTime = 0;
+            } else {
+                this.animation.drawFrame(this.game.clockTick, this.context,
+                    this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                    this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
+            }
+        } else if (this.knightSpawned !== -1) {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 2);
+        } else if (this.knightSpawned === -1 && this.isReadyToDie()) {
+
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
         }
+
         // else { //draw necromancer on knees}
     }
 
-    // pickSpot(currentSpot) {
-    //     let validSpots = [0, 1, 2, 3];
-    //     validSpots.splice(currentSpot, 1);
-    //     return validSpots[Math.floor(Math.random() * 4)];
-    //
-    // }
-    //Constructs fireball entity. (right now all attacks are randomly generated)
+    isReadyToDie() {
+        return this.futureHitbox.xMin === 300 && this.futureHitbox.yMin === 100;
+    }
+
+// pickSpot(currentSpot) {
+//     let validSpots = [0, 1, 2, 3];
+//     validSpots.splice(currentSpot, 1);
+//     return validSpots[Math.floor(Math.random() * 4)];
+//
+// }
+//Constructs fireball entity. (right now all attacks are randomly generated)
     fireBallAttack() {
 
         if (this.game.currentEntities[3].every(projectile => projectile.projectileNotOnScreen() || this.game.currentEntities[3].every(projectile => projectile.alive === false))) {
             // if (this.game.currentEntities[3].length <= 3 || this.game.currentEntities[3].filter(anyFireball => anyFireball.alive === false || this.game.currentEntities[3].length <= 3)) {
             let primary = Math.floor(Math.random() * 4);
             let secondary = Math.floor(Math.random() * 2);
-            this.fireball1 = new FireballProjectile(this.game, this.game.IMAGES_LIST["./res/img/fireball.png"], this.futureHitbox.xMin, this.futureHitbox.yMin + this.height, 'down', primary, secondary);
-            this.fireball2 = new FireballProjectile(this.game, this.game.IMAGES_LIST["./res/img/fireball.png"], this.futureHitbox.xMin, this.futureHitbox.yMin + this.height, 'left', primary, secondary);
-            this.fireball3 = new FireballProjectile(this.game, this.game.IMAGES_LIST["./res/img/fireball.png"], this.futureHitbox.xMin, this.futureHitbox.yMin + this.height, 'right', primary, secondary);
+            this.fireball1 = new FireballProjectile(this.game, this.game.ASSETS_LIST["./res/img/fireball.png"], this.futureHitbox.xMin, this.futureHitbox.yMin + this.height, 'down', primary, secondary);
+            this.fireball2 = new FireballProjectile(this.game, this.game.ASSETS_LIST["./res/img/fireball.png"], this.futureHitbox.xMin, this.futureHitbox.yMin + this.height, 'left', primary, secondary);
+            this.fireball3 = new FireballProjectile(this.game, this.game.ASSETS_LIST["./res/img/fireball.png"], this.futureHitbox.xMin, this.futureHitbox.yMin + this.height, 'right', primary, secondary);
 
             this.game.currentEntities[3].push(this.fireball1);
             this.game.currentEntities[3].push(this.fireball2);
@@ -358,21 +360,18 @@ class Necromancer extends Enemy {
                 let min = 300;
                 let max = 600;
                 let rand2 = Math.random() * (+max - +min) + +min;
-                let knight = new Knight(this.game, this.game.IMAGES_LIST["./res/img/knight.png"], rand, rand2, 60, 60);
+                let knight = new Knight(this.game, this.game.ASSETS_LIST["./res/img/knight.png"], rand, rand2, 60, 60);
                 this.enemiesArray.push(knight);
                 this.knightSpawned++;
                 this.totalSpawned++;
             }
         } else {
-            this.knightSpawned = -1
+            this.knightSpawned = -1;
         }
-        ;
-
     }
 
 //Deploy attack and reset counters.
     attackAndSet() {
-
         this.fireBallAttack();
         this.attackCount = 0;
         this.count = 0;
@@ -380,24 +379,22 @@ class Necromancer extends Enemy {
 
 //Compares the total number of spawned knights against the number in enemies array.  If they are equal then resets the update conditional to spawn more.
     checkKnightCount() {
-
-        let filtered = this.enemiesArray.filter(count => count instanceof Knight && count.alive === false);
-        if ((filtered.length) === this.totalSpawned) {
+        let deadKnights = this.enemiesArray.filter(enemy => enemy instanceof Knight && enemy.alive === false);
+        if ((deadKnights.length) === this.totalSpawned) {
             this.knightSpawned = 0;
             this.knightCount++;
         }
-
     }
 
-    // checkProjectileLocation() {
-    //     if (this.fireball1.projectileNotOnScreen() || this.fireball2.projectileNotOnScreen() || this.fireball3.projectileNotOnScreen()) {
-    //         // this.fireball1.resetFireBallPosition(this.tempCoordX, this.tempCoordY, this.futureHitbox.xMin, this.futureHitbox.yMax);
-    //         // this.fireball2.resetFireBallPosition(this.tempCoordX, this.tempCoordY, this.futureHitbox.xMin, this.futureHitbox.yMax);
-    //         // this.fireball3.resetFireBallPosition(this.tempCoordX, this.tempCoordY, this.futureHitbox.xMin, this.futureHitbox.yMax);
-    //         this.clear = true;
-    //     }
+// checkProjectileLocation() {
+//     if (this.fireball1.projectileNotOnScreen() || this.fireball2.projectileNotOnScreen() || this.fireball3.projectileNotOnScreen()) {
+//         // this.fireball1.resetFireBallPosition(this.tempCoordX, this.tempCoordY, this.futureHitbox.xMin, this.futureHitbox.yMax);
+//         // this.fireball2.resetFireBallPosition(this.tempCoordX, this.tempCoordY, this.futureHitbox.xMin, this.futureHitbox.yMax);
+//         // this.fireball3.resetFireBallPosition(this.tempCoordX, this.tempCoordY, this.futureHitbox.xMin, this.futureHitbox.yMax);
+//         this.clear = true;
+//     }
 
-    //}
+//}
 
 }
 
@@ -516,7 +513,7 @@ class Knight
     canWalkHere() {
         var blocksWithEnemy = this.game.currentEntities[1]; // Get the blocks
         blocksWithEnemy.push(this); // Add the knight to the blocks
-        var collide = detectCollide(blocksWithEnemy); // Check if there's any collision
+        var collide = detectCollide([this], this.game.currentEntities[1]); // Check if there's any collision
         blocksWithEnemy.pop(); // Remove knight from blocks
         return collide.length === 0; // Return if there was collision or not.
 
@@ -550,7 +547,7 @@ class Ghost extends Enemy {
 
 class Sniper extends Enemy {
 
-    constructor(game, spritesheet, x, y, width, height, position = "SOUTH") {
+    constructor(game, spritesheet, x, y, width, height, position) {
         super(game, x, y, width, height, 2);
         this.alive = true;
         this.animation = new Animation(spritesheet, this, 20, 19, .1, 4, [5], 0);
@@ -579,6 +576,7 @@ class Sniper extends Enemy {
     pickAttack(position) {
         if (position === 'SOUTH') {
             if (this.arrow.projectileNotOnScreen()) {
+
                 this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin, this.futureHitbox.yMin, position);
                 this.game.currentEntities[3].push(this.arrow);
             }
@@ -622,6 +620,181 @@ class Sniper extends Enemy {
             heroPosY > sniperPosY - this.detectRange && heroPosY < sniperPosY + this.detectRange;
 
         return isInRadius;
+
     }
 }
+
+class Beast extends Enemy {
+
+    constructor(game, spritesheet, x, y, width, height, position) {
+        super(game, x, y, width, height, 2);
+        this.alive = true;
+        this.animation = new Animation(spritesheet, this, 67, 58, .2, 1.5, [4], 0);
+        this.context = game.GAME_CONTEXT;
+        this.position = position; // Variable to hold the direction the sniper is pointing.
+        this.detectRange = 200;
+        this.speed = 500;
+        this.reverseDirection = false;
+        this.entityArray = [this];
+    }
+
+    preUpdate() {
+
+        this.selectDirection(this.position);
+
+        this.checkCollision();
+
+        if (this.reverseDirection === true) {
+
+            if (this.position === "EAST") {
+
+                this.position = "WEST";
+                this.reverseDirection = false;
+
+            } else if (this.position === "WEST") {
+
+                this.position = "EAST"
+                this.reverseDirection = false;
+            } else if (this.position === "SOUTH") {
+
+                this.position = "NORTH";
+                this.reverseDirection = false;
+            } else if (this.position === "NORTH") {
+
+                this.position = "SOUTH"
+                this.reverseDirection = false;
+            }
+
+        }
+    }
+
+    draw() {
+        if (this.position === 'SOUTH') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 8);
+        }
+        if (this.position === 'NORTH') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 5);
+        }
+        if (this.position === 'EAST') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 4);
+        }
+        if (this.position === 'WEST') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
+        }
+    }
+
+    checkCollision() {
+
+        let wallCollision = detectCollide(this.entityArray, this.game.currentEntities[1]);
+
+        if (wallCollision.length >= 1) {
+
+            this.reverseDirection = true;
+        }
+
+    }
+
+    south() {
+
+        this.futureHitbox.yMin += this.game.clockTick * this.speed;
+        this.futureHitbox.yMax += this.game.clockTick * this.speed;
+    }
+
+    north() {
+
+        this.futureHitbox.yMin -= this.game.clockTick * this.speed;
+        this.futureHitbox.yMax -= this.game.clockTick * this.speed;
+    }
+
+    east() {
+
+        this.futureHitbox.xMin += this.game.clockTick * this.speed;
+        this.futureHitbox.xMax += this.game.clockTick * this.speed;
+    }
+
+    west() {
+
+        this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+        this.futureHitbox.xMax -= this.game.clockTick * this.speed;
+    }
+
+    selectDirection(direction) {
+
+        switch (direction) {
+            case 'SOUTH':
+                this.south();
+                break;
+
+            case 'NORTH':
+                this.north();
+                break;
+
+            case 'EAST':
+                this.east();
+                break;
+            case 'WEST':
+                this.west();
+                break;
+        }
+
+    }
+}
+
+class Mage extends Enemy {
+
+    constructor(game, spritesheet, x, y, width, height) {
+        super(game, x, y, width, height, 2);
+        this.alive = true;
+        this.animation = new Animation(spritesheet, this, 18, 25, .25, 4, [12], 0);
+        this.context = game.GAME_CONTEXT;
+        // this.detectRange = 200;
+        this.count = 0;
+        this.startPull = false;
+
+
+    }
+
+    preUpdate() {
+
+        this.count += this.game.clockTick;
+
+        if (this.count >= 3) {
+            this.startPull = true;
+            this.pullAttack();
+            if (this.count >= 6) {
+                this.count = 0;
+                this.startPull = false;
+            }
+
+        }
+
+    }
+
+    draw() {
+
+        this.animation.drawFrame(this.game.clockTick, this.context,
+            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
+
+
+    }
+
+    pullAttack() {
+
+        if (this.startPull === true) {
+            this.game.HERO.gravitate(this.futureHitbox.xMin, this.futureHitbox.yMin, 100);
+        }
+    }
+
+}
+
+
 

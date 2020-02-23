@@ -159,35 +159,11 @@ class BlueHouse extends World {
 }
 
 class NecroDungeon extends World {
-    constructor(game, worldImage, sectionX, sectionY) {
-        super(game, worldImage, sectionX, sectionY);
+    constructor(game, worldImage, layeredImage, sectionX, sectionY) {
+        super(game, worldImage, layeredImage, sectionX, sectionY);
 
         // Creates tile maps for the necromancer dungeon world. # x # Tilemaps
-        this.NecroDungeonArrays = new NecroDungeonArrays();
-        this.tileMaps = [[],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            []
-        ];
-    }
-
-    initializeTileMaps() {
-        for (var i = 0; i < 8; i++) {
-            for (var j = 0; j < 8; j++) {
-                var entityArray = this.NecroDungeonArrays.getEntityArray(i, j);
-
-                var tileMap = new TileMap(this.GAME, entityArray);
-                this.tileMaps[i].push(tileMap);
-            }
-        }
-    }
-
-    getCurrentTileMap() {
-        return this.tileMaps[this.section.x][this.section.y];
+        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST['./res/jsonderulo/testBossRoom.json'])]];
     }
 }
 
