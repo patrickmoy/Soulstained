@@ -558,5 +558,17 @@
       ]
     ]
   ],
-  "realEntities": []
+  "realEntities": [
+    {
+      "type": "Lock",
+      "originalX": 176,
+      "originalY": 112,
+      "x": 176,
+      "y": 96,
+      "customProperties": {
+        "face": "WEST",
+        "strength": "smallkey"
+      }
+    }
+  ]
 }
