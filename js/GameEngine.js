@@ -144,7 +144,6 @@ class GameEngine {
         this.currentEntities[3] = currentMap.PROJECTILES;
         this.currentEntities[4] = currentMap.PASSIVES;
         this.currentEntities[5] = currentMap.DESTRUCTIBLES;
-        console.log(this.currentEntities[2]);
     }
 
     /**

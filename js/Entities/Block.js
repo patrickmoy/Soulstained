@@ -165,9 +165,9 @@ class Pickup extends Entity {
         this.animation = undefined;
         if (type === 'health') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/heartAnimation.png'], this, 16, 11, 0.15, 2, [4]);
         if (type === 'coin') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/coinAnimation.png'], this, 11, 11, 0.15, 2, [4]);
-        if (type === 'smallKey') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/smallkey.png'], this, 7, 14, .15, 2, [0]);
-        if (type === 'bossKey') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/bosskey.png'], this, 9, 14, .15, 2, [0]);
-
+        if (type === 'smallkey') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/smallkey.png'], this, 7, 14, .15, 2, [1]);
+        if (type === 'bosskey') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/bosskey.png'], this, 9, 14, .15, 2, [1]);
+        if (type === 'boots') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/boots.png'], this, 18, 19, .15, 2, [1]);
     }
 
     add(hero) {
@@ -180,13 +180,15 @@ class Pickup extends Entity {
                 coinPickup.play();
                 hero.coins += this.amount;
             }
-            if (this.type === 'smallKey') {
-
+            if (this.type === 'smallkey') {
                 hero.smallKeys++;
             }
-            if (this.type === 'bossKey') {
-
+            if (this.type === 'bosskey') {
                 hero.hasBossKey = true;
+            }
+            if (this.type === 'boots') {
+                hero.inventory.push('boots');
+                hero.equipK = 'boots';
             }
             this.alive = false;
         }

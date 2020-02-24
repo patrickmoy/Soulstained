@@ -75,6 +75,18 @@ class TileMap {
             } else if (entity.type === 'merchant') {
                 var items = JSON.parse(entity.customProperties.items);
                 this.BLOCKS.push(new Merchant(this.game, this.game.ASSETS_LIST['./res/img/merchant.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, items));
+            } else if (entity.type === 'Chest') {
+                let checkAmount = 0;
+                if (entity.customProperties.amount !== undefined) {
+                    checkAmount = entity.customProperties.amount;
+                }
+                this.BLOCKS.push(new Chest(this.game, this.game.ASSETS_LIST['./res/img/smallchest.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, entity.customProperties.msg, entity.customProperties.loot, checkAmount));
+            } else if (entity.type === 'BigChest') {
+                let checkAmount = 0;
+                if (entity.customProperties.amount !== undefined) {
+                    checkAmount = entity.customProperties.amount;
+                }
+                this.BLOCKS.push(new BigChest(this.game, this.game.ASSETS_LIST['./res/img/bigchest.png'], entity.x * 60 / 16, entity.y * 60 / 16, 120, 90, entity.customProperties.msg, entity.customProperties.loot, checkAmount));
             }
 
         }
