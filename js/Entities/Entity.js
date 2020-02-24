@@ -17,12 +17,12 @@ class Entity {
         this.z = 0;
 
         this.originalHitbox =
-            {
-                xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
-                yMin: y + height * (1 - this.HITBOX_SHRINK_FACTOR),
-                xMax: x + width * this.HITBOX_SHRINK_FACTOR,
-                yMax: y + height * this.HITBOX_SHRINK_FACTOR,
-            };
+        {
+            xMin: x + width * (1 - this.HITBOX_SHRINK_FACTOR),
+            yMin: y + height * (1 - this.HITBOX_SHRINK_FACTOR),
+            xMax: x + width * this.HITBOX_SHRINK_FACTOR,
+            yMax: y + height * this.HITBOX_SHRINK_FACTOR,
+        };
 
         this.speed = 0;
         this.health = -1;
@@ -90,7 +90,10 @@ class Entity {
             } else {
                 this.falling = false;
                 this.pushDamage = true;
-                this.futureHitbox = this.originalHitbox;
+                this.futureHitbox.xMin = this.originalHitbox.xMin;
+                this.futureHitbox.xMax = this.originalHitbox.xMax;
+                this.futureHitbox.yMin = this.originalHitbox.yMin;
+                this.futureHitbox.yMax = this.originalHitbox.yMax;
                 this.animation.scale = 2.4;
             }
         }
@@ -175,7 +178,6 @@ class Entity {
      *  Directs entity to take damage. Takes 1 damage if no damage is specified.
      */
     takeDamage(damage = 1) {
-        console.log(this.constructor.name + ": damage taken");
         if (this.health - damage < 0) {
             this.health = 0;
         } else {
@@ -228,6 +230,7 @@ class Sign extends Entity {
         super(game, x, y, width, height);
         this.msg = message;
         this.pushMessage = false;
+        this.alive = true;
     }
 
     //override Entity update
@@ -240,5 +243,36 @@ class Sign extends Entity {
                 this.pushMessage = false;
             }
         }
+    }
+}
+
+class NPC extends Entity {
+    constructor(game, x, y, width, height) {
+        super(game, x, y, width, height);
+    }
+}
+
+class Merchant extends NPC {
+    constructor(game, spritesheet, x, y, width, height, items = []) {
+        super(game, x, y, width, height);
+        this.animation = new Animation(spritesheet, this, 30, 45, 1, 1.4, [2], 0);
+        this.items = items;
+        this.pushTransaction = false;
+        this.alive = true;
+    }
+
+    update() {
+        if (this.pushTransaction) {
+            if (!this.game.newTransaction)
+            {
+                this.game.newTransaction = !this.game.newTransaction;
+                this.game.goods = this.items;
+                this.pushTransaction = false;
+            }
+        }
+    }
+
+    draw() {
+        this.animation.drawFrame(this.game.clockTick, this.game.GAME_CONTEXT, this.hitbox.xMin, this.hitbox.yMin, "walking");
     }
 }

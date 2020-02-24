@@ -7,7 +7,7 @@ class Animation {
      * Class is written with a horizontally aligned sprite sheet in mind -
      * please ensure sprite sheet is formatted as such through Aseprite or Marmoset Hexels.
      * @param {Image} spriteSheet Filepath of sprite sheet.
-     * @param {Worm} entity that has the animation (pass {this}).
+     * @param {Entity} entity that has the animation (pass {this}).
      * @param {number} frameHeight X coordinate to begin pulling sprite
      * @param {number} frameWidth Y coordinate to begin pull
      * @param {number} singleFrameTime  Time for single frame of standard loop.
@@ -39,42 +39,46 @@ class Animation {
      * @param status {string} the status of the object
      */
     drawFrame(tick, context, gamePositionX, gamePositionY, status, imageRow = 0) {
-
         let xIndex;
         let yIndex = imageRow * this.frameHeight;
-        if (!this.entity.jumping) {
-            if (status === 'walking') { // When walking, increment time by tick.
-                this.walkTime += tick;
-                if (this.walkTime >= this.walkDuration) { // Reset if we go over.
-                    this.walkTime -= this.walkDuration; // Should this value be "totalWalkDuration" or something?
+        if (!(this instanceof Necromancer)) {
+            if (!this.entity.jumping) {
+                if (status === 'walking') { // When walking, increment time by tick.
+                    this.walkTime += tick;
+                    if (this.walkTime >= this.walkDuration) { // Reset if we go over.
+                        this.walkTime -= this.walkDuration; // Should this value be "totalWalkDuration" or something?
+                    }
                 }
-            }
-            if (status === 'walking' || status === 'idle') {
-                xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0]);
-            } else if (status === 'attacking') {
-                xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) %
-                    (this.frameIndices[1] - this.frameIndices[0]) + this.frameIndices[0]);
-            } else if (status === 'weapon') {
-                xIndex = 0;
-                if (this.entity.direction <= 1) {
-                    yIndex = this.frameHeight * this.entity.direction;
-                } else {
-                    //yIndex = (this.frameHeight * (this.entity.direction - this.entity.WHIP_SPRITE_OFFSET) + (this.entity.WHIP_SPRITE_OFFSET * this.frameWidth));
-                    yIndex = this.entity.WHIP_SPRITE_OFFSET * (this.frameWidth - this.frameHeight) + this.frameHeight * this.entity.direction;
+                if (status === 'walking' || status === 'idle') {
+                    xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.walkTime)) % this.frameIndices[0]);
+                } else if (status === 'attacking') {
+                    xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) %
+                        (this.frameIndices[1] - this.frameIndices[0]) + this.frameIndices[0]);
+                } else if (status === 'weapon') {
+                    xIndex = 0;
+                    if (this.entity.direction <= 1) {
+                        yIndex = this.frameHeight * this.entity.direction;
+                    } else {
+                        //yIndex = (this.frameHeight * (this.entity.direction - this.entity.WHIP_SPRITE_OFFSET) + (this.entity.WHIP_SPRITE_OFFSET * this.frameWidth));
+                        yIndex = this.entity.WHIP_SPRITE_OFFSET * (this.frameWidth - this.frameHeight) + this.frameHeight * this.entity.direction;
+                    }
+
                 }
+                context.drawImage(this.spriteSheet, xIndex, yIndex,
+                    this.frameWidth, this.frameHeight, gamePositionX, gamePositionY,
+                    this.frameWidth * this.scale, this.frameHeight * this.scale);
+            } else if (this.entity.jumping) {
+                xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.jumpElapsedTime)) % this.frameIndices[2]);
+                yIndex = 4 * this.frameHeight + this.entity.JUMP_SPRITE_FRAME_HEIGHT * imageRow;
+                context.drawImage(this.spriteSheet, xIndex, yIndex,
+                    this.frameWidth, this.entity.JUMP_SPRITE_FRAME_HEIGHT, gamePositionX, gamePositionY,
+                    this.frameWidth * this.scale, this.entity.JUMP_SPRITE_FRAME_HEIGHT * this.scale);
 
             }
-            context.drawImage(this.spriteSheet, xIndex, yIndex,
-                this.frameWidth, this.frameHeight, gamePositionX, gamePositionY,
-                this.frameWidth * this.scale, this.frameHeight * this.scale);
-        } else if (this.entity.jumping) {
-            xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.jumpElapsedTime)) % this.frameIndices[2]);
-            yIndex = 4 * this.frameHeight + this.entity.JUMP_SPRITE_FRAME_HEIGHT * imageRow;
-            context.drawImage(this.spriteSheet, xIndex, yIndex,
-                this.frameWidth, this.entity.JUMP_SPRITE_FRAME_HEIGHT, gamePositionX, gamePositionY,
-                this.frameWidth * this.scale, this.entity.JUMP_SPRITE_FRAME_HEIGHT * this.scale);
+        } else {
 
         }
+
 
     }
 

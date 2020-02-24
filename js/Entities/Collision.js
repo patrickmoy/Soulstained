@@ -72,26 +72,23 @@ function entitiesCollided(firstElement, secondElement) {
  */
 function flagImpassable(collisionPairs) {
     collisionPairs.forEach(function (element) {
-        // if (!(element[0] instanceof Weapon) && !(element[1] instanceof Weapon)) {
-        //     element[0].pushUpdate = false;
-        //     element[1].pushUpdate = false;
-        // }
-        // Previous code blocks everything but weapons. Switched to only invisible blocks impede.
-        // if (element[0] instanceof InvisibleBlock || element[1] instanceof InvisibleBlock) {
-        //     element[0].pushUpdate = false;
-        //     element[1].pushUpdate = false;
-        // }
+
         // Assuming convention of ordering of parameters (heros and enemies first, blocks/traps after)
-        if (element[1] instanceof Block) { // Check if element[0] is hero or an enemy instead (non ghost).
+        if (element[1] instanceof InvisibleBlock && !(element[1] instanceof Pit)) { // Check if element[0] is hero or an enemy instead (non ghost).
             element[0].pushUpdate = false;
         }
         if (element[0] instanceof Weapon && element[0].active && element[1] instanceof Enemy) {
             element[1].pushUpdate = false;
         }
 
-        if (element[0] instanceof Sign || element[1] instanceof Sign) {
+        if (element[0] instanceof Sign || element[1] instanceof Sign || element[1] instanceof Merchant || element[0] instanceof Merchant) {
             element[0].pushUpdate = false;
             element[1].pushUpdate = false;
+        }
+
+        if (element[1] instanceof DestructibleBlock)
+        {
+            element[0].pushUpdate = false;
         }
     });
 }
@@ -103,9 +100,9 @@ function flagImpassable(collisionPairs) {
  */
 function flagDamage(collisionPairs) {
     collisionPairs.forEach(function (element) {
-        if (element[0] instanceof Hero && element[1] instanceof Enemy) {
+        if (element[0] instanceof Hero && (element[1] instanceof Enemy || element[1] instanceof Projectile)) {
             element[0].pushDamage = true;
-        } else if (element[0] instanceof Weapon && element[0].active && element[1] instanceof Enemy) {
+        } else if (element[0] instanceof Weapon && element[0].active && (element[1] instanceof Enemy || element[1] instanceof DestructibleBlock)) {
             element[1].pushDamage = true;
         }
     })
@@ -138,7 +135,7 @@ function flagMessages(collisionPairs) {
             if (element[1] instanceof Hero) {
                 if (element[1].direction === 0) {
                     element[0].pushMessage = true;
-                    console.log("message!")
+                    console.log("message1")
                 }
             }
         }
@@ -146,12 +143,36 @@ function flagMessages(collisionPairs) {
             if (element[1] instanceof Sign) {
                 if (element[0].direction === 0) {
                     element[1].pushMessage = true;
-                    console.log("message");
+                    console.log("message2");
+                }
+            }
+        }
+
+        if (element[0] instanceof Merchant) {
+            if (element[1] instanceof Hero) {
+                if (element[1].direction === 0) {
+                    element[0].pushTransaction = true;
+                    console.log("transaction1");
+                }
+            }
+        }
+        if (element[0] instanceof Hero) {
+            if (element[1] instanceof Merchant) {
+                if (element[0].direction === 0) {
+                    element[1].pushTransaction = true;
+                    console.log("transaction2");
                 }
             }
         }
     });
 
+}
+
+function flagPickup(collisionPairs) {
+    collisionPairs.forEach(element =>
+    {
+        element[1].add(element[0])
+    });
 }
 
 

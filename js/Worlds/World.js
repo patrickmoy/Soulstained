@@ -159,35 +159,54 @@ class BlueHouse extends World {
 }
 
 class NecroDungeon extends World {
-    constructor(game, worldImage, sectionX, sectionY) {
-        super(game, worldImage, sectionX, sectionY);
+    constructor(game, worldImage, layeredImage, sectionX, sectionY) {
+        super(game, worldImage, layeredImage, sectionX, sectionY);
 
         // Creates tile maps for the necromancer dungeon world. # x # Tilemaps
-        this.NecroDungeonArrays = new NecroDungeonArrays();
-        this.tileMaps = [[],
-            [],
-            [],
-            [],
-            [],
-            [],
-            [],
-            []
+        this.tileMaps = [
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 1, 5)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 2, 5)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 3, 5)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 4, 5)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 3)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 4)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("necro", 5, 5)])
+            ],
+
         ];
-    }
 
-    initializeTileMaps() {
-        for (var i = 0; i < 8; i++) {
-            for (var j = 0; j < 8; j++) {
-                var entityArray = this.NecroDungeonArrays.getEntityArray(i, j);
 
-                var tileMap = new TileMap(this.GAME, entityArray);
-                this.tileMaps[i].push(tileMap);
-            }
-        }
-    }
-
-    getCurrentTileMap() {
-        return this.tileMaps[this.section.x][this.section.y];
     }
 }
 

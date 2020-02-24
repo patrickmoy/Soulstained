@@ -1,6 +1,6 @@
-/**
- *
- */
+var whipSound = new Howl({src: ['./res/sound/whip.wav']});
+var jumpSound = new Howl({src: ['./res/sound/jump.mp3']});
+
 class Hero extends Entity {
     /**
      * The entity that the player can control and play the game with.
@@ -20,11 +20,13 @@ class Hero extends Entity {
         this.health = 10;
         this.maxHealth = 10;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
-        this.coins = 678;
+        this.coins = 0;
+        this.smallKeys = 0;
+        this.hasBossKey = false;
         this.alive = true;
         this.equipJ = "whip"; // Item equipped in J key.
         this.equipK = "boots"; // Item equipped in K key.
-        this.inventory = ["whip", "boots"];
+        this.inventory = ["whip"];
 
         // Change this to be 5x the attackFrameTime, and whip speed will update.
         // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration. (Not Hero's).
@@ -37,13 +39,15 @@ class Hero extends Entity {
         // hero damage animation control variables
         this.hurting = false;
         this.hurtCounter = this.INVINCIBLE_TIME;
-
+        this.whipSoundTag;
+        this.jumpSoundTag;
     }
 
     /**
      * Predicts future hitbox based on inputs.
      */
     preUpdate() {
+
         if (!this.game.transition) {
             this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
             if (this.jumping) {
@@ -114,6 +118,10 @@ class Hero extends Entity {
                 this.futureHitbox.xMax = this.hitbox.xMax;
                 break;
         }
+        this.originalHitbox.xMin = this.hitbox.xMin;
+        this.originalHitbox.xMax = this.hitbox.xMax;
+        this.originalHitbox.yMin = this.hitbox.yMin;
+        this.originalHitbox.yMax = this.hitbox.yMax;
     }
 
     /**
@@ -126,7 +134,6 @@ class Hero extends Entity {
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
         }
         if (this.hurting) {
-            console.log("OWWW");
             if (Math.floor(this.hurtCounter * 1000) % 3 !== 0) {
                 this.animation.drawFrame(this.game.clockTick, this.context,
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -193,6 +200,11 @@ class Hero extends Entity {
     }
 
     jump() {
+        console.log(this.jumpSoundTag);
+        if (!jumpSound.playing(this.jumpSoundTag) && this.jumpElapsedTime < .60) {
+            this.jumpSoundTag = jumpSound.play();
+            console.log(this.jumpSoundTag);
+        }
         this.jumpElapsedTime += this.game.clockTick;
         this.z = 1;
         if (this.jumpElapsedTime > this.JUMP_DURATION) {
@@ -204,11 +216,38 @@ class Hero extends Entity {
     }
 
     attack() {
+        if (!whipSound.playing(this.whipSoundTag)) {
+            this.whipSoundTag = whipSound.play();
+        }
         this.whip.direction = this.direction;
         super.attack();
     }
 
     beingUsed(itemName) {
         return (this.equipJ === itemName && this.game.INPUTS["KeyJ"]) || (this.equipK === itemName && this.game.INPUTS["KeyK"]);
+    }
+
+    checkSmallKeyInventory() {
+
+        let smallKeyCount = Object.keys(this.key).length;
+        console.log(smallKeyCount);
+
+    }
+    checkBossKeyInventory() {
+
+        let bossKeyCount = Object.keys(this.bossKey).length;
+        console.log(bossKeyCount);
+    }
+    acquireSmallKey() {
+
+        this.key[this.smallKeyCounter] = 'key';
+        this.smallKeyCounter++;
+
+    }
+    acquireBossKey() {
+
+        this.key[this.bossKeyCounter] = 'Bkey';
+        this.bossKeyCounter++;
+
     }
 }

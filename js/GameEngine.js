@@ -1,3 +1,7 @@
+var overworldMusic = new Howl({src: ['./res/sound/sh_sadwonder.mp3'], loop: true, volume: 0.5});
+var necroMusic = new Howl({src: ['./res/sound/castle_excitement.mp3'], loop: true, volume: 0.5});
+var deathMusic = new Howl({src: ['./res/sound/sh_spooky.mp3']});
+
 /** Game Engine for the {Working Title} Game
  * Copied from Seth Ladd's Game Development Talk on Google IO 2011
  * Modified to work with our game.
@@ -39,6 +43,7 @@ class GameEngine {
         this.pause = false; // Pauses other actions while we switch to a new map.
         this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
         this.currentEntities = [[], [], [], [], [], []]; // Stores entities at the current tile map
+        this.currentMusicID;
 
         this.currentPortal;
         this.TIMER; // The Game Timer to keep track of virtual time
@@ -53,6 +58,10 @@ class GameEngine {
         this.msg;
         this.newMsg = false;
         this.displayMessage = false;
+
+        this.goods = [];
+        this.newTransaction = false;
+        this.displayTransaction = false;
 
         this.HitQueue = [];
         this.DeathQueue = [];
@@ -74,10 +83,13 @@ class GameEngine {
         this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
         this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
         this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
+        this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
 
+        //this.currentWorld = this.WORLDS["necro"];
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
-        this.currentEntities[1] =  this.currentWorld.getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] =  this.currentWorld.getCurrentTileMap().ENEMIES;
+        this.currentMusicID = overworldMusic.play();
+        this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
+        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
         this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
@@ -122,6 +134,18 @@ class GameEngine {
         this.draw();
     }
 
+    /*
+     * Resets the current entities subarrays to the current tilemaps entities (simply moved duplicate codes to one function - Steven)
+     */
+    changeEntitiesToCurrent() {
+        const currentMap = this.currentWorld.getCurrentTileMap();
+        this.currentEntities[1] = currentMap.BLOCKS;
+        this.currentEntities[2] = currentMap.ENEMIES;
+        this.currentEntities[3] = currentMap.PROJECTILES;
+        this.currentEntities[4] = currentMap.PASSIVES;
+        this.currentEntities[5] = currentMap.DESTRUCTIBLES;
+    }
+
     /**
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
@@ -139,7 +163,9 @@ class GameEngine {
                 // PAUSE FOR MESSAGE
             } else if (this.inInventory) {
                 // PAUSE FOR INVENTORY
-            } else {
+            } else if (this.displayTransaction) {
+                // PAUSE FOR TRANSACTION
+            }else {
                 // PAUSE FOR PORTAL
                 this.currentWorld.fade();
                 if (!this.pause) {
@@ -148,7 +174,9 @@ class GameEngine {
             }
         } else if (this.newMsg) {
             this.UI.parseMessage(); // encodes string to numeric keys to index letter font sprite sheet
-        } else {
+        } else if (this.newTransaction) {
+            this.UI.parseTransaction();
+        }else {
             // Entities are now movable around the map
             // Reset all behavior flags for all entities. Can be expanded/diversified
             resetFlags(this.currentEntities[0]);
@@ -158,37 +186,48 @@ class GameEngine {
             resetFlags(this.currentEntities[4]);
 
             // Predicts update for all the necessary entities
-            this.currentEntities[0].filter(hero => hero.alive).forEach(hero => hero.preUpdate());
+            this.currentEntities[0].forEach(hero => hero.preUpdate());
             this.currentEntities[1].filter(block => block.alive).forEach(block => block.preUpdate());
-            this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.preUpdate());
-            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.preUpdate()); // TODO projectiles should be added from somewhere else, not the world array
+            this.currentEntities[2].forEach(enemy => enemy.preUpdate());
+            this.currentEntities[3].forEach(projectile => projectile.preUpdate());
 
             const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2]).filter(entity => entity.alive);
 
             // Hero and enemies vs. blocks
-            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1].concat(this.currentEntities[4]));
+            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1].concat(this.currentEntities[4], this.currentEntities[5]));
 
             // Weapon vs enemies causes momentary flinching
             const flinchEffect = detectCollide(this.currentEntities[0].filter(entity => entity.active), this.currentEntities[2]);
 
             // Hero vs enemies
-            const damageCollisions = detectCollide(this.currentEntities[0].filter(entity => entity.alive),
-                this.currentEntities[2].filter(entity => entity.alive));
+            const damageCollisions = detectCollide(this.currentEntities[0],
+                this.currentEntities[2].concat(this.currentEntities[3], this.currentEntities[5]));
 
+            // Hero vs pickups
+            const pickups = detectCollide([this.currentEntities[0][0]], this.currentEntities[5].filter(destroy => destroy instanceof Pickup));
             // Flags entities for standard "impassable" behavior (mostly terrain)
             flagGravitate(creatureToBlockCollisions);
             flagImpassable(creatureToBlockCollisions);
             flagImpassable(flinchEffect);
             flagMessages(creatureToBlockCollisions);
-
-
+            flagPickup(pickups);
             flagDamage(damageCollisions);
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
-            this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.update()); // Updates hero
+            this.currentEntities[0].forEach(entity => entity.update()); // Updates hero
+            // TODO weird bug where the smoke still appears on the enemy's death location when transitioning back into the tilemap. Requires a filter for alive.
+            this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.update());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
-            this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.update());
+            this.currentEntities[3].forEach(projectile => projectile.update());
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
+            this.currentEntities[5].forEach(destructible => destructible.update());
+
+
+            // Removes dead things (did this because we did it for every action in update(). Might as well just do it once.)
+            this.currentEntities[0] = this.currentEntities[0].filter(hero => hero.alive);
+            this.currentEntities[2] = this.currentEntities[2].filter(enemy => enemy.alive);
+            this.currentEntities[3] = this.currentEntities[3].filter(projectile => projectile.alive);
+            this.currentEntities[5] = this.currentEntities[5].filter(destructible => destructible.alive);
 
             // PORTAL AND BORDER TRANSITIONS
             this.checkPortal();
@@ -205,12 +244,9 @@ class GameEngine {
         {
             this.currentWorld.section.x += currentBorder.changeInX; // Change the x coordinate for the tilemap array
             this.currentWorld.section.y += currentBorder.changeInY; // Change the y coordinate for the tilemap array
-            this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS; // Replaces the current blocks with the ones in the new tilemap
-            this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES; // Replaces the current enemies with the ones in the new tilemap
+            this.changeEntitiesToCurrent();
             this.currentEntities[2].forEach(enemy => enemy.resetPosition());
-            this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
-            this.currentEntities[3] = []; // Removes all projectiles
-            this.transition = true; // Game Engine and other necessary components is now performing transition actions
+            this.transition = true; // Game Engine and other necessary components is now performing transition action
         }
     }
 
@@ -250,10 +286,17 @@ class GameEngine {
         this.HERO.futureHitbox.yMin = this.HERO.hitbox.yMin;
         this.HERO.futureHitbox.xMax = this.HERO.hitbox.xMax;
         this.HERO.futureHitbox.yMax = this.HERO.hitbox.yMax;
-        this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
-        this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
-        this.currentEntities[3] = [];
+        this.changeEntitiesToCurrent();
+        this.currentEntities[2].forEach(enemy => enemy.reset());
+        if (this.currentWorld === this.WORLDS["openworld"]) {
+            overworldMusic.stop();
+            necroMusic.stop();
+            this.currentMusicID = overworldMusic.play();
+        } else if (this.currentWorld === this.WORLDS["necro"]) {
+            overworldMusic.stop();
+            necroMusic.stop();
+            this.currentMusicID = necroMusic.play();
+        }
     }
 
     /**
@@ -274,12 +317,14 @@ class GameEngine {
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
-            this.currentWorld.getCurrentTileMap().COOLSTUFF.forEach(coolio => coolio.draw());
+            this.currentWorld.getCurrentTileMap().WORLDANIMATIONS.forEach(animations => animations.draw());
             this.currentEntities[4].forEach(passive => passive.draw());
+            this.currentEntities[5].forEach(destructible => destructible.draw());
             this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon.
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw());
+            this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
             this.drawHits();
             this.drawDeaths();
             this.currentWorld.drawLayer();
