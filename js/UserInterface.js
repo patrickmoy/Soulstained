@@ -125,7 +125,6 @@ class UserInterface {
                         } else {
                             this.hero.inventory.push(purchasedItem);
                         }
-                        console.log(this.hero.inventory);
                     } else {
                         this.game.INPUTS["KeyJ"] = false;
                         this.strokeStyle = 'yellow';
@@ -197,7 +196,6 @@ class UserInterface {
         this.game.newMsg = false;
         this.game.pause = true;
         this.game.displayMessage = true;
-        console.log("message parsed");
     }
 
     displayMessage() {
@@ -353,10 +351,10 @@ class UserInterface {
         this.ctx.drawImage(this.digitsFontImage, this.d1, 0, 49.5, 45, 371, 30, 22, 20);
 
         // draw keys and weapons
-        this.ctx.drawImage(this.keyJImage, 0, 0, 264, 268, 540, 30, 30, 30);
-        this.ctx.drawImage(this.keyKImage, 0, 0, 268, 269, 660, 30, 30, 30);
-        this.ctx.drawImage(this.whipPrototype, 0, 0, 60, 60, 510, 15, 45, 45);
-        this.ctx.drawImage(this.swordPrototype, 0, 0, 60, 60, 630, 15, 45, 45);
+        // this.ctx.drawImage(this.keyJImage, 0, 0, 264, 268, 540, 30, 30, 30);
+        // this.ctx.drawImage(this.keyKImage, 0, 0, 268, 269, 660, 30, 30, 30);
+        // this.ctx.drawImage(this.whipPrototype, 0, 0, 60, 60, 510, 15, 45, 45);
+        // this.ctx.drawImage(this.swordPrototype, 0, 0, 60, 60, 630, 15, 45, 45);
 
         // draw message
         if (this.game.pause && this.game.displayMessage) {

@@ -438,7 +438,7 @@ class Knight
 
 class Sniper extends Enemy {
 
-    constructor(game, spritesheet, x, y, width, height, position) {
+    constructor(game, spritesheet, x, y, width, height, position = "SOUTH") {
         super(game, x, y, width, height, 2);
         this.alive = true;
         this.animation = new Animation(spritesheet, this, 14, 17, .3, 5, [5], 1);

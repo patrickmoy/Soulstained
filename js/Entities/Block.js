@@ -1,5 +1,5 @@
 var coinPickup = new Howl({src: ['./res/sound/coinPickup.mp3']});
-var heartPickup = new Howl({src: ['./res/sound/heartPickup.mp3']});
+var heartPickup = new Howl({src: ['./res/sound/heartPickup.mp3'], volume: 0.5});
 
 class InvisibleBlock extends Entity {
 }

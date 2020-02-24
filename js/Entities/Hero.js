@@ -146,7 +146,6 @@ class Hero extends Entity {
             if (this.hurtCounter <= 0) {
                 this.hurting = false;
                 this.hurtCounter = this.INVINCIBLE_TIME;
-                console.log("HEALED!");
             }
         }
     }
@@ -200,10 +199,8 @@ class Hero extends Entity {
     }
 
     jump() {
-        console.log(this.jumpSoundTag);
         if (!jumpSound.playing(this.jumpSoundTag) && this.jumpElapsedTime < .60) {
             this.jumpSoundTag = jumpSound.play();
-            console.log(this.jumpSoundTag);
         }
         this.jumpElapsedTime += this.game.clockTick;
         this.z = 1;
@@ -230,13 +227,11 @@ class Hero extends Entity {
     checkSmallKeyInventory() {
 
         let smallKeyCount = Object.keys(this.key).length;
-        console.log(smallKeyCount);
 
     }
     checkBossKeyInventory() {
 
         let bossKeyCount = Object.keys(this.bossKey).length;
-        console.log(bossKeyCount);
     }
     acquireSmallKey() {
 

@@ -112,7 +112,6 @@ function flagGravitate(collisionPairs) {
     collisionPairs.forEach(function (element) {
         if (element[0] instanceof Hero && element[1] instanceof Pit) {
             element[0].gravitate(element[1].focusX, element[1].focusY, element[1].slipRate);
-            console.log("SUCKING!");
             const firstElement = element[0];
             const secondElement = element[1];
             const boxOne = firstElement.futureHitbox;
@@ -121,7 +120,6 @@ function flagGravitate(collisionPairs) {
                 boxTwo.xMin < boxOne.xMax &&
                 boxOne.yMin < boxTwo.yMax &&
                 boxTwo.yMin < boxOne.yMax && element[0].z === 0) {
-                console.log("FALLING!");
                 element[0].gravitate(element[1].focusX, element[1].focusY, element[1].plungeRate);
                 element[0].falling = true;
             }
@@ -135,7 +133,6 @@ function flagMessages(collisionPairs) {
             if (element[1] instanceof Hero) {
                 if (element[1].direction === 0) {
                     element[0].pushMessage = true;
-                    console.log("message1")
                 }
             }
         }
@@ -143,7 +140,6 @@ function flagMessages(collisionPairs) {
             if (element[1] instanceof Sign) {
                 if (element[0].direction === 0) {
                     element[1].pushMessage = true;
-                    console.log("message2");
                 }
             }
         }
@@ -152,7 +148,6 @@ function flagMessages(collisionPairs) {
             if (element[1] instanceof Hero) {
                 if (element[1].direction === 0) {
                     element[0].pushTransaction = true;
-                    console.log("transaction1");
                 }
             }
         }
@@ -160,7 +155,6 @@ function flagMessages(collisionPairs) {
             if (element[1] instanceof Merchant) {
                 if (element[0].direction === 0) {
                     element[1].pushTransaction = true;
-                    console.log("transaction2");
                 }
             }
         }

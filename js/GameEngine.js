@@ -1,5 +1,5 @@
-var overworldMusic = new Howl({src: ['./res/sound/sh_sadwonder.mp3'], loop: true, volume: 0.5});
-var necroMusic = new Howl({src: ['./res/sound/castle_excitement.mp3'], loop: true, volume: 0.5});
+var overworldMusic = new Howl({src: ['./res/sound/sh_sadwonder.mp3'], loop: true, volume: 0.25});
+var necroMusic = new Howl({src: ['./res/sound/castle_excitement.mp3'], loop: true, volume: 0.25});
 var deathMusic = new Howl({src: ['./res/sound/sh_spooky.mp3']});
 
 /** Game Engine for the {Working Title} Game
@@ -144,6 +144,7 @@ class GameEngine {
         this.currentEntities[3] = currentMap.PROJECTILES;
         this.currentEntities[4] = currentMap.PASSIVES;
         this.currentEntities[5] = currentMap.DESTRUCTIBLES;
+        console.log(this.currentEntities[2]);
     }
 
     /**
@@ -244,9 +245,18 @@ class GameEngine {
         {
             this.currentWorld.section.x += currentBorder.changeInX; // Change the x coordinate for the tilemap array
             this.currentWorld.section.y += currentBorder.changeInY; // Change the y coordinate for the tilemap array
-            this.changeEntitiesToCurrent();
-            this.currentEntities[2].forEach(enemy => enemy.resetPosition());
-            this.transition = true; // Game Engine and other necessary components is now performing transition action
+            if (this.currentWorld.getCurrentTileMap())
+            {
+                this.changeEntitiesToCurrent();
+                this.currentEntities[2].forEach(enemy => enemy.resetPosition());
+                this.transition = true; // Game Engine and other necessary components is now performing transition action
+            }
+            else
+            {
+                this.currentWorld.section.x -= currentBorder.changeInX; // Change the x coordinate for the tilemap array
+                this.currentWorld.section.y -= currentBorder.changeInY; // Change the y coordinate for the tilemap array
+                this.HERO.pushUpdate = false;
+            }
         }
     }
 

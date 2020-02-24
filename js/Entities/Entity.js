@@ -106,7 +106,6 @@ class Entity {
             if (this.invincibleCounter > this.INVINCIBLE_TIME) {
                 this.invincibleCounter = 0;
                 this.pushDamage = false;
-                console.log("not hurt anymore!");
             }
         } else {
             if (this.invincibleCounter > 0) {
@@ -236,7 +235,6 @@ class Sign extends Entity {
     //override Entity update
     update() {
         if (this.pushMessage) {
-            console.log("message push");
             if (this.game.newMsg === false) {
                 this.game.newMsg = true;
                 this.game.msg = this.msg;
