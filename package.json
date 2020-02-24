@@ -23,9 +23,6 @@
   },
   "homepage": "https://github.com/davidpatricksteven/COMP-WORLD-PROJECT#readme",
   "devDependencies": {
-    "@babel/cli": "^7.7.7",
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
     "stats.js": "^0.17.0"
   },
   "dependencies": {
