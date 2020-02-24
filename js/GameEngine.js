@@ -1,6 +1,6 @@
-var overworldMusic = new Howl({src: ['./res/sound/sh_sadwonder.mp3'], loop: true, volume: 0.5});
-var necroMusic = new Howl({src: ['./res/sound/castle_excitement.mp3'], loop: true, volume: 0.5});
-var deathMusic = new Howl({src: ['./res/sound/sh_spooky.mp3']});
+// var overworldMusic = new Howl({src: ['./res/sound/sh_sadwonder.mp3'], loop: true, volume: 0.5});
+// var necroMusic = new Howl({src: ['./res/sound/castle_excitement.mp3'], loop: true, volume: 0.5});
+// var deathMusic = new Howl({src: ['./res/sound/sh_spooky.mp3']});
 
 /** Game Engine for the {Working Title} Game
  * Copied from Seth Ladd's Game Development Talk on Google IO 2011
