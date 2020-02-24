@@ -183,7 +183,7 @@ class Arrow extends Projectile {
         super(game, x, y, 56, 56, 2);
         this.animation = new Animation(spritesheet, this, 96, 96, .10, 1, [1]);
         this.context = game.GAME_CONTEXT;
-        this.alive = true; //Every projectile is spawned dead.
+        this.alive = true;
         this.trajectory = trajectory; //A flight direction path of either: left, right or down.
         this.speed = 200; //Speed of each projectile, presently hard-coded in.
 
@@ -191,27 +191,38 @@ class Arrow extends Projectile {
     }
 
     preUpdate() {
-        this.selectPosition(this.trajectory);
+
+        // console.log("STILL UPDATING")
+        // if (this.projectileNotOnScreen()) {
+        //
+        //     console.log("KILL ARROW")
+        //     this.alive = false;
+        //
+        // } else {
+        //     console.log("SHOOT ARROW")
+            this.selectPosition(this.trajectory);
+      //  }
+
     };
 
     //Draws the projectile
     draw() {
-        if (this.alive && this.trajectory === 'SOUTH') {
+        if (!this.game.pause && this.trajectory === 'SOUTH') {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 8);
         }
-        if (this.alive && this.trajectory === 'NORTH') {
+        if (!this.game.pause && this.trajectory === 'NORTH') {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
         }
-        if (this.alive && this.trajectory === 'EAST') {
+        if (!this.game.pause && this.trajectory === 'EAST') {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 4);
         }
-        if (this.alive && this.trajectory === 'WEST') {
+        if (!this.game.pause && this.trajectory === 'WEST') {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 12);
