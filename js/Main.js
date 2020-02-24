@@ -1,4 +1,4 @@
-console.log("Code has started running2");
+console.log("Code has started running3");
 const AssetHandler = new AssetManager();
 AssetHandler.queueImage('./res/img/worlds/testBossRoom.png');
 AssetHandler.queueImage('./res/img/worlds/testBossRoom2.png');
