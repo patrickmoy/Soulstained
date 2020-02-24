@@ -2,7 +2,14 @@
   "width": 12,
   "height": 12,
   "collisionSets": {
-    "bigchest": {},
+    "bigchest": {
+      "0": {
+        "width": 32,
+        "height": 24,
+        "x": 0,
+        "y": 0
+      }
+    },
     "zelda_inspired_dungeon": {
       "0": {
         "width": 16,

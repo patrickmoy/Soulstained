@@ -25,7 +25,7 @@ class Hero extends Entity {
         this.hasBossKey = false;
         this.alive = true;
         this.equipJ = "whip"; // Item equipped in J key.
-        this.equipK = "boots"; // Item equipped in K key.
+        this.equipK; // Item equipped in K key.
         this.inventory = ["whip"];
 
         // Change this to be 5x the attackFrameTime, and whip speed will update.
