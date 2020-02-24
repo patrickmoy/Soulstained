@@ -101,10 +101,9 @@ AssetHandler.queueJSON('./res/jsonderulo/bluehouse_section1_1.json');
 AssetHandler.startDownload()
     .then(() => {
 
-            const gameCanvas = document.getElementById("gameWorld"); // Get the
-            const gameContext = gameCanvas.getContext("2d");
-            const myGame = new GameEngine(gameContext, AssetHandler.assets);
-
-            myGame.init();
+        const gameCanvas = document.getElementById("gameWorld"); // Get the
+        const gameContext = gameCanvas.getContext("2d");
+        const myGame = new GameEngine(gameContext, AssetHandler.assets);
+        myGame.init();
         myGame.run();
     });

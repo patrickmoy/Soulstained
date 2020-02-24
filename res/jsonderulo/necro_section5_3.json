@@ -728,5 +728,24 @@
       ]
     ]
   ],
-  "realEntities": []
+  "realEntities": [
+    {
+      "type": "Portal",
+      "originalX": 80,
+      "originalY": 184,
+      "x": 80,
+      "y": 184,
+      "width": 32,
+      "height": 8,
+      "customProperties": {
+        "TMX": 1,
+        "TMY": 2,
+        "destination": "openworld",
+        "destinationX": 420,
+        "destinationY": 380,
+        "height": 8,
+        "width": 32
+      }
+    }
+  ]
 }

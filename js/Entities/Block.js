@@ -1,4 +1,5 @@
 var coinPickup = new Howl({src: ['./res/sound/coinPickup.mp3']});
+var heartPickup = new Howl({src: ['./res/sound/heartPickup.mp3']});
 
 class InvisibleBlock extends Entity {
 }
@@ -22,17 +23,29 @@ class Block extends InvisibleBlock {
 
 class Lock extends InvisibleBlock {
 
-    constructor(game, spritesheet, x, y, width, height) {
+    constructor(game, spritesheet, x, y, width, height, strength, face) {
         super(game, spritesheet, x, y, width, height);
-        this.animation = new Animation(spritesheet, this, 16, 16, .1, 2, [0]);
+        this.strength = strength;
+        this.face = face;
+        if (this.strength === 'smallkey') {
+            // set spritesheet to small lock
+        } else if (this.strength === 'bosskey') {
+            // set sheet to big lock
+        }
+        this.animation = new Animation(spritesheet, this, 16, 16, .1, 2.4, [0]);
         this.alive = true;
         this.opened = false;
     }
 
 
     preUpdate() {
-
-        this.checkValidSmallKey();
+        if (this.strength === 'smallkey') {
+            this.checkValidSmallKey();
+            // set spritesheet to small lock
+        } else if (this.strength === 'bosskey') {
+            // set sheet to big lock
+            this.checkValidBossKey();
+        }
 
     }
 
@@ -55,31 +68,6 @@ class Lock extends InvisibleBlock {
             this.game.HERO.smallKeyCounter--;
         }
     }
-}
-
-class Bosslock extends Lock {
-
-    constructor(game, spritesheet, x, y, width, height) {
-        super(game, spritesheet, x, y, width, height);
-        this.animation = new Animation(spritesheet, this, 17, 16, .1, 2, [0]);
-        this.alive = true;
-        this.opened = false;
-    }
-
-    preUpdate() {
-
-        this.checkValidBossKey();
-
-    }
-
-    draw() {
-
-        if (!this.game.pause && this.opened === false) {
-            this.context.beginPath();
-            this.context.stroke();
-            this.animation.drawFrame(this.game.clockTick, this.context, this.x, this.y, "walking", 0);
-        }
-    }
 
     checkValidBossKey() {
 
@@ -92,7 +80,6 @@ class Bosslock extends Lock {
     }
 
 }
-
 
 class DestructibleBlock
     extends Block {
@@ -186,6 +173,7 @@ class Pickup extends Entity {
     add(hero) {
         if (this.alive) {
             if (this.type === 'health') {
+                heartPickup.play();
                 hero.health += this.amount;
             }
             if (this.type === 'coin') {
@@ -194,11 +182,11 @@ class Pickup extends Entity {
             }
             if (this.type === 'smallKey') {
 
-                hero.acquireSmallKey();
+                hero.smallKeys++;
             }
             if (this.type === 'bossKey') {
 
-                hero.acquireBossKey();
+                hero.hasBossKey = true;
             }
             this.alive = false;
         }

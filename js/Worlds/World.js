@@ -67,7 +67,6 @@ class World {
      * @returns {TileMap} the current tilemap of the world
      */
     getCurrentTileMap() {
-        console.log(this.tileMaps);
         return this.tileMaps[this.section.x][this.section.y];
     }
 

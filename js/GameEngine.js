@@ -1,3 +1,7 @@
+var overworldMusic = new Howl({src: ['./res/sound/sh_sadwonder.mp3'], loop: true, volume: 0.5});
+var necroMusic = new Howl({src: ['./res/sound/castle_excitement.mp3'], loop: true, volume: 0.5});
+var deathMusic = new Howl({src: ['./res/sound/sh_spooky.mp3']});
+
 /** Game Engine for the {Working Title} Game
  * Copied from Seth Ladd's Game Development Talk on Google IO 2011
  * Modified to work with our game.
@@ -39,6 +43,7 @@ class GameEngine {
         this.pause = false; // Pauses other actions while we switch to a new map.
         this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
         this.currentEntities = [[], [], [], [], [], []]; // Stores entities at the current tile map
+        this.currentMusicID;
 
         this.currentPortal;
         this.TIMER; // The Game Timer to keep track of virtual time
@@ -79,8 +84,10 @@ class GameEngine {
         this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
         this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
         this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
-        this.currentWorld = this.WORLDS["necro"];
-        //this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
+
+        //this.currentWorld = this.WORLDS["necro"];
+        this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
+        this.currentMusicID = overworldMusic.play();
         this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
         this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
         this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
@@ -130,8 +137,7 @@ class GameEngine {
     /*
      * Resets the current entities subarrays to the current tilemaps entities (simply moved duplicate codes to one function - Steven)
      */
-    changeEntitiesToCurrent()
-    {
+    changeEntitiesToCurrent() {
         const currentMap = this.currentWorld.getCurrentTileMap();
         this.currentEntities[1] = currentMap.BLOCKS;
         this.currentEntities[2] = currentMap.ENEMIES;
@@ -168,8 +174,7 @@ class GameEngine {
             }
         } else if (this.newMsg) {
             this.UI.parseMessage(); // encodes string to numeric keys to index letter font sprite sheet
-        } else if (this.newTransaction)
-        {
+        } else if (this.newTransaction) {
             this.UI.parseTransaction();
         }else {
             // Entities are now movable around the map
@@ -283,6 +288,15 @@ class GameEngine {
         this.HERO.futureHitbox.yMax = this.HERO.hitbox.yMax;
         this.changeEntitiesToCurrent();
         this.currentEntities[2].forEach(enemy => enemy.reset());
+        if (this.currentWorld === this.WORLDS["openworld"]) {
+            overworldMusic.stop();
+            necroMusic.stop();
+            this.currentMusicID = overworldMusic.play();
+        } else if (this.currentWorld === this.WORLDS["necro"]) {
+            overworldMusic.stop();
+            necroMusic.stop();
+            this.currentMusicID = necroMusic.play();
+        }
     }
 
     /**
