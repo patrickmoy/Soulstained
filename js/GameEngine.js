@@ -6,7 +6,6 @@ var deathMusic = new Howl({src: ['./res/sound/sh_spooky.mp3']});
  * Copied from Seth Ladd's Game Development Talk on Google IO 2011
  * Modified to work with our game.
  */
-
 // Requests the browser for when animation frame is ready.
 window.requestAnimFrame = (function () {
     return window.requestAnimationFrame ||
