@@ -1,5 +1,4 @@
-console.log("MOSHI");
-console.log("MOSHI MOSHI");
+console.log("Code has started running")
 const AssetHandler = new AssetManager();
 AssetHandler.queueImage('./res/img/worlds/testBossRoom.png');
 AssetHandler.queueImage('./res/img/worlds/testBossRoom2.png');
