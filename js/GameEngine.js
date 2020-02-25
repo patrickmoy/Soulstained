@@ -38,6 +38,7 @@ class GameEngine {
             "Space": false,
             "Enter": false
         };
+        this.gateTriggers = [];
         this.transition = false; // When transitioning is happening
         this.inInventory = false; // When player is in his inventory
         this.pause = false; // Pauses other actions while we switch to a new map.
@@ -103,7 +104,7 @@ class GameEngine {
         });
         // If button is lifted from press and the button is a key we care about, set it to false.
         this.GAME_CONTEXT.canvas.addEventListener("keyup", (key) => {
-            if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = false; // ! Interesting, when switching to modules, you no longer need self. You can just use this. Why? !
+            if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = false;
         });
 
         console.log('Game initialized');
@@ -150,6 +151,7 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
+        console.log(this.gateTriggers);
         this.UI.update();
         if (this.inInventory) // Player is in inventory so perform inventory actions.
         {

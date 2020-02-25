@@ -2,6 +2,17 @@ var coinPickup = new Howl({src: ['./res/sound/coinPickup.mp3']});
 var heartPickup = new Howl({src: ['./res/sound/heartPickup.mp3'], volume: 0.5});
 
 class InvisibleBlock extends Entity {
+
+    /**
+     * Removes this entity/block from the BLOCKS array.
+     */
+    deleteSelf() {
+        const index = this.game.currentEntities[1].indexOf(this);
+        if (index > -1) {
+            this.game.currentEntities[1].splice(index);
+        }
+    }
+
 }
 
 class Block extends InvisibleBlock {
@@ -23,59 +34,62 @@ class Block extends InvisibleBlock {
 
 class Lock extends InvisibleBlock {
 
-    constructor(game, spritesheet, x, y, width, height, strength, face) {
-        super(game, spritesheet, x, y, width, height);
+    constructor(game, lockSprite, bossLockSprite, x, y, width, height, face, strength) {
+        super(game, x, y, width, height);
         this.strength = strength;
         this.face = face;
+        this.context = game.GAME_CONTEXT;
+        this.spritesheet = undefined;
         if (this.strength === 'smallkey') {
-            // set spritesheet to small lock
-        } else if (this.strength === 'bosskey') {
-            // set sheet to big lock
+            this.spritesheet = lockSprite;
+        } else if (this.strength === 'boss') {
+            this.spritesheet = bossLockSprite;
         }
-        this.animation = new Animation(spritesheet, this, 16, 16, .1, 2.4, [0]);
         this.alive = true;
         this.opened = false;
     }
 
 
-    preUpdate() {
-        if (this.strength === 'smallkey') {
-            this.checkValidSmallKey();
-            // set spritesheet to small lock
-        } else if (this.strength === 'bosskey') {
-            // set sheet to big lock
-            this.checkValidBossKey();
+    update() {
+        if (this.pushUnlock) {
+            if (this.strength === 'smallkey') {
+                if (this.game.HERO.smallKeys >= 1) {
+                    this.game.HERO.smallKeys--;
+                    this.deleteSelf();
+                }
+            }
+        } else if (this.strength === 'boss') {
+            if (this.game.HERO.hasBossKey) {
+                this.deleteSelf();
+            }
         }
-
     }
 
     draw() {
-
-        if (!this.game.pause && this.opened === false) {
-            this.context.beginPath();
-            this.context.stroke();
-            this.animation.drawFrame(this.game.clockTick, this.context, this.x, this.y, "walking", 0);
-
-        }
-    }
-
-    checkValidSmallKey() {
-
-        if (this.game.HERO.checkSmallKeyInventory().length > 0) {
-
-            this.opened = true;
-            delete this.game.HERO.key[this.game.HERO.smallKeyCounter];
-            this.game.HERO.smallKeyCounter--;
-        }
-    }
-
-    checkValidBossKey() {
-
-        if (this.game.HERO.checkBossKeyInventory().length > 0) {
-
-            this.opened = true;
-            delete this.game.HERO.key[this.game.HERO.bossKeyCounter];
-            this.game.HERO.bossKeyCounter--;
+        if (this.strength === 'smallkey') {
+            let xIndex;
+            switch (this.face) {
+                case 'NORTH':
+                    xIndex = 0;
+                    break;
+                case 'SOUTH':
+                    xIndex = 1;
+                    break;
+                case 'WEST':
+                    xIndex = 2;
+                    break;
+                case 'EAST':
+                    xIndex = 3;
+                    break;
+                default:
+                    xIndex = 1;
+                    break;
+            }
+            this.context.drawImage(this.spritesheet, xIndex * 16, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
+                60, 60)
+        } else if (this.strength === 'bosskey') {
+            this.context.drawImage(this.spritesheet, 0, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
+                60, 60)
         }
     }
 
