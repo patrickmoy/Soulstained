@@ -1749,7 +1749,7 @@
       "x": 144,
       "y": 128,
       "customProperties": {
-        "direction": "north"
+        "direction": "NORTH"
       }
     },
     {

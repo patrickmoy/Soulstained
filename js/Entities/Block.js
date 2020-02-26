@@ -27,7 +27,7 @@ class Block extends InvisibleBlock {
     }
 
     draw() {
-        if (!this.game.pause) this.animation.drawFrame(this.game.clockTick, this.context, this.x, this.y, 'walking', 0);
+        if (!this.game.pause) this.animation.drawFrame(this.game.clockTick, this.context, this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR), this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
     }
 }
 
@@ -42,7 +42,8 @@ class Lock extends InvisibleBlock {
         this.spritesheet = undefined;
         if (this.strength === 'smallkey') {
             this.spritesheet = lockSprite;
-        } else if (this.strength === 'boss') {
+        }
+        else if (this.strength === 'boss') {
             this.spritesheet = bossLockSprite;
         }
         this.alive = true;
@@ -58,7 +59,8 @@ class Lock extends InvisibleBlock {
                     this.deleteSelf();
                 }
             }
-        } else if (this.strength === 'boss') {
+        }
+        else if (this.strength === 'boss') {
             if (this.game.HERO.hasBossKey) {
                 this.deleteSelf();
             }
@@ -87,7 +89,8 @@ class Lock extends InvisibleBlock {
             }
             this.context.drawImage(this.spritesheet, xIndex * 16, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
                 60, 60)
-        } else if (this.strength === 'bosskey') {
+        }
+        else if (this.strength === 'bosskey') {
             this.context.drawImage(this.spritesheet, 0, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
                 60, 60)
         }
@@ -104,6 +107,22 @@ class DestructibleBlock
         this.item = item;
         this.alive = true;
         if (!item) this.randomizeItems()
+    }
+
+    eventWalk() {
+        if (this.hitbox.xMin < this.originalHitbox.xMin) {
+            this.hitbox.xMin += this.game.GAME_CONTEXT.canvas.width / (this.game.currentWorld.SIZE / this.game.currentWorld.SOURCE_SHIFT);
+        }
+        else if (this.hitbox.xMin > this.originalHitbox.xMin) {
+            this.hitbox.xMin -= this.game.GAME_CONTEXT.canvas.width / (this.game.currentWorld.SIZE / this.game.currentWorld.SOURCE_SHIFT);
+        }
+
+        if (this.hitbox.yMin < this.originalHitbox.yMin) {
+            this.hitbox.yMin += this.game.GAME_CONTEXT.canvas.height / (this.game.currentWorld.SIZE / this.game.currentWorld.SOURCE_SHIFT);
+        }
+        else if (this.hitbox.yMin > this.originalHitbox.yMin) {
+            this.hitbox.yMin -= this.game.GAME_CONTEXT.canvas.height / (this.game.currentWorld.SIZE / this.game.currentWorld.SOURCE_SHIFT);
+        }
     }
 
     update() {

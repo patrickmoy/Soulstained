@@ -75,16 +75,21 @@ class GameEngine {
         this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
         // hero initialization
-        this.HERO = new Hero(this, this.ASSETS_LIST["./res/img/hero_extra.png"], this.ASSETS_LIST["./res/img/whip.png"]);
+        this.HERO = new Hero(this, this.ASSETS_LIST["./res/img/hero_extra.png"],
+            this.ASSETS_LIST["./res/img/whip.png"]);
         // push hero to currentEntities
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
 
         // Create the worlds
-        this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
-        this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
-        this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
-        this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
+        this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"],
+            this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
+        this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"],
+            this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
+        this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"],
+            this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
+        this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"],
+            this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
 
         //this.currentWorld = this.WORLDS["necro"];
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
@@ -151,34 +156,42 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
-        console.log(this.gateTriggers);
         this.UI.update();
         if (this.inInventory) // Player is in inventory so perform inventory actions.
         {
 
-        } else if (this.transition) // Transition is happening
+        }
+        else if (this.transition) // Transition is happening
         {
             this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
             this.HERO.eventWalk(); // Moves the player when transitioning is happening
-        } else if (this.pause) {
+            this.currentEntities[5].filter(destructible => destructible instanceof DestructibleBlock).forEach(destructible => destructible.eventWalk());
+        }
+        else if (this.pause) {
             if (this.displayMessage) {
                 // PAUSE FOR MESSAGE
-            } else if (this.inInventory) {
+            }
+            else if (this.inInventory) {
                 // PAUSE FOR INVENTORY
-            } else if (this.displayTransaction) {
+            }
+            else if (this.displayTransaction) {
                 // PAUSE FOR TRANSACTION
-            }else {
+            }
+            else {
                 // PAUSE FOR PORTAL
                 this.currentWorld.fade();
                 if (!this.pause) {
                     this.transposeWorlds();
                 }
             }
-        } else if (this.newMsg) {
+        }
+        else if (this.newMsg) {
             this.UI.parseMessage(); // encodes string to numeric keys to index letter font sprite sheet
-        } else if (this.newTransaction) {
+        }
+        else if (this.newTransaction) {
             this.UI.parseTransaction();
-        }else {
+        }
+        else {
             // Entities are now movable around the map
             // Reset all behavior flags for all entities. Can be expanded/diversified
             resetFlags(this.currentEntities[0]);
@@ -193,20 +206,24 @@ class GameEngine {
             this.currentEntities[2].forEach(enemy => enemy.preUpdate());
             this.currentEntities[3].forEach(projectile => projectile.preUpdate());
 
-            const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2]).filter(entity => entity.alive);
+            const heroAndMobs = [this.currentEntities[0][0]].concat(this.currentEntities[2])
+                .filter(entity => entity.alive);
 
             // Hero and enemies vs. blocks
-            const creatureToBlockCollisions = detectCollide(heroAndMobs, this.currentEntities[1].concat(this.currentEntities[4], this.currentEntities[5]));
+            const creatureToBlockCollisions = detectCollide(heroAndMobs,
+                this.currentEntities[1].concat(this.currentEntities[4], this.currentEntities[5]));
 
             // Weapon vs enemies causes momentary flinching
-            const flinchEffect = detectCollide(this.currentEntities[0].filter(entity => entity.active), this.currentEntities[2]);
+            const flinchEffect = detectCollide(this.currentEntities[0].filter(entity => entity.active),
+                this.currentEntities[2]);
 
             // Hero vs enemies
             const damageCollisions = detectCollide(this.currentEntities[0],
                 this.currentEntities[2].concat(this.currentEntities[3], this.currentEntities[5]));
 
             // Hero vs pickups
-            const pickups = detectCollide([this.currentEntities[0][0]], this.currentEntities[5].filter(destroy => destroy instanceof Pickup));
+            const pickups = detectCollide([this.currentEntities[0][0]],
+                this.currentEntities[5].filter(destroy => destroy instanceof Pickup));
             // Flags entities for standard "impassable" behavior (mostly terrain)
             flagGravitate(creatureToBlockCollisions);
             flagImpassable(creatureToBlockCollisions);
@@ -221,7 +238,9 @@ class GameEngine {
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.update());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
             this.currentEntities[3].forEach(projectile => projectile.update());
-            this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
+            this.currentEntities[3] = this.currentEntities[3].filter(
+                projectile => !projectile.projectileNotOnScreen() ||
+                    this.currentEntities[3].every(projectile => projectile.alive === false));
             this.currentEntities[5].forEach(destructible => destructible.update());
 
 
@@ -246,14 +265,17 @@ class GameEngine {
         {
             this.currentWorld.section.x += currentBorder.changeInX; // Change the x coordinate for the tilemap array
             this.currentWorld.section.y += currentBorder.changeInY; // Change the y coordinate for the tilemap array
-            if (this.currentWorld.getCurrentTileMap())
-            {
+            if (this.currentWorld.getCurrentTileMap()) {
                 this.changeEntitiesToCurrent();
                 this.currentEntities[2].forEach(enemy => enemy.resetPosition());
+                this.currentEntities[5].filter(destructible => destructible.alive).forEach(destructible => {
+                    // This is due to how changeInX and changeInY are column row order...
+                    destructible.hitbox.xMin += this.GAME_CONTEXT.canvas.width * currentBorder.changeInY;
+                    destructible.hitbox.yMin += this.GAME_CONTEXT.canvas.height * currentBorder.changeInX;
+                });
                 this.transition = true; // Game Engine and other necessary components is now performing transition action
             }
-            else
-            {
+            else {
                 this.currentWorld.section.x -= currentBorder.changeInX; // Change the x coordinate for the tilemap array
                 this.currentWorld.section.y -= currentBorder.changeInY; // Change the y coordinate for the tilemap array
                 this.HERO.pushUpdate = false;
@@ -303,7 +325,8 @@ class GameEngine {
             overworldMusic.stop();
             necroMusic.stop();
             this.currentMusicID = overworldMusic.play();
-        } else if (this.currentWorld === this.WORLDS["necro"]) {
+        }
+        else if (this.currentWorld === this.WORLDS["necro"]) {
             overworldMusic.stop();
             necroMusic.stop();
             this.currentMusicID = necroMusic.play();
@@ -335,16 +358,21 @@ class GameEngine {
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw());
-            this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
+            this.currentEntities[3] = this.currentEntities[3].filter(
+                projectile => !projectile.projectileNotOnScreen() ||
+                    this.currentEntities[3].every(projectile => projectile.alive === false));
             this.drawHits();
             this.drawDeaths();
             this.currentWorld.drawLayer();
             this.UI.draw();
             this.GAME_CONTEXT.restore();
-        } else { // Transition is handled here
+        }
+        else {
+            // Transition is handled here
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
+            this.currentEntities[5].filter(destructible => destructible instanceof DestructibleBlock).forEach(destructible => destructible.draw());
             this.currentEntities[0][0].draw();
             this.currentWorld.drawLayer();
             this.UI.draw();
@@ -355,7 +383,8 @@ class GameEngine {
     drawHits() {
         for (var i = 0; i < this.HitQueue.length; i++) {
             this.HitQueue[i].counter -= 1;
-            this.HitQueue[i].spritesheet.drawFrame(this.clockTick, this.GAME_CONTEXT, this.HitQueue[i].dx, this.HitQueue[i].dy, "walking");
+            this.HitQueue[i].spritesheet.drawFrame(this.clockTick, this.GAME_CONTEXT, this.HitQueue[i].dx,
+                this.HitQueue[i].dy, "walking");
         }
         this.HitQueue = this.HitQueue.filter(element => element.counter > 0);
     }
@@ -363,7 +392,8 @@ class GameEngine {
     drawDeaths() {
         for (var i = 0; i < this.DeathQueue.length; i++) {
             this.DeathQueue[i].counter -= 1;
-            this.DeathQueue[i].spritesheet.drawFrame(this.clockTick, this.GAME_CONTEXT, this.DeathQueue[i].dx, this.DeathQueue[i].dy, "walking");
+            this.DeathQueue[i].spritesheet.drawFrame(this.clockTick, this.GAME_CONTEXT, this.DeathQueue[i].dx,
+                this.DeathQueue[i].dy, "walking");
         }
         this.DeathQueue = this.DeathQueue.filter(element => element.counter > 0);
     }
