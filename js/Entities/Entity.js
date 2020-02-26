@@ -93,7 +93,7 @@ class Entity {
         }
         if (this.pushDamage && !(this instanceof Hero)) {
             var hitSprite = new Animation(this.game.ASSETS_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
-            var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 5, spritesheet: hitSprite};
+            var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 10, spritesheet: hitSprite};
             this.game.HitQueue.push(hitObject);
         }
         if (this.falling) {
@@ -133,7 +133,7 @@ class Entity {
             var deathObject = {
                 dx: this.hitbox.xMin,
                 dy: this.hitbox.yMin,
-                counter: 50,
+                counter: 40,
                 entity: this,
                 spritesheet: deathSprite
             };

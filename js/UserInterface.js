@@ -74,7 +74,7 @@ class UserInterface {
             if (i === 2) this.d100 = digit * 49.5;
         }
         // User presses the return key to switch the game state to Inventory
-        if (this.game.INPUTS["Enter"]) {
+        if (!this.game.displayHomeScreen && this.game.INPUTS["Enter"]) {
             this.game.pause = true;
             this.game.inInventory = true;
             this.game.INPUTS["Enter"] = false;
@@ -166,6 +166,14 @@ class UserInterface {
                 this.game.pause = false;
                 this.game.displayMessage = false;
                 this.msgEncoded = [];
+            }
+        }
+
+        if (this.game.pause && this.game.displayHomeScreen) {
+            if (this.game.INPUTS["KeyK"]) {
+                this.game.INPUTS["KeyK"] = false;
+                this.game.pause = false;
+                this.game.displayHomeScreen = false;
             }
         }
         // PROCESS TRANSACTION AND RETURN TO THE GAME
@@ -318,7 +326,7 @@ class UserInterface {
         var bottomMargin = 480;
 
         // Message Display "Board" is a transparent black rectangle for now
-        this.ctx.globalAlpha = 0.8;
+        this.ctx.globalAlpha = 0.9;
         this.ctx.fillStyle = 'black';
         this.ctx.fillRect(leftMargin - 20, topMargin - 20, 520, 280);
 
@@ -351,7 +359,7 @@ class UserInterface {
         var topMargin = 240;
         var bottomMargin = 480;
 
-        this.ctx.globalAlpha = 0.8;
+        this.ctx.globalAlpha = 0.9;
         this.ctx.fillStyle = 'black';
         this.ctx.fillRect(leftMargin - 20, topMargin - 20, 520, 280);
 
@@ -589,6 +597,45 @@ class UserInterface {
         }
     }
 
+    displayHomeScreen() {
+        // Message Display "Board" coordinates and dimensions
+        var dx = 120;
+        var dy = 240;
+        var width = 60;
+        var height = 60;
+        var step = 60;  // for sprite sheet
+        var leftMargin = 120;
+        var rightMargin = 600;
+        var topMargin = 240;
+        var bottomMargin = 480;
+
+        // Message Display "Board" is a transparent black rectangle for now
+        this.ctx.globalAlpha = 0.9;
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillRect(leftMargin - 20, topMargin - 20, 520, 280);
+
+        var homeScreenMessage = "HOW TO PLAY SOUL STAINED\n\n\n\n" +
+            "Use WASD keys to control your movement\n\n" +
+            "USE J AND K KEYS TO ATTACK AND ALSO\n\n" +
+            "TO SELECT MENU OPTIONS OR EXIT\n\n" +
+            "USE RETURN KEY TO ACCESS INVENTORY";
+
+        var msgEncoded = this.parse(homeScreenMessage);
+
+        for (var i = 0; i < msgEncoded.length; i++) {
+            var ch = msgEncoded[i];
+            if (ch === 30) {
+                dy += 13;
+                dx = leftMargin;
+            } else if (ch === 29) {
+                dx += 12;
+            } else {
+                this.ctx.drawImage(this.lettersFontImage, ch * step, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+    }
+
     draw() {
 
         /**
@@ -643,7 +690,6 @@ class UserInterface {
 
         if (this.hero.equipJ !== "empty") {
             var weaponJ = "./res/img/" + this.hero.equipJ + "UI.png";
-            console.log(weaponJ);
             this.ctx.drawImage(this.images[weaponJ], 0, 0, 30, 30, 570, 0, 60, 60);
         }
         if (this.hero.equipK !== "empty") {
@@ -664,7 +710,13 @@ class UserInterface {
 
         // draw inventory
         if (this.game.pause && this.game.inInventory) {
+            console.log("inventory draw");
             this.displayInventory();
+        }
+
+        if (this.game.pause && this.game.displayHomeScreen) {
+            console.log("home screen draw");
+            this.displayHomeScreen();
         }
 
     }
