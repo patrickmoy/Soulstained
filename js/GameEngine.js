@@ -151,7 +151,7 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
-        console.log(this.gateTriggers);
+        //console.log(this.gateTriggers);
         this.UI.update();
         // NESTING THE IF INVENTORY CLAUSE INSIDE THE IF PAUSE CLAUSE
         if (this.transition) // Transition is happening

@@ -11,6 +11,8 @@ AssetHandler.queueImage("./res/img/worlds/cavebasic2.png");
 AssetHandler.queueImage("./res/img/worlds/bluehouse.png");
 AssetHandler.queueImage("./res/img/worlds/bluehouse2.png");
 AssetHandler.queueImage("./res/img/hero.png");
+AssetHandler.queueImage("./res/img/upgrade-bar.png");
+AssetHandler.queueImage("./res/img/blinking-dot.png");
 AssetHandler.queueImage("./res/img/smallchest.png");
 AssetHandler.queueImage("./res/img/bigchest.png");
 AssetHandler.queueImage("./res/img/smallkey.png");

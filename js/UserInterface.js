@@ -11,10 +11,12 @@ class UserInterface {
         this.heartImage = this.images["./res/img/heart.png"];
         this.digitsFontImage = this.images["./res/img/digits.png"];
         this.lettersFontImage = this.images["./res/img/letters.png"];
+        this.upgradeBarImage = this.images["./res/img/upgrade-bar.png"];
         this.keyJImage = this.images["./res/img/keyJ.png"];
         this.keyKImage = this.images["./res/img/keyK.png"];
         this.swordPrototype = this.images["./res/img/swordPrototype.png"];
         this.whipPrototype = this.images["./res/img/whipPrototype.png"];
+        this.cursor = this.images["./res/img/blinking-dot.png"];
 
         // HERO's health and currency properties
         this.health;
@@ -39,6 +41,16 @@ class UserInterface {
          * if browse press j -> select
          * if select press j -> pay
          */
+
+        // variables for managing weapon swapping
+        // relevant properties from hero
+        // >>>>> this.hero.inventory, this.hero.equipJ, this.hero.equipK
+        this.availableWeapons = [];
+        this.currentJ;
+        this.currentK;
+        this.cursorX = 120 + 216 + 60 + 120;
+        this.cursorY = 305; // 305 or 324
+        this.cursorSX = 0;  // for indexing sprite sheet
     }
 
     update() {
@@ -56,16 +68,44 @@ class UserInterface {
             if (i === 2) this.d100 = digit * 49.5;
         }
 
-        // Inventory
+        // User presses the return key to switch the game state to Inventory
         if (this.game.INPUTS["Enter"]) {
             this.game.pause = true;
             this.game.inInventory = true;
             this.game.INPUTS["Enter"] = false;
         }
 
+        // EXIT INVENTORY AND RETURN TO THE GAME
+        if (this.game.pause && this.game.inInventory) {
+            if (this.game.INPUTS["KeyK"]) {
+                this.game.pause = false;
+                this.game.inInventory = false;
+            }
+
+            if (this.cursorSX === 0) {
+                this.cursorSX = 12;
+            } else {
+                this.cursorSX = 0;
+            }
+
+            // INVENTORY OPERATIONS
+            this.currentJ = this.hero.equipJ;
+            this.currentK = this.hero.equipK;
+            this.availableWeapons = this.hero.inventory.filter(weapon => weapon !== this.hero.equipJ || weapon !== this.hero.equipK);
+
+
+
+
+
+
+
+
+        }
+
         // EXIT MESSAGE AND RETURN TO THE GAME
         if (this.game.pause && this.game.displayMessage) {
             if (this.game.INPUTS["KeyK"]) {
+                this.game.INPUTS["KeyK"] = false;
                 this.game.pause = false;
                 this.game.displayMessage = false;
                 this.msgEncoded = [];
@@ -348,9 +388,146 @@ class UserInterface {
         var topMargin = 240;
         var bottomMargin = 480;
 
-        this.ctx.globalAlpha = 0.8;
+        this.ctx.globalAlpha = 0.95;
         this.ctx.fillStyle = 'black';
         this.ctx.fillRect(leftMargin - 20, topMargin - 20, 520, 280);
+
+        // draw word "inventory" center-aligned on the first line
+        dx += 186;
+        var self = this;
+        var wordInventory = this.parse("INVENTORY");
+        wordInventory.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex*step, 0, 60, 60, dx, dy, 12, 12);
+            dx+=12;
+        });
+
+        // 3 newlines and carriage return
+        dy += 39;
+        dx = 120;
+        // 2 space characters, each character's width 12px
+        dx += 24;
+        // draw words "weapon selection" left-aligned (col1)
+        var wordWeaponSelection = this.parse("WEAPON SELECTION");
+        wordWeaponSelection.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex*step, 0, 60, 60, dx, dy, 12, 12);
+            dx+=12;
+        });
+
+        // 2 newlines and a carriage return
+        dy += 26;
+        dx = 120;
+        // 8 space characters
+        dx += 96;
+        // draw words "Key J Slot" left-aligned (col1)
+        var wordKeyJSlot = this.parse("KEY J SLOT");
+        wordKeyJSlot.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex*step, 0, 60, 60, dx, dy, 12, 12);
+            dx += 12;
+        });
+
+        // 1 newline (1.5 line spacing) and a carriage return
+        dy += 19;
+        dx = 120;
+        // 8 space characters
+        dx += 96;
+        // draw words "Key K Slot" left-aligned (col1)
+        var wordKeyKSlot = this.parse("KEY K SLOT");
+        wordKeyKSlot.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex*step, 0, 60, 60, dx, dy, 12, 12);
+            dx += 12;
+        });
+
+        // 2 newlines and carriage return
+        dy += 52;
+        dx = 120;
+        // 3 space characters
+        dx += 36;
+        // draw words "weapon upgrades" left-aligned (col1)
+        var wordWeaponUpgrades = this.parse("WEAPON UPGRADES");
+        wordWeaponUpgrades.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex*step, 0, 60, 60, dx, dy, 12, 12);
+            dx+=12;
+        });
+
+        // col1 left-alignment rules
+        // the width of the spacing and characters must sum to 216
+        // 216 => 18 "characters"
+        // 2 newlines and a carriage return
+
+        dy += 26;
+        dx = 120;
+        var wordWhip = this.parse("              WHIP");
+        wordWhip.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
+            dx += 12;
+        });
+
+        // 1 newline (1.5 line spacing) and a carriage return
+        dy += 19;
+        dx = 120;
+        var wordBow = this.parse("               BOW");
+        wordBow.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
+            dx += 12;
+        });
+
+        // 1 newline (1.5 line spacing) and a carriage return
+        dy += 19;
+        dx = 120;
+        var wordBow = this.parse("          WEAPON C");
+        wordBow.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
+            dx += 12;
+        });
+
+        // 1 newline (1.5 line spacing) and a carriage return
+        dy += 19;
+        dx = 120;
+        var wordBow = this.parse("          WEAPON D");
+        wordBow.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
+            dx += 12;
+        });
+
+        // COLUMN 2
+        // dx = 120 + 216 + W
+        // KEY J SLOT dy = 305
+        // KEY K SLOT dy = 324
+        // WHIP dy = 402
+        // BOW dy = 421
+        // WEAPON C  dy = 440
+        // WEAPON D dy = 459
+
+        // weapon selection
+        // KEY J SELECTION
+        dx = 120 + 216 + 60;
+        dy = 305;
+        var wordCurrentJ = this.parse(this.currentJ);
+        wordCurrentJ.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
+            dx += 12;
+        });
+
+        // KEY K SELECTION
+        dx = 120 + 216 + 60;
+        dy = 324;
+        var wordCurrentK = this.parse(this.currentK);
+        wordCurrentK.forEach(function(letterIndex) {
+            self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
+            dx += 12;
+        });
+
+        // DRAW CURSOR
+        this.ctx.drawImage(this.cursor, this.sx, 0, 12, 12, this.cursorX, this.cursorY, 12, 12);
+
+        // upgrade bars - sprite sheet step is 141, dimensions 846 x 13
+        dx = 120 + 216 + 60;
+        dy = 402;
+        for (var i = 0; i < 4; i++) {
+            var lvl = this.hero.upgrades[i];
+            this.ctx.drawImage(this.upgradeBarImage, lvl*141, 0, 141, 13, dx, dy, 141, 13);
+            dy += 19;
+        }
     }
 
     draw() {
