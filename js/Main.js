@@ -40,8 +40,6 @@ AssetHandler.queueImage("./res/img/keyJ.png");
 AssetHandler.queueImage("./res/img/keyK.png");
 AssetHandler.queueImage('./res/img/crate.png');
 AssetHandler.queueImage('./res/img/chest.png');
-AssetHandler.queueImage("./res/img/whipPrototype.png");
-AssetHandler.queueImage("./res/img/swordPrototype.png");
 AssetHandler.queueImage("./res/img/fountainAnimation.png");
 AssetHandler.queueImage("./res/img/worm.png");
 AssetHandler.queueImage("./res/img/flower.png");
