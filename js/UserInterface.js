@@ -56,6 +56,13 @@ class UserInterface {
             if (i === 2) this.d100 = digit * 49.5;
         }
 
+        // Inventory
+        if (this.game.INPUTS["Enter"]) {
+            this.game.pause = true;
+            this.game.inInventory = true;
+            this.game.INPUTS["Enter"] = false;
+        }
+
         // EXIT MESSAGE AND RETURN TO THE GAME
         if (this.game.pause && this.game.displayMessage) {
             if (this.game.INPUTS["KeyK"]) {
@@ -329,6 +336,10 @@ class UserInterface {
         this.ctx.strokeRect(140, this.selectionBoxY, 48, 48);
     }
 
+    displayInventory() {
+
+    }
+
     draw() {
         /**
          * draw hearts
@@ -361,8 +372,15 @@ class UserInterface {
             this.displayMessage();
         }
 
+        // draw transaction
         if (this.game.pause && this.game.displayTransaction) {
             this.displayTransaction();
         }
+
+        // draw inventory
+        if (this.game.pause && this.game.inInventory) {
+            this.displayInventory();
+        }
+
     }
 }

@@ -170,11 +170,9 @@ class Crab extends Enemy {
     }
 
     draw() {
-        if (!this.game.pause) {
-            this.spritesheet.drawFrame(this.game.clockTick, this.context,
-                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking');
-        }
+        this.spritesheet.drawFrame(this.game.clockTick, this.context,
+            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking');
     }
 }
 
@@ -222,14 +220,12 @@ class Zombie extends Enemy {
     }
 
     draw() {
-        if (!this.game.pause) {
-            this.context.beginPath();
-            this.context.rect(this.x, this.y, this.width, this.height);
-            this.context.stroke();
-            this.animation.drawFrame(this.game.clockTick, this.context,
-                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status);
-        }
+        this.context.beginPath();
+        this.context.rect(this.x, this.y, this.width, this.height);
+        this.context.stroke();
+        this.animation.drawFrame(this.game.clockTick, this.context,
+            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status);
     }
 }
 
@@ -423,14 +419,12 @@ class Knight
     }
 
     draw() {
-        if (!this.game.pause) {
-            this.context.beginPath();
-            this.context.rect(this.x, this.y, this.width, this.height);
-            this.context.stroke();
-            this.animation.drawFrame(this.game.clockTick, this.context,
-                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status);
-        }
+        this.context.beginPath();
+        this.context.rect(this.x, this.y, this.width, this.height);
+        this.context.stroke();
+        this.animation.drawFrame(this.game.clockTick, this.context,
+            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status);
     }
 
 }
@@ -480,21 +474,20 @@ class Sniper extends Enemy {
     draw() {
 
 
-        if (!this.game.pause && this.position === "NORTH") {
+        if (this.position === "NORTH") {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
-        } else if (!this.game.pause && this.position === "EAST") {
-
+        } else if (this.position === "EAST") {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 2);
-        } else if (!this.game.pause && this.position === "WEST") {
+        } else if (this.position === "WEST") {
 
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 3);
-        } else if (!this.game.pause && this.position === "SOUTH") {
+        } else if (this.position === "SOUTH") {
 
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),

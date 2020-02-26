@@ -153,10 +153,8 @@ class GameEngine {
     update() {
         console.log(this.gateTriggers);
         this.UI.update();
-        if (this.inInventory) // Player is in inventory so perform inventory actions.
-        {
-
-        } else if (this.transition) // Transition is happening
+        // NESTING THE IF INVENTORY CLAUSE INSIDE THE IF PAUSE CLAUSE
+        if (this.transition) // Transition is happening
         {
             this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
             this.HERO.eventWalk(); // Moves the player when transitioning is happening

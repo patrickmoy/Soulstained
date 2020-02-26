@@ -128,7 +128,7 @@ class Hero extends Entity {
      * Draws the hero.
      */
     draw() {
-        if (!this.game.pause && !this.hurting) {
+        if (!this.hurting) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
