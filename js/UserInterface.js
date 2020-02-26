@@ -337,7 +337,20 @@ class UserInterface {
     }
 
     displayInventory() {
+        // Message board dimensions
+        var dx =  120;
+        var dy = 240;
+        var width = 60;
+        var height = 60;
+        var step = 60;  // for font sprite sheet
+        var leftMargin = 120;
+        var rightMargin = 600;
+        var topMargin = 240;
+        var bottomMargin = 480;
 
+        this.ctx.globalAlpha = 0.8;
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillRect(leftMargin - 20, topMargin - 20, 520, 280);
     }
 
     draw() {

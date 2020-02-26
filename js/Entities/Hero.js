@@ -223,26 +223,4 @@ class Hero extends Entity {
     beingUsed(itemName) {
         return (this.equipJ === itemName && this.game.INPUTS["KeyJ"]) || (this.equipK === itemName && this.game.INPUTS["KeyK"]);
     }
-
-    checkSmallKeyInventory() {
-
-        let smallKeyCount = Object.keys(this.key).length;
-
-    }
-    checkBossKeyInventory() {
-
-        let bossKeyCount = Object.keys(this.bossKey).length;
-    }
-    acquireSmallKey() {
-
-        this.key[this.smallKeyCounter] = 'key';
-        this.smallKeyCounter++;
-
-    }
-    acquireBossKey() {
-
-        this.key[this.bossKeyCounter] = 'Bkey';
-        this.bossKeyCounter++;
-
-    }
 }
