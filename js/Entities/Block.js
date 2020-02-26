@@ -27,7 +27,7 @@ class Block extends InvisibleBlock {
     }
 
     draw() {
-        if (!this.game.pause) this.animation.drawFrame(this.game.clockTick, this.context, this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR), this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
+        this.animation.drawFrame(this.game.clockTick, this.context, this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR), this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
     }
 }
 
