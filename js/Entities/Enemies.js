@@ -54,8 +54,7 @@ class Enemy extends Entity {
                 this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
             }
             this.directionTime++;
-        }
-        else {
+        } else {
             this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
             this.directionTime = 0;
         }
@@ -258,6 +257,7 @@ class Necromancer
     }
 
     preUpdate() {
+        this.spawnKnight();
         this.count += this.game.clockTick;
         this.actionElapsedTime += this.game.clockTick;
 
@@ -280,15 +280,13 @@ class Necromancer
             this.tempCoordY = this.location[spot][1]; // Returns the y - coordinate to be used to determine where to spawn new projectile after teleport.
             this.attackAndSet();
 
-        }
-        else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
+        } else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
             this.count = 0;
 
             if (this.attackCount < 5) {
                 this.fireBallAttack();
                 this.attackCount++;
-            }
-            else if (this.attackCount === 4) {
+            } else if (this.attackCount === 4) {
 
                 this.teleportAnimation = true;
                 this.checkKnightCount();
@@ -304,19 +302,16 @@ class Necromancer
             if (this.actionElapsedTime >= 1.3) {
                 this.teleportMove = true;
                 this.actionElapsedTime = 0;
-            }
-            else {
+            } else {
                 this.animation.drawFrame(this.game.clockTick, this.context,
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                     this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
             }
-        }
-        else if (this.knightSpawned !== -1) {
+        } else if (this.knightSpawned !== -1) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 2);
-        }
-        else if (this.knightSpawned === -1 && this.isReadyToDie()) {
+        } else if (this.knightSpawned === -1 && this.isReadyToDie()) {
 
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -354,7 +349,7 @@ class Necromancer
 
             for (let i = 0; i < this.knightCount; i++) {
                 let rand = Math.floor(Math.random() * 600);
-                let min = 300;
+                let min = 500;
                 let max = 600;
                 let rand2 = Math.random() * (+max - +min) + +min;
                 let knight = new Knight(this.game, this.game.ASSETS_LIST["./res/img/knight.png"], rand, rand2, 60, 60);
@@ -362,8 +357,7 @@ class Necromancer
                 this.knightSpawned++;
                 this.totalSpawned++;
             }
-        }
-        else {
+        } else {
             this.knightSpawned = -1;
         }
     }
@@ -395,7 +389,6 @@ class Knight
         this.context = game.GAME_CONTEXT;
         this.speed = 100;
         this.count = 0;
-        this.detectRange = 250;
         this.alive = true;
 
     }
@@ -406,8 +399,7 @@ class Knight
             // Actually perform the zombie movement.
             this.followHero();
             this.movementCooldown = 5;
-        }
-        else {
+        } else {
             this.randomWalk(50, this.movementCooldown);
             if (this.movementCooldown > 0) this.movementCooldown--;
         }
@@ -426,13 +418,18 @@ class Knight
         return collide.length === 0; // Return if there was collision or not.
     }
 
+    // draw() {
+    //     this.context.beginPath();
+    //     this.context.rect(this.x, this.y, this.width, this.height);
+    //     this.context.stroke();
+    //     this.animation.drawFrame(this.game.clockTick, this.context,
+    //         this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+    //         this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status);
+    // }
     draw() {
-        this.context.beginPath();
-        this.context.rect(this.x, this.y, this.width, this.height);
-        this.context.stroke();
         this.animation.drawFrame(this.game.clockTick, this.context,
             this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status);
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
     }
 
 }
@@ -447,13 +444,13 @@ class Sniper extends Enemy {
         this.context = game.GAME_CONTEXT;
         this.position = position; // Variable to hold the direction the sniper is pointing.
         this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * 2), this.futureHitbox.yMin, this.position);
-        this.count= 0;
+        this.count = 0;
     }
 
     preUpdate() {
 
         this.count += this.game.clockTick;
-        if (!this.game.pause && this.count > 1.5) {
+        if (!this.game.pause && this.count > 3.0) {
             if (this.position === "SOUTH") {
                 this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * .33), this.futureHitbox.yMin + (this.width), this.position); //correct
                 this.game.currentEntities[3].push(this.arrow);
