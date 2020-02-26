@@ -151,14 +151,15 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
-        //console.log(this.gateTriggers);
         this.UI.update();
         // NESTING THE IF INVENTORY CLAUSE INSIDE THE IF PAUSE CLAUSE
         if (this.transition) // Transition is happening
         {
             this.currentWorld.update(); // Updates the current world with the new coordinates and also redraws them in the draw()
             this.HERO.eventWalk(); // Moves the player when transitioning is happening
-        } else if (this.pause) {
+            this.currentEntities[5].filter(destructible => destructible instanceof DestructibleBlock).forEach(destructible => destructible.eventWalk());
+        }
+        else if (this.pause) {
             if (this.displayMessage) {
                 // PAUSE FOR MESSAGE
             } else if (this.inInventory) {
@@ -244,14 +245,17 @@ class GameEngine {
         {
             this.currentWorld.section.x += currentBorder.changeInX; // Change the x coordinate for the tilemap array
             this.currentWorld.section.y += currentBorder.changeInY; // Change the y coordinate for the tilemap array
-            if (this.currentWorld.getCurrentTileMap())
-            {
+            if (this.currentWorld.getCurrentTileMap()) {
                 this.changeEntitiesToCurrent();
                 this.currentEntities[2].forEach(enemy => enemy.resetPosition());
+                this.currentEntities[5].filter(destructible => destructible.alive).forEach(destructible => {
+                    // This is due to how changeInX and changeInY are column row order...
+                    destructible.hitbox.xMin += this.GAME_CONTEXT.canvas.width * currentBorder.changeInY;
+                    destructible.hitbox.yMin += this.GAME_CONTEXT.canvas.height * currentBorder.changeInX;
+                });
                 this.transition = true; // Game Engine and other necessary components is now performing transition action
             }
-            else
-            {
+            else {
                 this.currentWorld.section.x -= currentBorder.changeInX; // Change the x coordinate for the tilemap array
                 this.currentWorld.section.y -= currentBorder.changeInY; // Change the y coordinate for the tilemap array
                 this.HERO.pushUpdate = false;
@@ -339,10 +343,13 @@ class GameEngine {
             this.currentWorld.drawLayer();
             this.UI.draw();
             this.GAME_CONTEXT.restore();
-        } else { // Transition is handled here
+        }
+        else {
+            // Transition is handled here
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
+            this.currentEntities[5].filter(destructible => destructible instanceof DestructibleBlock).forEach(destructible => destructible.draw());
             this.currentEntities[0][0].draw();
             this.currentWorld.drawLayer();
             this.UI.draw();

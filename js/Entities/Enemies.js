@@ -54,7 +54,8 @@ class Enemy extends Entity {
                 this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
             }
             this.directionTime++;
-        } else {
+        }
+        else {
             this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
             this.directionTime = 0;
         }
@@ -279,13 +280,15 @@ class Necromancer
             this.tempCoordY = this.location[spot][1]; // Returns the y - coordinate to be used to determine where to spawn new projectile after teleport.
             this.attackAndSet();
 
-        } else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
+        }
+        else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
             this.count = 0;
 
             if (this.attackCount < 5) {
                 this.fireBallAttack();
                 this.attackCount++;
-            } else if (this.attackCount === 4) {
+            }
+            else if (this.attackCount === 4) {
 
                 this.teleportAnimation = true;
                 this.checkKnightCount();
@@ -301,16 +304,19 @@ class Necromancer
             if (this.actionElapsedTime >= 1.3) {
                 this.teleportMove = true;
                 this.actionElapsedTime = 0;
-            } else {
+            }
+            else {
                 this.animation.drawFrame(this.game.clockTick, this.context,
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                     this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
             }
-        } else if (this.knightSpawned !== -1) {
+        }
+        else if (this.knightSpawned !== -1) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 2);
-        } else if (this.knightSpawned === -1 && this.isReadyToDie()) {
+        }
+        else if (this.knightSpawned === -1 && this.isReadyToDie()) {
 
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -356,7 +362,8 @@ class Necromancer
                 this.knightSpawned++;
                 this.totalSpawned++;
             }
-        } else {
+        }
+        else {
             this.knightSpawned = -1;
         }
     }
@@ -399,7 +406,8 @@ class Knight
             // Actually perform the zombie movement.
             this.followHero();
             this.movementCooldown = 5;
-        } else {
+        }
+        else {
             this.randomWalk(50, this.movementCooldown);
             if (this.movementCooldown > 0) this.movementCooldown--;
         }

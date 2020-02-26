@@ -1,7 +1,8 @@
 const jsonPath = (world = "", x = 0, y = 0) => {
     if (world === "") {
         return `./res/jsonderulo/section${x}_${y}.json`;
-    } else {
+    }
+    else {
         return `./res/jsonderulo/${world}_section${x}_${y}.json`;
     }
 };
@@ -27,7 +28,7 @@ class World {
         this.tileMaps = [[]];
 
         this.SOURCE_SHIFT = 3; // Shifting amount (in px) every update();
-        this.SIZE = 192; // Pixel width and height to represent one section.
+        this.SIZE = 192; // Pixel width and height to represent one section (image of a tilemap).
         this.sourceX = this.section.x * this.SIZE; // Used to update the sections position start.
         this.sourceY = this.section.y * this.SIZE;
         // attributes used for fade animations during world transport
@@ -47,13 +48,12 @@ class World {
     update() {
         const newSourceX = this.section.x * this.SIZE;
         const newSourceY = this.section.y * this.SIZE;
-        if (this.sourceX < newSourceX) this.sourceX += this.SOURCE_SHIFT; // Shift left since new X is on left
-        else if (this.sourceX > newSourceX) this.sourceX -= this.SOURCE_SHIFT; // Shift right since new X is on right
-        else if (this.sourceY < newSourceY) this.sourceY += this.SOURCE_SHIFT; // Shift down since new Y is on down
+        if (this.sourceX < newSourceX) this.sourceX += this.SOURCE_SHIFT;// Shift left since new X is on left
+        else if (this.sourceX > newSourceX) this.sourceX -= this.SOURCE_SHIFT;// Shift right since new X is on right
+        else if (this.sourceY < newSourceY) this.sourceY += this.SOURCE_SHIFT;// Shift down since new Y is on down
         else if (this.sourceY > newSourceY) this.sourceY -= this.SOURCE_SHIFT; // Shift up  since new Y is on up
 
         if (this.sourceX === newSourceX && this.sourceY === newSourceY) {
-
             this.GAME.transition = false;
             this.sx = this.sourceX;
             this.sy = this.sourceY;
@@ -99,7 +99,8 @@ class World {
         if (!this.GAME.pause) {
             this.CONTEXT.drawImage(this.WORLD_IMAGE, this.sourceY, this.sourceX, this.SIZE, this.SIZE, 0, 0,
                 this.CONTEXT.canvas.width, this.CONTEXT.canvas.height);
-        } else {
+        }
+        else {
             this.drawFade();
         }
     }
@@ -112,8 +113,10 @@ class World {
     }
 
     drawFade() {
-        this.CONTEXT.drawImage(this.WORLD_IMAGE, this.sy, this.sx, this.sWidth, this.sHeight, this.dx, this.dy, this.dWidth, this.dHeight);
-        this.CONTEXT.drawImage(this.layeredImage, this.sy, this.sx, this.sWidth, this.sHeight, this.dx, this.dy, this.dWidth, this.dHeight);
+        this.CONTEXT.drawImage(this.WORLD_IMAGE, this.sy, this.sx, this.sWidth, this.sHeight, this.dx, this.dy,
+            this.dWidth, this.dHeight);
+        this.CONTEXT.drawImage(this.layeredImage, this.sy, this.sx, this.sWidth, this.sHeight, this.dx, this.dy,
+            this.dWidth, this.dHeight);
     }
 
 }
@@ -132,14 +135,23 @@ class OpenWorld extends World {
         // Create a foundation for open world tile maps here. 3 x 5 TileMaps
         this.tileMaps =
             [
-                [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 3)]),
-                    new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 5)])],
+                [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 1)]), new TileMap(this.GAME,
+                    this.GAME.ASSETS_LIST[jsonPath("", 1, 2)]), new TileMap(this.GAME,
+                    this.GAME.ASSETS_LIST[jsonPath("", 1, 3)]),
+                    new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 1, 4)]), new TileMap(this.GAME,
+                    this.GAME.ASSETS_LIST[jsonPath("", 1, 5)])],
 
-                [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 3)]),
-                    new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 5)])],
+                [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 1)]), new TileMap(this.GAME,
+                    this.GAME.ASSETS_LIST[jsonPath("", 2, 2)]), new TileMap(this.GAME,
+                    this.GAME.ASSETS_LIST[jsonPath("", 2, 3)]),
+                    new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 2, 4)]), new TileMap(this.GAME,
+                    this.GAME.ASSETS_LIST[jsonPath("", 2, 5)])],
 
-                [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 1)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 2)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 3)]),
-                    new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 4)]), new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 5)])],
+                [new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 1)]), new TileMap(this.GAME,
+                    this.GAME.ASSETS_LIST[jsonPath("", 3, 2)]), new TileMap(this.GAME,
+                    this.GAME.ASSETS_LIST[jsonPath("", 3, 3)]),
+                    new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("", 3, 4)]), new TileMap(this.GAME,
+                    this.GAME.ASSETS_LIST[jsonPath("", 3, 5)])],
             ];
     }
 }
@@ -211,10 +223,5 @@ class NecroDungeon extends World {
 }
 
 class WolfDungeon extends World {
-    constructor(game, worldImage, sectionX, sectionY) {
-        super(game, worldImage, sectionX, sectionY);
 
-        // Creates tile maps for the wolf dungeon world. # x # Tilemaps
-        this.wolfTileMaps = [];
-    }
 }
