@@ -56,6 +56,13 @@ class UserInterface {
             if (i === 2) this.d100 = digit * 49.5;
         }
 
+        // Inventory
+        if (this.game.INPUTS["Enter"]) {
+            this.game.pause = true;
+            this.game.inInventory = true;
+            this.game.INPUTS["Enter"] = false;
+        }
+
         // EXIT MESSAGE AND RETURN TO THE GAME
         if (this.game.pause && this.game.displayMessage) {
             if (this.game.INPUTS["KeyK"]) {
@@ -329,6 +336,23 @@ class UserInterface {
         this.ctx.strokeRect(140, this.selectionBoxY, 48, 48);
     }
 
+    displayInventory() {
+        // Message board dimensions
+        var dx =  120;
+        var dy = 240;
+        var width = 60;
+        var height = 60;
+        var step = 60;  // for font sprite sheet
+        var leftMargin = 120;
+        var rightMargin = 600;
+        var topMargin = 240;
+        var bottomMargin = 480;
+
+        this.ctx.globalAlpha = 0.8;
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillRect(leftMargin - 20, topMargin - 20, 520, 280);
+    }
+
     draw() {
         /**
          * draw hearts
@@ -361,8 +385,15 @@ class UserInterface {
             this.displayMessage();
         }
 
+        // draw transaction
         if (this.game.pause && this.game.displayTransaction) {
             this.displayTransaction();
         }
+
+        // draw inventory
+        if (this.game.pause && this.game.inInventory) {
+            this.displayInventory();
+        }
+
     }
 }
