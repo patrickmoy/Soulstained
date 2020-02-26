@@ -3,16 +3,6 @@ var heartPickup = new Howl({src: ['./res/sound/heartPickup.mp3'], volume: 0.5});
 
 class InvisibleBlock extends Entity {
 
-    /**
-     * Removes this entity/block from the BLOCKS array.
-     */
-    deleteSelf() {
-        const index = this.game.currentEntities[1].indexOf(this);
-        if (index > -1) {
-            this.game.currentEntities[1].splice(index);
-        }
-    }
-
 }
 
 class Block extends InvisibleBlock {
@@ -47,7 +37,6 @@ class Lock extends InvisibleBlock {
             this.spritesheet = bossLockSprite;
         }
         this.alive = true;
-        this.opened = false;
     }
 
 
@@ -65,6 +54,7 @@ class Lock extends InvisibleBlock {
                 this.deleteSelf();
             }
         }
+        this.pushUnlock = false;
     }
 
     draw() {
@@ -89,8 +79,7 @@ class Lock extends InvisibleBlock {
             }
             this.context.drawImage(this.spritesheet, xIndex * 16, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
                 60, 60)
-        }
-        else if (this.strength === 'bosskey') {
+        } else if (this.strength === 'boss') {
             this.context.drawImage(this.spritesheet, 0, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
                 60, 60)
         }

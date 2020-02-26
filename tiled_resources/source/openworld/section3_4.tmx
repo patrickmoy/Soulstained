@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="60">
+ <editorsettings>
+  <export target="../../finished/openworld/section3_4.json" format="soulstain"/>
+ </editorsettings>
+ <tileset firstgid="1" source="../../tilesets/openworld_extra.tsx"/>
+ <tileset firstgid="481" source="../../tilesets/openworld.tsx"/>
+ <tileset firstgid="961" source="../../tilesets/hero.tsx"/>
+ <tileset firstgid="969" source="../../tilesets/fire.tsx"/>
+ <tileset firstgid="973" source="../../tilesets/crab.tsx"/>
+ <tileset firstgid="975" source="../../tilesets/barf_dungeon.tsx"/>
+ <tileset firstgid="1231" source="../../tilesets/ghost.tsx"/>
+ <tileset firstgid="1239" source="../../tilesets/gray_dungeon32x32.tsx"/>
+ <tileset firstgid="1559" source="../../tilesets/green_world.tsx"/>
+ <tileset firstgid="1728" source="../../tilesets/knight.tsx"/>
+ <tileset firstgid="1749" source="../../tilesets/pit.tsx"/>
+ <tileset firstgid="1813" source="../../tilesets/red_dungeon.tsx"/>
+ <tileset firstgid="2083" source="../../tilesets/stone_comfy_house.tsx"/>
+ <tileset firstgid="2167" source="../../tilesets/zombie.tsx"/>
+ <tileset firstgid="2171" source="../../../../grass tiles.tsx"/>
+ <layer id="1" name="floor" width="12" height="12">
+  <data encoding="csv">
+819,212,212,1,1,1,1,1,1,1,1,1,
+819,2684355182,2684355182,1,1,1,1,1,1,1,1,1,
+1610613554,2684355182,2684355182,1,1,1,1,1,1,1,1,1,
+819,2684355182,2684355182,1,1,1,1,1,1,1,1,1,
+819,292,292,1,1,1,1,1,1,1,1,1,
+851,292,292,1,1,1,1,1,1,1,1,1,
+883,292,292,1,1,1,1,1,1,1,1,1,
+915,292,292,1,1,1,1,1,1,1,1,1,
+292,292,292,337,1,1,1,1,1,1,1,1,
+2,292,292,292,292,292,292,292,292,292,337,1,
+292,292,292,292,292,292,292,292,292,292,292,292,
+292,292,292,292,1610612738,292,292,292,292,292,292,3221225474
+</data>
+ </layer>
+ <layer id="3" name="level" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,860,
+0,0,0,0,0,0,0,0,0,802,0,860,
+0,0,0,0,895,896,0,0,0,0,0,0,
+0,0,0,2684355298,0,0,0,0,0,0,0,0,
+0,0,0,2684355299,0,0,0,0,895,896,0,0,
+0,0,0,2684355300,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,484,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,346,347,0,0,738,739,740,0,0,0,0,
+0,362,363,0,346,347,0,277,346,347,738,739,
+346,347,0,277,362,363,346,347,362,363,0,0,
+362,363,277,0,0,277,362,363,277,0,0,0
+</data>
+ </layer>
+ <objectgroup id="4" name="entities">
+  <object id="24" gid="484" x="96" y="112" width="16" height="16">
+   <properties>
+    <property name="msg">ADVISORY NOTICE FOR SHIPWRECK SURVIVORS
+
+DUE TO RECENT DEVELOPMENTS IN OUR LANDS
+WE MUST REGRETTABLY BE LESS HOSPITABLE
+
+SIGHTINGS OF RAMPANT UNDEAD MONSTERS
+ALONGSIDE RUMORS OF A PLAGUE OR CURSE
+FORCE US TO BEGIN QUARANTINE
+
+PLEASE DESTROY EMERGENCY SUPPLY CRATES
+IF YOU ARE IN NEED OF SUPPLIES
+WE HOPE YOU FIND SUSTENANCE
+
+SIGNED
+
+FRIGHTENED CITIZENS OF JOY TOWN</property>
+   </properties>
+  </object>
+  <object id="31" type="Portal" x="4" y="32" width="11" height="16">
+   <properties>
+    <property name="TMX" type="int" value="0"/>
+    <property name="TMY" type="int" value="0"/>
+    <property name="destination" value="cavebasic"/>
+    <property name="destinationX" type="int" value="435"/>
+    <property name="destinationY" type="int" value="580"/>
+    <property name="height" type="int" value="16"/>
+    <property name="width" type="int" value="11"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer id="8" name="sky" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image.">
+  <object id="26" gid="973" x="64" y="96" width="16" height="16"/>
+  <object id="27" gid="973" x="112" y="128" width="16" height="16"/>
+  <object id="28" gid="973" x="128" y="48" width="16" height="16"/>
+  <object id="59" gid="721" x="64" y="128" width="16" height="16"/>
+ </objectgroup>
+ <layer id="7" name="second image" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,863,864,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,863,864,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="10" name="dividers" width="12" height="12" visible="0" opacity="0.4">
+  <data encoding="csv">
+925,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

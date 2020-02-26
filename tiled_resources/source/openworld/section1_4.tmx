@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="84">
+ <editorsettings>
+  <export target="../../finished/openworld/section1_4.json" format="soulstain"/>
+ </editorsettings>
+ <tileset firstgid="1" source="../../tilesets/openworld_extra.tsx"/>
+ <tileset firstgid="481" source="../../tilesets/openworld.tsx"/>
+ <tileset firstgid="961" source="../../tilesets/hero.tsx"/>
+ <tileset firstgid="969" source="../../tilesets/fire.tsx"/>
+ <tileset firstgid="973" source="../../tilesets/crab.tsx"/>
+ <tileset firstgid="975" source="../../tilesets/barf_dungeon.tsx"/>
+ <tileset firstgid="1231" source="../../tilesets/ghost.tsx"/>
+ <tileset firstgid="1239" source="../../tilesets/gray_dungeon32x32.tsx"/>
+ <tileset firstgid="1559" source="../../tilesets/green_world.tsx"/>
+ <tileset firstgid="1728" source="../../tilesets/knight.tsx"/>
+ <tileset firstgid="1749" source="../../tilesets/pit.tsx"/>
+ <tileset firstgid="1813" source="../../tilesets/red_dungeon.tsx"/>
+ <tileset firstgid="2083" source="../../tilesets/stone_comfy_house.tsx"/>
+ <tileset firstgid="2167" source="../../tilesets/zombie.tsx"/>
+ <tileset firstgid="2171" source="../../tilesets/ashlands.tsx"/>
+ <tileset firstgid="3011" source="../../tilesets/sniper.tsx"/>
+ <tileset firstgid="3017" source="../../tilesets/worm.tsx"/>
+ <tileset firstgid="3020" source="../../tilesets/cursed_grass.tsx"/>
+ <layer id="1" name="floor" width="12" height="12">
+  <data encoding="csv">
+3020,3020,3020,3020,3020,3020,3025,3025,3020,3020,3020,3020,
+3020,3020,3020,3020,3020,3020,3025,3025,3020,3020,2299,3020,
+3020,3020,3020,3020,3020,3025,3025,3025,3020,3020,3020,3020,
+3020,3020,3020,3020,3024,3025,3025,3020,3020,3020,3020,3020,
+3020,3020,3021,3020,3020,3025,3025,3020,3020,3020,3020,3020,
+3025,3025,3025,3025,3025,3025,3029,3025,3021,3025,3025,3025,
+3025,3025,3025,3025,3025,3029,3025,3026,3025,3021,3025,3025,
+3020,3020,3020,3020,3020,3025,1808,3025,3020,3020,3020,3024,
+3023,2299,2299,2299,3025,3026,3025,3025,2299,3020,3020,3020,
+3020,2299,2299,2299,3020,0,3029,3020,3020,3020,3020,3023,
+3021,2299,2300,3020,3025,3026,482,3023,3020,3020,3020,3020,
+3020,3020,3020,3020,3025,3025,3026,3020,2299,2299,2299,482
+</data>
+ </layer>
+ <layer id="3" name="level" width="12" height="12">
+  <data encoding="csv">
+892,893,894,0,893,894,892,527,0,550,551,552,
+0,0,0,893,894,0,0,0,893,582,583,584,
+893,894,893,894,0,0,0,0,0,614,615,616,
+893,894,0,0,0,3027,0,0,0,646,920,648,
+0,0,0,0,0,3027,0,893,894,678,679,680,
+522,3026,0,0,0,531,0,0,0,0,0,523,
+0,3029,0,3026,0,0,0,0,2403,562,2322,0,
+0,2231,2232,2233,0,0,1808,0,2231,2232,2233,0,
+0,2271,2223,2273,0,0,0,0,2271,2221,2273,488,
+0,2311,2315,2313,3021,3026,2243,0,2311,2315,2313,0,
+0,2391,2355,2393,0,0,3025,0,2351,2355,2353,0,
+663,0,0,488,0,0,522,0,2391,2395,2433,643
+</data>
+ </layer>
+ <objectgroup id="4" name="entities"/>
+ <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image.">
+  <object id="65" gid="2167" x="64" y="96" width="16" height="16"/>
+  <object id="66" gid="2167" x="112" y="112" width="16" height="16"/>
+  <object id="69" gid="3011" x="32" y="144" width="16" height="16"/>
+  <object id="70" gid="3011" x="144" y="144" width="16" height="16">
+   <properties>
+    <property name="direction" value="north"/>
+   </properties>
+  </object>
+  <object id="71" gid="2167" x="97" y="48" width="16" height="16"/>
+  <object id="74" gid="721" x="128" y="64" width="16" height="16"/>
+  <object id="75" gid="721" x="128" y="48" width="16" height="16"/>
+  <object id="78" gid="3017" x="64" y="160" width="16" height="16"/>
+  <object id="80" gid="3017" x="160" y="96" width="16" height="16"/>
+  <object id="82" gid="721" x="48" y="64" width="16" height="16"/>
+  <object id="83" gid="484" x="96" y="160" width="16" height="16">
+   <properties>
+    <property name="msg">JOY TOWN PUBLIC ADVISORY NOTICE
+
+BEWARE OF ROAMING FAMILIAR FACES
+
+WHILE THEY MAY LOOK LIKE YOUR NEIGHBORS 
+THEY NO LONGER RECOGNIZE FRIEND FROM FOE
+
+DO NOT LET THEM IN
+
+PLEASE KEEP YOUR DISTANCE FOR SAFETY
+OR YOU MAY BE EATEN BY THE UNDEAD
+
+SIGNED
+
+SURVIVING CITIZENS OF JOY TOWN
+
+</property>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer id="7" name="second image" width="12" height="12">
+  <data encoding="csv">
+0,0,0,861,862,0,0,0,861,0,0,0,
+861,862,861,862,0,0,0,0,0,0,0,0,
+861,862,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,861,862,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,695,
+0,0,588,589,0,0,0,861,862,588,589,727
+</data>
+ </layer>
+ <layer id="2" name="temp" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="10" name="dividers" width="12" height="12" opacity="0.4">
+  <data encoding="csv">
+925,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

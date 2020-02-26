@@ -57,6 +57,18 @@ class Entity {
         this.pushUpdate = true;
     }
 
+
+    /**
+     * Removes this entity/block from the BLOCKS array.
+     */
+    deleteSelf() {
+        const index = this.game.currentEntities[1].indexOf(this);
+        if (index > -1) {
+            this.game.currentEntities[1].splice(index);
+        }
+    }
+
+
     /**
      * Performs a update but does not actually push it. Will go through several phases until the update is pushed.
      */

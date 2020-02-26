@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="339">
+ <editorsettings>
+  <export target="../../finished/openworld/section1_5.json" format="soulstain"/>
+ </editorsettings>
+ <tileset firstgid="1" source="../../tilesets/openworld_extra.tsx"/>
+ <tileset firstgid="481" source="../../tilesets/openworld.tsx"/>
+ <tileset firstgid="961" source="../../tilesets/hero.tsx"/>
+ <tileset firstgid="969" source="../../tilesets/fire.tsx"/>
+ <tileset firstgid="973" source="../../tilesets/crab.tsx"/>
+ <tileset firstgid="975" source="../../tilesets/barf_dungeon.tsx"/>
+ <tileset firstgid="1231" source="../../tilesets/ghost.tsx"/>
+ <tileset firstgid="1239" source="../../tilesets/gray_dungeon32x32.tsx"/>
+ <tileset firstgid="1559" source="../../tilesets/green_world.tsx"/>
+ <tileset firstgid="1728" source="../../tilesets/knight.tsx"/>
+ <tileset firstgid="1749" source="../../tilesets/pit.tsx"/>
+ <tileset firstgid="1813" source="../../tilesets/red_dungeon.tsx"/>
+ <tileset firstgid="2083" source="../../tilesets/stone_comfy_house.tsx"/>
+ <tileset firstgid="2167" source="../../tilesets/zombie.tsx"/>
+ <tileset firstgid="2171" source="../../tilesets/ashlands.tsx"/>
+ <tileset firstgid="3011" source="../../tilesets/objects_round.tsx"/>
+ <tileset firstgid="3671" source="../../tilesets/sniper.tsx"/>
+ <tileset firstgid="3677" source="../../tilesets/worm.tsx"/>
+ <tileset firstgid="3680" source="../../tilesets/cursed_grass.tsx"/>
+ <layer id="1" name="floor" width="12" height="12">
+  <data encoding="csv">
+3680,3680,3680,3680,3680,3680,3683,3680,3680,3680,3683,1808,
+3680,3680,3682,3680,3680,3680,3680,1808,1808,1808,3680,1808,
+3681,3680,3680,3680,3680,3680,3680,3680,3680,1808,3680,3680,
+3680,3680,3680,3680,3680,3680,3681,1808,3680,1808,3680,1808,
+3680,3681,3680,1808,3680,3680,3680,1808,3680,1808,3684,3680,
+3685,3685,3680,1808,3680,1808,3680,3680,3680,1808,3680,3680,
+3685,3685,3680,3680,3680,1808,3680,1808,1808,1808,3680,3682,
+3680,3682,3680,3680,3680,3680,3680,3680,3680,3680,3680,3680,
+3684,3680,3680,3680,3683,3680,3680,3680,3680,1808,3680,3680,
+1808,1808,1808,1808,1808,1808,3680,3680,3683,3680,3680,482,
+3680,482,482,482,482,482,482,482,482,482,482,482,
+482,482,482,3680,3680,3680,3680,3680,482,482,482,482
+</data>
+ </layer>
+ <layer id="3" name="level" width="12" height="12">
+  <data encoding="csv">
+0,0,2271,2215,2215,2215,2273,1808,1808,1808,1808,0,
+1610615019,0,2311,2312,2312,2312,2313,0,0,0,0,0,
+1610615018,0,2351,2352,2352,2352,2353,0,0,0,0,2300,
+0,0,2391,2392,2392,2392,2393,0,0,0,0,0,
+893,894,2243,0,0,0,0,0,0,0,0,1808,
+0,0,0,0,0,0,0,0,0,0,0,1808,
+0,0,0,0,0,0,0,0,0,0,0,1808,
+0,0,0,0,0,0,0,0,0,892,0,1808,
+893,894,893,894,893,894,0,893,894,0,0,1808,
+0,0,0,0,0,0,0,0,0,0,0,1808,
+815,709,709,709,709,709,709,709,0,0,0,0,
+0,709,709,709,709,709,709,709,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="4" name="entities">
+  <object id="299" gid="1808" x="48" y="80" width="16" height="16"/>
+  <object id="300" gid="1808" x="48" y="96" width="16" height="16"/>
+  <object id="301" gid="1808" x="80" y="96" width="16" height="16"/>
+  <object id="302" gid="1808" x="80" y="112" width="16" height="16"/>
+  <object id="303" gid="1808" x="80" y="160" width="16" height="16"/>
+  <object id="304" gid="1808" x="64" y="160" width="16" height="16"/>
+  <object id="305" gid="1808" x="48" y="160" width="16" height="16"/>
+  <object id="306" gid="1808" x="32" y="160" width="16" height="16"/>
+  <object id="307" gid="1808" x="16" y="160" width="16" height="16"/>
+  <object id="308" gid="1808" x="0" y="160" width="16" height="16"/>
+  <object id="309" gid="1808" x="144" y="144" width="16" height="16"/>
+  <object id="310" gid="1808" x="176" y="160" width="16" height="16"/>
+  <object id="311" gid="1808" x="176" y="144" width="16" height="16"/>
+  <object id="312" gid="1808" x="176" y="128" width="16" height="16"/>
+  <object id="313" gid="1808" x="176" y="112" width="16" height="16"/>
+  <object id="314" gid="1808" x="176" y="96" width="16" height="16"/>
+  <object id="315" gid="1808" x="176" y="80" width="16" height="16"/>
+  <object id="316" gid="1808" x="176" y="64" width="16" height="16"/>
+  <object id="317" gid="1808" x="176" y="32" width="16" height="16"/>
+  <object id="318" gid="1808" x="176" y="16" width="16" height="16"/>
+  <object id="319" gid="1808" x="160" y="16" width="16" height="16"/>
+  <object id="320" gid="1808" x="144" y="16" width="16" height="16"/>
+  <object id="321" gid="1808" x="128" y="16" width="16" height="16"/>
+  <object id="322" gid="1808" x="112" y="16" width="16" height="16"/>
+  <object id="323" gid="1808" x="112" y="32" width="16" height="16"/>
+  <object id="324" gid="1808" x="128" y="32" width="16" height="16"/>
+  <object id="325" gid="1808" x="144" y="32" width="16" height="16"/>
+  <object id="326" gid="1808" x="144" y="48" width="16" height="16"/>
+  <object id="327" gid="1808" x="144" y="64" width="16" height="16"/>
+  <object id="328" gid="1808" x="144" y="80" width="16" height="16"/>
+  <object id="329" gid="1808" x="144" y="96" width="16" height="16"/>
+  <object id="330" gid="1808" x="144" y="112" width="16" height="16"/>
+  <object id="332" gid="1808" x="128" y="112" width="16" height="16"/>
+  <object id="333" gid="1808" x="112" y="112" width="16" height="16"/>
+  <object id="334" gid="1808" x="1" y="360" width="16" height="16"/>
+  <object id="335" gid="1808" x="112" y="64" width="16" height="16"/>
+  <object id="336" gid="1808" x="112" y="80" width="16" height="16"/>
+ </objectgroup>
+ <layer id="8" name="sky" width="12" height="12" visible="0">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,704,0,0,0
+</data>
+ </layer>
+ <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image." visible="0">
+  <object id="61" type="Chest" gid="657" x="0" y="64" width="16" height="16"/>
+  <object id="67" gid="3671" x="48" y="16" width="16" height="16">
+   <properties>
+    <property name="direction" value="SOUTH"/>
+   </properties>
+  </object>
+  <object id="68" gid="3671" x="64" y="16" width="16" height="16">
+   <properties>
+    <property name="direction" value="SOUTH"/>
+   </properties>
+  </object>
+  <object id="69" gid="3671" x="80" y="16" width="16" height="16">
+   <properties>
+    <property name="direction" value="SOUTH"/>
+   </properties>
+  </object>
+  <object id="224" gid="3677" x="32" y="112" width="16" height="16"/>
+  <object id="225" gid="3677" x="16" y="32" width="16" height="16"/>
+  <object id="228" gid="721" x="48" y="80" width="16" height="16"/>
+  <object id="229" gid="721" x="48" y="96" width="16" height="16"/>
+  <object id="230" gid="721" x="48" y="112" width="16" height="16"/>
+  <object id="231" gid="721" x="64" y="112" width="16" height="16"/>
+  <object id="232" gid="721" x="64" y="96" width="16" height="16"/>
+  <object id="233" gid="721" x="64" y="80" width="16" height="16"/>
+  <object id="234" gid="721" x="80" y="80" width="16" height="16"/>
+  <object id="235" gid="721" x="80" y="96" width="16" height="16"/>
+  <object id="236" gid="721" x="80" y="112" width="16" height="16"/>
+  <object id="237" gid="721" x="96" y="112" width="16" height="16"/>
+  <object id="238" gid="721" x="96" y="96" width="16" height="16"/>
+  <object id="239" gid="721" x="96" y="80" width="16" height="16"/>
+  <object id="240" gid="721" x="112" y="112" width="16" height="16"/>
+  <object id="241" gid="721" x="112" y="96" width="16" height="16"/>
+  <object id="242" gid="721" x="112" y="80" width="16" height="16"/>
+  <object id="243" gid="721" x="112" y="64" width="16" height="16"/>
+  <object id="244" gid="721" x="112" y="48" width="16" height="16"/>
+  <object id="245" gid="721" x="112" y="32" width="16" height="16"/>
+  <object id="246" gid="721" x="112" y="16" width="16" height="16"/>
+  <object id="247" gid="721" x="128" y="16" width="16" height="16"/>
+  <object id="248" gid="721" x="144" y="16" width="16" height="16"/>
+  <object id="249" gid="721" x="160" y="16" width="16" height="16"/>
+  <object id="250" gid="721" x="176" y="16" width="16" height="16"/>
+  <object id="251" gid="721" x="176" y="32" width="16" height="16"/>
+  <object id="252" gid="721" x="144" y="32" width="16" height="16"/>
+  <object id="253" gid="721" x="128" y="32" width="16" height="16"/>
+  <object id="254" gid="721" x="160" y="32" width="16" height="16"/>
+  <object id="255" gid="721" x="128" y="48" width="16" height="16"/>
+  <object id="256" gid="721" x="144" y="48" width="16" height="16"/>
+  <object id="257" gid="721" x="160" y="48" width="16" height="16"/>
+  <object id="261" gid="721" x="176" y="64" width="16" height="16"/>
+  <object id="262" gid="721" x="176" y="80" width="16" height="16"/>
+  <object id="263" gid="721" x="176" y="96" width="16" height="16"/>
+  <object id="264" gid="721" x="176" y="112" width="16" height="16"/>
+  <object id="265" gid="721" x="176" y="128" width="16" height="16"/>
+  <object id="266" gid="721" x="176" y="144" width="16" height="16"/>
+  <object id="267" gid="721" x="176" y="144" width="16" height="16"/>
+  <object id="268" gid="721" x="176" y="160" width="16" height="16"/>
+  <object id="269" gid="721" x="160" y="160" width="16" height="16"/>
+  <object id="270" gid="721" x="144" y="160" width="16" height="16"/>
+  <object id="271" gid="721" x="128" y="160" width="16" height="16"/>
+  <object id="272" gid="721" x="112" y="160" width="16" height="16"/>
+  <object id="273" gid="721" x="96" y="160" width="16" height="16"/>
+  <object id="274" gid="721" x="80" y="160" width="16" height="16"/>
+  <object id="275" gid="721" x="64" y="160" width="16" height="16"/>
+  <object id="276" gid="721" x="48" y="160" width="16" height="16"/>
+  <object id="277" gid="721" x="32" y="160" width="16" height="16"/>
+  <object id="278" gid="721" x="16" y="160" width="16" height="16"/>
+  <object id="279" gid="721" x="0" y="160" width="16" height="16"/>
+  <object id="280" gid="721" x="0" y="176" width="16" height="16"/>
+  <object id="281" gid="721" x="96" y="144" width="16" height="16"/>
+  <object id="282" gid="721" x="96" y="128" width="16" height="16"/>
+  <object id="283" gid="721" x="128" y="112" width="16" height="16"/>
+  <object id="284" gid="721" x="144" y="144" width="16" height="16"/>
+  <object id="285" gid="721" x="160" y="144" width="16" height="16"/>
+  <object id="286" gid="721" x="160" y="128" width="16" height="16"/>
+  <object id="287" gid="721" x="144" y="112" width="16" height="16"/>
+  <object id="288" gid="721" x="160" y="112" width="16" height="16"/>
+  <object id="289" gid="721" x="128" y="96" width="16" height="16"/>
+  <object id="290" gid="721" x="144" y="96" width="16" height="16"/>
+  <object id="291" gid="721" x="160" y="96" width="16" height="16"/>
+  <object id="292" gid="721" x="128" y="80" width="16" height="16"/>
+  <object id="293" gid="721" x="144" y="80" width="16" height="16"/>
+  <object id="294" gid="721" x="160" y="80" width="16" height="16"/>
+  <object id="295" gid="721" x="128" y="64" width="16" height="16"/>
+  <object id="296" gid="721" x="144" y="64" width="16" height="16"/>
+  <object id="297" gid="721" x="160" y="64" width="16" height="16"/>
+  <object id="298" gid="3310" x="176" y="48" width="16" height="16">
+   <properties>
+    <property name="trigger" value="necro"/>
+   </properties>
+  </object>
+  <object id="337" gid="484" x="32" y="80" width="16" height="16">
+   <properties>
+    <property name="msg">CAUTION
+
+PLEASE KEEP OUT OF THIS AREA
+THE GROUND IS UNSAFE
+
+THERE IS NOTHING IMPORTANT OR VALUABLE
+ABSOLUTELY NOTHING
+IT IS A WASTE OF TIME
+PLEASE DO NOT EXPLORE</property>
+   </properties>
+  </object>
+  <object id="338" gid="721" x="176" y="48" width="16" height="16"/>
+ </objectgroup>
+ <layer id="7" name="second image" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+861,862,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+861,862,861,862,861,862,0,861,862,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+664,665,666,667,668,669,670,671,672,0,0,0,
+696,699,699,699,700,701,701,701,704,0,0,0
+</data>
+ </layer>
+ <layer id="2" name="temp" width="12" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="10" name="dividers" width="12" height="12" visible="0" opacity="0.4">
+  <data encoding="csv">
+925,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

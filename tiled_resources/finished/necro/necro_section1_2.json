@@ -1,0 +1,783 @@
+{
+  "width": 12,
+  "height": 12,
+  "collisionSets": {
+    "smallchest": {},
+    "pit": {},
+    "zelda_inspired_dungeon": {
+      "0": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "1": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "2": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "4": {
+        "width": 16,
+        "height": 8,
+        "x": 0,
+        "y": 8
+      },
+      "7": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "8": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "10": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "12": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "14": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "15": {
+        "width": 12,
+        "height": 16,
+        "x": 4,
+        "y": 0
+      },
+      "16": {
+        "width": 12,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "20": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "21": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "22": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "25": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "26": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "27": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "28": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "30": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "31": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "40": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "41": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "46": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "47": {
+        "width": 8,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "49": {
+        "width": 8,
+        "height": 16,
+        "x": 8,
+        "y": 0
+      },
+      "50": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "51": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "56": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "57": {
+        "width": 8,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "58": {
+        "width": 16,
+        "height": 8,
+        "x": 0,
+        "y": 8
+      },
+      "59": {
+        "width": 8,
+        "height": 16,
+        "x": 8,
+        "y": 0
+      },
+      "60": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "61": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      },
+      "66": {
+        "width": 16,
+        "height": 16,
+        "x": 0,
+        "y": 0
+      }
+    },
+    "sniper": {}
+  },
+  "calcTiles": [
+    {
+      "name": "smallchest",
+      "min": 1,
+      "max": 2
+    },
+    {
+      "name": "pit",
+      "min": 3,
+      "max": 66
+    },
+    {
+      "name": "zelda_inspired_dungeon",
+      "min": 67,
+      "max": 146
+    },
+    {
+      "name": "sniper",
+      "min": 147,
+      "max": 152
+    }
+  ],
+  "layers": [
+    [
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    [
+      [
+        67,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        68,
+        69
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        77,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        79
+      ],
+      [
+        87,
+        88,
+        88,
+        88,
+        88,
+        0,
+        88,
+        88,
+        88,
+        88,
+        88,
+        89
+      ]
+    ]
+  ],
+  "realEntities": [
+    {
+      "type": "Pit",
+      "originalX": 160,
+      "originalY": 80,
+      "x": 160,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 144,
+      "originalY": 80,
+      "x": 144,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 128,
+      "originalY": 80,
+      "x": 128,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 112,
+      "originalY": 80,
+      "x": 112,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 96,
+      "originalY": 80,
+      "x": 96,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 80,
+      "originalY": 80,
+      "x": 80,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 64,
+      "originalY": 80,
+      "x": 64,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 48,
+      "originalY": 80,
+      "x": 48,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 32,
+      "originalY": 80,
+      "x": 32,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 16,
+      "originalY": 80,
+      "x": 16,
+      "y": 64,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 16,
+      "originalY": 144,
+      "x": 16,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 32,
+      "originalY": 144,
+      "x": 32,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 48,
+      "originalY": 144,
+      "x": 48,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 64,
+      "originalY": 144,
+      "x": 64,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 80,
+      "originalY": 144,
+      "x": 80,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 96,
+      "originalY": 144,
+      "x": 96,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 112,
+      "originalY": 144,
+      "x": 112,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 128,
+      "originalY": 144,
+      "x": 128,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 144,
+      "originalY": 144,
+      "x": 144,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Pit",
+      "originalX": 160,
+      "originalY": 144,
+      "x": 160,
+      "y": 128,
+      "customProperties": {}
+    },
+    {
+      "type": "Archer",
+      "originalX": 160,
+      "originalY": 128,
+      "x": 160,
+      "y": 112,
+      "customProperties": {
+        "direction": "WEST"
+      }
+    },
+    {
+      "type": "Archer",
+      "originalX": 160,
+      "originalY": 64,
+      "x": 160,
+      "y": 48,
+      "customProperties": {
+        "direction": "WEST"
+      }
+    },
+    {
+      "type": "Archer",
+      "originalX": 16,
+      "originalY": 96,
+      "x": 16,
+      "y": 80,
+      "customProperties": {
+        "direction": "EAST"
+      }
+    },
+    {
+      "type": "Chest",
+      "originalX": 80,
+      "originalY": 32,
+      "x": 80,
+      "y": 16,
+      "customProperties": {
+        "amount": 100,
+        "loot": "coin",
+        "msg": "YOU HAVE FOUND SOME COINS"
+      }
+    }
+  ]
+}
