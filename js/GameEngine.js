@@ -337,11 +337,13 @@ class GameEngine {
             this.currentWorld.getCurrentTileMap().WORLDANIMATIONS.forEach(animations => animations.draw());
             this.currentEntities[4].forEach(passive => passive.draw());
             this.currentEntities[5].forEach(destructible => destructible.draw());
-            this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon.
+
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw());
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
+
+            this.currentEntities[0].filter(hero => hero.alive).forEach(entity => entity.draw()); // Draws the hero and his weapon
             this.drawHits();
             this.drawDeaths();
             this.currentWorld.drawLayer();
