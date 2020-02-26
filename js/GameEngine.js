@@ -41,7 +41,7 @@ class GameEngine {
         this.gateTriggers = [];
         this.transition = false; // When transitioning is happening
         this.inInventory = false; // When player is in his inventory
-        this.pause = false; // Pauses other actions while we switch to a new map.
+        this.pause = true; // Pauses other actions while we switch to a new map.
         this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
         this.currentEntities = [[], [], [], [], [], []]; // Stores entities at the current tile map
         this.currentMusicID;
@@ -55,6 +55,8 @@ class GameEngine {
         this.currentWorld; // Current world the player is in (e.g. Necromancer Dungeon or Open World)
 
         this.UI;
+
+        this.displayHomeScreen = true;
 
         this.msg;
         this.newMsg = false;
@@ -166,7 +168,9 @@ class GameEngine {
                 // PAUSE FOR INVENTORY
             } else if (this.displayTransaction) {
                 // PAUSE FOR TRANSACTION
-            }else {
+            } else if (this.displayHomeScreen) {
+                // PAUSE FOR HOME SCREEN
+            } else {
                 // PAUSE FOR PORTAL
                 this.currentWorld.fade();
                 if (!this.pause) {
