@@ -445,8 +445,7 @@ class Sniper extends Enemy {
         this.context = game.GAME_CONTEXT;
         this.position = position; // Variable to hold the direction the sniper is pointing.
         this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * 2), this.futureHitbox.yMin, this.position);
-        //this.game.currentEntities[3].push(this.arrow);
-        this.firstArrow = true;
+        this.count= 0;
     }
 
     preUpdate() {
