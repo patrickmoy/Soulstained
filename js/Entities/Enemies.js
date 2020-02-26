@@ -449,49 +449,34 @@ class Sniper extends Enemy {
         this.firstArrow = true;
     }
 
-
     preUpdate() {
 
-
-        if (!this.game.pause && this.arrow.projectileNotOnScreen() || this.firstArrow) {
-
-
+        this.count += this.game.clockTick;
+        if (!this.game.pause && this.count > 1.5) {
             if (this.position === "SOUTH") {
-                console.log("SOUTH")
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * 1.5), this.futureHitbox.yMin, this.position);
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * .33), this.futureHitbox.yMin + (this.width), this.position); //correct
                 this.game.currentEntities[3].push(this.arrow);
 
             } else if (this.position === "NORTH") {
-                console.log("NORTH")
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width), this.futureHitbox.yMin - (this.height * 2), this.position);
+                console.log("NORTH");
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * .33), this.futureHitbox.yMin - (this.height), this.position); //correct
                 this.game.currentEntities[3].push(this.arrow);
 
             } else if (this.position === "EAST") {
-                console.log("EAST")
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin + (this.width), this.futureHitbox.yMin - this.height, this.position);
+                console.log("EAST");
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin + (this.width), (this.futureHitbox.yMin + this.height * .25), this.position); // correct
                 this.game.currentEntities[3].push(this.arrow);
 
 
             } else if (this.position === "WEST") {
-                console.log("WEST")
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * 3), this.futureHitbox.yMin - (this.height), this.position);
+                console.log("WEST");
+                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width), (this.futureHitbox.yMin - this.height * .25), this.position);
                 this.game.currentEntities[3].push(this.arrow);
             }
-
-            this.firstArrow = false;
-        } else if (this.game.currentEntities[3].every(projectile => projectile.projectileNotOnScreen() && projectile.alive === true)) {
-
-            console.log("MADE IT TO ELSE")
-            this.arrow.alive = false;
-
-            if (this.arrow.alive === false) {
-
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * 3), this.futureHitbox.yMin - (this.height), this.position);
-                this.game.currentEntities[3].push(this.arrow);
-            }
+            this.count = 0;
         }
-
     }
+
 
     draw() {
 

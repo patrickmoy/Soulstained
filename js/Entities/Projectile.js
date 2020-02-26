@@ -192,16 +192,9 @@ class Arrow extends Projectile {
 
     preUpdate() {
 
-        // console.log("STILL UPDATING")
-        // if (this.projectileNotOnScreen()) {
-        //
-        //     console.log("KILL ARROW")
-        //     this.alive = false;
-        //
-        // } else {
-        //     console.log("SHOOT ARROW")
-            this.selectPosition(this.trajectory);
-      //  }
+
+        this.selectPosition(this.trajectory);
+
 
     };
 
