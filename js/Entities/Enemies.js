@@ -553,7 +553,7 @@ class Beast
         if (this.position === 'SOUTH') {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 8);
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 7);
         }
         if (this.position === 'NORTH') {
             this.animation.drawFrame(this.game.clockTick, this.context,

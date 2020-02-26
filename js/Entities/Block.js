@@ -32,8 +32,7 @@ class Lock extends InvisibleBlock {
         this.spritesheet = undefined;
         if (this.strength === 'smallkey') {
             this.spritesheet = lockSprite;
-        }
-        else if (this.strength === 'boss') {
+        } else if (this.strength === 'boss') {
             this.spritesheet = bossLockSprite;
         }
         this.alive = true;
@@ -47,14 +46,14 @@ class Lock extends InvisibleBlock {
                     this.game.HERO.smallKeys--;
                     this.deleteSelf();
                 }
+
+            } else if (this.strength === 'boss') {
+                if (this.game.HERO.hasBossKey) {
+                    this.deleteSelf();
+                }
             }
+            this.pushUnlock = false;
         }
-        else if (this.strength === 'boss') {
-            if (this.game.HERO.hasBossKey) {
-                this.deleteSelf();
-            }
-        }
-        this.pushUnlock = false;
     }
 
     draw() {
@@ -101,15 +100,13 @@ class DestructibleBlock
     eventWalk() {
         if (this.hitbox.xMin < this.originalHitbox.xMin) {
             this.hitbox.xMin += this.game.GAME_CONTEXT.canvas.width / (this.game.currentWorld.SIZE / this.game.currentWorld.SOURCE_SHIFT);
-        }
-        else if (this.hitbox.xMin > this.originalHitbox.xMin) {
+        } else if (this.hitbox.xMin > this.originalHitbox.xMin) {
             this.hitbox.xMin -= this.game.GAME_CONTEXT.canvas.width / (this.game.currentWorld.SIZE / this.game.currentWorld.SOURCE_SHIFT);
         }
 
         if (this.hitbox.yMin < this.originalHitbox.yMin) {
             this.hitbox.yMin += this.game.GAME_CONTEXT.canvas.height / (this.game.currentWorld.SIZE / this.game.currentWorld.SOURCE_SHIFT);
-        }
-        else if (this.hitbox.yMin > this.originalHitbox.yMin) {
+        } else if (this.hitbox.yMin > this.originalHitbox.yMin) {
             this.hitbox.yMin -= this.game.GAME_CONTEXT.canvas.height / (this.game.currentWorld.SIZE / this.game.currentWorld.SOURCE_SHIFT);
         }
     }
