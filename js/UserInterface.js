@@ -12,11 +12,14 @@ class UserInterface {
         this.digitsFontImage = this.images["./res/img/digits.png"];
         this.lettersFontImage = this.images["./res/img/letters.png"];
         this.upgradeBarImage = this.images["./res/img/upgrade-bar.png"];
+        this.cursor = this.images["./res/img/blinking-dot.png"];
+        this.smallKey = this.images["./res/img/smallkey.png"]; // 7 x 14
+        this.bossKey = this.images["./res/img/bosskey.png"]; // 9 x 14
+
+
         this.keyJImage = this.images["./res/img/keyJ.png"];
         this.keyKImage = this.images["./res/img/keyK.png"];
-        this.swordPrototype = this.images["./res/img/swordPrototype.png"];
-        this.whipPrototype = this.images["./res/img/whipPrototype.png"];
-        this.cursor = this.images["./res/img/blinking-dot.png"];
+
 
         // HERO's health and currency properties
         this.health;
@@ -70,14 +73,12 @@ class UserInterface {
             if (i === 1) this.d10 = digit * 49.5;
             if (i === 2) this.d100 = digit * 49.5;
         }
-
         // User presses the return key to switch the game state to Inventory
         if (this.game.INPUTS["Enter"]) {
             this.game.pause = true;
             this.game.inInventory = true;
             this.game.INPUTS["Enter"] = false;
         }
-
         // EXIT INVENTORY AND RETURN TO THE GAME
         if (this.game.pause && this.game.inInventory) {
             if (this.game.INPUTS["KeyK"]) {
@@ -122,7 +123,6 @@ class UserInterface {
                     // key J selection
                     if (this.indexKeyJ === 0) {
                         this.indexKeyJ = this.hero.inventory.length - 1;
-                        console.log(this.indexKeyJ);
                     } else {
                         this.indexKeyJ--;
                     }
@@ -159,7 +159,6 @@ class UserInterface {
             this.hero.equipJ = this.currentJ;
             this.hero.equipK = this.currentK;
         }
-
         // EXIT MESSAGE AND RETURN TO THE GAME
         if (this.game.pause && this.game.displayMessage) {
             if (this.game.INPUTS["KeyK"]) {
@@ -230,6 +229,8 @@ class UserInterface {
                         } else {
                             this.hero.inventory.push(purchasedItem);
                         }
+                    } else if (purchasedItem === 'arrows') {
+
                     } else {
                         this.game.INPUTS["KeyJ"] = false;
                         this.strokeStyle = 'yellow';
@@ -604,16 +605,36 @@ class UserInterface {
         }
 
         // draw coin and amount
-        this.ctx.drawImage(this.coinImage, 0, 0, 11, 11, 345, 0, 30, 30);
-        this.ctx.drawImage(this.digitsFontImage, this.d100, 0, 49.5, 45, 327, 30, 22, 20);
-        this.ctx.drawImage(this.digitsFontImage, this.d10, 0, 49.5, 45, 349, 30, 22, 20);
-        this.ctx.drawImage(this.digitsFontImage, this.d1, 0, 49.5, 45, 371, 30, 22, 20);
+        this.ctx.drawImage(this.coinImage, 0, 0, 11, 11, 345, 5, 30, 30);
+        this.ctx.drawImage(this.digitsFontImage, this.d100, 0, 49.5, 45, 327, 37, 22, 20);
+        this.ctx.drawImage(this.digitsFontImage, this.d10, 0, 49.5, 45, 349, 37, 22, 20);
+        this.ctx.drawImage(this.digitsFontImage, this.d1, 0, 49.5, 45, 371, 37, 22, 20);
+
+        // draw keys
+        this.ctx.drawImage(this.smallKey, 0, 0, 7, 14, 462, 5, 15, 30);
+        this.ctx.drawImage(this.digitsFontImage, this.hero.smallKeys * 49.5, 0, 49.5, 45,  460, 37, 22, 20);
+
+        this.ctx.drawImage(this.bossKey, 0, 0, 9, 14, 492, 5, 19,30);
+        if (this.hero.hasBossKey) {
+            this.ctx.drawImage(this.digitsFontImage, 49.5, 0, 49.5, 45, 490, 37, 22, 20);
+        } else {
+            this.ctx.drawImage(this.digitsFontImage, 0, 0, 49.5, 45, 490, 37, 22, 20);
+        }
 
         // draw keys and weapons
-        // this.ctx.drawImage(this.keyJImage, 0, 0, 264, 268, 540, 30, 30, 30);
-        // this.ctx.drawImage(this.keyKImage, 0, 0, 268, 269, 660, 30, 30, 30);
-        // this.ctx.drawImage(this.whipPrototype, 0, 0, 60, 60, 510, 15, 45, 45);
-        // this.ctx.drawImage(this.swordPrototype, 0, 0, 60, 60, 630, 15, 45, 45);
+        this.ctx.drawImage(this.keyJImage, 0, 0, 264, 268, 600, 30, 30, 30);
+        this.ctx.drawImage(this.keyKImage, 0, 0, 268, 269, 660, 30, 30, 30);
+
+        if (this.hero.equipJ !== "empty") {
+            var weaponJ = "./res/img/" + this.hero.equipJ + "UI.png";
+            console.log(weaponJ);
+            this.ctx.drawImage(this.images[weaponJ], 0, 0, 30, 30, 570, 0, 60, 60);
+        }
+        if (this.hero.equipK !== "empty") {
+            var weaponK = "./res/img/" + this.hero.equipK + "UI.png";
+            this.ctx.drawImage(this.images[weaponK], 0, 0, 30, 30, 630, 0, 60, 60);
+        }
+
 
         // draw message
         if (this.game.pause && this.game.displayMessage) {

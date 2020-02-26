@@ -26,7 +26,8 @@ class Hero extends Entity {
         this.alive = true;
         this.equipJ = "whip"; // Item equipped in J key.
         this.equipK = "empty"; // Item equipped in K key.
-        this.inventory = ["empty", "whip"];
+        this.inventory = ["empty", "whip", "boots"];
+        this.arrows = 0;
         // array to store weapon upgrade levels
         // may need to expand on the elements as an object to include weapon name
         // upgrades[0] = whip, upgrades[1] = bow, upgrades[2] = weapon c, upgrades[3] = weapon d
