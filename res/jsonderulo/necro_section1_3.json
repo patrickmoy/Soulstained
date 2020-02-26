@@ -1221,11 +1221,11 @@
       "customProperties": {}
     },
     {
-      "type": "",
+      "type": "Necromancer",
       "originalX": 80,
       "originalY": 32,
-      "x": 80,
-      "y": 16,
+      "x": 115,
+      "y": 5,
       "customProperties": {}
     }
   ]

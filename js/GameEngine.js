@@ -88,7 +88,7 @@ class GameEngine {
         this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
         this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
 
-        //this.currentWorld = this.WORLDS["necro"];
+       // this.currentWorld = this.WORLDS["necro"];
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
         this.currentMusicID = overworldMusic.play();
         this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;

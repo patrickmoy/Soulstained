@@ -78,15 +78,15 @@ class TileMap {
                         entity.y * 60 / 16, 2.3, [3]))
             }
             else if (entity.type === 'Mage') {
-                this.ENEMIES.push(new Mage(this.game, this.game.ASSETS_LIST['./res/img/mage.png'], 100, 100, 56, 56));
+                this.ENEMIES.push(new Mage(this.game, this.game.ASSETS_LIST['./res/img/mage.png'], entity.x * 60/16, entity.y * 60/16, 56, 56));
             }
             else if (entity.type === 'Necromancer') {
                 this.ENEMIES.push(
-                    new Necromancer(this.game, this.game.ASSETS_LIST['./res/img/necro.png'], 300, 100, 56, 56,
+                    new Necromancer(this.game, this.game.ASSETS_LIST['./res/img/necro.png'], entity.x * 60/16, entity.y *60/16, 56, 56,
                         this.ENEMIES));
             }
             else if (entity.type === 'Beast') {
-                this.ENEMIES.push(new Beast(this.game, this.game.ASSETS_LIST['./res/img/beast.png'], 600, 300, 56, 56,
+                this.ENEMIES.push(new Beast(this.game, this.game.ASSETS_LIST['./res/img/beast.png'], entity.x * 60/16, entity.y * 60/16, 56, 56,
                     entity.customProperties.position));
             }
             else if (entity.type === 'Flower') {

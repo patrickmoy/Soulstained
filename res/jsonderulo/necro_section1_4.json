@@ -1663,6 +1663,16 @@
         "loot": "healthUpgrade",
         "msg": "YOU HAVE FOUND A MAGIC BALM\n\nITS MAGIC ESSENCE INVIGORATES YOU\n\nYOU FEEL STURDIER AND HARDIER"
       }
+    },
+    {
+      "type": "Beast",
+      "originalX": 24,
+      "originalY": 132.66666666666666,
+      "x": 24,
+      "y": 200.66666666666666,
+      "customProperties": {
+        "position": "EAST"
+      }
     }
   ]
 }
