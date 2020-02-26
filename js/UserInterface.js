@@ -592,11 +592,14 @@ class UserInterface {
     draw() {
 
         /**
-         * draw background
+         * distracts too much from the game play
          */
-        this.ctx.globalAlpha = 0.9;
+        /*
+        this.ctx.globalAlpha = 0.7;
         this.ctx.fillStyle = 'teal';
         this.ctx.fillRect(0, 0, 720, 75);
+        */
+
 
         /**
          * draw hearts
