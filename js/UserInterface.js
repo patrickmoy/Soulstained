@@ -46,6 +46,8 @@ class UserInterface {
         // relevant properties from hero
         // >>>>> this.hero.inventory, this.hero.equipJ, this.hero.equipK
         this.availableWeapons = [];
+        this.indexKeyJ;
+        this.indexKeyK;
         this.currentJ;
         this.currentK;
         this.cursorX = 120 + 216 + 60 + 120;
@@ -89,17 +91,73 @@ class UserInterface {
             this.cursorSX = 12 * Math.floor(Math.floor(this.cursorTime / 0.5) % 2);
 
             // INVENTORY OPERATIONS
-            this.currentJ = this.hero.equipJ;
-            this.currentK = this.hero.equipK;
-            this.availableWeapons = this.hero.inventory.filter(weapon => weapon !== this.hero.equipJ || weapon !== this.hero.equipK);
+            this.indexKeyJ = this.hero.inventory.indexOf(this.hero.equipJ);
+            this.indexKeyK = this.hero.inventory.indexOf(this.hero.equipK);
+            //this.availableWeapons = this.hero.inventory.filter(weapon => weapon !== this.hero.equipJ || weapon !== this.hero.equipK);
+
+            // handle key inputs
+            // cursor first
+
+            if (this.game.INPUTS["KeyW"]) {
+                this.game.INPUTS["KeyW"] = false;
+                if (this.cursorY === 305) {
+                    // do nothing
+                } else {
+                    this.cursorY = 305;
+                }
+            }
+
+            if (this.game.INPUTS["KeyS"]) {
+                this.game.INPUTS["KeyS"] = false;
+                if (this.cursorY === 324) {
+                    // do nothing
+                } else {
+                    this.cursorY = 324;
+                }
+            }
+
+            if (this.game.INPUTS["KeyA"]) {
+                this.game.INPUTS["KeyA"] = false;
+                if (this.cursorY === 305) {
+                    // key J selection
+                    if (this.indexKeyJ === 0) {
+                        this.indexKeyJ = this.hero.inventory.length - 1;
+                        console.log(this.indexKeyJ);
+                    } else {
+                        this.indexKeyJ--;
+                    }
+
+                } else {
+                    if (this.indexKeyK === 0) {
+                        this.indexKeyK = this.hero.inventory.length - 1;
+                    } else {
+                        this.indexKeyK--;
+                    }
+                }
+            }
+
+            if (this.game.INPUTS["KeyD"]) {
+                this.game.INPUTS["KeyD"] = false;
+                if (this.cursorY === 305) {
+                    if (this.indexKeyJ === this.hero.inventory.length - 1) {
+                        this.indexKeyJ = 0;
+                    } else {
+                        this.indexKeyJ++;
+                    }
+                } else {
+                    if (this.indexKeyK === this.hero.inventory.length - 1) {
+                        this.indexKeyK = 0;
+                    } else {
+                        this.indexKeyK++;
+                    }
+                }
+            }
 
 
-
-
-
-
-
-
+            this.currentJ = this.hero.inventory[this.indexKeyJ];
+            this.currentK = this.hero.inventory[this.indexKeyK];
+            this.hero.equipJ = this.currentJ;
+            this.hero.equipK = this.currentK;
         }
 
         // EXIT MESSAGE AND RETURN TO THE GAME
@@ -474,8 +532,8 @@ class UserInterface {
         // 1 newline (1.5 line spacing) and a carriage return
         dy += 19;
         dx = 120;
-        var wordBow = this.parse("          WEAPON C");
-        wordBow.forEach(function(letterIndex) {
+        var wordWeaponC = this.parse("          WEAPON C");
+        wordWeaponC.forEach(function(letterIndex) {
             self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
             dx += 12;
         });
@@ -484,7 +542,7 @@ class UserInterface {
         dy += 19;
         dx = 120;
         var wordBow = this.parse("          WEAPON D");
-        wordBow.forEach(function(letterIndex) {
+        wordWeaponC.forEach(function(letterIndex) {
             self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
             dx += 12;
         });
