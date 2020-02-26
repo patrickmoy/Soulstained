@@ -18,6 +18,7 @@ class TileMap {
         this.PROJECTILES = []; // Will contain any projectiles
         this.WORLDANIMATIONS = []; // Will contain animated stuff. Does not store into any entities subarray, just called and drawn.
         this.DESTRUCTIBLES = []; // Stores any destructibles (e.g. crates)
+        this.TRIGGERS = [];
         this.createEntities(); // Creates the tiles for collision and passes it into entities
     }
 
@@ -87,8 +88,14 @@ class TileMap {
                     checkAmount = entity.customProperties.amount;
                 }
                 this.BLOCKS.push(new BigChest(this.game, this.game.ASSETS_LIST['./res/img/bigchest.png'], entity.x * 60 / 16, entity.y * 60 / 16, 120, 90, entity.customProperties.msg, entity.customProperties.loot, checkAmount));
+            } else if (entity.type === 'Lever') {
+                this.BLOCKS.push(new Lever(this.game, this.game.ASSETS_LIST['./res/img/lever.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, entity.customProperties.trigger));
+            } else if (entity.type === 'Gate') {
+                this.BLOCKS.push(new Gate(this.game, this.game.ASSETS_LIST['./res/img/gate.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, entity.customProperties.trigger));
+            } else if (entity.type === 'Lock') {
+                console.log(entity.customProperties);
+                this.BLOCKS.push(new Lock(this.game, this.game.ASSETS_LIST['./res/img/lock.png'], this.game.ASSETS_LIST['./res/img/bosslock.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60, entity.customProperties.face, entity.customProperties.strength));
             }
-
         }
     }
 }

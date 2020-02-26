@@ -86,8 +86,7 @@ function flagImpassable(collisionPairs) {
             element[1].pushUpdate = false;
         }
 
-        if (element[1] instanceof DestructibleBlock)
-        {
+        if (element[1] instanceof DestructibleBlock) {
             element[0].pushUpdate = false;
         }
     });
@@ -144,6 +143,17 @@ function flagMessages(collisionPairs) {
             }
         }
 
+        if (element[0] instanceof Lever) {
+            if (element[1] instanceof Hero) {
+                element[0].pushMessage = true;
+            }
+        }
+        if (element[0] instanceof Hero) {
+            if (element[1] instanceof Lever) {
+                element[1].pushMessage = true;
+            }
+        }
+
         if (element[0] instanceof Merchant) {
             if (element[1] instanceof Hero) {
                 if (element[1].direction === 0) {
@@ -158,13 +168,23 @@ function flagMessages(collisionPairs) {
                 }
             }
         }
+        if (element[0] instanceof Hero) {
+            if (element[1] instanceof Lock) {
+                element[1].pushUnlock = true;
+            }
+        }
+        if (element[0] instanceof Lock) {
+            if (element[1] instanceof Hero) {
+                element[0].pushUnlock = true;
+            }
+        }
+
     });
 
 }
 
 function flagPickup(collisionPairs) {
-    collisionPairs.forEach(element =>
-    {
+    collisionPairs.forEach(element => {
         element[1].add(element[0])
     });
 }

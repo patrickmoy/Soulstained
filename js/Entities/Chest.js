@@ -70,3 +70,65 @@ class BigChest extends Chest {
         }
     }
 }
+
+class Gate extends Sign {
+    constructor(game, spritesheet, x, y, width, height, trigger) {
+        super(game, x, y, width, height, "");
+        this.spritesheet = spritesheet;
+        this.context = game.GAME_CONTEXT;
+        this.trigger = trigger;
+        this.msg = 'YOU FOUND A LARGE AND IMPOSING GATE\n\nIT LOOKS LOCKED\n\nMAYBE YOU SHOULD LOOK AROUND\nTO FIND A WAY TO OPEN IT';
+    }
+
+    update() {
+        if (this.game.gateTriggers[this.trigger]) {
+            this.deleteSelf();
+        }
+        if (this.pushMessage) {
+            if (this.game.newMsg === false) {
+                this.game.newMsg = true;
+                this.game.msg = this.msg;
+                this.pushMessage = false;
+            }
+        }
+    }
+
+    draw() {
+        this.context.drawImage(this.spritesheet, 0, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
+            60, 60)
+    }
+}
+
+class Lever extends Sign {
+    constructor(game, spritesheet, x, y, width, height, trigger) {
+        super(game, x, y, width, height, "");
+        this.spritesheet = spritesheet;
+        this.context = game.GAME_CONTEXT;
+        this.trigger = trigger;
+        this.pulled = false;
+        this.msg = 'YOU PULLED THE LEVER\n\nBETTER LEAVE IT THIS WAY';
+    }
+
+    update() {
+        if (this.pushMessage && !this.pulled) {
+            if (this.game.newMsg === false) {
+                this.game.newMsg = true;
+                this.game.msg = this.msg;
+                this.pushMessage = false;
+                this.pulled = true;
+                this.game.gateTriggers[this.trigger] = true;
+            }
+        }
+    }
+
+    draw() {
+        if (!this.pulled) {
+            this.context.drawImage(this.spritesheet, 0, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
+                60, 60)
+        } else {
+            this.context.drawImage(this.spritesheet, 16, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
+                60, 60)
+        }
+    }
+
+}
