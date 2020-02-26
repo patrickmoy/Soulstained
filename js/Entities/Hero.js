@@ -27,11 +27,15 @@ class Hero extends Entity {
         this.equipJ = "whip"; // Item equipped in J key.
         this.equipK = "empty"; // Item equipped in K key.
         this.inventory = ["empty", "whip", "boots"];
-        this.arrows = 0;
+
+
         // array to store weapon upgrade levels
         // may need to expand on the elements as an object to include weapon name
         // upgrades[0] = whip, upgrades[1] = bow, upgrades[2] = weapon c, upgrades[3] = weapon d
-        this.upgrades = [0, 0, 0, 0];
+        this.upgrades = [0, 0];
+        // variable to count number of arrows
+        // idea -> 1 unit of arrow represents a bundle of a dozen arrows (like a magazine clip)
+        this.arrows = 0;
 
         // Change this to be 5x the attackFrameTime, and whip speed will update.
         // It is advised to adjust Entity's INVINCIBLE_TIME to match hero's whip duration. (Not Hero's).

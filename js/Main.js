@@ -52,6 +52,7 @@ AssetHandler.queueImage('./res/img/gate.png');
 AssetHandler.queueImage("./res/img/boots.png");
 AssetHandler.queueImage("./res/img/bootsUI.png");
 AssetHandler.queueImage("./res/img/arrows.png");
+AssetHandler.queueImage("./res/img/arrowsUI.png");
 AssetHandler.queueImage("./res/img/merchant.png");
 AssetHandler.queueImage("./res/img/lever.png");
 AssetHandler.queueJSON('./res/jsonderulo/section1_1.json');

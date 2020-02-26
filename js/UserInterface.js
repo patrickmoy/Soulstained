@@ -533,7 +533,7 @@ class UserInterface {
         // 1 newline (1.5 line spacing) and a carriage return
         dy += 19;
         dx = 120;
-        var wordWeaponC = this.parse("          WEAPON C");
+        var wordWeaponC = this.parse("");
         wordWeaponC.forEach(function(letterIndex) {
             self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
             dx += 12;
@@ -542,7 +542,7 @@ class UserInterface {
         // 1 newline (1.5 line spacing) and a carriage return
         dy += 19;
         dx = 120;
-        var wordBow = this.parse("          WEAPON D");
+        var wordBow = this.parse("");
         wordWeaponC.forEach(function(letterIndex) {
             self.ctx.drawImage(self.lettersFontImage, letterIndex * step, 0, 60, 60, dx, dy, 12, 12);
             dx += 12;
@@ -590,6 +590,14 @@ class UserInterface {
     }
 
     draw() {
+
+        /**
+         * draw background
+         */
+        this.ctx.globalAlpha = 0.9;
+        this.ctx.fillStyle = 'teal';
+        this.ctx.fillRect(0, 0, 720, 75);
+
         /**
          * draw hearts
          */
@@ -609,6 +617,11 @@ class UserInterface {
         this.ctx.drawImage(this.digitsFontImage, this.d100, 0, 49.5, 45, 327, 37, 22, 20);
         this.ctx.drawImage(this.digitsFontImage, this.d10, 0, 49.5, 45, 349, 37, 22, 20);
         this.ctx.drawImage(this.digitsFontImage, this.d1, 0, 49.5, 45, 371, 37, 22, 20);
+
+        // draw arrows
+        this.ctx.drawImage(this.images["./res/img/arrowsUI.png"], 0, 0, 18, 18, 420, 5, 30, 30);
+        this.ctx.drawImage(this.digitsFontImage, this.hero.arrows, 0, 49.5, 45, 425, 37, 22, 20);
+
 
         // draw keys
         this.ctx.drawImage(this.smallKey, 0, 0, 7, 14, 462, 5, 15, 30);
