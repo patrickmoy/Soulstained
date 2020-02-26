@@ -51,6 +51,7 @@ class UserInterface {
         this.cursorX = 120 + 216 + 60 + 120;
         this.cursorY = 305; // 305 or 324
         this.cursorSX = 0;  // for indexing sprite sheet
+        this.cursorTime = 0;
     }
 
     update() {
@@ -80,13 +81,12 @@ class UserInterface {
             if (this.game.INPUTS["KeyK"]) {
                 this.game.pause = false;
                 this.game.inInventory = false;
+                this.game.INPUTS["KeyK"] = false;
             }
 
-            if (this.cursorSX === 0) {
-                this.cursorSX = 12;
-            } else {
-                this.cursorSX = 0;
-            }
+            // cursor animation operations
+            this.cursorTime += this.game.clockTick;
+            this.cursorSX = 12 * Math.floor(Math.floor(this.cursorTime / 0.5) % 2);
 
             // INVENTORY OPERATIONS
             this.currentJ = this.hero.equipJ;
@@ -518,7 +518,7 @@ class UserInterface {
         });
 
         // DRAW CURSOR
-        this.ctx.drawImage(this.cursor, this.sx, 0, 12, 12, this.cursorX, this.cursorY, 12, 12);
+        this.ctx.drawImage(this.cursor, this.cursorSX, 0, 12, 12, this.cursorX, this.cursorY, 12, 12);
 
         // upgrade bars - sprite sheet step is 141, dimensions 846 x 13
         dx = 120 + 216 + 60;
