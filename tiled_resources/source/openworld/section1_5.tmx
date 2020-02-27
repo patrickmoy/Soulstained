@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="360">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="364">
  <editorsettings>
   <export target="../../finished/openworld/section1_5.json" format="soulstain"/>
  </editorsettings>
@@ -22,7 +22,6 @@
  <tileset firstgid="3671" source="../../tilesets/sniper.tsx"/>
  <tileset firstgid="3677" source="../../tilesets/worm.tsx"/>
  <tileset firstgid="3680" source="../../tilesets/cursed_grass.tsx"/>
- <tileset firstgid="3690" source="../../../../../SchoolDownload/tiled_resources_new1111/tiled_resources/tilesets/openworld.tsx"/>
  <layer id="1" name="floor" width="12" height="12">
   <data encoding="csv">
 3680,3680,3680,3680,3680,3680,3683,1808,1808,1808,1808,1808,
@@ -49,8 +48,8 @@
 0,0,0,0,0,0,0,0,0,0,0,2684356843,
 0,0,0,0,0,0,0,0,0,0,0,2684356842,
 0,0,0,0,0,0,0,0,0,892,0,2684356843,
-893,894,893,894,893,894,0,893,894,0,0,4101,
-0,0,0,0,0,0,0,0,0,0,0,4069,
+893,894,893,894,893,894,0,893,894,0,0,892,
+0,0,0,0,0,0,0,0,0,0,0,860,
 709,709,709,709,709,709,709,709,0,0,0,1,
 0,0,0,0,0,0,0,0,0,0,0,1
 </data>
@@ -101,6 +100,7 @@ PLEASE DO NOT EXPLORE</property>
   <object id="351" gid="1808" x="160" y="16" width="16" height="16"/>
   <object id="352" gid="1808" x="144" y="16" width="16" height="16"/>
   <object id="353" gid="1808" x="128" y="64" width="16" height="16"/>
+  <object id="360" gid="1808" x="128" y="80" width="16" height="16"/>
  </objectgroup>
  <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
@@ -186,10 +186,10 @@ PLEASE DO NOT EXPLORE</property>
     <property name="trigger" value="necro"/>
    </properties>
   </object>
-  <object id="354" gid="3930" x="48" y="128" width="16" height="16"/>
-  <object id="356" gid="3930" x="64" y="128" width="16" height="16"/>
-  <object id="357" gid="3930" x="80" y="128" width="16" height="16"/>
-  <object id="358" gid="3930" x="112" y="128" width="16" height="16"/>
+  <object id="354" gid="721" x="48" y="128" width="16" height="16"/>
+  <object id="356" gid="721" x="64" y="128" width="16" height="16"/>
+  <object id="357" gid="721" x="80" y="128" width="16" height="16"/>
+  <object id="358" gid="721" x="112" y="128" width="16" height="16"/>
  </objectgroup>
  <layer id="7" name="second image" width="12" height="12" visible="0">
   <data encoding="csv">

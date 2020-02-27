@@ -81,7 +81,7 @@ function flagImpassable(collisionPairs) {
         if (element[1] instanceof InvisibleBlock && !(element[1] instanceof Pit)) { // Check if element[0] is hero or an enemy instead (non ghost).
             element[0].pushUpdate = false;
         }
-        if (element[0] instanceof Hero) {
+        if (element[0] instanceof Hero && element[1] instanceof InvisibleBlock && !(element[1] instanceof Pit)) {
             const xCheck = boxCheck(element[0].nbx, element[1].futureHitbox);
             const yCheck = boxCheck(element[0].nby, element[1].futureHitbox);
             if (yCheck && xCheck) {

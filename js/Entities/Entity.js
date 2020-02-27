@@ -105,10 +105,12 @@ class Entity {
             } else {
                 this.falling = false;
                 this.pushDamage = true;
-                this.futureHitbox.xMin = this.originalHitbox.xMin;
-                this.futureHitbox.xMax = this.originalHitbox.xMax;
-                this.futureHitbox.yMin = this.originalHitbox.yMin;
-                this.futureHitbox.yMax = this.originalHitbox.yMax;
+                setBoxToThis(this.futureHitbox, this.originalHitbox);
+                if (this instanceof Hero) {
+                    setBoxToThis(this.nbx, this.originalHitbox);
+                    setBoxToThis(this.nby, this.originalHitbox);
+                    setBoxToThis(this.hitbox, this.originalHitbox);
+                }
                 this.animation.scale = 2.4;
             }
         }
