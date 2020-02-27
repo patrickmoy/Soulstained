@@ -710,12 +710,12 @@ class UserInterface {
 
         // draw inventory
         if (this.game.pause && this.game.inInventory) {
-            console.log("inventory draw");
+            // console.log("inventory draw");
             this.displayInventory();
         }
 
         if (this.game.pause && this.game.displayHomeScreen) {
-            console.log("home screen draw");
+            // console.log("home screen draw");
             this.displayHomeScreen();
         }
 

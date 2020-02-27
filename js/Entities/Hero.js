@@ -17,6 +17,7 @@ class Hero extends Entity {
         this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
+        this.originalSpeed = 225;
         this.health = 10;
         this.maxHealth = 10;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
@@ -27,7 +28,18 @@ class Hero extends Entity {
         this.equipJ = "whip"; // Item equipped in J key.
         this.equipK = "empty"; // Item equipped in K key.
         this.inventory = ["empty", "whip", "boots"];
-
+        this.nbx = {
+            xMin: this.hitbox.xMin,
+            yMin: this.hitbox.yMin,
+            xMax: this.hitbox.xMax,
+            yMax: this.hitbox.yMax
+        };
+        this.nby = {
+            xMin: this.hitbox.xMin,
+            yMin: this.hitbox.yMin,
+            xMax: this.hitbox.xMax,
+            yMax: this.hitbox.yMax
+        };
 
         // array to store weapon upgrade levels
         // may need to expand on the elements as an object to include weapon name
@@ -43,13 +55,22 @@ class Hero extends Entity {
         this.ACTION_DURATION = .5;
         this.JUMP_DURATION = .650;
         this.WHIP_ACTIVE_RATIO = .6;
-        this.JUMP_SPRITE_FRAME_HEIGHT = 27;
+        this.JUMP_SPRITE_FRAME_HEIGHT = 27; // Used in Animation for jump.
 
         // hero damage animation control variables
         this.hurting = false;
         this.hurtCounter = this.INVINCIBLE_TIME;
         this.whipSoundTag;
         this.jumpSoundTag;
+    }
+
+    walk(direction) {
+        super.walk(direction);
+        setBoxOnlyX(this.nbx, this.futureHitbox);
+        setBoxOnlyY(this.nbx, this.hitbox);
+
+        setBoxOnlyX(this.nby, this.hitbox);
+        setBoxOnlyY(this.nby, this.futureHitbox);
     }
 
     /**
@@ -72,6 +93,10 @@ class Hero extends Entity {
                 this.attack();
             } else if (this.game.hasMoveInputs()) {
                 this.status = 'walking';
+                this.movingDiagonally = !!this.hasMultipleMoveInputs();
+                if (this.movingDiagonally) {
+                    this.speed *= this.game.DIAGONAL_ADJUSTMENT;
+                }
                 if (this.game.INPUTS["KeyW"]) {
                     this.direction = 0;
                     this.walk(this.direction);
@@ -88,6 +113,8 @@ class Hero extends Entity {
                     this.direction = 3;
                     this.walk(this.direction);
                 }
+                this.speed = this.originalSpeed;
+
             } else {
                 this.status = 'idle';
             }
@@ -105,26 +132,32 @@ class Hero extends Entity {
             case "up":
                 this.hitbox.yMin = this.hitbox.yMin + TRANSITION_AMOUNT_Y; // Add top left y coordinate with the shift amount
                 this.hitbox.yMax = this.hitbox.yMin + this.height; // Updates the new y max coordinate hitbox
-                this.futureHitbox.yMin = this.hitbox.yMin; // Updates the future hitbox to accommodate for the shifting
-                this.futureHitbox.yMax = this.hitbox.yMax;
+                setBoxOnlyY(this.futureHitbox, this.hitbox);
+                setBoxToThis(this.nbx, this.hitbox);
+                setBoxToThis(this.nby, this.hitbox);
                 break;
             case "down":
                 this.hitbox.yMin = this.hitbox.yMin - TRANSITION_AMOUNT_Y; // Add top left y coordinate with the shift amount
                 this.hitbox.yMax = this.hitbox.yMin + this.height; // Updates the new y max coordinate hitbox
-                this.futureHitbox.yMin = this.hitbox.yMin; // Updates the future hitbox to accommodate for the shifting
-                this.futureHitbox.yMax = this.hitbox.yMax;
+                setBoxOnlyY(this.futureHitbox, this.hitbox);
+                setBoxToThis(this.nbx, this.hitbox);
+                setBoxToThis(this.nby, this.hitbox);
                 break;
             case "left":
                 this.hitbox.xMin = this.hitbox.xMin + TRANSITION_AMOUNT_X; // Add top left x coordinate with the shift amount
                 this.hitbox.xMax = this.hitbox.xMin + this.width; // Updates the new x max coordinate to include the new width point
-                this.futureHitbox.xMin = this.hitbox.xMin; // Updates the future hitbox to accommodate for the shifting
-                this.futureHitbox.xMax = this.hitbox.xMax;
+                setBoxOnlyX(this.futureHitbox, this.hitbox); // Updates the future hitbox to accommodate for the shifting
+                // this.futureHitbox.xMin = this.hitbox.xMin;
+                // this.futureHitbox.xMax = this.hitbox.xMax;
+                setBoxToThis(this.nbx, this.hitbox);
+                setBoxToThis(this.nby, this.hitbox);
                 break;
             case "right":
                 this.hitbox.xMin = this.hitbox.xMin - TRANSITION_AMOUNT_X; // Add top left x coordinate with the shift amount
                 this.hitbox.xMax = this.hitbox.xMin + this.width; // Updates the new x max coordinate to include the new width point
-                this.futureHitbox.xMin = this.hitbox.xMin; // Updates the future hitbox to accommodate for the shifting
-                this.futureHitbox.xMax = this.hitbox.xMax;
+                setBoxOnlyX(this.futureHitbox, this.hitbox);
+                setBoxToThis(this.nbx, this.hitbox);
+                setBoxToThis(this.nby, this.hitbox);
                 break;
         }
         this.originalHitbox.xMin = this.hitbox.xMin;
@@ -233,4 +266,7 @@ class Hero extends Entity {
         return (this.equipJ === itemName && this.game.INPUTS["KeyJ"]) || (this.equipK === itemName && this.game.INPUTS["KeyK"]);
     }
 
+    hasMultipleMoveInputs() {
+        return (this.game.INPUTS["KeyW"] || this.game.INPUTS["KeyS"]) && (this.game.INPUTS["KeyD"] || this.game.INPUTS["KeyA"]);
+    }
 }

@@ -58,6 +58,10 @@ function detectCollide(entities, otherEntities) {
 function entitiesCollided(firstElement, secondElement) {
     const boxOne = firstElement.futureHitbox;
     const boxTwo = secondElement.futureHitbox;
+    return boxCheck(boxOne, boxTwo);
+}
+
+function boxCheck(boxOne, boxTwo) {
     return boxOne.xMin < boxTwo.xMax &&
         boxTwo.xMin < boxOne.xMax &&
         boxOne.yMin < boxTwo.yMax &&
@@ -76,6 +80,18 @@ function flagImpassable(collisionPairs) {
         // Assuming convention of ordering of parameters (heros and enemies first, blocks/traps after)
         if (element[1] instanceof InvisibleBlock && !(element[1] instanceof Pit)) { // Check if element[0] is hero or an enemy instead (non ghost).
             element[0].pushUpdate = false;
+        }
+        if (element[0] instanceof Hero) {
+            const xCheck = boxCheck(element[0].nbx, element[1].futureHitbox);
+            const yCheck = boxCheck(element[0].nby, element[1].futureHitbox);
+            if (yCheck && xCheck) {
+                element[0].pushUpdateY = false;
+                element[0].pushUpdateX = false;
+            } else if (yCheck) {
+                element[0].pushUpdateY = false;
+            } else if (xCheck) {
+                element[0].pushUpdateX = false;
+            }
         }
         if (element[0] instanceof Enemy && element[1] instanceof Pit)
         {
@@ -202,4 +218,21 @@ function resetFlags(entitiesToCheck) {
     for (let i = 0; i < entitiesToCheck.length; i++) {
         entitiesToCheck[i].pushUpdate = true;
     }
+}
+
+function setBoxToThis(boxOne, boxTwo) {
+    boxOne.xMin = boxTwo.xMin;
+    boxOne.xMax = boxTwo.xMax;
+    boxOne.yMin = boxTwo.yMin;
+    boxOne.yMax = boxTwo.yMax;
+}
+
+function setBoxOnlyX(boxOne, boxTwo) {
+    boxOne.xMin = boxTwo.xMin;
+    boxOne.xMax = boxTwo.xMax;
+}
+
+function setBoxOnlyY(boxOne, boxTwo) {
+    boxOne.yMin = boxTwo.yMin;
+    boxOne.yMax = boxTwo.yMax;
 }

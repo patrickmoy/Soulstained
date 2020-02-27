@@ -48,7 +48,7 @@ class GameEngine {
 
         this.currentPortal;
         this.TIMER; // The Game Timer to keep track of virtual time
-        this.SUCK_RATE;
+        this.DIAGONAL_ADJUSTMENT = 0.75;
         this.GAME_CANVAS_WIDTH; // The main canvas width
         this.GAME_CANVAS_HEIGHT; // The main canvas height
         this.HERO; // The main player of the game
@@ -185,6 +185,8 @@ class GameEngine {
             // Entities are now movable around the map
             // Reset all behavior flags for all entities. Can be expanded/diversified
             resetFlags(this.currentEntities[0]);
+            this.HERO.pushUpdateX = true;
+            this.HERO.pushUpdateY = true;
             resetFlags(this.currentEntities[1]);
             resetFlags(this.currentEntities[2]);
             resetFlags(this.currentEntities[3]);
@@ -260,9 +262,12 @@ class GameEngine {
                 this.transition = true; // Game Engine and other necessary components is now performing transition action
             }
             else {
+                console.log("hit branch");
                 this.currentWorld.section.x -= currentBorder.changeInX; // Change the x coordinate for the tilemap array
                 this.currentWorld.section.y -= currentBorder.changeInY; // Change the y coordinate for the tilemap array
                 this.HERO.pushUpdate = false;
+                this.HERO.pushUpdateX = false;
+                this.HERO.pushUpdateY = false;
             }
         }
     }

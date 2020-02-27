@@ -55,6 +55,7 @@ class Entity {
         this.moveable = true;
         this.pushDamage = false;
         this.pushUpdate = true;
+        this.movingDiagonally = false;
     }
 
 
@@ -80,17 +81,24 @@ class Entity {
      * Actually updates the game given that update is allowed to be pushed
      */
     update() {
-        if (this.pushUpdate) {
-            this.hitbox.xMin = this.futureHitbox.xMin; // Updates to new top left x coordinate
-            this.hitbox.yMin = this.futureHitbox.yMin; // Updates to the new top left y coordinate
-            this.hitbox.xMax = this.futureHitbox.xMax; // Updates to the new bottom right x coordinate
-            this.hitbox.yMax = this.futureHitbox.yMax; // Updates to the new bottom right y coordinate
+        if (this instanceof Hero) {
+            if (this.pushUpdateX) {
+                setBoxOnlyX(this.hitbox, this.nbx);
+            } else {
+                setBoxToThis(this.nbx, this.hitbox);
+            }
+            if (this.pushUpdateY) {
+                setBoxOnlyY(this.hitbox, this.nby);
+            } else {
+                setBoxToThis(this.nby, this.hitbox);
+            }
+            setBoxToThis(this.futureHitbox, this.hitbox);
+        } else if (this.pushUpdate) {
+            setBoxToThis(this.hitbox, this.futureHitbox);
         } else {
-            this.futureHitbox.xMin = this.hitbox.xMin; // Resets future top left x coordinate
-            this.futureHitbox.yMin = this.hitbox.yMin; // Resets future top left y coordinate
-            this.futureHitbox.xMax = this.hitbox.xMax; // Resets future bottom right x coordinate
-            this.futureHitbox.yMax = this.hitbox.yMax; // Resets future bottom right y coordinate
+            setBoxToThis(this.futureHitbox, this.hitbox);
         }
+
         if (this.pushDamage && !(this instanceof Hero)) {
             var hitSprite = new Animation(this.game.ASSETS_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
             var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 10, spritesheet: hitSprite};
@@ -195,7 +203,6 @@ class Entity {
             this.health -= damage;
         }
     }
-
 
     gravitate(focusX, focusY, suckRate) {
         var diffX = focusX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;

@@ -7,6 +7,7 @@ class Enemy extends Entity {
         this.ORIGINAL_HEALTH = health;
         this.health = health;
         this.alive = true;
+        this.ALLOWED_TRACKING_ERROR = 30;
     }
 
     /**
@@ -87,23 +88,27 @@ class Enemy extends Entity {
                 //Difference between hero and zombie in y direction
                 var diffY = heroPosY - (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2;
                 // Zombie is to the right of hero so move left
+
+                let speedAdjust = (Math.abs(diffX) >= this.ALLOWED_TRACKING_ERROR &&
+                    Math.abs(diffY) >= this.ALLOWED_TRACKING_ERROR) ? this.game.DIAGONAL_ADJUSTMENT : 1.0;
+
                 if (diffX < 0) {
-                    this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+                    this.futureHitbox.xMin -= this.game.clockTick * this.speed * speedAdjust;
                     this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
                 }
                 // Zombie is to the left of hero so move right
                 if (diffX > 0) {
-                    this.futureHitbox.xMin += this.game.clockTick * this.speed;
+                    this.futureHitbox.xMin += this.game.clockTick * this.speed * speedAdjust;
                     this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
                 }
                 // Zombie is below the hero so move up
                 if (diffY < 0) {
-                    this.futureHitbox.yMin -= this.game.clockTick * this.speed;
+                    this.futureHitbox.yMin -= this.game.clockTick * this.speed * speedAdjust;
                     this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
                 }
                 // Zombie is above the hero so move down
                 if (diffY > 0) {
-                    this.futureHitbox.yMin += this.game.clockTick * this.speed;
+                    this.futureHitbox.yMin += this.game.clockTick * this.speed * speedAdjust;
                     this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
                 }
                 // Checks if the movement was valid with walls
@@ -122,24 +127,28 @@ class Enemy extends Entity {
     followHero() {
         const heroPosX = (this.game.HERO.hitbox.xMin + this.game.HERO.hitbox.xMax) / 2; // Gets the hero's center x
         const heroPosY = (this.game.HERO.hitbox.yMin + this.game.HERO.hitbox.yMax) / 2; // Gets the hero's center y
+
+
         // Difference between hero and enemy in x direction
         var diffX = heroPosX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;
         //Difference between hero and enemy in y direction
         var diffY = heroPosY - (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2;
+        let speedAdjust = (Math.abs(diffX) >= this.ALLOWED_TRACKING_ERROR &&
+            Math.abs(diffY) >= this.ALLOWED_TRACKING_ERROR) ? this.game.DIAGONAL_ADJUSTMENT : 1.0;
         if (diffX < 0) {
-            this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+            this.futureHitbox.xMin -= this.game.clockTick * this.speed * speedAdjust;
             this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
         }
         if (diffX > 0) {
-            this.futureHitbox.xMin += this.game.clockTick * this.speed;
+            this.futureHitbox.xMin += this.game.clockTick * this.speed * speedAdjust;
             this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
         }
         if (diffY < 0) {
-            this.futureHitbox.yMin -= this.game.clockTick * this.speed;
+            this.futureHitbox.yMin -= this.game.clockTick * this.speed * speedAdjust;
             this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
         }
         if (diffY > 0) {
-            this.futureHitbox.yMin += this.game.clockTick * this.speed;
+            this.futureHitbox.yMin += this.game.clockTick * this.speed * speedAdjust;
             this.futureHitbox.yMax = this.futureHitbox.yMin + this.height;
         }
     }
