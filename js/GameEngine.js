@@ -308,6 +308,9 @@ class GameEngine {
         this.HERO.futureHitbox.yMin = this.HERO.hitbox.yMin;
         this.HERO.futureHitbox.xMax = this.HERO.hitbox.xMax;
         this.HERO.futureHitbox.yMax = this.HERO.hitbox.yMax;
+        setBoxToThis(this.HERO.nbx, this.HERO.hitbox);
+        setBoxToThis(this.HERO.nby, this.HERO.hitbox);
+
         this.changeEntitiesToCurrent();
         this.currentEntities[2].forEach(enemy => enemy.reset());
         if (this.currentWorld === this.WORLDS["openworld"]) {

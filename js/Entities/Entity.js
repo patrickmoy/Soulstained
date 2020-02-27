@@ -100,6 +100,8 @@ class Entity {
         }
 
         if (this.pushDamage && !(this instanceof Hero)) {
+            console.log(this);
+            console.log(this.pushDamage);
             var hitSprite = new Animation(this.game.ASSETS_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
             var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 10, spritesheet: hitSprite};
             this.game.HitQueue.push(hitObject);
