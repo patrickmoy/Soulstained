@@ -99,13 +99,6 @@ class Entity {
             setBoxToThis(this.futureHitbox, this.hitbox);
         }
 
-        if (this.pushDamage && !(this instanceof Hero)) {
-            console.log(this);
-            console.log(this.pushDamage);
-            var hitSprite = new Animation(this.game.ASSETS_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
-            var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 10, spritesheet: hitSprite};
-            this.game.HitQueue.push(hitObject);
-        }
         if (this.falling) {
             if (this.animation.scale > 0) {
                 this.animation.scale -= .25;
@@ -120,6 +113,11 @@ class Entity {
             }
         }
         if (this.pushDamage) {
+            if (!(this instanceof Hero)) {
+                var hitSprite = new Animation(this.game.ASSETS_LIST["./res/img/hit.png"], this, 30, 30, 0.05, 2, [2]);
+                var hitObject = {dx: this.hitbox.xMin, dy: this.hitbox.yMin, counter: 10, spritesheet: hitSprite};
+                this.game.HitQueue.push(hitObject);
+            }
             if (this.invincibleCounter === 0) {
                 this.takeDamage();
                 this.hurting = true;
@@ -127,8 +125,8 @@ class Entity {
             this.invincibleCounter += this.game.clockTick;
             if (this.invincibleCounter > this.INVINCIBLE_TIME) {
                 this.invincibleCounter = 0;
-                this.pushDamage = false;
             }
+            this.pushDamage = false;
         } else {
             if (this.invincibleCounter > 0) {
                 this.invincibleCounter += this.game.clockTick;
@@ -205,6 +203,7 @@ class Entity {
             this.health -= damage;
         }
     }
+
 
     gravitate(focusX, focusY, suckRate) {
         var diffX = focusX - (this.futureHitbox.xMin + this.futureHitbox.xMax) / 2;

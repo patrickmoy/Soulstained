@@ -40,8 +40,10 @@ class Enemy extends Entity {
      */
     reset() {
         this.resetPosition();
-        this.alive = true;
+        //this.alive = true;
         this.health = this.ORIGINAL_HEALTH;
+        this.alive = true;
+        console.log(this.pushDamage);
     }
 
     randomWalk(maxTime, cooldown) {

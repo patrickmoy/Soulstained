@@ -262,7 +262,6 @@ class GameEngine {
                 this.transition = true; // Game Engine and other necessary components is now performing transition action
             }
             else {
-                console.log("hit branch");
                 this.currentWorld.section.x -= currentBorder.changeInX; // Change the x coordinate for the tilemap array
                 this.currentWorld.section.y -= currentBorder.changeInY; // Change the y coordinate for the tilemap array
                 this.HERO.pushUpdate = false;
