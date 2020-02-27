@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="84">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="85">
  <editorsettings>
   <export target="../../finished/openworld/section1_4.json" format="soulstain"/>
  </editorsettings>
@@ -53,14 +53,39 @@
 663,0,0,488,0,0,522,0,2391,2395,2433,643
 </data>
  </layer>
- <objectgroup id="4" name="entities"/>
+ <objectgroup id="4" name="entities">
+  <object id="81" gid="1808" x="96" y="128" width="16" height="16"/>
+  <object id="83" gid="2243" x="96" y="160" width="16" height="16">
+   <properties>
+    <property name="msg">JOY TOWN PUBLIC ADVISORY
+
+BE AWARE OF ROAMING FAMILIAR FACES
+WHILE THEY MAY LOOK LIKE YOUR NEIGHBORS
+THEY NO LONGER RECOGNIZE FRIEND OR FOE
+DO NOT LET THEM IN
+PLEASE KEEP YOUR DISTANCE FOR SAFETY
+OR YOU MAY BE EATEN BY THE UNDEAD
+
+SIGNED
+
+SURVIVING CITIZENS OF JOY TOWN</property>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image.">
+  <object id="60" x="-475.644" y="270.479" width="146.793" height="69.8822">
+   <text wrap="1">Harder enemies but different color</text>
+  </object>
   <object id="65" gid="2167" x="64" y="96" width="16" height="16"/>
   <object id="66" gid="2167" x="112" y="112" width="16" height="16"/>
-  <object id="69" gid="3011" x="32" y="144" width="16" height="16"/>
+  <object id="69" gid="3011" x="32" y="144" width="16" height="16">
+   <properties>
+    <property name="direction" value="EAST"/>
+   </properties>
+  </object>
   <object id="70" gid="3011" x="144" y="144" width="16" height="16">
    <properties>
-    <property name="direction" value="north"/>
+    <property name="direction" value="NORTH"/>
    </properties>
   </object>
   <object id="71" gid="2167" x="97" y="48" width="16" height="16"/>
@@ -68,30 +93,9 @@
   <object id="75" gid="721" x="128" y="48" width="16" height="16"/>
   <object id="78" gid="3017" x="64" y="160" width="16" height="16"/>
   <object id="80" gid="3017" x="160" y="96" width="16" height="16"/>
-  <object id="82" gid="721" x="48" y="64" width="16" height="16"/>
-  <object id="83" gid="484" x="96" y="160" width="16" height="16">
-   <properties>
-    <property name="msg">JOY TOWN PUBLIC ADVISORY NOTICE
-
-BEWARE OF ROAMING FAMILIAR FACES
-
-WHILE THEY MAY LOOK LIKE YOUR NEIGHBORS 
-THEY NO LONGER RECOGNIZE FRIEND FROM FOE
-
-DO NOT LET THEM IN
-
-PLEASE KEEP YOUR DISTANCE FOR SAFETY
-OR YOU MAY BE EATEN BY THE UNDEAD
-
-SIGNED
-
-SURVIVING CITIZENS OF JOY TOWN
-
-</property>
-   </properties>
-  </object>
+  <object id="84" gid="721" x="48" y="64" width="16" height="16"/>
  </objectgroup>
- <layer id="7" name="second image" width="12" height="12">
+ <layer id="7" name="second image" width="12" height="12" visible="0">
   <data encoding="csv">
 0,0,0,861,862,0,0,0,861,0,0,0,
 861,862,861,862,0,0,0,0,0,0,0,0,
@@ -107,7 +111,7 @@ SURVIVING CITIZENS OF JOY TOWN
 0,0,588,589,0,0,0,861,862,588,589,727
 </data>
  </layer>
- <layer id="2" name="temp" width="12" height="12">
+ <layer id="2" name="temp" width="12" height="12" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -123,7 +127,7 @@ SURVIVING CITIZENS OF JOY TOWN
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="10" name="dividers" width="12" height="12" opacity="0.4">
+ <layer id="10" name="dividers" width="12" height="12" visible="0" opacity="0.4">
   <data encoding="csv">
 925,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,

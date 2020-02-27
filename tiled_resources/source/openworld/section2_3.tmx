@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="79">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="68">
  <editorsettings>
-  <export target="." format="soulstain"/>
+  <export target="../../finished/openworld/section2_3.json" format="soulstain"/>
  </editorsettings>
  <tileset firstgid="1" source="../../tilesets/openworld_extra.tsx"/>
  <tileset firstgid="481" source="../../tilesets/openworld.tsx"/>
@@ -52,19 +52,7 @@
 566,567,2602,2603,566,567,566,567,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="entities">
-  <object id="68" type="Portal" x="112" y="64" width="16" height="24">
-   <properties>
-    <property name="TMX" type="int" value="4"/>
-    <property name="TMY" type="int" value="2"/>
-    <property name="destination" value="necro"/>
-    <property name="destinationX" type="int" value="360"/>
-    <property name="destinationY" type="int" value="600"/>
-    <property name="height" type="int" value="24"/>
-    <property name="width" type="int" value="16"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup id="4" name="entities"/>
  <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -89,16 +77,6 @@
   <object id="65" gid="657" x="17" y="16" width="16" height="16"/>
   <object id="66" gid="3021" x="144" y="176" width="16" height="16"/>
   <object id="67" gid="3021" x="48" y="176" width="16" height="16"/>
-  <object id="74" gid="1646" x="112" y="96" width="16" height="16">
-   <properties>
-    <property name="trigger" value="necro"/>
-   </properties>
-  </object>
-  <object id="78" gid="1646" x="112" y="80" width="16" height="16">
-   <properties>
-    <property name="trigger" value="necro"/>
-   </properties>
-  </object>
  </objectgroup>
  <layer id="7" name="second image" width="12" height="12">
   <data encoding="csv">

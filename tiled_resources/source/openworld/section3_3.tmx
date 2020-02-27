@@ -49,8 +49,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="entities"/>
- <layer id="8" name="sky" width="12" height="12">
+ <objectgroup id="4" name="entities" visible="0"/>
+ <layer id="8" name="sky" width="12" height="12" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -66,14 +66,14 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image.">
+ <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image." visible="0">
   <object id="25" gid="657" x="177" y="80" width="16" height="16"/>
   <object id="47" gid="2167" x="160" y="32" width="16" height="16"/>
   <object id="49" gid="2167" x="160" y="64" width="16" height="16"/>
   <object id="56" gid="973" x="49" y="160" width="16" height="16"/>
   <object id="57" gid="973" x="32" y="96" width="16" height="16"/>
  </objectgroup>
- <layer id="7" name="second image" width="12" height="12">
+ <layer id="7" name="second image" width="12" height="12" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,

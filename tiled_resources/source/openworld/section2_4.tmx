@@ -55,7 +55,7 @@
 0,0,0,750,0,802,0,0,0,0,0,663
 </data>
  </layer>
- <objectgroup id="4" name="entities" visible="0"/>
+ <objectgroup id="4" name="entities"/>
  <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -111,7 +111,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="10" name="dividers" width="12" height="12" visible="0" opacity="0.4">
+ <layer id="10" name="dividers" width="12" height="12" opacity="0.4">
   <data encoding="csv">
 925,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,

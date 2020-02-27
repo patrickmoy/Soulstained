@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="339">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="340">
  <editorsettings>
   <export target="../../finished/openworld/section1_5.json" format="soulstain"/>
  </editorsettings>
@@ -50,8 +50,8 @@
 0,0,0,0,0,0,0,0,0,892,0,1808,
 893,894,893,894,893,894,0,893,894,0,0,1808,
 0,0,0,0,0,0,0,0,0,0,0,1808,
-815,709,709,709,709,709,709,709,0,0,0,0,
-0,709,709,709,709,709,709,709,0,0,0,0
+709,709,709,709,709,709,709,709,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
  <objectgroup id="4" name="entities">
@@ -89,11 +89,22 @@
   <object id="330" gid="1808" x="144" y="112" width="16" height="16"/>
   <object id="332" gid="1808" x="128" y="112" width="16" height="16"/>
   <object id="333" gid="1808" x="112" y="112" width="16" height="16"/>
-  <object id="334" gid="1808" x="1" y="360" width="16" height="16"/>
   <object id="335" gid="1808" x="112" y="64" width="16" height="16"/>
   <object id="336" gid="1808" x="112" y="80" width="16" height="16"/>
+  <object id="338" gid="2243" x="32" y="80" width="16" height="16">
+   <properties>
+    <property name="msg">CAUTION
+
+PLEASE KEEP OUT OF THIS AREA
+THE GROUND IS UNSAFE
+THERE IS NOTHING IMPORTANT OR VALUABLE
+ABSOLUTELY NOTHING
+IT IS A WASTE OF TIME
+PLEASE DO NOT EXPLORE</property>
+   </properties>
+  </object>
  </objectgroup>
- <layer id="8" name="sky" width="12" height="12" visible="0">
+ <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -106,26 +117,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,704,0,0,0
+0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image." visible="0">
+ <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image.">
   <object id="61" type="Chest" gid="657" x="0" y="64" width="16" height="16"/>
-  <object id="67" gid="3671" x="48" y="16" width="16" height="16">
-   <properties>
-    <property name="direction" value="SOUTH"/>
-   </properties>
-  </object>
-  <object id="68" gid="3671" x="64" y="16" width="16" height="16">
-   <properties>
-    <property name="direction" value="SOUTH"/>
-   </properties>
-  </object>
-  <object id="69" gid="3671" x="80" y="16" width="16" height="16">
-   <properties>
-    <property name="direction" value="SOUTH"/>
-   </properties>
-  </object>
+  <object id="67" gid="3671" x="48" y="16" width="16" height="16"/>
+  <object id="69" gid="3671" x="80" y="16" width="16" height="16"/>
   <object id="224" gid="3677" x="32" y="112" width="16" height="16"/>
   <object id="225" gid="3677" x="16" y="32" width="16" height="16"/>
   <object id="228" gid="721" x="48" y="80" width="16" height="16"/>
@@ -177,7 +175,6 @@
   <object id="277" gid="721" x="32" y="160" width="16" height="16"/>
   <object id="278" gid="721" x="16" y="160" width="16" height="16"/>
   <object id="279" gid="721" x="0" y="160" width="16" height="16"/>
-  <object id="280" gid="721" x="0" y="176" width="16" height="16"/>
   <object id="281" gid="721" x="96" y="144" width="16" height="16"/>
   <object id="282" gid="721" x="96" y="128" width="16" height="16"/>
   <object id="283" gid="721" x="128" y="112" width="16" height="16"/>
@@ -200,20 +197,6 @@
     <property name="trigger" value="necro"/>
    </properties>
   </object>
-  <object id="337" gid="484" x="32" y="80" width="16" height="16">
-   <properties>
-    <property name="msg">CAUTION
-
-PLEASE KEEP OUT OF THIS AREA
-THE GROUND IS UNSAFE
-
-THERE IS NOTHING IMPORTANT OR VALUABLE
-ABSOLUTELY NOTHING
-IT IS A WASTE OF TIME
-PLEASE DO NOT EXPLORE</property>
-   </properties>
-  </object>
-  <object id="338" gid="721" x="176" y="48" width="16" height="16"/>
  </objectgroup>
  <layer id="7" name="second image" width="12" height="12">
   <data encoding="csv">
