@@ -81,6 +81,7 @@ class World {
         this.dHeight -= 7.5;
         if (this.dWidth < 1) {
             this.GAME.pause = false;
+            this.GAME.fading = false;
             this.sx = this.sourceX;
             this.sy = this.sourceY;
             this.sWidth = 192;

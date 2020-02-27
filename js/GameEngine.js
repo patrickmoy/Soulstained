@@ -41,6 +41,7 @@ class GameEngine {
         this.gateTriggers = [];
         this.transition = false; // When transitioning is happening
         this.inInventory = false; // When player is in his inventory
+        this.fading = false;
         this.pause = true; // Pauses other actions while we switch to a new map.
         this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
         this.currentEntities = [[], [], [], [], [], []]; // Stores entities at the current tile map
@@ -284,6 +285,7 @@ class GameEngine {
                     this.HERO.hitbox.yMin < portal.y + portal.height &&
                     portal.y < this.HERO.hitbox.yMax) {
                     this.pause = true;
+                    this.fading = true;
                     this.currentPortal = portals[i];
                 }
             }
@@ -337,7 +339,7 @@ class GameEngine {
      *
      */
     draw() {
-        if (!this.transition) {
+        if (!this.transition && !this.fading) {
             this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
             this.GAME_CONTEXT.save(); // Saves any properties of the canvas
             this.currentWorld.draw();
@@ -355,6 +357,13 @@ class GameEngine {
             this.drawDeaths();
             this.currentWorld.drawLayer();
             this.UI.draw();
+            this.GAME_CONTEXT.restore();
+        }
+        else if (this.fading) {
+            console.log("fading");
+            this.GAME_CONTEXT.clearRect(0, 0, this.GAME_CANVAS_WIDTH, this.GAME_CANVAS_HEIGHT); // Clears the Canvas
+            this.GAME_CONTEXT.save(); // Saves any properties of the canvas
+            this.currentWorld.draw();
             this.GAME_CONTEXT.restore();
         }
         else {
