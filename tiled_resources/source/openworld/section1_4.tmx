@@ -21,6 +21,7 @@
  <tileset firstgid="3011" source="../../tilesets/sniper.tsx"/>
  <tileset firstgid="3017" source="../../tilesets/worm.tsx"/>
  <tileset firstgid="3020" source="../../tilesets/cursed_grass.tsx"/>
+ <tileset firstgid="3030" source="../../../../../SchoolDownload/tiled_resources_new1111/tiled_resources/tilesets/openworld.tsx"/>
  <layer id="1" name="floor" width="12" height="12">
   <data encoding="csv">
 3020,3020,3020,3020,3020,3020,3025,3025,3020,3020,3020,3020,
@@ -43,7 +44,7 @@
 0,0,0,893,894,0,0,0,893,582,583,584,
 893,894,893,894,0,0,0,0,0,614,615,616,
 893,894,0,0,0,3027,0,0,0,646,920,648,
-0,0,0,0,0,3027,0,893,894,678,679,680,
+0,0,0,0,0,3027,0,893,894,3227,679,3229,
 522,3026,0,0,0,531,0,0,0,0,0,523,
 0,3029,0,3026,0,0,0,0,2403,562,2322,0,
 0,2231,2232,2233,0,0,1808,0,2231,2232,2233,0,

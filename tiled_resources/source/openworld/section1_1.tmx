@@ -50,9 +50,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="entities">
-  <object id="59" type="Lever" gid="2470" x="944" y="48" width="16" height="16"/>
- </objectgroup>
+ <objectgroup id="4" name="entities"/>
  <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,

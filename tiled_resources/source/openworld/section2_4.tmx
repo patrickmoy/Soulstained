@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="63">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="71">
  <editorsettings>
-  <export target="../../finished/openworld/section2_4.json" format="soulstain"/>
+  <export target="../../../res/jsonderulo/section2_4.json" format="soulstain"/>
  </editorsettings>
  <tileset firstgid="1" source="../../tilesets/openworld_extra.tsx"/>
  <tileset firstgid="481" source="../../tilesets/openworld.tsx"/>
@@ -23,6 +23,7 @@
  <tileset firstgid="3628" source="../../tilesets/sniper.tsx"/>
  <tileset firstgid="3634" source="../../tilesets/cursed_grass.tsx"/>
  <tileset firstgid="3644" source="../../tilesets/flower.tsx"/>
+ <tileset firstgid="3648" source="../../../../../SchoolDownload/tiled_resources_new1111/tiled_resources/tilesets/openworld.tsx"/>
  <layer id="1" name="floor" width="12" height="12">
   <data encoding="csv">
 3634,3634,482,2299,486,3639,3640,482,3634,482,482,482,
@@ -44,18 +45,21 @@
 0,0,620,621,0,0,0,893,894,620,621,759,
 620,621,0,0,0,0,0,2684357394,0,0,0,712,
 561,547,0,0,0,0,517,618,619,0,514,711,
-547,547,620,621,0,0,0,0,0,519,0,712,
+547,547,620,621,0,0,0,0,0,519,3644,712,
 554,0,0,0,0,0,0,0,0,0,0,0,
 0,523,0,0,0,0,620,621,519,0,524,0,
 0,0,0,0,0,0,554,0,0,0,523,0,
 0,1610615569,514,517,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,517,0,803,0,
+0,3644,0,0,0,0,0,0,517,0,803,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,524,781,0,0,0,0,860,0,0,
 0,0,0,750,0,802,0,0,0,0,0,663
 </data>
  </layer>
- <objectgroup id="4" name="entities"/>
+ <objectgroup id="4" name="entities">
+  <object id="69" gid="3644" x="160" y="64" width="16" height="16"/>
+  <object id="70" gid="3644" x="16" y="144" width="16" height="16"/>
+ </objectgroup>
  <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -76,8 +80,12 @@
   <object id="35" gid="973" x="128" y="144" width="16" height="16"/>
   <object id="36" gid="2167" x="48" y="96" width="16" height="16"/>
   <object id="37" gid="2167" x="97" y="32" width="16" height="16"/>
-  <object id="60" gid="3644" x="16" y="144" width="16" height="16"/>
-  <object id="61" gid="3644" x="160" y="64" width="16" height="16"/>
+  <object id="63" gid="3888" x="112" y="112" width="16" height="16"/>
+  <object id="64" gid="3888" x="96" y="112" width="16" height="16"/>
+  <object id="65" gid="3888" x="96" y="128" width="16" height="16"/>
+  <object id="66" gid="3888" x="160" y="32" width="16" height="16"/>
+  <object id="67" gid="3888" x="144" y="32" width="16" height="16"/>
+  <object id="68" gid="3888" x="144" y="48" width="16" height="16"/>
  </objectgroup>
  <layer id="7" name="second image" width="12" height="12">
   <data encoding="csv">

@@ -20,7 +20,7 @@
  <tileset firstgid="2171" source="../../tilesets/openworld_realistic.tsx"/>
  <layer id="1" name="floor" width="12" height="12">
   <data encoding="csv">
-482,482,885,885,885,885,885,482,482,482,482,482,
+482,482,885,885,885,885,885,482,482,482,1,1,
 482,482,885,885,885,885,885,482,482,482,1,1,
 482,482,885,885,885,885,482,482,482,482,1,2,
 482,482,885,885,482,482,885,1,482,482,1,292,
@@ -50,7 +50,7 @@
 895,896,895,896,895,896,0,0,0,708,0,0
 </data>
  </layer>
- <objectgroup id="4" name="entities">
+ <objectgroup id="4" name="entities" visible="0">
   <object id="59" type="Portal" x="64" y="54" width="16" height="10">
    <properties>
     <property name="TMX" type="int" value="0"/>
@@ -66,7 +66,7 @@
  </objectgroup>
  <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,708,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -80,7 +80,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="second image" width="12" height="12">
+ <layer id="7" name="second image" width="12" height="12" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -96,7 +96,7 @@
 863,864,863,864,863,864,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="10" name="dividers" width="12" height="12" opacity="0.4">
+ <layer id="10" name="dividers" width="12" height="12" visible="0" opacity="0.4">
   <data encoding="csv">
 925,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
