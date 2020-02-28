@@ -111,6 +111,7 @@ class Entity {
                     setBoxToThis(this.nby, this.originalHitbox);
                     setBoxToThis(this.hitbox, this.originalHitbox);
                 }
+
                 this.animation.scale = 2.4;
             }
         }
