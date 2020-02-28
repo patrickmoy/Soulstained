@@ -1,13 +1,20 @@
-const AssetHandler = new AssetManager();
-AssetHandler.queueImage('./res/img/worlds/testBossRoom.png');
-AssetHandler.queueImage('./res/img/worlds/testBossRoom2.png');
-AssetHandler.queueJSON('./res/jsonderulo/testBossRoom.json');
-AssetHandler.queueImage("./res/img/worlds/openworld.png");
-AssetHandler.queueImage("./res/img/worlds/openworld2.png");
-AssetHandler.queueImage("./res/img/worlds/necro.png");
-AssetHandler.queueImage("./res/img/worlds/necro2.png");
-AssetHandler.queueImage("./res/img/worlds/cavebasic.png");
-AssetHandler.queueImage("./res/img/worlds/cavebasic2.png");
+window.onload = () => {
+    const gameCanvas = document.getElementById("gameWorld");
+    const gameContext = gameCanvas.getContext("2d");
+    gameContext.font = "75px bold Courier";
+    gameContext.fillStyle = "White";
+    gameContext.textAlign = "center";
+    gameContext.fillText("Loading Resources...", gameContext.canvas.width / 2, gameContext.canvas.height / 2);
+    const AssetHandler = new AssetManager();
+    AssetHandler.queueImage('./res/img/worlds/testBossRoom.png');
+    AssetHandler.queueImage('./res/img/worlds/testBossRoom2.png');
+    AssetHandler.queueJSON('./res/jsonderulo/testBossRoom.json');
+    AssetHandler.queueImage("./res/img/worlds/openworld.png");
+    AssetHandler.queueImage("./res/img/worlds/openworld2.png");
+    AssetHandler.queueImage("./res/img/worlds/necro.png");
+    AssetHandler.queueImage("./res/img/worlds/necro2.png");
+    AssetHandler.queueImage("./res/img/worlds/cavebasic.png");
+    AssetHandler.queueImage("./res/img/worlds/cavebasic2.png");
 AssetHandler.queueImage("./res/img/worlds/bluehouse.png");
 AssetHandler.queueImage("./res/img/worlds/bluehouse2.png");
 AssetHandler.queueImage("./res/img/hero.png");
@@ -92,17 +99,18 @@ AssetHandler.queueJSON('./res/jsonderulo/necro_section4_4.json');
 AssetHandler.queueJSON('./res/jsonderulo/necro_section4_5.json');
 AssetHandler.queueJSON('./res/jsonderulo/necro_section5_1.json');
 AssetHandler.queueJSON('./res/jsonderulo/necro_section5_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section5_3.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section5_4.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section5_5.json');
-AssetHandler.queueJSON('./res/jsonderulo/cave_section1_1.json');
-AssetHandler.queueJSON('./res/jsonderulo/bluehouse_section1_1.json');
-AssetHandler.startDownload()
-    .then(() => {
-
-        const gameCanvas = document.getElementById("gameWorld"); // Get the
-        const gameContext = gameCanvas.getContext("2d");
-        const myGame = new GameEngine(gameContext, AssetHandler.assets);
-        myGame.init();
-        myGame.run();
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section5_3.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section5_4.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section5_5.json');
+    AssetHandler.queueJSON('./res/jsonderulo/cave_section1_1.json');
+    AssetHandler.queueJSON('./res/jsonderulo/bluehouse_section1_1.json');
+    AssetHandler.startDownload()
+        .then(() => {
+            const myGame = new GameEngine(gameContext, AssetHandler.assets);
+            myGame.init();
+            myGame.run();
+        }).catch(() => {
+        gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+        gameContext.fillText("Error, Check Console", gameContext.canvas.width / 2, gameContext.canvas.height / 2);
     });
+};
