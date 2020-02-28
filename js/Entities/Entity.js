@@ -173,11 +173,6 @@ class Entity {
                     this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
                     break;
             }
-            // Removed since it causes speed disparities left to right and top to bottom. s
-            // this.futureHitbox.xMin = Math.floor(this.futureHitbox.xMin); // Normalize the x min coordinate for consistency
-            // this.futureHitbox.xMax = Math.floor(this.futureHitbox.xMax); // Normalize the x max coordinate for consistency
-            // this.futureHitbox.yMin = Math.floor(this.futureHitbox.yMin); // Normalize the y min coordinate for consistency
-            // this.futureHitbox.yMax = Math.floor(this.futureHitbox.yMax); // Normalize the y max coordinate for consistency
         }
     }
 

@@ -170,15 +170,31 @@ class Crab extends Enemy {
     constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height, 1);
         this.spritesheet = new Animation(spritesheet, this, 16, 16, .25, 2.3);
+        this.height = height;
+        this.width = width;
         this.speed = 85;
         this.directionTime = 0;
         this.alive = true;
         this.direction = Math.floor(Math.random() * 4.5);
+        this.lootDropped = false;
     }
 
     preUpdate() {
         this.randomWalk(25, 0);
     }
+
+    update() {
+        super.update();
+        if (!this.alive && !this.lootDropped) {
+            var choice = Math.random() < 0.5 ? (Math.random() < 0.1 ? 'health' : 'coin') : undefined;
+            var item = undefined;
+            if (choice === 'coin') item = new Pickup(this.game, this.hitbox.xMin + (this.width / 2), this.hitbox.yMin + (this.height / 2), Math.floor(Math.random() * 15), 'coin');
+            if (choice === 'health') item = new Pickup(this.game, this.hitbox.xMin + (this.width / 2), this.hitbox.yMin + (this.height / 2), Math.floor(Math.random() * 2), 'health');
+            if (item !== undefined) this.game.currentEntities[5].push(item);
+            this.lootDropped = true;
+        }
+    }
+
 
     draw() {
         this.spritesheet.drawFrame(this.game.clockTick, this.context,
