@@ -118,9 +118,9 @@ class DestructibleBlock
     }
 
     randomizeItems() {
-        var choice = Math.random() < 0.3 ? (Math.random() < 0.1 ? 'health' : 'coin') : undefined;
-        if (choice === 'coin') this.item = new Pickup(this.game, this.x + (this.width / 2), this.y + (this.height / 2), Math.floor(Math.random() * 15), 'coin');
-        if (choice === 'health') this.item = new Pickup(this.game, this.x + (this.width / 2), this.y + (this.height / 2), Math.floor(Math.random() * 2), 'health');
+        var choice = Math.random() < 0.3 ? (Math.random() < 0.5 ? 'health' : 'coin') : undefined;
+        if (choice === 'coin') this.item = new Pickup(this.game, this.x + (this.width / 2), this.y + (this.height / 2), Math.ceil(Math.random() * 15), 'coin');
+        if (choice === 'health') this.item = new Pickup(this.game, this.x + (this.width / 2), this.y + (this.height / 2), Math.ceil(Math.random() * 2), 'health');
     }
 
     draw() {
