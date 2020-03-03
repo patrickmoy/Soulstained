@@ -74,17 +74,18 @@ class UserInterface {
             if (i === 2) this.d100 = digit * 49.5;
         }
         // User presses the return key to switch the game state to Inventory
-        if (!this.game.displayHomeScreen && this.game.INPUTS["Enter"]) {
+        if (!this.game.transition && !this.game.displayHomeScreen && !this.game.inInventory && this.game.INPUTS["Enter"]) {
+            this.game.INPUTS["Enter"] = false;
             this.game.pause = true;
             this.game.inInventory = true;
-            this.game.INPUTS["Enter"] = false;
         }
+
         // EXIT INVENTORY AND RETURN TO THE GAME
         if (this.game.pause && this.game.inInventory) {
-            if (this.game.INPUTS["KeyK"]) {
+            if (this.game.INPUTS["Enter"]) {
+                this.game.INPUTS["Enter"] = false;
                 this.game.pause = false;
                 this.game.inInventory = false;
-                this.game.INPUTS["KeyK"] = false;
             }
 
             // cursor animation operations
@@ -159,6 +160,7 @@ class UserInterface {
             this.hero.equipJ = this.currentJ;
             this.hero.equipK = this.currentK;
         }
+
         // EXIT MESSAGE AND RETURN TO THE GAME
         if (this.game.pause && this.game.displayMessage) {
             if (this.game.INPUTS["KeyK"]) {
@@ -710,12 +712,10 @@ class UserInterface {
 
         // draw inventory
         if (this.game.pause && this.game.inInventory) {
-            console.log("inventory draw");
             this.displayInventory();
         }
 
         if (this.game.pause && this.game.displayHomeScreen) {
-            console.log("home screen draw");
             this.displayHomeScreen();
         }
 
