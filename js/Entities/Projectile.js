@@ -13,23 +13,9 @@ class Projectile extends Entity {
             || this.hitbox.yMin > this.game.GAME_CANVAS_HEIGHT
             || this.hitbox.xMin < 0
             || this.hitbox.yMin < 0);
-        // return (this.futureHitbox.xMin > this.game.GAME_CANVAS_WIDTH
-        //     || this.futureHitbox.yMin > this.game.GAME_CANVAS_HEIGHT
-        //     || this.futureHitbox.xMin < 0
-        //     || this.futureHitbox.yMin < 0);
 
     }
 
-    /**
-     * Resets the position of an enemy (primarily used when transitioning)
-     */
-    // resetFireBallPosition(x , y, x2, y2) {
-    //     this.futureHitbox.xMin = x;
-    //     this.futureHitbox.yMin = y;
-    //     this.futureHitbox.xMax = x2;
-    //     this.futureHitbox.yMax = y2;
-    //
-    // }
 }
 
 
@@ -177,11 +163,11 @@ class FireballProjectile extends Projectile {
 
 }
 
-class Arrow extends Projectile {
+class VerticalArrow extends Projectile {
 
     constructor(game, spritesheet, x, y, trajectory) {
-        super(game, x, y, 56, 56, 2);
-        this.animation = new Animation(spritesheet, this, 96, 96, .10, 1, [1]);
+        super(game, x, y, 4, 57, 2);
+        this.animation = new Animation(spritesheet, this, 4, 57, .10, 1, [1]);
         this.context = game.GAME_CONTEXT;
         this.alive = true;
         this.trajectory = trajectory; //A flight direction path of either: left, right or down.
@@ -203,23 +189,14 @@ class Arrow extends Projectile {
         if (!this.game.pause && this.trajectory === 'SOUTH') {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 8);
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
         }
         if (!this.game.pause && this.trajectory === 'NORTH') {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
         }
-        if (!this.game.pause && this.trajectory === 'EAST') {
-            this.animation.drawFrame(this.game.clockTick, this.context,
-                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 4);
-        }
-        if (!this.game.pause && this.trajectory === 'WEST') {
-            this.animation.drawFrame(this.game.clockTick, this.context,
-                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 12);
-        }
+
     }
 
     south() {
@@ -234,27 +211,6 @@ class Arrow extends Projectile {
         this.futureHitbox.yMax -= this.game.clockTick * this.speed;
     }
 
-    east() {
-
-        this.futureHitbox.xMin += this.game.clockTick * this.speed;
-        this.futureHitbox.xMax += this.game.clockTick * this.speed;
-    }
-
-    west() {
-
-        this.futureHitbox.xMin -= this.game.clockTick * this.speed;
-        this.futureHitbox.xMax -= this.game.clockTick * this.speed;
-    }
-
-    // checkArrowStatus() {
-    //
-    //     if (this.game.currentEntities[3].every(arrow => arrow.projectileNotOnScreen())) {
-    //
-    //         this.arrow.alive = false;
-    //         this.arrow.count = 0;
-    //     }
-    //
-    // }
 
     selectPosition(direction) {
 
@@ -267,6 +223,63 @@ class Arrow extends Projectile {
                 this.north();
                 break;
 
+
+        }
+    }
+}
+
+class HorizontalArrow
+    extends Projectile {
+
+    constructor(game, spritesheet, x, y, trajectory) {
+        super(game, x, y, 55, 4, 2);
+        this.animation = new Animation(spritesheet, this, 55, 4, .10, 1, [1]);
+        this.context = game.GAME_CONTEXT;
+        this.alive = true;
+        this.trajectory = trajectory; //A flight direction path of either: left, right or down.
+        this.speed = 200; //Speed of each projectile, presently hard-coded in.
+
+
+    }
+
+    preUpdate() {
+
+
+        this.selectPosition(this.trajectory);
+
+
+    };
+
+    //Draws the projectile
+    draw() {
+
+        if (!this.game.pause && this.trajectory === 'EAST') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
+        }
+        if (!this.game.pause && this.trajectory === 'WEST') {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
+        }
+    }
+
+    east() {
+
+        this.futureHitbox.xMin += this.game.clockTick * this.speed;
+        this.futureHitbox.xMax += this.game.clockTick * this.speed;
+    }
+
+    west() {
+
+        this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+        this.futureHitbox.xMax -= this.game.clockTick * this.speed;
+    }
+
+    selectPosition(direction) {
+
+        switch (direction) {
             case 'EAST':
                 this.east();
                 break;
@@ -274,6 +287,5 @@ class Arrow extends Projectile {
                 this.west();
                 break;
         }
-
     }
 }
