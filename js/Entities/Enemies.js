@@ -266,14 +266,15 @@ class Necromancer
         this.alive = true;
         this.animation = new Animation(spritesheet, this, 191, 157, .1, 1, [13], 1); // Necromancer sprite
         this.context = game.GAME_CONTEXT;
-        this.enemiesArray = array; // Passing in ENEMIES array.
+        //this.enemiesArray = array; // Passing in ENEMIES array.
+        this.health = 1;
         this.location = { //Necromancer teleport locations.
-            0: [50, 50],
-            1: [500, 50],
-            2: [50, 100],
-            3: [500, 100]
+            0: [57, 57],
+            1: [550, 150],
+            2: [300, 57],
+            3: [150, 90]
         };
-        this.knightCount = 1; // Counter to generate how many knights per respawn.
+        this.knightCount = 0; // Counter to generate how many knights per respawn.
         this.knightSpawned = 0; // Counter number of spawned knights on screen, used to reset conditional.
         this.count = 0; // Stores the elapsed game clock time
         this.attackCount = 0; // Use to count the completion of attack cycles.
@@ -281,24 +282,22 @@ class Necromancer
         this.teleportAnimation = false;
         this.teleportMove = false;
 
+
     }
 
     preUpdate() {
-        this.spawnKnight();
+
         this.count += this.game.clockTick;
-        this.actionElapsedTime += this.game.clockTick;
 
         if (this.knightSpawned === 0) {
             this.spawnKnight();
             if (this.knightSpawned === -1) {
                 this.futureHitbox.xMin = 300;
-                this.futureHitbox.yMin = 100;
+                this.futureHitbox.yMin = 300;
                 this.teleportMove = false;
             }
         }
-        if (this.teleportMove === true) {
-
-            this.teleportAnimation = false;
+        if (this.teleportMove === true && !this.isReadyToDie()) {
             this.teleportMove = false;
             let spot = Math.floor(Math.random() * 4);
             this.futureHitbox.xMin = this.location[spot][0]; // teleports necromancer to this x coordinate.
@@ -310,14 +309,16 @@ class Necromancer
         } else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
             this.count = 0;
 
-            if (this.attackCount < 5) {
-                this.fireBallAttack();
-                this.attackCount++;
-            } else if (this.attackCount === 4) {
+            if (this.attackCount === 4) {
 
                 this.teleportAnimation = true;
                 this.checkKnightCount();
                 this.attackCount = 0;
+
+            } else if ((this.attackCount < 5) && !this.isReadyToDie()) {
+
+                this.fireBallAttack();
+                this.attackCount++;
             }
         }
     }
@@ -334,29 +335,28 @@ class Necromancer
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                     this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
             }
+            this.teleportAnimation = false;
         } else if (this.knightSpawned !== -1) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 2);
         } else if (this.knightSpawned === -1 && this.isReadyToDie()) {
-
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
         }
+        this.game.GAME_CONTEXT.strokeRect(this.hitbox.xMin, this.hitbox.yMin, this.width, this.height);
 
-        // else { //draw necromancer on knees}
     }
 
     isReadyToDie() {
-        return this.futureHitbox.xMin === 300 && this.futureHitbox.yMin === 100;
+        return this.futureHitbox.xMin === 300 && this.futureHitbox.yMin === 300;
     }
 
 //Constructs fireball entity. (right now all attacks are randomly generated)
     fireBallAttack() {
 
         if (this.game.currentEntities[3].every(projectile => projectile.projectileNotOnScreen() || this.game.currentEntities[3].every(projectile => projectile.alive === false))) {
-            // if (this.game.currentEntities[3].length <= 3 || this.game.currentEntities[3].filter(anyFireball => anyFireball.alive === false || this.game.currentEntities[3].length <= 3)) {
             let primary = Math.floor(Math.random() * 4);
             let secondary = Math.floor(Math.random() * 2);
             this.fireball1 = new FireballProjectile(this.game, this.game.ASSETS_LIST["./res/img/fireball.png"], this.futureHitbox.xMin, this.futureHitbox.yMin + this.height, 'down', primary, secondary);
@@ -372,18 +372,24 @@ class Necromancer
 //Spawns knight in iterative order: 1, 2, 3.... until a certain value (Undecided).  Knights are randomly spawned x-coord: 0 - 600, y-coord: 300 - 600.
     spawnKnight() {
 
+
         if (this.knightCount < 6) {
+
+            if (this.knightCount === 0) {
+                this.knightCount = 1;
+            }
 
             for (let i = 0; i < this.knightCount; i++) {
                 let rand = Math.floor(Math.random() * 600);
                 let min = 500;
-                let max = 600;
+                let max = 500;
                 let rand2 = Math.random() * (+max - +min) + +min;
                 let knight = new Knight(this.game, this.game.ASSETS_LIST["./res/img/knight.png"], rand, rand2, 60, 60);
-                this.enemiesArray.push(knight);
+                this.game.currentEntities[2].push(knight);
                 this.knightSpawned++;
                 this.totalSpawned++;
             }
+
         } else {
             this.knightSpawned = -1;
         }
@@ -398,8 +404,8 @@ class Necromancer
 
 //Compares the total number of spawned knights against the number in enemies array.  If they are equal then resets the update conditional to spawn more.
     checkKnightCount() {
-        let deadKnights = this.enemiesArray.filter(enemy => enemy instanceof Knight && enemy.alive === false);
-        if ((deadKnights.length) === this.totalSpawned) {
+
+        if (this.game.deadEntities.length === this.totalSpawned) {
             this.knightSpawned = 0;
             this.knightCount++;
         }
@@ -438,21 +444,10 @@ class Knight
      */
     canWalkHere() {
         var blocksWithEnemy = this.game.currentEntities[1]; // Get the blocks
-        //Refactor given that detectCollide function takes two lists as arguments.
-        //blocksWithEnemy.push(this); // Add the zombie to the blocks
         var collide = detectCollide(blocksWithEnemy, [this]); // Check if there's any collision
-        // locksWithEnemy.pop(); // Remove zombie from blocks
         return collide.length === 0; // Return if there was collision or not.
     }
 
-    // draw() {
-    //     this.context.beginPath();
-    //     this.context.rect(this.x, this.y, this.width, this.height);
-    //     this.context.stroke();
-    //     this.animation.drawFrame(this.game.clockTick, this.context,
-    //         this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-    //         this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status);
-    // }
     draw() {
         this.animation.drawFrame(this.game.clockTick, this.context,
             this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -470,7 +465,8 @@ class Sniper extends Enemy {
         this.animation = new Animation(spritesheet, this, 14, 17, .3, 5, [5], 1);
         this.context = game.GAME_CONTEXT;
         this.position = position; // Variable to hold the direction the sniper is pointing.
-        this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * 2), this.futureHitbox.yMin, this.position);
+        this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], this.futureHitbox.xMin - (this.width * 2), this.futureHitbox.yMin, this.position);
+        this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"], this.futureHitbox.xMin - (this.width * 2), this.futureHitbox.yMin, this.position);
         this.count = 0;
     }
 
@@ -479,24 +475,21 @@ class Sniper extends Enemy {
         this.count += this.game.clockTick;
         if (!this.game.pause && this.count > 3.0) {
             if (this.position === "SOUTH") {
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * .33), this.futureHitbox.yMin + (this.width), this.position); //correct
-                this.game.currentEntities[3].push(this.arrow);
+                this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], this.futureHitbox.xMin + (this.futureHitbox.xMin *.10), this.futureHitbox.yMin + this.height, this.position); //correct
+                this.game.currentEntities[3].push(this.vertarrow);
 
             } else if (this.position === "NORTH") {
-                console.log("NORTH");
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width * .33), this.futureHitbox.yMin - (this.height), this.position); //correct
-                this.game.currentEntities[3].push(this.arrow);
+                this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], this.futureHitbox.xMin + (this.futureHitbox.xMin * .025), this.futureHitbox.yMin - (this.futureHitbox.yMin * .15) , this.position); //correct
+                this.game.currentEntities[3].push(this.vertarrow);
 
             } else if (this.position === "EAST") {
-                console.log("EAST");
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin + (this.width), (this.futureHitbox.yMin + this.height * .25), this.position); // correct
-                this.game.currentEntities[3].push(this.arrow);
+                this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"], this.futureHitbox.xMin + this.width, this.futureHitbox.yMin + (this.futureHitbox.yMin * .05), this.position); // correct
+                this.game.currentEntities[3].push(this.horizarrow);
 
 
             } else if (this.position === "WEST") {
-                console.log("WEST");
-                this.arrow = new Arrow(this.game, this.game.ASSETS_LIST["./res/img/FIREARROW.png"], this.futureHitbox.xMin - (this.width), (this.futureHitbox.yMin - this.height * .25), this.position);
-                this.game.currentEntities[3].push(this.arrow);
+                this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"], this.futureHitbox.xMin - this.width, this.futureHitbox.yMin + (this.futureHitbox.yMin * .10), this.position); // correct
+                this.game.currentEntities[3].push(this.horizarrow);
             }
             this.count = 0;
         }
@@ -658,7 +651,6 @@ class Mage extends Enemy {
         this.alive = true;
         this.animation = new Animation(spritesheet, this, 18, 25, .25, 4, [12], 0);
         this.context = game.GAME_CONTEXT;
-        // this.detectRange = 200;
         this.count = 0;
         this.startPull = false;
     }

@@ -69,6 +69,7 @@ class GameEngine {
 
         this.HitQueue = [];
         this.DeathQueue = [];
+        this.deadEntities = [];
     }
 
     /**
@@ -230,6 +231,8 @@ class GameEngine {
             this.currentEntities[3] = this.currentEntities[3].filter(projectile => !projectile.projectileNotOnScreen() || this.currentEntities[3].every(projectile => projectile.alive === false));
             this.currentEntities[5].forEach(destructible => destructible.update());
 
+            //Keeps track of dead knights for necromancer knight spawns.
+            this.deadEntities = this.deadEntities.concat(this.currentEntities[2].filter(enemy => enemy instanceof Knight && enemy.alive === false));
 
             // Removes dead things (did this because we did it for every action in update(). Might as well just do it once.)
             this.currentEntities[0] = this.currentEntities[0].filter(hero => hero.alive);
