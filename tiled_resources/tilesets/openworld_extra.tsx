@@ -238,14 +238,29 @@
    <object id="4" x="9" y="10" width="7" height="6"/>
   </objectgroup>
  </tile>
- <tile id="291">
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="0" width="16" height="16"/>
-  </objectgroup>
- </tile>
- <tile id="336">
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="11" width="5" height="5"/>
-  </objectgroup>
- </tile>
+    <tile id="291">
+        <objectgroup draworder="index" id="2">
+            <object id="1" x="0" y="0" width="16" height="16"/>
+        </objectgroup>
+    </tile>
+    <tile id="336">
+        <objectgroup draworder="index" id="2">
+            <object id="1" x="0" y="11" width="5" height="5"/>
+        </objectgroup>
+    </tile>
+    <tile id="400">
+        <objectgroup draworder="index" id="2">
+            <object id="1" x="1" y="0" width="15" height="16"/>
+        </objectgroup>
+    </tile>
+    <tile id="401">
+        <objectgroup draworder="index" id="2">
+            <object id="1" x="0" y="0" width="16" height="16"/>
+        </objectgroup>
+    </tile>
+    <tile id="408">
+        <objectgroup draworder="index" id="2">
+            <object id="1" x="0" y="0" width="16" height="16"/>
+        </objectgroup>
+    </tile>
 </tileset>

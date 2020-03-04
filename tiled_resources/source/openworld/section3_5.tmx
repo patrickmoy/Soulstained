@@ -73,10 +73,10 @@ CONCERNED CITIZENS OF JOY TOWN</property>
   <object id="61" gid="969" x="96" y="64" width="16" height="16"/>
   <object id="62" gid="969" x="96" y="112" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image." visible="0">
+ <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image.">
   <object id="64" type="Chest" gid="657" x="96" y="16" width="16" height="16"/>
  </objectgroup>
- <layer id="7" name="second image" width="12" height="12" visible="0">
+ <layer id="7" name="second image" width="12" height="12">
   <data encoding="csv">
 0,863,864,863,864,863,864,863,864,0,0,0,
 0,0,737,0,0,0,0,737,0,0,0,0,
@@ -92,7 +92,7 @@ CONCERNED CITIZENS OF JOY TOWN</property>
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="2" name="temp" width="12" height="12" visible="0">
+ <layer id="2" name="temp" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -108,7 +108,7 @@ CONCERNED CITIZENS OF JOY TOWN</property>
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="10" name="dividers" width="12" height="12" visible="0" opacity="0.4">
+ <layer id="10" name="dividers" width="12" height="12" opacity="0.4">
   <data encoding="csv">
 925,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,

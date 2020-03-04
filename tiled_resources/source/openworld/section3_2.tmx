@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="59">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="159">
  <editorsettings>
   <export target="." format="soulstain"/>
  </editorsettings>
@@ -17,23 +17,26 @@
  <tileset firstgid="1813" source="../../tilesets/red_dungeon.tsx"/>
  <tileset firstgid="2083" source="../../tilesets/stone_comfy_house.tsx"/>
  <tileset firstgid="2167" source="../../tilesets/zombie.tsx"/>
+ <tileset firstgid="2171" source="../../tilesets/cursed_grass.tsx"/>
+ <tileset firstgid="2181" source="../../tilesets/sniper.tsx"/>
+ <tileset firstgid="2187" source="../../tilesets/beast.tsx"/>
  <layer id="1" name="floor" width="12" height="12">
   <data encoding="csv">
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885,
-885,885,885,885,885,885,885,885,885,885,885,885
+2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,
+1781,1782,1782,1782,1782,1782,1782,1782,1782,1782,1782,1782,
+1789,1790,1790,1790,1790,1790,1790,1790,1790,1790,1790,1790,
+1789,1790,1790,1790,1790,1790,1790,1790,1790,1790,1790,1790,
+1789,1790,1790,1790,1790,1790,1790,1790,1790,1790,1790,1790,
+1789,1790,1790,1790,1790,1790,1790,1790,1790,1790,1790,1790,
+1797,1798,1798,1798,1798,1798,1798,1798,1798,1798,1798,1798,
+2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,
+2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,
+2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,
+2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,
+2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171
 </data>
  </layer>
- <layer id="3" name="level" width="12" height="12" visible="0">
+ <layer id="3" name="level" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -42,11 +45,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0
+0,0,892,892,0,892,892,892,0,0,0,0,
+0,892,0,0,0,892,892,0,0,892,892,0,
+0,892,0,892,0,0,0,892,0,892,892,0,
+0,0,0,892,892,892,0,0,0,892,892,0,
+401,402,0,0,0,0,0,0,0,0,527,0
 </data>
  </layer>
  <objectgroup id="4" name="entities"/>
@@ -66,7 +69,32 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image."/>
+ <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image.">
+  <object id="68" gid="2181" x="160" y="16" width="16" height="16"/>
+  <object id="70" gid="2181" x="112" y="16" width="16" height="16"/>
+  <object id="71" gid="2181" x="64" y="16" width="16" height="16"/>
+  <object id="72" gid="2181" x="16" y="16" width="16" height="16"/>
+  <object id="103" gid="721" x="160" y="144" width="16" height="16"/>
+  <object id="108" gid="721" x="144" y="176" width="16" height="16"/>
+  <object id="109" gid="721" x="144" y="160" width="16" height="16"/>
+  <object id="110" gid="721" x="144" y="144" width="16" height="16"/>
+  <object id="119" gid="721" x="112" y="160" width="16" height="16"/>
+  <object id="121" gid="721" x="112" y="128" width="16" height="16"/>
+  <object id="122" gid="721" x="96" y="128" width="16" height="16"/>
+  <object id="123" gid="721" x="96" y="144" width="16" height="16"/>
+  <object id="128" gid="721" x="80" y="176" width="16" height="16"/>
+  <object id="130" gid="721" x="80" y="144" width="16" height="16"/>
+  <object id="131" gid="721" x="80" y="128" width="16" height="16"/>
+  <object id="135" gid="721" x="64" y="176" width="16" height="16"/>
+  <object id="138" gid="721" x="48" y="176" width="16" height="16"/>
+  <object id="141" gid="721" x="48" y="160" width="16" height="16"/>
+  <object id="145" gid="721" x="48" y="128" width="16" height="16"/>
+  <object id="146" gid="721" x="32" y="128" width="16" height="16"/>
+  <object id="148" gid="721" x="16" y="144" width="16" height="16"/>
+  <object id="149" gid="721" x="16" y="160" width="16" height="16"/>
+  <object id="157" gid="2187" x="64" y="160" width="50" height="50"/>
+  <object id="158" gid="2187" x="96" y="208" width="50" height="50"/>
+ </objectgroup>
  <layer id="7" name="second image" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -79,7 +107,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
+385,386,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
