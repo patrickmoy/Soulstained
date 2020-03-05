@@ -90,12 +90,9 @@ class GameEngine {
         this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
         this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
 
-       // this.currentWorld = this.WORLDS["necro"];
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
         this.currentMusicID = overworldMusic.play();
-        this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
-        this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
+        this.changeEntitiesToCurrent();
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
 
@@ -149,6 +146,7 @@ class GameEngine {
         this.currentEntities[3] = currentMap.PROJECTILES;
         this.currentEntities[4] = currentMap.PASSIVES;
         this.currentEntities[5] = currentMap.DESTRUCTIBLES;
+        console.log(this.currentEntities[5]);
     }
 
     /**
@@ -349,7 +347,6 @@ class GameEngine {
             this.currentWorld.getCurrentTileMap().WORLDANIMATIONS.forEach(animations => animations.draw());
             this.currentEntities[4].forEach(passive => passive.draw());
             this.currentEntities[5].forEach(destructible => destructible.draw());
-
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.draw());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.draw());
             this.currentEntities[3].filter(projectile => projectile.alive).forEach(projectile => projectile.draw());

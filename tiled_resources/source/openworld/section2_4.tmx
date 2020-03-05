@@ -23,7 +23,6 @@
  <tileset firstgid="3628" source="../../tilesets/sniper.tsx"/>
  <tileset firstgid="3634" source="../../tilesets/cursed_grass.tsx"/>
  <tileset firstgid="3644" source="../../tilesets/flower.tsx"/>
- <tileset firstgid="3648" source="../../../../../SchoolDownload/tiled_resources_new1111/tiled_resources/tilesets/openworld.tsx"/>
  <layer id="1" name="floor" width="12" height="12">
   <data encoding="csv">
 3634,3634,482,2299,486,3639,3640,482,3634,482,482,482,
@@ -80,12 +79,12 @@
   <object id="35" gid="973" x="128" y="144" width="16" height="16"/>
   <object id="36" gid="2167" x="48" y="96" width="16" height="16"/>
   <object id="37" gid="2167" x="97" y="32" width="16" height="16"/>
-  <object id="63" gid="3888" x="112" y="112" width="16" height="16"/>
-  <object id="64" gid="3888" x="96" y="112" width="16" height="16"/>
-  <object id="65" gid="3888" x="96" y="128" width="16" height="16"/>
-  <object id="66" gid="3888" x="160" y="32" width="16" height="16"/>
-  <object id="67" gid="3888" x="144" y="32" width="16" height="16"/>
-  <object id="68" gid="3888" x="144" y="48" width="16" height="16"/>
+  <object id="63" gid="721" x="112" y="112" width="16" height="16"/>
+  <object id="64" gid="721" x="96" y="112" width="16" height="16"/>
+  <object id="65" gid="721" x="96" y="128" width="16" height="16"/>
+  <object id="66" gid="721" x="160" y="32" width="16" height="16"/>
+  <object id="67" gid="721" x="144" y="32" width="16" height="16"/>
+  <object id="68" gid="721" x="144" y="48" width="16" height="16"/>
  </objectgroup>
  <layer id="7" name="second image" width="12" height="12">
   <data encoding="csv">

@@ -82,15 +82,15 @@ AssetHandler.queueJSON('./res/jsonderulo/necro_section1_1.json');
 AssetHandler.queueJSON('./res/jsonderulo/necro_section1_2.json');
 AssetHandler.queueJSON('./res/jsonderulo/necro_section1_3.json');
 AssetHandler.queueJSON('./res/jsonderulo/necro_section1_4.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section1_5.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_1.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_3.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_4.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_5.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section3_1.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section3_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section3_3.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section1_5.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_1.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_2.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_3.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_4.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_5.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section3_1.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section3_2.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section3_3.json');
     AssetHandler.queueJSON('./res/jsonderulo/necro_section3_4.json');
     AssetHandler.queueJSON('./res/jsonderulo/necro_section3_5.json');
     AssetHandler.queueJSON('./res/jsonderulo/necro_section4_1.json');
@@ -110,8 +110,9 @@ AssetHandler.queueJSON('./res/jsonderulo/necro_section3_3.json');
             const myGame = new GameEngine(gameContext, AssetHandler.assets);
             myGame.init();
             myGame.run();
-        }).catch(() => {
-        gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-        gameContext.fillText("Error, Check Console", gameContext.canvas.width / 2, gameContext.canvas.height / 2);
-    });
+        })
+        .catch(() => {
+            gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+            gameContext.fillText("Error, Check Console", gameContext.canvas.width / 2, gameContext.canvas.height / 2);
+        });
 };
