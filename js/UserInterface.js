@@ -57,6 +57,11 @@ class UserInterface {
         this.cursorY = 305; // 305 or 324
         this.cursorSX = 0;  // for indexing sprite sheet
         this.cursorTime = 0;
+
+
+        this.colorIndex = 0;
+        this.colorIndexHelper = 0;
+        this.colorIncrement = true;
     }
 
     update() {
@@ -74,7 +79,7 @@ class UserInterface {
             if (i === 2) this.d100 = digit * 49.5;
         }
         // User presses the return key to switch the game state to Inventory
-        if (!this.game.transition && !this.game.displayHomeScreen && !this.game.inInventory && this.game.INPUTS["Enter"]) {
+        if (!this.game.transition && !this.game.displayHomeScreen && !this.game.inInventory && !this.game.displayMessage && !this.game.displayTransaction && this.game.INPUTS["Enter"]) {
             this.game.INPUTS["Enter"] = false;
             this.game.pause = true;
             this.game.inInventory = true;
@@ -163,8 +168,8 @@ class UserInterface {
 
         // EXIT MESSAGE AND RETURN TO THE GAME
         if (this.game.pause && this.game.displayMessage) {
-            if (this.game.INPUTS["KeyK"]) {
-                this.game.INPUTS["KeyK"] = false;
+            if (this.game.INPUTS["Enter"]) {
+                this.game.INPUTS["Enter"] = false;
                 this.game.pause = false;
                 this.game.displayMessage = false;
                 this.msgEncoded = [];
@@ -172,10 +177,28 @@ class UserInterface {
         }
 
         if (this.game.pause && this.game.displayHomeScreen) {
-            if (this.game.INPUTS["KeyK"]) {
-                this.game.INPUTS["KeyK"] = false;
+
+            if (this.game.INPUTS["click"] && (this.game.INPUTS["coord"].x > 240 && this.game.INPUTS["coord"].x < 480 && this.game.INPUTS["coord"].y > 494 && this.game.INPUTS["coord"].y < 518 )){
+                this.game.INPUTS["click"] = false;
                 this.game.pause = false;
                 this.game.displayHomeScreen = false;
+            }
+
+            this.colorIndexHelper++;
+            if (this.colorIndexHelper % 3 === 0) {
+                if (this.colorIncrement) {
+                    this.colorIndex++;
+                    if (this.colorIndex === 32) {
+                        this.colorIncrement = false;
+                        this.colorIndex = 30;
+                    }
+                } else {
+                    this.colorIndex--;
+                    if (this.colorIndex === -1) {
+                        this.colorIncrement = true;
+                        this.colorIndex = 1;
+                    }
+                }
             }
         }
         // PROCESS TRANSACTION AND RETURN TO THE GAME
@@ -207,9 +230,9 @@ class UserInterface {
                     this.transactionState = 'select';
                     this.strokeStyle = 'green';
                 }
-                if (this.game.INPUTS["KeyK"])
+                if (this.game.INPUTS["Enter"])
                 {
-                    this.game.INPUTS["KeyK"] = false;
+                    this.game.INPUTS["Enter"] = false;
                     this.game.pause = false;
                     this.game.displayTransaction = false;
                 }
@@ -290,9 +313,6 @@ class UserInterface {
 
     }
 
-    /**
-     * Fetches the message from the game engine and encodes the message to indexes of the letters font sprite sheet
-     */
     parseMessage() {
         var msgString = this.game.msg;
         for (var i = 0; i < msgString.length; i++) {
@@ -600,40 +620,220 @@ class UserInterface {
     }
 
     displayHomeScreen() {
-        // Message Display "Board" coordinates and dimensions
-        var dx = 120;
-        var dy = 240;
-        var width = 60;
-        var height = 60;
-        var step = 60;  // for sprite sheet
-        var leftMargin = 120;
-        var rightMargin = 600;
-        var topMargin = 240;
-        var bottomMargin = 480;
+        var frequency = 0.1;
+        var red   = Math.sin(frequency*this.colorIndex + 0) * 85 + 170; // 55 200
+        var green = Math.sin(frequency*this.colorIndex + 2) * 85 + 170;
+        var blue  = Math.sin(frequency*this.colorIndex + 4) * 85 + 170;
+        this.ctx.globalAlpha = 0.8;
+        this.ctx.fillStyle = this.RGB2Color(red,green,blue);
+        this.ctx.fillRect(0, 0, 720, 720);
 
-        // Message Display "Board" is a transparent black rectangle for now
-        this.ctx.globalAlpha = 0.9;
         this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(leftMargin - 20, topMargin - 20, 520, 280);
+        this.ctx.fillRect(216, 120, 288,24);
+        var title = this.parse("SOUL STAINED");
+        var dx = 216;
+        var dy = 120;
+        for (var i=0; i<title.length; i++)
+        {
+            if (title[i] === 29) dx += 24;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, title[i] * 60, 0, 60, 60, dx, dy, 24, 24);
+                dx += 24;
+            }
+        }
 
-        var homeScreenMessage = "HOW TO PLAY SOUL STAINED\n\n\n\n" +
-            "Use WASD keys to control your movement\n\n" +
-            "USE J AND K KEYS TO ATTACK AND ALSO\n\n" +
-            "TO SELECT MENU OPTIONS OR EXIT\n\n" +
-            "USE RETURN KEY TO ACCESS INVENTORY";
-
-        var msgEncoded = this.parse(homeScreenMessage);
-
-        for (var i = 0; i < msgEncoded.length; i++) {
-            var ch = msgEncoded[i];
-            if (ch === 30) {
-                dy += 13;
-                dx = leftMargin;
-            } else if (ch === 29) {
+        this.ctx.fillRect(264, 156 + 12, 192,12);
+        dx = 264;
+        dy = 156 + 12;
+        var devTeam = this.parse("DEVELOPMENT TEAM");
+        for (var j=0; j<devTeam.length; j++)
+        {
+            if (devTeam[j] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, devTeam[j] * 60, 0, 60, 60, dx, dy, 12, 12);
                 dx += 12;
-            } else {
-                this.ctx.drawImage(this.lettersFontImage, ch * step, 0, 60, 60, dx, dy, 12, 12);
+            }
+        }
+
+        this.ctx.fillRect(288, 156 + 24 + 2, 144, 12);
+        dx = 288;
+        dy = 156 + 24 + 2;
+        var david = this.parse("DAVID SAELEE");
+        for (var k=0; k<david.length; k++)
+        {
+            if (david[k] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, david[k] * 60, 0, 60, 60, dx, dy, 12, 12);
                 dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(294, 156 + 24 + 2 + 12 + 2, 132, 12);
+        dx = 294;
+        dy = 156 + 24 + 2 + 12 + 2;
+        var patrick = this.parse("PATRICK MOY");
+        for (var l=0; l<patrick.length; l++)
+        {
+            if (patrick[l] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, patrick[l] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(294, 156 + 24 + 2 + 12 + 2 + 12 + 2, 132, 12);
+        dx = 294;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2;
+        var steven = this.parse("STEVEN TRAN");
+        for (var m=0; m<steven.length; m++)
+        {
+            if (steven[m] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, steven[m] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(312, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2, 96, 12);
+        dx = 312;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2;
+        var yung = this.parse("YUNG KOO");
+        for (var n=0; n<yung.length; n++)
+        {
+            if (yung[n] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, yung[n] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(300, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24, 120, 12);
+        dx = 300;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24;
+        var supervisor = this.parse("SUPERVISOR");
+        for (var o=0; o<supervisor.length; o++)
+        {
+            if (supervisor[o] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, supervisor[o] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(282, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 2, 156, 12);
+        dx = 282;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 2;
+        var chris = this.parse("CHRIS MARIOTT");
+        for (var p=0; p<chris.length; p++)
+        {
+            if (chris[p] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, chris[p] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(264, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48, 192, 24);
+        dx = 264;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48;
+        var controls = this.parse("CONTROLS");
+        for (var q=0; q<controls.length; q++)
+        {
+            if (controls[q] === 29) dx += 24;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, controls[q] * 60, 0, 60, 60, dx, dy, 24, 24);
+                dx += 24;
+            }
+        }
+
+        this.ctx.fillRect(288, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48, 144, 12);
+        dx = 288;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48;
+        var wsad = this.parse("W S A D KEYS");
+        for (var r=0; r<wsad.length; r++)
+        {
+            if (wsad[r] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, wsad[r] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(312, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2, 96, 12);
+        dx = 312;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2;
+        var movement = this.parse("MOVEMENT");
+        for (var s=0; s<movement.length; s++)
+        {
+            if (movement[s] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, movement[s] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(312, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24, 96, 12);
+        dx = 312;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24;
+        var jk = this.parse("J K KEYS");
+        for (var t=0; t<jk.length; t++)
+        {
+            if (jk[t] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, jk[t] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(222, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2, 276, 12);
+        dx = 222;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2;
+        var attack = this.parse("ATTACK AND MENU OPTIONS");
+        for (var u=0; u<attack.length; u++)
+        {
+            if (attack[u] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, attack[u] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(306, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2 +24, 108, 12);
+        dx = 306;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2 + 24;
+        var enter = this.parse("ENTER KEY");
+        for (var v=0; v<enter.length; v++)
+        {
+            if (enter[v] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, enter[v] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(180, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2 + 24 + 12 + 2, 360, 12);
+        dx = 180;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2 + 24 + 12 + 2;
+        var inventory = this.parse("ACCESS INVENTORY AND EXIT MENU");
+        for (var w=0; w<inventory.length; w++)
+        {
+            if (inventory[w] === 29) dx += 12;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, inventory[w] * 60, 0, 60, 60, dx, dy, 12, 12);
+                dx += 12;
+            }
+        }
+
+        this.ctx.fillRect(240, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2 + 24 + 12 + 2 + 48, 240, 24);
+        dx = 240;
+        dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2 + 24 + 12 + 2 + 48;
+        var start = this.parse("START GAME");
+        for (var x=0; x<start.length; x++)
+        {
+            if (start[x] === 29) dx += 24;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, start[x] * 60, 0, 60, 60, dx, dy, 24, 24);
+                dx += 24;
             }
         }
     }
@@ -719,5 +919,14 @@ class UserInterface {
             this.displayHomeScreen();
         }
 
+    }
+
+    RGB2Color(r, g, b) {
+        return '#' + this.byte2Hex(r) + this.byte2Hex(g) + this.byte2Hex(b);
+    }
+
+    byte2Hex(n) {
+        var nybHexString = "0123456789ABCDEF";
+        return String(nybHexString.substr((n >> 4) & 0x0F,1)) + nybHexString.substr(n & 0x0F,1)
     }
 }

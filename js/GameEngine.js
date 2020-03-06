@@ -36,7 +36,9 @@ class GameEngine {
             "KeyJ": false,
             "KeyK": false,
             "Space": false,
-            "Enter": false
+            "Enter": false,
+            "click": false,
+            "coord": {}
         };
         this.gateTriggers = [];
         this.transition = false; // When transitioning is happening
@@ -111,7 +113,20 @@ class GameEngine {
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, key.code)) this.INPUTS[key.code] = false;
         });
 
+        this.GAME_CONTEXT.canvas.addEventListener('mousedown', (e) => {
+            if (Object.prototype.hasOwnProperty.call(this.INPUTS, "click")) this.INPUTS["click"]= true;
+            if (Object.prototype.hasOwnProperty.call(this.INPUTS, "coord")) this.INPUTS["coord"] = this.getCursorPosition(this.GAME_CONTEXT.canvas, e);
+        });
+
         console.log('Game initialized');
+    }
+    getCursorPosition(canvas, event) {
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        console.log("x: " + x + " y: " + y);
+        var coord = {x: x, y: y};
+        return coord;
     }
 
     /**
