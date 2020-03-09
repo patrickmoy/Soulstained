@@ -10,9 +10,10 @@ class Block extends InvisibleBlock {
         super(game, x, y, width, height);
         this.context = game.GAME_CONTEXT;
         this.spritesheet = spritesheet;
+        this.height = height;
+        this.width = width;
         this.x = x;
         this.y = y;
-
         this.animation = new Animation(this.spritesheet, this, frameWidth, frameHeight, speed, scale, indices);
     }
 
@@ -216,4 +217,96 @@ class Pickup extends Entity {
     draw() {
         if (this.alive) this.animation.drawFrame(this.game.clockTick, this.game.GAME_CONTEXT, this.x, this.y, 'walking', 0);
     }
+}
+
+class RollingPin extends Block {
+    constructor(game, spritesheet, x, y, width, height, frameWidth, frameHeight, speed, scale, indices, moveSpeed = 100, direction = "SOUTH") {
+        super(game, spritesheet, x, y, width, height, frameWidth, frameHeight, speed, scale, indices);
+        this.direction = direction;
+        this.speed = moveSpeed;
+        this.alive = true;
+    }
+
+    preUpdate() {
+        super.preUpdate();
+        this.pushUpdate = true;
+        if (detectCollide([this], this.game.currentEntities[1]).length >= 2) {
+            switch (this.direction) {
+                case "SOUTH":
+                    this.direction = "NORTH";
+                    break;
+                case "NORTH":
+                    this.direction = "SOUTH";
+                    break;
+                case "WEST":
+                    this.direction = "EAST";
+                    break;
+                case "EAST":
+                    this.direction = "WEST";
+                    break;
+            }
+        }
+        switch (this.direction) {
+            case "SOUTH":
+                this.futureHitbox.yMin += this.game.clockTick * this.speed;
+                this.futureHitbox.yMax += this.game.clockTick * this.speed;
+                break;
+            case "NORTH":
+                this.futureHitbox.yMin -= this.game.clockTick * this.speed;
+                this.futureHitbox.yMax -= this.game.clockTick * this.speed;
+                break;
+            case "WEST":
+                this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+                this.futureHitbox.xMax -= this.game.clockTick * this.speed;
+                break;
+            case "EAST":
+                this.futureHitbox.xMin += this.game.clockTick * this.speed;
+                this.futureHitbox.xMax += this.game.clockTick * this.speed;
+                break;
+        }
+    }
+
+    update() {
+        if (!this.pushUpdate) {
+            const hero = this.game.HERO;
+            switch (this.direction) {
+                case "SOUTH":
+                    // if (hero.hitbox.yMin >= this.hitbox.yMax)
+                    // {
+                    hero.futureHitbox.yMin += this.game.clockTick * this.speed * 1.5;
+                    hero.futureHitbox.yMax += this.game.clockTick * this.speed * 1.5;
+                    // }
+                    break;
+                case "NORTH":
+                    // if (hero.hitbox.yMax <= this.hitbox.yMin)
+                    // {
+                    hero.futureHitbox.yMin -= this.game.clockTick * this.speed * 1.5;
+                    hero.futureHitbox.yMax -= this.game.clockTick * this.speed * 1.5;
+                    // }
+                    break;
+                case "WEST":
+                    // if (hero.hitbox.xMax <= this.hitbox.xMin)
+                    // {
+                    hero.futureHitbox.xMin -= this.game.clockTick * this.speed * 1.5;
+                    hero.futureHitbox.xMax -= this.game.clockTick * this.speed * 1.5;
+                    // }
+                    break;
+                case "EAST":
+                    // if (hero.hitbox.xMin >= this.hitbox.xMax && hero.hitbox.xMin)
+                    // {
+                    hero.futureHitbox.xMin += this.game.clockTick * this.speed * 1.5;
+                    hero.futureHitbox.xMax += this.game.clockTick * this.speed * 1.5;
+                    // }
+                    break;
+            }
+            setBoxToThis(hero.hitbox, hero.futureHitbox);
+        }
+        this.pushUpdate = true;
+        super.update();
+    }
+
+    draw() {
+        super.draw();
+    }
+
 }

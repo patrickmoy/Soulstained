@@ -46,6 +46,7 @@ class TileMap {
         }
         for (var i = 0; i < this.info.realEntities.length; i++) {
             var entity = this.info.realEntities[i];
+
             if (entity.type === 'Crab') {
                 this.ENEMIES.push(new Crab(this.game, this.game.ASSETS_LIST['./res/img/crab.png'], entity.x * 60 / 16,
                     entity.y * 60 / 16, 40, 40));
@@ -55,9 +56,8 @@ class TileMap {
                     entity.y * 60 / 16, 60, 60, 16, 16, .1, 4, [4]));
             }
             else if (entity.type === 'Zombie') {
-                this.ENEMIES.push(
-                    new Zombie(this.game, this.game.ASSETS_LIST['./res/img/zombie.png'], entity.x * 60 / 16,
-                        entity.y * 60 / 16, 60, 60));
+                this.ENEMIES.push(new Zombie(this.game, this.game.ASSETS_LIST['./res/img/zombie.png'], entity.x * 60 / 16,
+                    entity.y * 60 / 16, 60, 60));
             }
             else if (entity.type === 'Portal') {
                 this.PORTALS.push(
@@ -149,6 +149,19 @@ class TileMap {
                 this.BLOCKS.push(new Lock(this.game, this.game.ASSETS_LIST['./res/img/lock.png'],
                     this.game.ASSETS_LIST['./res/img/bosslock.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60,
                     entity.customProperties.face, entity.customProperties.strength));
+            }
+            else if (entity.type === 'RollingPin') {
+                console.log(entity.customProperties)
+                if (entity.customProperties.Direction === "SOUTH" || entity.customProperties.Direction === "NORTH") {
+                    this.BLOCKS.push(new RollingPin(this.game, this.game.ASSETS_LIST['./res/img/log.png'], entity.x * 60 / 16, entity.y * 60 / 16, 220, 60,
+                        55, 24, 0.1, 3.7, [6], entity.customProperties.Speed, entity.customProperties.Direction))
+                }
+                else if (entity.customProperties.Direction === "WEST" || entity.customProperties.Direction === "EAST") {
+
+                    this.BLOCKS.push(new RollingPin(this.game, this.game.ASSETS_LIST['./res/img/log2.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 165,
+                        22, 52, 0.15, 3.4, [6], entity.customProperties.Speed, entity.customProperties.Direction))
+                }
+
             }
         }
     }

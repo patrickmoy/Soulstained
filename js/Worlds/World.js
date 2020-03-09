@@ -224,5 +224,16 @@ class NecroDungeon extends World {
 }
 
 class WolfDungeon extends World {
+    constructor(game, worldImage, layeredImage, sectionX, sectionY) {
+        super(game, worldImage, layeredImage, sectionX, sectionY);
+        console.log(jsonPath("wolf", 1, 1));
+        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 1, 1)])]]
+    }
+}
 
+class testSection extends World {
+    constructor(game, worldImage, layeredImage, sectionX, sectionY) {
+        super(game, worldImage, layeredImage, sectionX, sectionY);
+        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST['./res/jsonderulo/testSection.json'])]]
+    }
 }
