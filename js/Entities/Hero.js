@@ -7,27 +7,29 @@ class Hero extends Entity {
      * @param game {GameEngine} The engine of the game for accessing
      * @param spriteSheet {Image} The image of the hero for animation and updating
      * @param weaponSheet {Image} The image of the default weapon for animation.
+     * @param bowSheet {Image} Bow sprites for hero.
      */
-    constructor(game, spriteSheet, weaponSheet) {
+    constructor(game, spriteSheet, weaponSheet, bowSheet) {
         super(game, 300, 420, 38, 55, 1);
         // To modify whip speed, change last parameter here (.100 default, attackFrameTime parameter in Animation).
         // Must be 1/5 of this.ACTION_DURATION (change that too).
         this.animation = new Animation(spriteSheet, this, 16, 23, .250,
             2.4, [2, 7, 11], .100);
+        this.bowAnimation = new Animation(bowSheet, this, 36, 36, .250, 2.4, [4]);
         this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
         this.originalSpeed = 225;
-        this.health = 10;
-        this.maxHealth = 10;
+        this.health = 5;
+        this.maxHealth = 5;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
         this.coins = 0;
         this.smallKeys = 0;
         this.hasBossKey = false;
         this.alive = true;
         this.equipJ = "whip"; // Item equipped in J key.
-        this.equipK = "empty"; // Item equipped in K key.
-        this.inventory = ["empty", "whip", "boots"];
+        this.equipK = "bow"; // Item equipped in K key.
+        this.inventory = ["empty", "whip", "bow"];
         this.nbx = {
             xMin: this.hitbox.xMin,
             yMin: this.hitbox.yMin,
@@ -62,6 +64,7 @@ class Hero extends Entity {
         this.hurtCounter = this.INVINCIBLE_TIME;
         this.whipSoundTag;
         this.jumpSoundTag;
+        this.arrowShot;
     }
 
     walk(direction) {
@@ -73,6 +76,22 @@ class Hero extends Entity {
         setBoxOnlyY(this.nby, this.futureHitbox);
     }
 
+    update() {
+        if (this.pushUpdateX) {
+            setBoxOnlyX(this.hitbox, this.nbx);
+        } else {
+            setBoxToThis(this.nbx, this.hitbox);
+        }
+        if (this.pushUpdateY) {
+            setBoxOnlyY(this.hitbox, this.nby);
+        } else {
+            setBoxToThis(this.nby, this.hitbox);
+        }
+        setBoxToThis(this.futureHitbox, this.hitbox);
+        super.update();
+    }
+
+
     /**
      * Predicts future hitbox based on inputs.
      */
@@ -82,7 +101,7 @@ class Hero extends Entity {
             this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
             if (this.jumping) {
                 this.jump();
-            } else if (!this.jumping && this.beingUsed("boots")) {
+            } else if (!this.jumping && this.beingUsed("boots") && this.status !== 'shooting') {
                 this.jumping = true;
                 this.jump();
             }
@@ -91,6 +110,12 @@ class Hero extends Entity {
             } else if (this.status !== 'attacking' && this.beingUsed("whip")) {
                 this.status = 'attacking';
                 this.attack();
+            } else if (this.status === 'shooting') {
+                this.shoot();
+            } else if (this.beingUsed("bow") && (this.status !== 'attacking' && !this.jumping)) {
+                this.status = 'shooting';
+                this.shoot();
+                this.arrowShot = false;
             } else if (this.game.hasMoveInputs()) {
                 this.status = 'walking';
                 this.movingDiagonally = !!this.hasMultipleMoveInputs();
@@ -171,15 +196,20 @@ class Hero extends Entity {
      */
     draw() {
         if (!this.hurting) {
-            this.animation.drawFrame(this.game.clockTick, this.context,
-                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
+           if (this.status !== 'shooting') {
+               this.drawHeroHelper();
+           } else {
+               this.drawHeroShootHelper();
+           }
         }
         if (this.hurting) {
             if (Math.floor(this.hurtCounter * 1000) % 3 !== 0) {
-                this.animation.drawFrame(this.game.clockTick, this.context,
-                    this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
-                    this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
+                if (this.status !== 'shooting') {
+                    this.drawHeroHelper();
+                } else {
+                    this.drawHeroShootHelper();
+                }
+
             } else {
                 // draw nothing
             }
@@ -190,6 +220,17 @@ class Hero extends Entity {
                 this.hurtCounter = this.INVINCIBLE_TIME;
             }
         }
+    }
+
+    drawHeroHelper() {
+        this.animation.drawFrame(this.game.clockTick, this.context,
+            this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
+    }
+
+    drawHeroShootHelper() {
+        this.bowAnimation.drawFrame(this.game.clockTick, this.context,this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR) - 20,
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR) - 16, this.status, this.direction);
     }
 
     /**
@@ -254,12 +295,49 @@ class Hero extends Entity {
 
     }
 
+
     attack() {
         if (!whipSound.playing(this.whipSoundTag)) {
             this.whipSoundTag = whipSound.play();
         }
         this.whip.direction = this.direction;
         super.attack();
+    }
+
+    shoot() {
+        super.attack();
+        if (this.actionElapsedTime >= .75 && !this.arrowShot) {
+            console.log("shooting 1 arrow!");
+            this.arrowShot = true;
+            switch (this.direction) {
+                case 0:
+                    this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"],
+                        this.futureHitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR) + this.width / 2,
+                        this.futureHitbox.yMin - 57, 'NORTH');
+                    this.vertarrow.speed = 400;
+                    this.game.currentEntities[0].push(this.vertarrow);
+                    break;
+                case 1:
+                    this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"],
+                        this.futureHitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR) + this.width / 2 + 2,
+                        this.futureHitbox.yMin + 57, 'SOUTH');
+                    this.vertarrow.speed = 400;
+                    this.game.currentEntities[0].push(this.vertarrow);
+                    break;
+                case 2:
+                    this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"],
+                        this.futureHitbox.xMin - 57 - this.width / 2, this.futureHitbox.yMin + this.height / 2, "WEST");
+                    this.horizarrow.speed = 400;
+                    this.game.currentEntities[0].push(this.horizarrow);
+                    break;
+                case 3:
+                    this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"],
+                        this.futureHitbox.xMin + this.width, this.futureHitbox.yMin + this.height / 2, "EAST");
+                    this.horizarrow.speed = 400;
+                    this.game.currentEntities[0].push(this.horizarrow);
+                    break;
+            }
+        }
     }
 
     beingUsed(itemName) {

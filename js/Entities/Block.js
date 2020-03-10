@@ -133,8 +133,9 @@ class Pit extends InvisibleBlock {
         super(game, x, y, 60, 60);
         this.HITBOX_SHRINK_FACTOR = .8;
         this.slipRate = 10;
-        this.plungeRate = 75;
-        this.ABYSS_FACTOR = .5;
+        this.plungeRate = 100; // How fast hero "falls" towards the pit center.
+        this.ABYSS_FACTOR = .65; // How large the "pit" hitbox is - where you fall, and don't just slip.
+                                // Select value from 0.5 to this.HITBOX_SHRINK_FACTOR in size.
         this.focusX = (this.hitbox.xMin + this.hitbox.xMax) / 2;
         this.focusY = (this.hitbox.yMin + this.hitbox.yMax) / 2;
         this.hitbox = {
@@ -187,6 +188,8 @@ class Pickup extends Entity {
         if (type === 'smallkey') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/smallkey.png'], this, 7, 14, .15, 2, [1]);
         if (type === 'bosskey') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/bosskey.png'], this, 9, 14, .15, 2, [1]);
         if (type === 'boots') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/boots.png'], this, 18, 19, .15, 2, [1]);
+        if (type === 'healthUpgrade') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/goldheart.png'], this, 16, 16, .15, 2, [1]);
+        if (type === 'bow') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/bow.png'], this, 16, 16, .15, 2, [1]);
     }
 
     add(hero) {
@@ -194,6 +197,9 @@ class Pickup extends Entity {
             if (this.type === 'health') {
                 heartPickup.play();
                 hero.health += this.amount;
+                if (hero.health > hero.maxHealth) {
+                    hero.health = hero.maxHealth;
+                }
             }
             if (this.type === 'coin') {
                 coinPickup.play();
@@ -207,7 +213,13 @@ class Pickup extends Entity {
             }
             if (this.type === 'boots') {
                 hero.inventory.push('boots');
-                hero.equipK = 'boots';
+            }
+            if (this.type === 'bow') {
+                hero.inventory.push('bow');
+            }
+            if (this.type === 'healthUpgrade') {
+                hero.maxHealth = 10;
+                hero.health = 10;
             }
             this.alive = false;
         }

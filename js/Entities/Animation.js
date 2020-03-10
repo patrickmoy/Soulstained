@@ -54,7 +54,10 @@ class Animation {
                 } else if (status === 'attacking') {
                     xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) %
                         (this.frameIndices[1] - this.frameIndices[0]) + this.frameIndices[0]);
-                } else if (status === 'weapon') {
+                } else if (status === 'shooting') {
+                    xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) % this.frameIndices[0]);
+                }
+                else if (status === 'weapon') {
                     xIndex = 0;
                     if (this.entity.direction <= 1) {
                         yIndex = this.frameHeight * this.entity.direction;

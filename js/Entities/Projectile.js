@@ -203,12 +203,18 @@ class VerticalArrow extends Projectile {
 
         this.futureHitbox.yMin += this.game.clockTick * this.speed;
         this.futureHitbox.yMax += this.game.clockTick * this.speed;
+        if (this.projectileNotOnScreen()) {
+            this.alive = false;
+        }
     }
 
     north() {
 
         this.futureHitbox.yMin -= this.game.clockTick * this.speed;
         this.futureHitbox.yMax -= this.game.clockTick * this.speed;
+        if (this.projectileNotOnScreen()) {
+            this.alive = false;
+        }
     }
 
 
@@ -269,12 +275,18 @@ class HorizontalArrow
 
         this.futureHitbox.xMin += this.game.clockTick * this.speed;
         this.futureHitbox.xMax += this.game.clockTick * this.speed;
+        if (this.projectileNotOnScreen()) {
+            this.alive = false;
+        }
     }
 
     west() {
 
         this.futureHitbox.xMin -= this.game.clockTick * this.speed;
         this.futureHitbox.xMax -= this.game.clockTick * this.speed;
+        if (this.projectileNotOnScreen()) {
+            this.alive = false;
+        }
     }
 
     selectPosition(direction) {

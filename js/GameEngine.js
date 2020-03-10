@@ -81,7 +81,7 @@ class GameEngine {
         this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
         // hero initialization
-        this.HERO = new Hero(this, this.ASSETS_LIST["./res/img/hero_extra.png"], this.ASSETS_LIST["./res/img/whip.png"]);
+        this.HERO = new Hero(this, this.ASSETS_LIST["./res/img/hero_extra.png"], this.ASSETS_LIST["./res/img/whip.png"], this.ASSETS_LIST["./res/img/hero_bow.png"]);
         // push hero to currentEntities
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
@@ -92,8 +92,9 @@ class GameEngine {
         this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
         this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
 
-       // this.currentWorld = this.WORLDS["necro"];
+
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
+
         this.currentMusicID = overworldMusic.play();
         this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
         this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
@@ -124,7 +125,7 @@ class GameEngine {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        console.log("x: " + x + " y: " + y);
+        // console.log("x: " + x + " y: " + y);
         var coord = {x: x, y: y};
         return coord;
     }
@@ -170,6 +171,7 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
+        console.log(this.currentEntities[0]);
         this.UI.update();
         // NESTING THE IF INVENTORY CLAUSE INSIDE THE IF PAUSE CLAUSE
         if (this.transition) // Transition is happening

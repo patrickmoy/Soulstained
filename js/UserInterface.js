@@ -720,10 +720,10 @@ class UserInterface {
             }
         }
 
-        this.ctx.fillRect(282, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 2, 156, 12);
-        dx = 282;
+        this.ctx.fillRect(276, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 2, 168, 12);
+        dx = 276;
         dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 2;
-        var chris = this.parse("CHRIS MARIOTT");
+        var chris = this.parse("CHRIS MARRIOTT");
         for (var p=0; p<chris.length; p++)
         {
             if (chris[p] === 29) dx += 12;
@@ -855,7 +855,8 @@ class UserInterface {
          */
         var dx = 22;
         var dy = 0;
-        for (var i = 0; i < this.health; i++) {
+        let healthToDraw = Math.min(this.hero.maxHealth, this.health);
+        for (var i = 0; i < healthToDraw; i++) {
             this.ctx.drawImage(this.heartImage, 0, 0, 30, 30, dx, dy, 40, 40);
             dx += 50;
             if (i === 4) {
@@ -894,7 +895,7 @@ class UserInterface {
             var weaponJ = "./res/img/" + this.hero.equipJ + "UI.png";
             this.ctx.drawImage(this.images[weaponJ], 0, 0, 30, 30, 570, 0, 60, 60);
         }
-        if (this.hero.equipK !== "empty") {
+        if (this.hero.equipK !== "empty" && this.hero.equipK) {
             var weaponK = "./res/img/" + this.hero.equipK + "UI.png";
             this.ctx.drawImage(this.images[weaponK], 0, 0, 30, 30, 630, 0, 60, 60);
         }

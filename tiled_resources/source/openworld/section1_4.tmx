@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="85">
  <editorsettings>
-  <export target="../../finished/openworld/section1_4.json" format="soulstain"/>
+  <export target="../../../../../Desktop/section1_4.json" format="soulstain"/>
  </editorsettings>
  <tileset firstgid="1" source="../../tilesets/openworld_extra.tsx"/>
  <tileset firstgid="481" source="../../tilesets/openworld.tsx"/>
@@ -34,7 +34,7 @@
 3023,2299,2299,2299,3025,3026,3025,3025,2299,3020,3020,3020,
 3020,2299,2299,2299,3020,0,3029,3020,3020,3020,3020,3023,
 3021,2299,2300,3020,3025,3026,482,3023,3020,3020,3020,3020,
-3020,3020,3020,3020,3025,3025,3026,3020,2299,2299,2299,482
+3020,3020,3020,3020,3025,3025,3026,3020,2391,2299,2299,482
 </data>
  </layer>
  <layer id="3" name="level" width="12" height="12">
@@ -43,19 +43,19 @@
 0,0,0,893,894,0,0,0,893,582,583,584,
 893,894,893,894,0,0,0,0,0,614,615,616,
 893,894,0,0,0,3027,0,0,0,646,920,648,
-0,0,0,0,0,3027,0,893,894,678,679,663,
+0,0,0,0,0,3027,0,893,894,678,679,680,
 522,3026,0,0,0,531,0,0,0,0,0,523,
 0,3029,0,3026,0,0,0,0,2403,562,2322,0,
 0,2231,2232,2233,0,0,1808,0,2231,2232,2233,0,
 0,2271,2223,2273,0,0,0,0,2271,2221,2273,488,
 0,2311,2315,2313,3021,3026,2243,0,2311,2315,2313,0,
-0,2391,2355,2393,0,0,3025,0,2351,2355,2353,0,
-663,0,0,488,0,0,522,0,2391,2395,2433,643
+0,892,2355,2393,0,0,3025,0,2351,2355,2353,0,
+892,892,0,488,0,0,522,0,892,2395,892,643
 </data>
  </layer>
  <objectgroup id="4" name="entities">
-  <object id="81" type="Pit" gid="1808" x="96" y="128" width="16" height="16"/>
-  <object id="83" type="Sign" gid="2243" x="96" y="160" width="16" height="16">
+  <object id="81" gid="1808" x="96" y="128" width="16" height="16"/>
+  <object id="83" gid="2243" x="96" y="160" width="16" height="16">
    <properties>
     <property name="msg">JOY TOWN PUBLIC ADVISORY
 

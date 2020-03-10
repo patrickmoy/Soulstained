@@ -97,7 +97,7 @@ function flagImpassable(collisionPairs) {
         {
             element[0].pushUpdate = false;
         }
-        if (element[0] instanceof Weapon && element[0].active && element[1] instanceof Enemy) {
+        if (((element[0] instanceof Weapon && element[0].active) || element[0] instanceof Projectile) && element[1] instanceof Enemy) {
             element[1].pushUpdate = false;
         }
 
@@ -121,7 +121,7 @@ function flagDamage(collisionPairs) {
     collisionPairs.forEach(function (element) {
         if (element[0] instanceof Hero && (element[1] instanceof Enemy || element[1] instanceof Projectile)) {
             element[0].pushDamage = true;
-        } else if (element[0] instanceof Weapon && element[0].active && (element[1] instanceof Enemy || element[1] instanceof DestructibleBlock)) {
+        } else if (((element[0] instanceof Weapon && element[0].active) || element[0] instanceof Projectile) && (element[1] instanceof Enemy || element[1] instanceof DestructibleBlock)) {
             element[1].pushDamage = true;
         }
     })

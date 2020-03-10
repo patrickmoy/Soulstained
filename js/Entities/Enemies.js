@@ -649,7 +649,7 @@ class Mage extends Enemy {
     constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height, 2);
         this.alive = true;
-        this.animation = new Animation(spritesheet, this, 18, 25, .25, 4, [12], 0);
+        this.animation = new Animation(spritesheet, this, 18, 25, .5, 4, [12], 0);
         this.context = game.GAME_CONTEXT;
         this.count = 0;
         this.startPull = false;
@@ -659,7 +659,7 @@ class Mage extends Enemy {
 
         this.count += this.game.clockTick;
 
-        if (this.count >= 3) {
+        if (this.count >= 4) {
             this.startPull = true;
             this.pullAttack();
             if (this.count >= 6) {
@@ -679,7 +679,8 @@ class Mage extends Enemy {
     pullAttack() {
 
         if (this.startPull === true) {
-            this.game.HERO.gravitate(this.futureHitbox.xMin, this.futureHitbox.yMin, 125);
+            this.game.HERO.gravitate((this.futureHitbox.xMin + this.futureHitbox.xMax) / 2,
+                (this.futureHitbox.yMin + this.futureHitbox.yMax) / 2, 75);
         }
     }
 
