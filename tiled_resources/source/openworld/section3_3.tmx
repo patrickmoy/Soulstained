@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="59">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="71">
  <editorsettings>
   <export target="." format="soulstain"/>
  </editorsettings>
@@ -50,7 +50,20 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="entities" visible="0"/>
+ <objectgroup id="4" name="entities">
+  <object id="59" gid="1808" x="0" y="32" width="16" height="16"/>
+  <object id="60" gid="1808" x="16" y="32" width="16" height="16"/>
+  <object id="61" gid="1808" x="16" y="48" width="16" height="16"/>
+  <object id="62" gid="1808" x="0" y="48" width="16" height="16"/>
+  <object id="63" gid="1808" x="0" y="64" width="16" height="16"/>
+  <object id="64" gid="1808" x="16" y="64" width="16" height="16"/>
+  <object id="65" gid="1808" x="0" y="80" width="16" height="16"/>
+  <object id="66" gid="1808" x="16" y="80" width="16" height="16"/>
+  <object id="67" gid="1808" x="0" y="96" width="16" height="16"/>
+  <object id="68" gid="1808" x="16" y="96" width="16" height="16"/>
+  <object id="69" gid="1808" x="0" y="112" width="16" height="16"/>
+  <object id="70" gid="1808" x="16" y="112" width="16" height="16"/>
+ </objectgroup>
  <layer id="8" name="sky" width="12" height="12" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,

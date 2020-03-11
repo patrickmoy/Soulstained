@@ -77,24 +77,24 @@ AssetHandler.queueJSON('./res/jsonderulo/section2_2.json');
 AssetHandler.queueJSON('./res/jsonderulo/section2_3.json');
 AssetHandler.queueJSON('./res/jsonderulo/section2_4.json');
 AssetHandler.queueJSON('./res/jsonderulo/section2_5.json');
-AssetHandler.queueJSON('./res/jsonderulo/section3_1.json');
-AssetHandler.queueJSON('./res/jsonderulo/section3_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/section3_3.json');
-AssetHandler.queueJSON('./res/jsonderulo/section3_4.json');
-AssetHandler.queueJSON('./res/jsonderulo/section3_5.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section1_1.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section1_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section1_3.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section1_4.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section1_5.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_1.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_3.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_4.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section2_5.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section3_1.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section3_2.json');
-AssetHandler.queueJSON('./res/jsonderulo/necro_section3_3.json');
+    AssetHandler.queueJSON('./res/jsonderulo/section3_1.json');
+    AssetHandler.queueJSON('./res/jsonderulo/section3_2.json');
+    AssetHandler.queueJSON('./res/jsonderulo/section3_3.json');
+    AssetHandler.queueJSON('./res/jsonderulo/section3_4.json');
+    AssetHandler.queueJSON('./res/jsonderulo/section3_5.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section1_1.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section1_2.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section1_3.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section1_4.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section1_5.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_1.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_2.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_3.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_4.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section2_5.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section3_1.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section3_2.json');
+    AssetHandler.queueJSON('./res/jsonderulo/necro_section3_3.json');
     AssetHandler.queueJSON('./res/jsonderulo/necro_section3_4.json');
     AssetHandler.queueJSON('./res/jsonderulo/necro_section3_5.json');
     AssetHandler.queueJSON('./res/jsonderulo/necro_section4_1.json');
@@ -109,13 +109,21 @@ AssetHandler.queueJSON('./res/jsonderulo/necro_section3_3.json');
     AssetHandler.queueJSON('./res/jsonderulo/necro_section5_5.json');
     AssetHandler.queueJSON('./res/jsonderulo/cave_section1_1.json');
     AssetHandler.queueJSON('./res/jsonderulo/bluehouse_section1_1.json');
+
+    AssetHandler.queueImage('./res/img/log.png');
+    AssetHandler.queueImage('./res/img/log2.png');
+    AssetHandler.queueImage('./res/img/worlds/wolf.png');
+    AssetHandler.queueImage('./res/img/worlds/wolf2.png');
+    AssetHandler.queueJSON('./res/jsonderulo/wolf_section1_1.json');
     AssetHandler.startDownload()
         .then(() => {
             const myGame = new GameEngine(gameContext, AssetHandler.assets);
             myGame.init();
             myGame.run();
-        }).catch(() => {
-        gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-        gameContext.fillText("Error, Check Console", gameContext.canvas.width / 2, gameContext.canvas.height / 2);
-    });
+        })
+        .catch((error) => {
+            console.error(error);
+            gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+            gameContext.fillText("Error, Check Console", gameContext.canvas.width / 2, gameContext.canvas.height / 2);
+        });
 };

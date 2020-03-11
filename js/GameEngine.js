@@ -96,9 +96,7 @@ class GameEngine {
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
 
         this.currentMusicID = overworldMusic.play();
-        this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
-        this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
+        this.changeEntitiesToCurrent();
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
 

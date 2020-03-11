@@ -590,12 +590,10 @@ class Beast
     }
 
     checkWallCollision() {
-
         let wallCollision = detectCollide(this.entityArray, this.game.currentEntities[1]);
         if (wallCollision.length >= 1) {
             this.reverseDirection = true;
         }
-
     }
 
     south() {
