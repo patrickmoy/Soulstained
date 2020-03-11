@@ -57,7 +57,6 @@ class World {
             this.GAME.transition = false;
             this.sx = this.sourceX;
             this.sy = this.sourceY;
-            this.GAME.save();
         } // Transition is complete, turn off transitioning
     }
 

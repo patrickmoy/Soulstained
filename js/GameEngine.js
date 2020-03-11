@@ -25,10 +25,9 @@ class GameEngine {
      * @param gameContext {CanvasRenderingContext2D} 2d context of the gameplay
      * @param assets {Image[]} array of cached images for the game
      */
-    constructor(gameContext, assets, socket) {
+    constructor(gameContext, assets) {
         this.ASSETS_LIST = assets; // A list of images to be used for the game.
         this.GAME_CONTEXT = gameContext; // 2D Context of the main game section (where player movement occurs)
-        this.socket = socket;
         this.INPUTS = {
             "KeyW": false,
             "KeyA": false,
@@ -75,7 +74,6 @@ class GameEngine {
         this.deadEntities = [];
 
         this.displayContinueScreen = false;
-        this.loading = false;
     }
 
     /**
@@ -298,18 +296,15 @@ class GameEngine {
             this.checkTransition();
 
             // HERO DEATH, LOAD GAME STATE FROM LAST CHECKPOINT
-            if (this.HERO.health === 0 && !this.pause && !this.displayContinueScreen && !this.loading)
+            if (this.HERO.health === 0 && !this.pause && !this.displayContinueScreen)
             {
                 this.displayContinueScreen = true;
                 this.pause = true;
-                this.loading = true;
-                console.log("emit load");
-                this.socket.emit("load", {studentname: "groupRed2", statename: "last_checkpoint"});
             }
         }
     }
 
-    load(data) {
+    load() {
         if (this.currentWorld === this.WORLDS["cavebasic"]) {
             this.HERO.originalHitbox.xMin = 430 + this.HERO.width * (1 - this.HERO.HITBOX_SHRINK_FACTOR);
             this.HERO.originalHitbox.yMin = 590 + this.HERO.height * (1 - this.HERO.HITBOX_SHRINK_FACTOR);
@@ -321,13 +316,6 @@ class GameEngine {
         setBoxToThis(this.HERO.nbx, this.HERO.originalHitbox);
         setBoxToThis(this.HERO.nby, this.HERO.originalHitbox);
         setBoxToThis(this.HERO.hitbox, this.HERO.originalHitbox);
-        this.loading = false;
-    }
-
-    save() {
-        var gameState = {};
-        console.log("emit save");
-        this.socket.emit("save", {studentname: "groupRed2", statename: "last_checkpoint", data: gameState});
     }
 
     /**

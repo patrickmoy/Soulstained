@@ -207,6 +207,7 @@ class UserInterface {
                 this.game.HERO.alive = true;
                 this.game.HERO.health = 3;
                 this.game.currentEntities[0] = [this.game.HERO].concat(this.game.currentEntities[0]);
+                this.game.load();
             }
 
             if (this.game.INPUTS["click"] && (this.game.INPUTS["coord"].x > 264 && this.game.INPUTS["coord"].x < 456 && this.game.INPUTS["coord"].y > 480 && this.game.INPUTS["coord"].y < 504 )){
