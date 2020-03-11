@@ -23,7 +23,7 @@ class Hero extends Entity {
         this.health = 5;
         this.maxHealth = 10;
         this.transitionDirection = 0; // Helper variable to keep track of what direction to transition
-        this.coins = 900;
+        this.coins = 0;
         this.smallKeys = 0;
         this.hasBossKey = false;
         this.alive = true;
