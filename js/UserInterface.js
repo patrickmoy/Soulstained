@@ -295,6 +295,10 @@ class UserInterface {
                         }
                     } else if (purchasedItem === 'arrows') {
 
+                    } else if (purchasedItem === 'whipUpgrade') {
+                        this.hero.upgrades[0]++;
+                    } else if (purchasedItem === 'bowUpgrade') {
+                        this.hero.upgrades[1]++;
                     } else {
                         this.game.INPUTS["KeyJ"] = false;
                         this.strokeStyle = 'yellow';
