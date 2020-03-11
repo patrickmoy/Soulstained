@@ -160,7 +160,6 @@ class TileMap {
                     this.BLOCKS.push(new RollingPin(this.game, this.game.ASSETS_LIST['./res/img/log2.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 165,
                         22, 52, 0.15, 3.4, [6], entity.customProperties.Speed, entity.customProperties.Direction))
                 }
-
             }
         }
     }
