@@ -279,6 +279,7 @@ class UserInterface {
                 {
                     var itemIndex = (this.selectionBoxY - 280) / 48;
                     var purchasedItem = this.game.goods[itemIndex].name;
+                    console.log(purchasedItem);
                     if (this.hero.coins >= this.game.goods[itemIndex].price) {
 
                         this.game.INPUTS["KeyJ"] = false;
@@ -291,15 +292,15 @@ class UserInterface {
                         //280, 328, 376, 424, 472
                         if (purchasedItem === 'heart') {
                             this.hero.health += 1;
+                        } else if (purchasedItem === 'whip_upgrade') {
+                            this.hero.upgrades[0]++;
+                            console.log(this.hero.upgrades[0]);
+                        } else if (purchasedItem === 'bow_upgrade') {
+                            this.hero.upgrades[1]++;
+                            console.log(this.hero.upgrades[1]);
                         } else {
                             this.hero.inventory.push(purchasedItem);
                         }
-                    } else if (purchasedItem === 'arrows') {
-
-                    } else if (purchasedItem === 'whipUpgrade') {
-                        this.hero.upgrades[0]++;
-                    } else if (purchasedItem === 'bowUpgrade') {
-                        this.hero.upgrades[1]++;
                     } else {
                         this.game.INPUTS["KeyJ"] = false;
                         this.strokeStyle = 'yellow';
@@ -933,11 +934,11 @@ class UserInterface {
         this.ctx.drawImage(this.digitsFontImage, this.d100, 0, 49.5, 45, 327, 37, 22, 20);
         this.ctx.drawImage(this.digitsFontImage, this.d10, 0, 49.5, 45, 349, 37, 22, 20);
         this.ctx.drawImage(this.digitsFontImage, this.d1, 0, 49.5, 45, 371, 37, 22, 20);
-
+        /*
         // draw arrows
         this.ctx.drawImage(this.images["./res/img/arrowsUI.png"], 0, 0, 18, 18, 420, 5, 30, 30);
         this.ctx.drawImage(this.digitsFontImage, this.hero.arrows, 0, 49.5, 45, 425, 37, 22, 20);
-
+        */
 
         // draw keys
         this.ctx.drawImage(this.smallKey, 0, 0, 7, 14, 462, 5, 15, 30);
@@ -960,7 +961,7 @@ class UserInterface {
         }
         if (this.hero.equipK !== "empty" && this.hero.equipK) {
             var weaponK = "./res/img/" + this.hero.equipK + "UI.png";
-            this.ctx.drawImage(this.images[weaponK], 0, 0, 30, 30, 630, 0, 60, 60);
+            this.ctx.drawImage(this.images[weaponK], 0, 0, 30, 30, 632, 0, 60, 60);
         }
         /*
         // draw message
