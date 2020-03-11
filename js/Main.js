@@ -117,7 +117,8 @@ AssetHandler.queueJSON('./res/jsonderulo/section2_5.json');
     AssetHandler.queueJSON('./res/jsonderulo/wolf_section1_1.json');
     AssetHandler.startDownload()
         .then(() => {
-            const myGame = new GameEngine(gameContext, AssetHandler.assets);
+            var socket = io.connect("http://24.16.255.56:8888");
+            const myGame = new GameEngine(gameContext, AssetHandler.assets, socket);
             myGame.init();
             myGame.run();
         })

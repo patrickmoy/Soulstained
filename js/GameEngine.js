@@ -25,9 +25,10 @@ class GameEngine {
      * @param gameContext {CanvasRenderingContext2D} 2d context of the gameplay
      * @param assets {Image[]} array of cached images for the game
      */
-    constructor(gameContext, assets) {
+    constructor(gameContext, assets, socket) {
         this.ASSETS_LIST = assets; // A list of images to be used for the game.
         this.GAME_CONTEXT = gameContext; // 2D Context of the main game section (where player movement occurs)
+        this.socket = socket;
         this.INPUTS = {
             "KeyW": false,
             "KeyA": false,
@@ -72,6 +73,9 @@ class GameEngine {
         this.HitQueue = [];
         this.DeathQueue = [];
         this.deadEntities = [];
+
+        this.displayContinueScreen = false;
+        this.loading = false;
     }
 
     /**
@@ -117,14 +121,45 @@ class GameEngine {
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, "click")) this.INPUTS["click"]= true;
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, "coord")) this.INPUTS["coord"] = this.getCursorPosition(this.GAME_CONTEXT.canvas, e);
         });
-
+        this.socket.on("load", function(data) {
+            console.log("load");
+            this.load(data);
+        });
         console.log('Game initialized');
     }
+
+    reset() {
+        this.transition = false; // When transitioning is happening
+        this.inInventory = false; // When player is in his inventory
+        this.fading = false;
+        this.pause = true; // Pauses other actions while we switch to a new map.
+        this.WORLDS = {}; // I wonder, will it create a new instance everytime you switch?
+        this.currentEntities = [[], [], [], [], [], []]; // Stores entities at the current tile map
+        this.HERO = new Hero(this, this.ASSETS_LIST["./res/img/hero_extra.png"], this.ASSETS_LIST["./res/img/whip.png"], this.ASSETS_LIST["./res/img/hero_bow.png"]);
+        this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
+        this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
+        this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
+        this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
+        this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
+        this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
+        this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
+        overworldMusic.stop();
+        necroMusic.stop();
+        this.currentMusicID = overworldMusic.play();
+        this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
+        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
+        this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
+        this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
+        this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
+
+        this.UI.hero = this.HERO;
+    }
+
     getCursorPosition(canvas, event) {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        // console.log("x: " + x + " y: " + y);
+        console.log("x: " + x + " y: " + y);
         var coord = {x: x, y: y};
         return coord;
     }
@@ -170,8 +205,10 @@ class GameEngine {
      * Updates the game instance. (Updates anything related to the game like entities or collision)
      */
     update() {
-        console.log(this.currentEntities[0]);
         this.UI.update();
+        // discard mouse coordinates
+        this.INPUTS["coord"].x = 0;
+        this.INPUTS["coord"].y = 0;
         // NESTING THE IF INVENTORY CLAUSE INSIDE THE IF PAUSE CLAUSE
         if (this.transition) // Transition is happening
         {
@@ -188,7 +225,11 @@ class GameEngine {
                 // PAUSE FOR TRANSACTION
             } else if (this.displayHomeScreen) {
                 // PAUSE FOR HOME SCREEN
-            } else {
+            } else if (this.displayContinueScreen) {
+                // PAUSE FOR CONTINUE SCREEN
+            }
+            else
+            {
                 // PAUSE FOR PORTAL
                 this.currentWorld.fade();
                 if (!this.pause) {
@@ -259,7 +300,38 @@ class GameEngine {
             // PORTAL AND BORDER TRANSITIONS
             this.checkPortal();
             this.checkTransition();
+
+            // HERO DEATH, LOAD GAME STATE FROM LAST CHECKPOINT
+            if (this.HERO.health === 0 && !this.pause && !this.displayContinueScreen && !this.loading)
+            {
+                this.displayContinueScreen = true;
+                this.pause = true;
+                this.loading = true;
+                console.log("emit load");
+                this.socket.emit("load", {studentname: "groupRed2", statename: "last_checkpoint"});
+            }
         }
+    }
+
+    load(data) {
+        if (this.currentWorld === this.WORLDS["cavebasic"]) {
+            this.HERO.originalHitbox.xMin = 430 + this.HERO.width * (1 - this.HERO.HITBOX_SHRINK_FACTOR);
+            this.HERO.originalHitbox.yMin = 590 + this.HERO.height * (1 - this.HERO.HITBOX_SHRINK_FACTOR);
+            this.HERO.originalHitbox.xMax = 430 + this.HERO.width * this.HERO.HITBOX_SHRINK_FACTOR;
+            this.HERO.originalHitbox.yMax = 590 + this.HERO.height * this.HERO.HITBOX_SHRINK_FACTOR
+        }
+        this.HERO.direction = 1;
+        this.HERO.status = "idle";
+        setBoxToThis(this.HERO.nbx, this.HERO.originalHitbox);
+        setBoxToThis(this.HERO.nby, this.HERO.originalHitbox);
+        setBoxToThis(this.HERO.hitbox, this.HERO.originalHitbox);
+        this.loading = false;
+    }
+
+    save() {
+        var gameState = {};
+        console.log("emit save");
+        this.socket.emit("save", {studentname: "groupRed2", statename: "last_checkpoint", data: gameState});
     }
 
     /**

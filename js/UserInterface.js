@@ -79,7 +79,7 @@ class UserInterface {
             if (i === 2) this.d100 = digit * 49.5;
         }
         // User presses the return key to switch the game state to Inventory
-        if (!this.game.transition && !this.game.displayHomeScreen && !this.game.inInventory && !this.game.displayMessage && !this.game.displayTransaction && this.game.INPUTS["Enter"]) {
+        if (!this.game.displayContinueScreen && !this.game.transition && !this.game.displayHomeScreen && !this.game.inInventory && !this.game.displayMessage && !this.game.displayTransaction && this.game.INPUTS["Enter"]) {
             this.game.INPUTS["Enter"] = false;
             this.game.pause = true;
             this.game.inInventory = true;
@@ -165,8 +165,6 @@ class UserInterface {
             this.hero.equipJ = this.currentJ;
             this.hero.equipK = this.currentK;
         }
-
-        // EXIT MESSAGE AND RETURN TO THE GAME
         if (this.game.pause && this.game.displayMessage) {
             if (this.game.INPUTS["Enter"]) {
                 this.game.INPUTS["Enter"] = false;
@@ -175,10 +173,9 @@ class UserInterface {
                 this.msgEncoded = [];
             }
         }
-
         if (this.game.pause && this.game.displayHomeScreen) {
 
-            if (this.game.INPUTS["click"] && (this.game.INPUTS["coord"].x > 240 && this.game.INPUTS["coord"].x < 480 && this.game.INPUTS["coord"].y > 494 && this.game.INPUTS["coord"].y < 518 )){
+            if (this.game.INPUTS["click"] && (this.game.INPUTS["coord"].x > 240 && this.game.INPUTS["coord"].x < 480 && this.game.INPUTS["coord"].y > 494 && this.game.INPUTS["coord"].y < 518 )) {
                 this.game.INPUTS["click"] = false;
                 this.game.pause = false;
                 this.game.displayHomeScreen = false;
@@ -201,7 +198,41 @@ class UserInterface {
                 }
             }
         }
-        // PROCESS TRANSACTION AND RETURN TO THE GAME
+        if (this.game.pause && this.game.displayContinueScreen) {
+            if (this.game.INPUTS["click"] && (this.game.INPUTS["coord"].x > 264 && this.game.INPUTS["coord"].x < 456 && this.game.INPUTS["coord"].y > 240 && this.game.INPUTS["coord"].y < 264 )){
+                this.game.INPUTS["click"] = false;
+                this.game.pause = false;
+                this.game.displayContinueScreen = false;
+
+                this.game.HERO.alive = true;
+                this.game.HERO.health = 3;
+                this.game.currentEntities[0] = [this.game.HERO].concat(this.game.currentEntities[0]);
+            }
+
+            if (this.game.INPUTS["click"] && (this.game.INPUTS["coord"].x > 264 && this.game.INPUTS["coord"].x < 456 && this.game.INPUTS["coord"].y > 480 && this.game.INPUTS["coord"].y < 504 )){
+                this.game.INPUTS["click"] = false;
+                this.game.displayContinueScreen = false;
+                this.game.displayHomeScreen = true;
+                this.game.reset();
+            }
+
+            this.colorIndexHelper++;
+            if (this.colorIndexHelper % 3 === 0) {
+                if (this.colorIncrement) {
+                    this.colorIndex++;
+                    if (this.colorIndex === 32) {
+                        this.colorIncrement = false;
+                        this.colorIndex = 30;
+                    }
+                } else {
+                    this.colorIndex--;
+                    if (this.colorIndex === -1) {
+                        this.colorIncrement = true;
+                        this.colorIndex = 1;
+                    }
+                }
+            }
+        }
         if (this.game.pause && this.game.displayTransaction) {
 
             if (this.transactionState === 'browse')
@@ -619,6 +650,44 @@ class UserInterface {
         }
     }
 
+    displayContinueScreen() {
+        var frequency = 0.1;
+        var red   = Math.sin(frequency*this.colorIndex + 0) * 85 + 170; // 55 200
+        var green = Math.sin(frequency*this.colorIndex + 2) * 85 + 170;
+        var blue  = Math.sin(frequency*this.colorIndex + 4) * 85 + 170;
+        this.ctx.globalAlpha = 0.8;
+        this.ctx.fillStyle = this.RGB2Color(red,green,blue);
+        this.ctx.fillRect(0, 0, 720, 720);
+
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillRect(264, 240, 192, 24);
+        var continueGame = this.parse("CONTINUE");
+        var dx = 264;
+        var dy = 240;
+        for (var i=0; i<continueGame.length; i++)
+        {
+            if (continueGame[i] === 29) dx += 24;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, continueGame[i] * 60, 0, 60, 60, dx, dy, 24, 24);
+                dx += 24;
+            }
+        }
+
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillRect(264, 480, 192, 24);
+        var endGame = this.parse("END GAME");
+        dx = 264;
+        dy = 480;
+        for (var j=0; j<endGame.length; j++)
+        {
+            if (endGame[j] === 29) dx += 24;
+            else {
+                this.ctx.drawImage(this.lettersFontImage, endGame[j] * 60, 0, 60, 60, dx, dy, 24, 24);
+                dx += 24;
+            }
+        }
+    }
+
     displayHomeScreen() {
         var frequency = 0.1;
         var red   = Math.sin(frequency*this.colorIndex + 0) * 85 + 170; // 55 200
@@ -839,17 +908,6 @@ class UserInterface {
     }
 
     draw() {
-
-        /**
-         * distracts too much from the game play
-         */
-        /*
-        this.ctx.globalAlpha = 0.7;
-        this.ctx.fillStyle = 'teal';
-        this.ctx.fillRect(0, 0, 720, 75);
-        */
-
-
         /**
          * draw hearts
          */
@@ -899,8 +957,7 @@ class UserInterface {
             var weaponK = "./res/img/" + this.hero.equipK + "UI.png";
             this.ctx.drawImage(this.images[weaponK], 0, 0, 30, 30, 630, 0, 60, 60);
         }
-
-
+        /*
         // draw message
         if (this.game.pause && this.game.displayMessage) {
             this.displayMessage();
@@ -920,6 +977,20 @@ class UserInterface {
             this.displayHomeScreen();
         }
 
+        if (this.game.pause && this.game.displayContinueScreen) {
+            this.displayContinueScreen();
+        }
+        */
+        if (this.game.pause) {
+            if (this.game.displayMessage) this.displayMessage();
+            else if (this.game.displayTransaction) this.displayTransaction();
+            else if (this.game.inInventory) this.displayInventory();
+            else if (this.game.displayHomeScreen) this.displayHomeScreen();
+            else if (this.game.displayContinueScreen) {
+
+                this.displayContinueScreen();
+            }
+        }
     }
 
     RGB2Color(r, g, b) {
