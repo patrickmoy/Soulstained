@@ -121,6 +121,10 @@ AssetHandler.queueJSON('./res/jsonderulo/section2_5.json');
             const myGame = new GameEngine(gameContext, AssetHandler.assets, socket);
             myGame.init();
             myGame.run();
+            socket.on("load", function(data) {
+                console.log("load");
+                myGame.load(data);
+            });
         })
         .catch((error) => {
             console.error(error);

@@ -121,10 +121,6 @@ class GameEngine {
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, "click")) this.INPUTS["click"]= true;
             if (Object.prototype.hasOwnProperty.call(this.INPUTS, "coord")) this.INPUTS["coord"] = this.getCursorPosition(this.GAME_CONTEXT.canvas, e);
         });
-        this.socket.on("load", function(data) {
-            console.log("load");
-            this.load(data);
-        });
         console.log('Game initialized');
     }
 
