@@ -151,7 +151,6 @@ class TileMap {
                     entity.customProperties.face, entity.customProperties.strength));
             }
             else if (entity.type === 'RollingPin') {
-                console.log(entity.customProperties)
                 if (entity.customProperties.Direction === "SOUTH" || entity.customProperties.Direction === "NORTH") {
                     this.BLOCKS.push(new RollingPin(this.game, this.game.ASSETS_LIST['./res/img/log.png'], entity.x * 60 / 16, entity.y * 60 / 16, 220, 60,
                         55, 24, 0.1, 3.7, [6], entity.customProperties.Speed, entity.customProperties.Direction))
