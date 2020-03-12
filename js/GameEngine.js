@@ -305,12 +305,6 @@ class GameEngine {
     }
 
     load() {
-        if (this.currentWorld === this.WORLDS["cavebasic"]) {
-            this.HERO.originalHitbox.xMin = 430 + this.HERO.width * (1 - this.HERO.HITBOX_SHRINK_FACTOR);
-            this.HERO.originalHitbox.yMin = 590 + this.HERO.height * (1 - this.HERO.HITBOX_SHRINK_FACTOR);
-            this.HERO.originalHitbox.xMax = 430 + this.HERO.width * this.HERO.HITBOX_SHRINK_FACTOR;
-            this.HERO.originalHitbox.yMax = 590 + this.HERO.height * this.HERO.HITBOX_SHRINK_FACTOR
-        }
         this.HERO.direction = 1;
         this.HERO.status = "idle";
         setBoxToThis(this.HERO.nbx, this.HERO.originalHitbox);
@@ -386,7 +380,7 @@ class GameEngine {
         this.HERO.futureHitbox.yMax = this.HERO.hitbox.yMax;
         setBoxToThis(this.HERO.nbx, this.HERO.hitbox);
         setBoxToThis(this.HERO.nby, this.HERO.hitbox);
-
+        setBoxToThis(this.HERO.originalHitbox, this.HERO.hitbox);
         this.changeEntitiesToCurrent();
         this.currentEntities[2].forEach(enemy => enemy.reset());
         if (this.currentWorld === this.WORLDS["openworld"]) {
