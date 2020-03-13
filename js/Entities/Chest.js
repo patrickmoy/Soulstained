@@ -99,6 +99,39 @@ class Gate extends Sign {
     }
 }
 
+class DungeonGate extends Gate {
+    constructor(game, spritesheet, x, y, width, height, trigger, face) {
+        super(game, spritesheet, x, y, width, height, trigger);
+        this.face = face;
+    }
+
+    update() {
+        this.pushMessage = false;
+        super.update();
+    }
+
+    draw() {
+        console.log(this.hitbox);
+        if (this.face === 'NORTH') {
+            this.context.drawImage(this.spritesheet, 0, 0, 16, 16, this.hitbox.xMin - 44, this.hitbox.yMin - 6,
+                60, 60);
+        }
+        if (this.face === 'SOUTH') {
+            this.context.drawImage(this.spritesheet, 16, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
+                60, 60);
+        }
+        if (this.face === 'WEST') {
+            console.log("I AM HERE");
+            this.context.drawImage(this.spritesheet, 32, 0, 16, 16, this.hitbox.xMin - 36, this.hitbox.yMin - 6,
+                60, 60);
+        }
+        if (this.face === 'EAST') {
+            this.context.drawImage(this.spritesheet, 48, 0, 16, 16, this.hitbox.xMin - 6, this.hitbox.yMin - 6,
+                60, 60);
+        }
+    }
+}
+
 class Lever extends Sign {
     constructor(game, spritesheet, x, y, width, height, trigger) {
         super(game, x, y, width, height, "");

@@ -683,3 +683,137 @@ class Mage extends Enemy {
     }
 
 }
+
+class Target extends Enemy {
+
+    constructor(game, x, y, targetOwner, time, motion, speed) {
+        super(game, x, y, 60, 60, 1);
+        this.spritesheet = this.game.ASSETS_LIST["./res/img/dummy.png"];
+        this.owner = targetOwner; // Enclosing trigger latch that creates target puzzles.
+        this.time = time; // Time puzzle lingers.
+        this.timeCount = 0;
+        // Integer of number of squares that the target can oscillate in a given direction (0, 1, 2, etc.).
+        this.motionX = motion[0];
+        this.motionY = motion[1];
+        this.speed = speed;
+        this.motionCounter = 0;
+        this.motionDirection = "positive";
+        this.originalHitbox =
+            {
+                xMin: this.hitbox.xMin,
+                xMax: this.hitbox.xMax,
+                yMin: this.hitbox.yMin,
+                yMax: this.hitbox.yMax
+            };
+        this.maximumHitbox =
+            {
+                xMin: this.originalHitbox.xMin + this.motionX * 60,
+                xMax: this.originalHitbox.xMax + this.motionX * 60,
+                yMin: this.originalHitbox.yMin + this.motionY * 60,
+                yMax: this.originalHitbox.yMax + this.motionY * 60
+            };
+
+    }
+
+    preUpdate() {
+        if (this.motionX !== 0) {
+            if (this.motionDirection === 'positive') {
+                this.walk(3);
+                this.motionCounter += ((this.speed * this.game.clockTick) / 60);
+                if (this.motionCounter >= this.motionX) {
+                    this.motionDirection = 'negative';
+                    this.motionCounter = this.motionX;
+                    setBoxToThis(this.futureHitbox, this.maximumHitbox);
+                }
+            } else if (this.motionDirection === 'negative') {
+                this.walk(2);
+                this.motionCounter -= ((this.speed * this.game.clockTick) / 60);
+                if (this.motionCounter <= 0) {
+                    this.motionDirection = 'positive';
+                    this.motionCounter = 0;
+                    setBoxToThis(this.futureHitbox, this.originalHitbox);
+                }
+            }
+        } else if (this.motionY !== 0) {
+            if (this.motionDirection === 'positive') {
+                this.walk(1);
+                this.motionCounter += ((this.speed * this.game.clockTick) / 60);
+                if (this.motionCounter >= this.motionY) {
+                    this.motionDirection = 'negative';
+                    this.motionCounter = this.motionY;
+                    setBoxToThis(this.futureHitbox, this.maximumHitbox);
+                }
+            } else if (this.motionDirection === 'negative') {
+                this.walk(0);
+                this.motionCounter -= ((this.speed * this.game.clockTick) / 60);
+                if (this.motionCounter <= 0) {
+                    this.motionDirection = 'positive';
+                    this.motionCounter = 0;
+                    setBoxToThis(this.futureHitbox, this.originalHitbox);
+                }
+            }
+        }
+    }
+
+    update() {
+        this.timeCount += this.game.clockTick;
+        super.update();
+        if (this.timeCount >= this.time) {
+            this.alive = false;
+            this.owner.targetCount--;
+        }
+        if (!this.alive) {
+            this.owner.targetCount++;
+        }
+    }
+
+    draw() {
+        this.game.GAME_CONTEXT.drawImage(this.spritesheet, this.hitbox.xMin - 6, this.hitbox.yMin - 6, 60, 60);
+    }
+}
+
+class TargetOwner extends Sign {
+    constructor(game, x, y, trigger, targetArray, time, threshold) {
+        super(game, x, y, 60, 60, "SHOOT ALL THE TARGETS QUICKLY");
+        this.trigger = trigger;
+        console.log(targetArray);
+        this.targetArray = JSON.parse(targetArray);
+        this.activated = false;
+        this.targetCount = 0;
+        this.threshold = threshold;
+        this.timeCounter = 0;
+        this.time = time;
+        this.complete = false;
+    }
+
+    update () {
+        if (this.activated) {
+            this.timeCounter += this.game.clockTick;
+            if (this.timeCounter >= this.time) {
+                this.activated = false;
+                this.pushMessage = false;
+                this.timeCounter = 0;
+                this.targetCount = 0;
+            }
+        } else if (this.pushMessage && !this.activated && !this.complete) {
+            if (this.game.newMsg === false) {
+                this.game.newMsg = true;
+                this.game.msg = this.msg;
+                this.pushMessage = false;
+                this.activated = true;
+                for (let i = 0; i < this.targetArray.targets.length; i++) {
+                    // In the .json, TargetArray entries are x, y, motion [x,y] , speed
+                    const targData = this.targetArray.targets[i];
+                    const target = new Target(this.game, targData.x, targData.y, this, this.time,
+                        [targData.motionX, targData.motionY], targData.speed);
+                    console.log(target);
+                    this.game.currentEntities[2].push(target);
+                }
+            }
+        }
+        if (this.targetCount >= this.threshold) {
+            this.game.gateTriggers[this.trigger] = true;
+            this.complete = true;
+        }
+    }
+}

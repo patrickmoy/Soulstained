@@ -94,10 +94,11 @@ class GameEngine {
         this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
         this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
         this.WORLDS["wolf"] = new WolfDungeon(this, this.ASSETS_LIST["./res/img/worlds/wolf.png"], this.ASSETS_LIST["./res/img/worlds/wolf2.png"], 0, 0);
+        this.WORLDS["test"] = new TestDungeon(this, this.ASSETS_LIST["./res/img/worlds/testroom.png"], this.ASSETS_LIST["./res/img/worlds/testroom2.png"], 0, 0);
 
 
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
-
+        // this.currentWorld = this.WORLDS["necro"];
         this.currentMusicID = overworldMusic.play();
         this.changeEntitiesToCurrent();
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
@@ -153,7 +154,7 @@ class GameEngine {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        console.log("x: " + x + " y: " + y);
+        // console.log("x: " + x + " y: " + y);
         var coord = {x: x, y: y};
         return coord;
     }

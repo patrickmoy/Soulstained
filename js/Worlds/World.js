@@ -171,6 +171,14 @@ class BlueHouse extends World {
     }
 }
 
+class TestDungeon extends World {
+    constructor(game, worldImage, layeredImage, sectionX, sectionY) {
+        super(game, worldImage, layeredImage, sectionX, sectionY);
+        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("testroom", 1, 1)])]];
+    }
+}
+
+
 class NecroDungeon extends World {
     constructor(game, worldImage, layeredImage, sectionX, sectionY) {
         super(game, worldImage, layeredImage, sectionX, sectionY);

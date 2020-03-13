@@ -15,6 +15,8 @@ window.onload = () => {
     AssetHandler.queueImage("./res/img/worlds/necro2.png");
     AssetHandler.queueImage("./res/img/worlds/cavebasic.png");
     AssetHandler.queueImage("./res/img/worlds/cavebasic2.png");
+    AssetHandler.queueImage("./res/img/worlds/testroom.png");
+    AssetHandler.queueImage("./res/img/worlds/testroom2.png");
 AssetHandler.queueImage("./res/img/worlds/bluehouse.png");
 AssetHandler.queueImage("./res/img/worlds/bluehouse2.png");
 AssetHandler.queueImage("./res/img/hero.png");
@@ -25,6 +27,7 @@ AssetHandler.queueImage("./res/img/bigchest.png");
 AssetHandler.queueImage("./res/img/smallkey.png");
 AssetHandler.queueImage("./res/img/bosskey.png");
 AssetHandler.queueImage("./res/img/bosslock.png");
+    AssetHandler.queueImage("./res/img/dummy.png");
 AssetHandler.queueImage("./res/img/lock.png");
 AssetHandler.queueImage("./res/img/hero_extra.png");
 AssetHandler.queueImage("./res/img/hero_bow.png");
@@ -59,6 +62,7 @@ AssetHandler.queueImage("./res/img/fire.png");
 AssetHandler.queueImage("./res/img/letters.png");
 AssetHandler.queueImage("./res/img/death.png");
 AssetHandler.queueImage('./res/img/heartAnimation.png');
+AssetHandler.queueImage('./res/img/bow.png');
 AssetHandler.queueImage('./res/img/goldheart.png');
 AssetHandler.queueImage('./res/img/coinAnimation.png');
 AssetHandler.queueImage('./res/img/gate.png');
@@ -67,6 +71,8 @@ AssetHandler.queueImage("./res/img/bootsUI.png");
 
 AssetHandler.queueImage("./res/img/merchant.png");
 AssetHandler.queueImage("./res/img/lever.png");
+    AssetHandler.queueImage("./res/img/dungeongate.png");
+AssetHandler.queueJSON('./res/jsonderulo/testroom_section1_1.json');
 AssetHandler.queueJSON('./res/jsonderulo/section1_1.json');
 AssetHandler.queueJSON('./res/jsonderulo/section1_2.json');
 AssetHandler.queueJSON('./res/jsonderulo/section1_3.json');
@@ -120,10 +126,8 @@ AssetHandler.queueJSON('./res/jsonderulo/section2_5.json');
             const myGame = new GameEngine(gameContext, AssetHandler.assets);
             myGame.init();
             myGame.run();
-        })
-        .catch((error) => {
-            console.error(error);
-            gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-            gameContext.fillText("Error, Check Console", gameContext.canvas.width / 2, gameContext.canvas.height / 2);
-        });
+        }).catch(() => {
+        gameContext.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+        gameContext.fillText("Error, Check Console", gameContext.canvas.width / 2, gameContext.canvas.height / 2);
+    });
 };

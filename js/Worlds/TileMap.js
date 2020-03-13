@@ -46,7 +46,6 @@ class TileMap {
         }
         for (var i = 0; i < this.info.realEntities.length; i++) {
             var entity = this.info.realEntities[i];
-
             if (entity.type === 'Crab') {
                 this.ENEMIES.push(new Crab(this.game, this.game.ASSETS_LIST['./res/img/crab.png'], entity.x * 60 / 16,
                     entity.y * 60 / 16, 40, 40));
@@ -56,8 +55,9 @@ class TileMap {
                     entity.y * 60 / 16, 60, 60, 16, 16, .1, 4, [4]));
             }
             else if (entity.type === 'Zombie') {
-                this.ENEMIES.push(new Zombie(this.game, this.game.ASSETS_LIST['./res/img/zombie.png'], entity.x * 60 / 16,
-                    entity.y * 60 / 16, 60, 60));
+                this.ENEMIES.push(
+                    new Zombie(this.game, this.game.ASSETS_LIST['./res/img/zombie.png'], entity.x * 60 / 16,
+                        entity.y * 60 / 16, 60, 60));
             }
             else if (entity.type === 'Portal') {
                 this.PORTALS.push(
@@ -149,6 +149,27 @@ class TileMap {
                 this.BLOCKS.push(new Lock(this.game, this.game.ASSETS_LIST['./res/img/lock.png'],
                     this.game.ASSETS_LIST['./res/img/bosslock.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 60,
                     entity.customProperties.face, entity.customProperties.strength));
+            }
+            else if (entity.type === 'TargetOwner') {
+                this.BLOCKS.push(new TargetOwner(this.game,entity.x * 60/16, entity.y * 60/16, entity.customProperties.trigger,
+                    entity.customProperties.targetArray, entity.customProperties.time, entity.customProperties.threshold));
+            }
+            else if (entity.type === 'DungeonGate') {
+                const face = entity.customProperties.face;
+                let width = 0, height = 0;
+                let faceX = entity.x;
+                let faceY = entity.y;
+                if (face === 'NORTH' || face === 'SOUTH') {
+                    width = 60;
+                    height = 36;
+                    if (face === 'SOUTH') faceY += 8;
+                } else {
+                    width = 36;
+                    height = 60;
+                    if (face === 'WEST') faceX += 8;
+                }
+                this.BLOCKS.push(new DungeonGate(this.game, this.game.ASSETS_LIST['./res/img/dungeongate.png'], faceX * 60/16, faceY * 60/16, width,
+                    height, entity.customProperties.trigger, entity.customProperties.face));
             }
             else if (entity.type === 'RollingPin') {
                 if (entity.customProperties.Direction === "SOUTH" || entity.customProperties.Direction === "NORTH") {
