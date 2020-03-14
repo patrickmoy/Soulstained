@@ -185,13 +185,14 @@
 	]
 }</property>
     <property name="threshold" type="int" value="6"/>
-    <property name="time" type="int" value="10"/>
+    <property name="time" type="int" value="12"/>
     <property name="trigger" value="werewolf"/>
    </properties>
   </object>
   <object id="153" gid="484" x="32" y="48" width="16" height="16">
    <properties>
     <property name="msg">WE HAVE LOCKED THE DUNGEON
+LOCATED EAST OF HERE
 IN ORDER TO KEEP EVIL INSIDE
 
 FOR YOUR OWN SAFETY KEEP OUT
