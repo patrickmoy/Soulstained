@@ -181,6 +181,9 @@ class TileMap {
                         22, 52, 0.15, 3.4, [6], entity.customProperties.Speed, entity.customProperties.Direction))
                 }
             }
+            else if (entity.type === 'Rubble') {
+                this.BLOCKS.push(new Rubble(this.game, this.game.ASSETS_LIST['./res/img/rubble.png'], entity.x * 60/16, entity.y *60/16));
+            }
         }
     }
 }

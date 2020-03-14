@@ -87,6 +87,17 @@ class Lock extends InvisibleBlock {
 
 }
 
+class Rubble extends Block {
+    constructor(game, spritesheet, x, y) {
+        super(game, spritesheet, x, y, 60, 60, 16, 16, 0, 2.4, [0]);
+        this.alive = true;
+    }
+
+    draw() {
+        this.game.GAME_CONTEXT.drawImage(this.spritesheet, this.hitbox.xMin - 6, this.hitbox.yMin - 6, 60, 60);
+    }
+}
+
 class DestructibleBlock
     extends Block {
     constructor(game, spritesheet, x, y, width, height, frameWidth, frameHeight, speed, scale, indices, health = 1, item) {

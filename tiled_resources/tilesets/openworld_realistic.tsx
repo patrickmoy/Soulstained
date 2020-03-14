@@ -12,6 +12,7 @@
    <object id="1" x="0" y="0" width="16" height="10"/>
   </objectgroup>
  </tile>
+ <tile id="203" type="RollingPin"/>
  <tile id="382" type="Fountain">
   <objectgroup draworder="index" id="5">
    <object id="4" x="4" y="4" width="12" height="12"/>

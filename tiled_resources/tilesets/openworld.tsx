@@ -11,6 +11,11 @@
    <object id="1" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
+ <tile id="9">
+  <objectgroup draworder="index" id="2">
+   <object id="1" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
  <tile id="33">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0" width="16" height="16"/>
@@ -176,7 +181,7 @@
    <object id="1" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
- <tile id="176">
+ <tile id="176" type="Chest">
   <objectgroup draworder="index" id="3">
    <object id="2" x="0" y="0" width="16" height="16"/>
   </objectgroup>

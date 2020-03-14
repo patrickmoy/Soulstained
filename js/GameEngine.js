@@ -140,6 +140,7 @@ class GameEngine {
         this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
         this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
         this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
+        this.WORLDS["wolf"] = new WolfDungeon(this, this.ASSETS_LIST["./res/img/worlds/wolf.png"], this.ASSETS_LIST["./res/img/worlds/wolf2.png"], 3, 1);
         this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
         overworldMusic.stop();
         necroMusic.stop();

@@ -234,8 +234,34 @@ class NecroDungeon extends World {
 class WolfDungeon extends World {
     constructor(game, worldImage, layeredImage, sectionX, sectionY) {
         super(game, worldImage, layeredImage, sectionX, sectionY);
-        console.log(jsonPath("wolf", 1, 1));
-        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 1, 1)])]]
+
+
+
+        this.tileMaps = [
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 1, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 1, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 1, 3)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 2, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 2, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 2, 3)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 3, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 3, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 3, 3)])
+            ],
+
+            [
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 4, 1)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 4, 2)]),
+                new TileMap(this.GAME, this.GAME.ASSETS_LIST[jsonPath("wolf", 4, 3)])
+            ]
+        ];
     }
 }
 

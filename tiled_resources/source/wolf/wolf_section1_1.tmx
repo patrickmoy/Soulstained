@@ -1,38 +1,182 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="42">
  <tileset firstgid="1" source="../../tilesets/wolf_dungeon.tsx"/>
  <tileset firstgid="248" source="../../tilesets/dungeon pit.tsx"/>
  <tileset firstgid="264" source="../../tilesets/openworld.tsx"/>
+ <tileset firstgid="744" source="../../tilesets/openworld_realistic.tsx"/>
+ <tileset firstgid="2184" source="../../tilesets/smallchest.tsx"/>
+ <tileset firstgid="2186" source="../../tilesets/darkdimension.tsx"/>
+ <tileset firstgid="2795" source="../../tilesets/pit.tsx"/>
  <layer id="1" name="floor" width="12" height="12">
   <data encoding="csv">
 7,7,7,7,7,7,7,7,7,7,7,7,
-7,69,1610612804,1610612804,1610612804,1610612804,1610612804,1610612804,1610612804,1610612804,2684354629,7,
-7,3221225540,50,47,47,47,47,47,47,47,68,7,
-7,3221225540,50,50,70,48,48,48,47,47,68,7,
-7,3221225540,47,50,70,70,70,48,48,47,68,7,
-7,3221225540,70,50,50,50,70,70,48,48,68,7,
-7,3221225540,70,70,70,50,50,70,70,48,68,7,
-7,3221225540,48,48,70,70,50,50,70,70,68,7,
-7,3221225540,47,48,48,70,70,50,50,50,68,7,
-7,3221225540,47,47,48,48,70,70,70,50,68,7,
-7,1610612805,2684354628,2684354628,2684354628,2684354628,2684354628,2684354628,2684354628,2684354628,3221225541,7,
+7,69,1610612804,1610612804,46,46,46,1610612804,1610612804,1610612804,2684354629,7,
+7,46,46,47,46,48,46,47,47,47,68,7,
+7,3221225540,46,50,46,48,46,48,46,46,46,7,
+7,3221225540,46,48,46,70,46,68,46,47,46,7,
+7,3221225540,46,70,46,50,46,70,46,48,46,7,
+7,3221225540,46,70,46,50,46,68,46,48,46,7,
+7,3221225540,46,50,46,70,46,50,46,48,68,7,
+7,3221225540,46,48,46,70,46,50,46,68,68,7,
+7,3221225540,46,47,46,48,46,70,46,68,68,7,
+7,1610612805,46,46,46,2684354628,46,46,46,68,3221225541,7,
 7,7,7,7,7,7,7,7,7,7,7,7
 </data>
  </layer>
  <layer id="2" name="level" width="12" height="12">
   <data encoding="csv">
 4,58,58,58,58,58,58,58,58,58,58,5,
-77,260,261,253,261,261,261,249,249,249,250,78,
-77,440,478,255,0,0,478,252,253,253,254,78,
-77,0,0,255,0,253,0,252,253,257,254,78,
-77,263,158,259,0,33,158,256,258,0,259,78,
-77,0,2684355081,0,0,251,0,0,2684355081,0,0,0,
-77,0,2684355083,0,0,259,0,0,2684355083,0,0,0,
-77,251,0,251,158,33,0,248,250,158,251,78,
-77,255,0,259,0,251,0,256,258,0,255,78,
-77,255,0,0,3221225950,255,0,0,0,3221225950,255,78,
-77,256,261,261,261,257,261,261,261,261,258,78,
+77,0,0,33,0,0,0,33,248,249,250,78,
+77,0,0,859,0,33,0,33,256,258,859,78,
+77,250,0,0,0,33,0,33,0,0,0,78,
+77,254,0,0,0,251,0,0,0,251,0,78,
+77,254,0,0,0,255,0,0,0,255,0,78,
+77,254,0,0,0,255,0,0,0,255,0,0,
+77,254,0,0,0,259,0,0,0,252,250,78,
+77,254,0,33,0,33,0,33,0,252,253,78,
+77,254,0,859,0,33,0,859,46,252,253,78,
+77,254,0,0,0,33,0,0,0,252,253,78,
 23,79,79,79,79,79,79,79,79,79,79,24
 </data>
  </layer>
+ <objectgroup id="3" name="entities we dont draw" visible="0">
+  <object id="1" gid="859" x="160" y="48" width="16" height="16">
+   <properties>
+    <property name="targetArray">{
+	&quot;targets&quot;: [{
+			&quot;x&quot;: 480,
+			&quot;y&quot;: 600,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}
+	]
+}</property>
+    <property name="threshold" type="int" value="1"/>
+    <property name="time" type="int" value="4"/>
+    <property name="trigger" value="wolf1_1_gate1"/>
+   </properties>
+  </object>
+  <object id="2" gid="859" x="112" y="160" width="16" height="16">
+   <properties>
+    <property name="targetArray">{
+	&quot;targets&quot;: [{
+			&quot;x&quot;: 360,
+			&quot;y&quot;: 60,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}
+	]
+}</property>
+    <property name="threshold" type="int" value="1"/>
+    <property name="time" type="int" value="4"/>
+    <property name="trigger" value="wolf1_1_gate2"/>
+   </properties>
+  </object>
+  <object id="3" gid="859" x="48" y="48" width="16" height="16">
+   <properties>
+    <property name="targetArray">{
+	&quot;targets&quot;: [{
+			&quot;x&quot;: 240,
+			&quot;y&quot;: 600,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}
+	]
+}</property>
+    <property name="threshold" type="int" value="1"/>
+    <property name="time" type="int" value="4"/>
+    <property name="trigger" value="wolf1_1_gate3"/>
+   </properties>
+  </object>
+  <object id="4" gid="859" x="48" y="160" width="16" height="16">
+   <properties>
+    <property name="targetArray">{
+	&quot;targets&quot;: [{
+			&quot;x&quot;: 120,
+			&quot;y&quot;: 60,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}
+	]
+}</property>
+    <property name="threshold" type="int" value="1"/>
+    <property name="time" type="int" value="4"/>
+    <property name="trigger" value="wolf1_1_gate4"/>
+   </properties>
+  </object>
+  <object id="5" gid="2184" x="16" y="32" width="16" height="16">
+   <properties>
+    <property name="loot" value="bosskey"/>
+    <property name="msg">YOU HAVE FOUND THE DIRE KEY
+
+IT RADIATES AN AURA OF VIOLENCE
+
+THIS SHOULD OPEN THE DOOR TO THE BOSS</property>
+   </properties>
+  </object>
+  <object id="6" gid="2757" x="128" y="144" width="16" height="16">
+   <properties>
+    <property name="trigger" value="wolf1_1_gate1"/>
+   </properties>
+  </object>
+  <object id="7" gid="2757" x="64" y="144" width="16" height="16">
+   <properties>
+    <property name="trigger" value="wolf1_1_gate3"/>
+   </properties>
+  </object>
+  <object id="8" gid="2699" x="32" y="64" width="16" height="16">
+   <properties>
+    <property name="trigger" value="wolf1_1_gate4"/>
+   </properties>
+  </object>
+  <object id="9" gid="2699" x="96" y="64" width="16" height="16">
+   <properties>
+    <property name="trigger" value="wolf1_1_gate2"/>
+   </properties>
+  </object>
+  <object id="10" gid="2854" x="128" y="32" width="16" height="16"/>
+  <object id="11" gid="2854" x="128" y="48" width="16" height="16"/>
+  <object id="12" gid="2854" x="144" y="48" width="16" height="16"/>
+  <object id="13" gid="2854" x="144" y="32" width="16" height="16"/>
+  <object id="14" gid="2854" x="160" y="32" width="16" height="16"/>
+  <object id="15" gid="2854" x="144" y="80" width="16" height="16"/>
+  <object id="16" gid="2854" x="144" y="96" width="16" height="16"/>
+  <object id="17" gid="2854" x="144" y="112" width="16" height="16"/>
+  <object id="18" gid="2854" x="144" y="128" width="16" height="16"/>
+  <object id="19" gid="2854" x="160" y="128" width="16" height="16"/>
+  <object id="20" gid="2854" x="160" y="144" width="16" height="16"/>
+  <object id="21" gid="2854" x="144" y="144" width="16" height="16"/>
+  <object id="22" gid="2854" x="144" y="160" width="16" height="16"/>
+  <object id="23" gid="2854" x="160" y="160" width="16" height="16"/>
+  <object id="24" gid="2854" x="160" y="176" width="16" height="16"/>
+  <object id="25" gid="2854" x="144" y="176" width="16" height="16"/>
+  <object id="26" gid="2854" x="80" y="128" width="16" height="16"/>
+  <object id="27" gid="2854" x="80" y="112" width="16" height="16"/>
+  <object id="28" gid="2854" x="80" y="96" width="16" height="16"/>
+  <object id="29" gid="2854" x="80" y="80" width="16" height="16"/>
+  <object id="30" gid="2854" x="16" y="64" width="16" height="16"/>
+  <object id="31" gid="2854" x="16" y="80" width="16" height="16"/>
+  <object id="32" gid="2854" x="16" y="96" width="16" height="16"/>
+  <object id="33" gid="2854" x="16" y="112" width="16" height="16"/>
+  <object id="34" gid="2854" x="16" y="128" width="16" height="16"/>
+  <object id="35" gid="2854" x="16" y="144" width="16" height="16"/>
+  <object id="37" gid="2854" x="16" y="160" width="16" height="16"/>
+  <object id="38" gid="2854" x="16" y="176" width="16" height="16"/>
+  <object id="39" gid="947" x="32" y="80" width="16" height="16">
+   <properties>
+    <property name="Direction" value="EAST"/>
+    <property name="Speed" type="int" value="200"/>
+   </properties>
+  </object>
+  <object id="41" gid="947" x="96" y="80" width="16" height="16">
+   <properties>
+    <property name="Direction" value="EAST"/>
+    <property name="Speed" type="int" value="200"/>
+   </properties>
+  </object>
+ </objectgroup>
 </map>
