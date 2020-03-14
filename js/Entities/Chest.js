@@ -111,7 +111,6 @@ class DungeonGate extends Gate {
     }
 
     draw() {
-        console.log(this.hitbox);
         if (this.face === 'NORTH') {
             this.context.drawImage(this.spritesheet, 0, 0, 16, 16, this.hitbox.xMin - 44, this.hitbox.yMin - 6,
                 60, 60);

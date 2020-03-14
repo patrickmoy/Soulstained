@@ -796,7 +796,6 @@ class TargetOwner extends Sign {
     constructor(game, x, y, trigger, targetArray, time, threshold) {
         super(game, x, y, 60, 60, "SHOOT ALL THE TARGETS QUICKLY");
         this.trigger = trigger;
-        console.log(targetArray);
         this.targetArray = JSON.parse(targetArray);
         this.activated = false;
         this.targetCount = 0;
