@@ -191,6 +191,7 @@ class Pickup extends Entity {
         if (type === 'boots') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/boots.png'], this, 18, 19, .15, 2, [1]);
         if (type === 'healthUpgrade') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/goldheart.png'], this, 16, 16, .15, 2, [1]);
         if (type === 'bow') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/bow.png'], this, 16, 16, .15, 2, [1]);
+        if (type === 'bracer') this.animation = new Animation(this.game.ASSETS_LIST['./res/img/bracer.png'], this, 30, 29, .15, 2, [1]);
     }
 
     add(hero) {
@@ -221,6 +222,9 @@ class Pickup extends Entity {
             if (this.type === 'healthUpgrade') {
                 hero.maxHealth = 10;
                 hero.health = 10;
+            }
+            if (this.type === 'bracer') {
+                hero.inventory.push('bracer');
             }
             this.alive = false;
         }

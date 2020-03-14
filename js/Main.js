@@ -20,6 +20,7 @@ window.onload = () => {
 AssetHandler.queueImage("./res/img/worlds/bluehouse.png");
 AssetHandler.queueImage("./res/img/worlds/bluehouse2.png");
 AssetHandler.queueImage("./res/img/hero.png");
+AssetHandler.queueImage("./res/img/bracer.png");
 AssetHandler.queueImage("./res/img/upgrade-bar.png");
 AssetHandler.queueImage("./res/img/blinking-dot.png");
 AssetHandler.queueImage("./res/img/smallchest.png");
@@ -43,6 +44,7 @@ AssetHandler.queueImage("./res/img/knight.png");
 AssetHandler.queueImage("./res/img/whip.png");
 AssetHandler.queueImage("./res/img/whipUI.png");
     AssetHandler.queueImage("./res/img/bowUI.png");
+    AssetHandler.queueImage("./res/img/bracerUI.png");
     AssetHandler.queueImage("./res/img/bow_upgrade.png");
     AssetHandler.queueImage("./res/img/whip_upgrade.png");
 AssetHandler.queueImage("./res/img/crab.png");

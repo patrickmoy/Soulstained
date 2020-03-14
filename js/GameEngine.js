@@ -92,12 +92,15 @@ class GameEngine {
         this.WORLDS["openworld"] = new OpenWorld(this, this.ASSETS_LIST["./res/img/worlds/openworld.png"], this.ASSETS_LIST["./res/img/worlds/openworld2.png"], 2, 4);
         this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
         this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
-        this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
+        //this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
+        this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 0, 2);
+
         this.WORLDS["wolf"] = new WolfDungeon(this, this.ASSETS_LIST["./res/img/worlds/wolf.png"], this.ASSETS_LIST["./res/img/worlds/wolf2.png"], 0, 0);
         this.WORLDS["test"] = new TestDungeon(this, this.ASSETS_LIST["./res/img/worlds/testroom.png"], this.ASSETS_LIST["./res/img/worlds/testroom2.png"], 0, 0);
 
 
-        this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
+        //this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
+        this.currentWorld = this.WORLDS["necro"]; // Set the current world to the open worlds
         // this.currentWorld = this.WORLDS["necro"];
         this.currentMusicID = overworldMusic.play();
         this.changeEntitiesToCurrent();

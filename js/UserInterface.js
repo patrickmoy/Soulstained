@@ -17,6 +17,7 @@ class UserInterface {
         this.bossKey = this.images["./res/img/bosskey.png"]; // 9 x 14
 
 
+
         this.keyJImage = this.images["./res/img/keyJ.png"];
         this.keyKImage = this.images["./res/img/keyK.png"];
 

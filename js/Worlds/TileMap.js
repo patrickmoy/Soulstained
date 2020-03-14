@@ -82,8 +82,7 @@ class TileMap {
             }
             else if (entity.type === 'Necromancer') {
                 this.ENEMIES.push(
-                    new Necromancer(this.game, this.game.ASSETS_LIST['./res/img/necro.png'], 500, 57, 56, 56,
-                        this.ENEMIES));
+                    new Necromancer(this.game, this.game.ASSETS_LIST['./res/img/necro.png'], 400, 25, 120, 110));
             }
             else if (entity.type === 'Beast') {
                 this.ENEMIES.push(new Beast(this.game, this.game.ASSETS_LIST['./res/img/beast.png'], entity.x * 60/16, entity.y * 60/16, 56, 56,

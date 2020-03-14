@@ -259,20 +259,19 @@ class Zombie extends Enemy {
 class Necromancer
     extends Enemy {
 
-    constructor(game, spritesheet, x, y, width, height, array) {
+    constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height, 2);
         this.tempCoordX = this.futureHitbox.xMin; // Stores the x-coord beneath the necormancer.
         this.tempCoordY = this.futureHitbox.yMin; // Stores the y-coord beneath the necromancer.
         this.alive = true;
-        this.animation = new Animation(spritesheet, this, 191, 157, .1, 1, [13], 1); // Necromancer sprite
+        this.animation = new Animation(spritesheet, this, 192, 192, .1, 1, [13], 1); // Necromancer sprite
         this.context = game.GAME_CONTEXT;
-        //this.enemiesArray = array; // Passing in ENEMIES array.
         this.health = 1;
         this.location = { //Necromancer teleport locations.
-            0: [57, 57],
-            1: [550, 150],
-            2: [300, 57],
-            3: [150, 90]
+            0: [250, 25],
+            1: [400, 75],
+            2: [150, 75],
+            3: [400, 25]
         };
         this.knightCount = 0; // Counter to generate how many knights per respawn.
         this.knightSpawned = 0; // Counter number of spawned knights on screen, used to reset conditional.
@@ -281,14 +280,29 @@ class Necromancer
         this.totalSpawned = 0; // Counter for total number of spawned knights.
         this.teleportAnimation = false;
         this.teleportMove = false;
-
+        this.dead = false;
 
     }
 
+    update() {
+        this.pushUpdate = true;
+        super.update();
+        this.lootDropped = false;
+        if (this.dead && !this.lootDropped) {
+            const bracer = new Pickup(this.game, this.hitbox.xMin + (this.width / 2), this.hitbox.yMin + (this.height / 2), 1, "bracer");
+            this.lootDropped = true;
+            console.log(bracer);
+
+            this.game.currentEntities[5].push(bracer);
+            console.log(this.game.currentEntities[5]);
+        }
+    }
+
+
     preUpdate() {
 
-        this.count += this.game.clockTick;
 
+        this.count += this.game.clockTick;
         if (this.knightSpawned === 0) {
             this.spawnKnight();
             if (this.knightSpawned === -1) {
@@ -309,18 +323,19 @@ class Necromancer
         } else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
             this.count = 0;
 
-            if (this.attackCount === 4) {
+            if (this.attackCount === 2) {
 
                 this.teleportAnimation = true;
                 this.checkKnightCount();
                 this.attackCount = 0;
 
-            } else if ((this.attackCount < 5) && !this.isReadyToDie()) {
+            } else if ((this.attackCount < 3) && !this.isReadyToDie()) {
 
                 this.fireBallAttack();
                 this.attackCount++;
             }
         }
+
     }
 
     draw() {
@@ -330,22 +345,25 @@ class Necromancer
             if (this.actionElapsedTime >= 1.3) {
                 this.teleportMove = true;
                 this.actionElapsedTime = 0;
+                this.teleportAnimation = false;
             } else {
                 this.animation.drawFrame(this.game.clockTick, this.context,
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                     this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
             }
-            this.teleportAnimation = false;
         } else if (this.knightSpawned !== -1) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 2);
         } else if (this.knightSpawned === -1 && this.isReadyToDie()) {
+            this.dead = true;
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
+            this.alive = false;
+            this.update();
+
         }
-        this.game.GAME_CONTEXT.strokeRect(this.hitbox.xMin, this.hitbox.yMin, this.width, this.height);
 
     }
 
@@ -380,7 +398,9 @@ class Necromancer
             }
 
             for (let i = 0; i < this.knightCount; i++) {
-                let rand = Math.floor(Math.random() * 600);
+                let minX = 56;
+                let maxX = 546;
+                let rand = Math.random() * (+maxX - +minX) + +minX;
                 let min = 500;
                 let max = 500;
                 let rand2 = Math.random() * (+max - +min) + +min;
@@ -420,7 +440,7 @@ class Knight
         super(game, x, y, width, height, 2);
         this.animation = new Animation(spritesheet, this, 62, 70, .11, 2, [7], 1);
         this.context = game.GAME_CONTEXT;
-        this.speed = 100;
+        this.speed = 50;
         this.count = 0;
         this.alive = true;
 
@@ -475,11 +495,11 @@ class Sniper extends Enemy {
         this.count += this.game.clockTick;
         if (!this.game.pause && this.count > 3.0) {
             if (this.position === "SOUTH") {
-                this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], this.futureHitbox.xMin + (this.futureHitbox.xMin *.10), this.futureHitbox.yMin + this.height, this.position); //correct
+                this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], this.futureHitbox.xMin + (this.futureHitbox.xMin * .10), this.futureHitbox.yMin + this.height, this.position); //correct
                 this.game.currentEntities[3].push(this.vertarrow);
 
             } else if (this.position === "NORTH") {
-                this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], this.futureHitbox.xMin + (this.futureHitbox.xMin * .025), this.futureHitbox.yMin - (this.futureHitbox.yMin * .15) , this.position); //correct
+                this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], this.futureHitbox.xMin + (this.futureHitbox.xMin * .025), this.futureHitbox.yMin - (this.futureHitbox.yMin * .15), this.position); //correct
                 this.game.currentEntities[3].push(this.vertarrow);
 
             } else if (this.position === "EAST") {
@@ -786,7 +806,7 @@ class TargetOwner extends Sign {
         this.complete = false;
     }
 
-    update () {
+    update() {
         if (this.activated) {
             this.timeCounter += this.game.clockTick;
             if (this.timeCounter >= this.time) {
