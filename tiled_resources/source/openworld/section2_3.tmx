@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="68">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="75">
  <editorsettings>
   <export target="../../../../../Desktop/section2_3.json" format="soulstain"/>
  </editorsettings>
@@ -22,37 +22,37 @@
  <tileset firstgid="3021" source="../../tilesets/flower.tsx"/>
  <layer id="1" name="floor" width="12" height="12">
   <data encoding="csv">
-482,3011,3011,3011,3011,2299,2299,2299,2299,2299,3011,3011,
-482,3011,3011,3011,3011,2299,2299,2299,2299,2299,3011,3011,
-482,3011,3011,3011,3011,2299,2299,482,482,482,482,3011,
-482,3011,3011,3011,482,482,482,482,482,482,482,482,
-482,3011,482,482,482,482,482,482,482,482,482,482,
-482,482,482,482,482,482,482,482,482,482,487,513,
-482,482,482,482,482,482,482,513,513,513,513,513,
-482,482,2300,482,482,2300,482,482,2299,513,513,482,
-482,482,2300,482,482,2300,482,482,2300,482,482,482,
-482,482,482,482,482,482,482,482,482,482,482,482,
-482,482,482,482,482,482,482,482,482,482,482,482,
-482,482,2419,2419,482,482,482,482,785,786,786,786
+3011,3011,3011,3011,3011,2299,2299,2299,2299,2299,3011,3011,
+3011,3011,3011,3011,3011,2299,2299,2299,2299,2299,3011,3011,
+3011,3011,3011,3011,3011,2299,2299,482,482,482,482,3011,
+3011,3011,3011,3011,482,482,482,482,482,482,482,482,
+3011,3011,482,482,482,482,482,482,482,482,482,482,
+3011,3011,482,482,482,482,482,482,482,482,487,513,
+3011,3011,482,482,482,482,482,513,513,513,513,513,
+3011,3011,2300,482,482,2300,482,482,2299,513,513,482,
+3011,3011,2300,482,482,2300,482,482,2300,482,482,482,
+3011,3011,3011,482,482,482,482,482,482,482,482,482,
+3011,3011,3011,3011,482,482,482,482,482,482,482,482,
+3011,3011,2419,2419,482,482,482,482,785,786,786,786
 </data>
  </layer>
  <layer id="3" name="level" width="12" height="12">
   <data encoding="csv">
-0,2684357163,0,0,0,788,789,789,789,790,562,0,
-0,2684357163,562,893,894,820,0,0,0,822,893,894,
-0,547,547,547,547,852,853,853,853,854,547,547,
-0,0,814,815,0,884,887,888,889,886,0,547,
-0,815,0,0,0,884,919,483,921,886,2831,0,
-0,0,0,2832,0,916,919,483,921,918,0,0,
-0,0,0,0,0,0,0,522,0,0,0,0,
-0,0,0,0,0,2303,0,0,2300,0,0,0,
-0,0,2303,0,0,2300,0,0,2302,0,0,0,
-0,0,2835,0,2834,2837,0,0,2836,0,0,0,
-0,0,0,0,0,0,0,0,0,0,2833,0,
-566,567,2602,2603,566,567,566,567,0,0,0,0
+892,2684357163,0,0,0,788,789,789,789,790,562,0,
+892,2684357163,562,893,894,820,0,0,0,822,893,894,
+892,547,547,547,547,852,853,853,853,854,547,547,
+892,0,814,815,0,884,887,888,889,886,0,547,
+892,783,0,0,0,884,919,483,921,886,2831,0,
+892,783,0,2832,0,916,919,483,921,918,0,0,
+892,783,0,0,0,0,0,522,0,0,0,0,
+892,0,0,0,0,2303,0,0,2300,0,0,0,
+892,0,2303,0,0,2300,0,0,2302,0,0,0,
+892,484,2835,0,2834,2837,0,0,2836,0,0,0,
+892,0,0,0,0,0,0,0,0,0,2833,0,
+566,567,941,941,566,567,566,567,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="entities"/>
+ <objectgroup id="4" name="entities" visible="0"/>
  <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -69,12 +69,54 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image.">
+ <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image." visible="0">
   <object id="52" gid="2167" x="80" y="128" width="16" height="16"/>
   <object id="53" gid="2167" x="32" y="128" width="16" height="16"/>
   <object id="54" gid="2167" x="128" y="128" width="16" height="16"/>
   <object id="66" gid="3021" x="144" y="176" width="16" height="16"/>
   <object id="67" gid="3021" x="48" y="176" width="16" height="16"/>
+  <object id="68" gid="942" x="32" y="192" width="16" height="16"/>
+  <object id="69" gid="942" x="48" y="192" width="16" height="16"/>
+  <object id="70" gid="484" x="16" y="160" width="16" height="16">
+   <properties>
+    <property name="msg">ADVISORY NOTICE FOR QUARANTINE 
+
+IN ORDER TO PROTECT OUTER DISTRICTS 
+BOULDER FORMATIONS HAVE BEEN PLACED
+TO BLOCK DANGEROUS AREAS
+
+UNDER NO CIRCUMSTANCES WHATSOEVER
+SHOULD CITIZENS FIRE ENERGY BLASTS 
+AT CRACKED BOULDERS AND RUBBLE
+
+DOING SO MIGHT DESTROY BARRICADES
+
+SIGNED
+
+CONCERNED CITIZENS OF JOY TOWN</property>
+   </properties>
+  </object>
+  <object id="72" type="Portal" x="112" y="64" width="16" height="24">
+   <properties>
+    <property name="TMX" type="int" value="4"/>
+    <property name="TMY" type="int" value="2"/>
+    <property name="destination" value="necro"/>
+    <property name="destinationX" type="int" value="360"/>
+    <property name="destinationY" type="int" value="600"/>
+    <property name="height" type="int" value="24"/>
+    <property name="width" type="int" value="16"/>
+   </properties>
+  </object>
+  <object id="73" gid="1646" x="112" y="96" width="16" height="16">
+   <properties>
+    <property name="trigger" value="necro"/>
+   </properties>
+  </object>
+  <object id="74" gid="1646" x="112" y="80" width="16" height="16">
+   <properties>
+    <property name="trigger" value="necro"/>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="7" name="second image" width="12" height="12">
   <data encoding="csv">
@@ -110,17 +152,17 @@
  </layer>
  <layer id="9" name="wall" width="12" height="12">
   <data encoding="csv">
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
-917,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>

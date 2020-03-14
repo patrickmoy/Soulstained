@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="61">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="112">
  <editorsettings>
-  <export target="." format="soulstain"/>
+  <export target="../../finished/openworld/section2_2.json" format="soulstain"/>
  </editorsettings>
  <tileset firstgid="1" source="../../tilesets/openworld_extra.tsx"/>
  <tileset firstgid="481" source="../../tilesets/openworld.tsx"/>
@@ -20,75 +20,116 @@
  <tileset firstgid="2171" source="../../tilesets/cursed_grass.tsx"/>
  <tileset firstgid="2181" source="../../tilesets/worm.tsx"/>
  <tileset firstgid="2184" source="../../tilesets/ashlands.tsx"/>
- <layer id="1" name="floor" width="12" height="12">
+ <layer id="1" name="floor" width="12" height="12" visible="0">
   <data encoding="csv">
 0,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,
-2171,2171,2171,1585,1586,1586,1586,1586,1586,1587,2171,2171,
-2171,2176,2171,1598,1599,1599,1599,1599,1599,1600,2171,2171,
-2176,2171,2176,1598,1599,1599,1599,1599,1599,1600,2171,2171,
-2171,2176,2171,1598,1599,1599,1599,1599,1599,1600,2171,2171,
-2171,2176,2171,1611,1612,1612,1612,1612,1612,1613,2171,2171,
-2171,2171,2176,1624,1627,1628,1599,1628,1628,1626,2171,2171,
-2171,2176,2176,1637,1640,1599,0,1599,1641,1639,2171,2171,
-2171,2176,0,0,0,1599,0,1599,0,2171,2171,2171,
-2171,2176,0,0,0,2176,2176,2176,2171,2171,2171,2171,
+2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,
+2171,2176,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,
+2176,2171,2176,2171,2171,2171,2171,2171,2171,2171,2171,2171,
+2171,2176,2171,2171,2171,2171,2171,2171,2171,2171,2171,2171,
+2171,2176,2171,2171,2171,1627,1629,1628,2171,2171,2171,2171,
+2171,2171,2176,2171,2171,1718,1718,1718,2171,2171,2171,2171,
+2171,2176,2176,2171,2171,1599,1599,1599,2171,2171,2171,2171,
+2171,2176,2171,2171,2171,1599,1599,1599,2171,2171,2171,2171,
+2171,2176,2171,2171,2171,2176,2176,2176,2171,2171,2171,2171,
 2171,2176,2176,2176,2176,2176,2176,2176,2171,2171,2171,2171,
 2171,2171,2176,2176,2171,2176,2176,2171,2171,2171,2171,2171
 </data>
  </layer>
- <layer id="3" name="level" width="12" height="12">
+ <layer id="3" name="level" width="12" height="12" visible="0">
   <data encoding="csv">
 2404,2405,2405,2405,2405,2405,2405,2405,2405,2405,2405,2406,
-527,0,0,0,0,0,0,0,0,0,0,0,
-527,0,0,0,0,0,0,0,0,0,0,0,
-527,0,0,0,0,0,0,0,0,0,0,0,
-527,0,0,0,0,0,0,0,0,0,0,0,
-527,0,0,0,0,1659,1660,1661,0,0,0,0,
-527,0,0,0,0,1672,1673,1674,0,0,0,0,
-527,0,2171,0,0,1685,1599,1687,0,0,2766,401,
-527,0,2171,2171,2171,1698,1599,1700,2171,0,2806,401,
-527,0,2171,2171,2171,0,523,0,527,0,562,2766,
-527,0,0,0,0,0,0,0,0,0,0,2806,
-527,0,0,0,0,0,0,561,0,0,0,2806
+527,0,0,1585,1586,1586,1586,1586,1586,1587,0,0,
+527,0,0,1598,1599,1599,1599,1599,1599,1600,893,894,
+527,0,0,1598,1599,1599,1599,1599,1599,1600,0,0,
+527,0,2847,1611,1612,1612,1612,1612,1612,1613,893,894,
+527,0,0,1624,1627,0,0,0,1628,1626,0,0,
+527,0,0,1624,1627,1585,1586,1587,1628,1626,893,894,
+527,0,0,1637,1640,1598,1599,1600,1641,1639,0,892,
+527,0,0,1637,1629,1698,1699,1700,1629,1639,2806,892,
+527,0,0,0,0,0,523,0,527,0,562,892,
+527,0,0,0,0,0,0,0,0,2847,0,892,
+527,0,0,0,0,0,0,561,0,0,0,663
 </data>
  </layer>
- <objectgroup id="4" name="entities"/>
+ <objectgroup id="4" name="entities" visible="0">
+  <object id="110" type="Portal" x="80" y="112" width="48" height="24">
+   <properties>
+    <property name="TMX" type="int" value="3"/>
+    <property name="TMY" type="int" value="1"/>
+    <property name="destination" value="werewolf"/>
+    <property name="destinationX" type="int" value="360"/>
+    <property name="destinationY" type="int" value="600"/>
+    <property name="height" type="int" value="24"/>
+    <property name="width" type="int" value="48"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image." visible="0">
+  <object id="59" gid="2181" x="144" y="160" width="16" height="16"/>
+  <object id="101" gid="1646" x="80" y="144" width="16" height="16">
+   <properties>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+  <object id="102" gid="1646" x="96" y="144" width="16" height="16">
+   <properties>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+  <object id="103" gid="1646" x="112" y="144" width="16" height="16">
+   <properties>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+  <object id="104" gid="1646" x="80" y="128" width="16" height="16">
+   <properties>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+  <object id="105" gid="1646" x="96" y="128" width="16" height="16">
+   <properties>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+  <object id="106" gid="1646" x="112" y="128" width="16" height="16">
+   <properties>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+  <object id="107" gid="1646" x="80" y="112" width="16" height="16">
+   <properties>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+  <object id="108" gid="1646" x="96" y="112" width="16" height="16">
+   <properties>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+  <object id="109" gid="1646" x="112" y="112" width="16" height="16">
+   <properties>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+ </objectgroup>
  <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,861,862,
 0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,861,862,
 0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,861,862,
 0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,2847,0,0,0,0,0,0,0,0,2847,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,1599,0,0,0,0,0,
-0,0,0,1709,1629,0,0,0,1642,1722,0,0,
-0,0,0,0,527,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,2847,0,2766,
-0,0,0,0,0,0,0,0,0,0,0,0
-</data>
- </layer>
- <objectgroup id="5" name="entities that can be removed/don't need to be drawn in the actual image.">
-  <object id="59" gid="2181" x="144" y="160" width="16" height="16"/>
- </objectgroup>
- <layer id="7" name="second image" width="12" height="12">
-  <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,385,
-0,0,0,0,0,0,0,0,0,0,0,385,
+0,0,0,0,0,0,0,0,0,0,2766,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="2" name="temp" width="12" height="12">
+ <layer id="7" name="second image" width="12" height="12" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -104,7 +145,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="9" name="wall" width="12" height="12">
+ <layer id="2" name="temp" width="12" height="12" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
@@ -120,7 +161,23 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="10" name="dividers" width="12" height="12" opacity="0.4">
+ <layer id="9" name="wall" width="12" height="12" visible="0">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="10" name="dividers" width="12" height="12" visible="0" opacity="0.4">
   <data encoding="csv">
 925,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,

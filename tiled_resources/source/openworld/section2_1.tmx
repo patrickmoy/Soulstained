@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="151">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="154">
  <editorsettings>
-  <export target="." format="soulstain"/>
+  <export target="../../finished/openworld/section2_1.json" format="soulstain"/>
  </editorsettings>
  <tileset firstgid="1" source="../../tilesets/openworld_extra.tsx"/>
  <tileset firstgid="481" source="../../tilesets/openworld.tsx"/>
@@ -19,39 +19,41 @@
  <tileset firstgid="2167" source="../../tilesets/zombie.tsx"/>
  <tileset firstgid="2171" source="../../tilesets/cursed_grass.tsx"/>
  <tileset firstgid="2181" source="../../tilesets/ashlands.tsx"/>
+ <tileset firstgid="3021" source="../../tilesets/zelda_inspired_dungeon.tsx"/>
+ <tileset firstgid="3101" source="../../tilesets/openworld_realistic.tsx"/>
  <layer id="1" name="floor" width="12" height="12">
   <data encoding="csv">
 2171,2171,2171,2171,2171,1781,1782,1782,1782,1782,1782,1783,
-0,0,0,0,0,1789,1790,1790,1790,1790,1790,1799,
+0,0,0,0,0,1789,1790,1790,1790,1790,1790,1791,
+2171,2171,2171,2171,2171,1789,1790,1790,1790,1790,1790,1799,
 2171,2171,2171,2171,2171,1789,1790,1790,1790,1790,1791,2171,
 2171,2171,2171,2171,2171,1789,1790,1790,1790,1790,1791,2171,
 2171,2171,2171,2171,2171,1789,1790,1790,1790,1790,1791,2171,
-2171,2171,2171,2171,2171,1789,1790,1790,1790,1790,1790,1783,
-2171,2171,2171,2171,2171,1789,1790,1790,1790,1790,1790,1791,
-2171,2176,2176,0,1781,1790,1790,1790,1790,1790,1790,1791,
-2171,2176,2176,0,1789,1790,1790,1790,1790,1790,1790,1791,
-2171,2176,2176,0,1789,1790,1790,1790,1790,1790,1790,1791,
-2171,2176,2176,1789,1789,1790,1790,1790,1790,1790,1790,1791,
-2171,2176,2176,0,1797,1798,1798,1798,1798,1798,1798,1799
+2171,2171,2171,2171,2171,1789,1790,1790,1790,1790,1790,1807,
+2171,2176,2176,2171,1781,1790,1790,1790,1790,1790,1791,2171,
+2171,2176,2176,2171,1789,1790,1790,1790,1790,1790,1791,2171,
+2171,2176,2176,2171,1789,1790,1790,1790,1790,1790,1791,2171,
+2171,2176,2176,2171,1789,1790,1790,1790,1790,1790,1790,1783,
+2171,2176,2176,2171,1797,1798,1798,1798,1798,1798,1798,1799
 </data>
  </layer>
  <layer id="3" name="level" width="12" height="12">
   <data encoding="csv">
 916,887,888,889,886,0,0,0,0,0,0,0,
 916,919,920,921,918,0,0,0,0,0,0,0,
-0,969,0,969,0,0,0,0,0,0,0,0,
+0,969,436,969,3216,0,0,0,0,0,0,0,
 2763,969,0,969,0,0,0,0,0,0,0,0,
 2803,0,0,0,0,0,0,0,0,0,0,0,
 2803,0,0,0,0,0,0,0,0,0,0,0,
-2803,0,2171,2171,0,0,0,0,0,0,0,0,
-2803,0,0,2171,0,0,0,0,0,0,0,0,
-2803,0,0,2171,0,0,0,0,0,0,0,0,
-2803,0,0,2171,0,0,0,0,0,0,0,0,
-2803,0,0,2171,0,0,0,0,0,0,0,0,
-2803,0,0,2171,0,0,0,0,0,0,0,0
+2803,0,0,0,0,0,0,0,0,0,0,0,
+2803,0,0,0,0,0,0,0,0,0,0,0,
+2803,0,0,0,0,0,0,0,0,0,0,0,
+2803,0,0,0,0,0,0,0,0,0,0,0,
+2803,0,0,0,0,0,0,0,0,0,0,0,
+2803,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="entities">
+ <objectgroup id="4" name="entities" visible="0">
   <object id="59" gid="969" x="16" y="48" width="16" height="16"/>
   <object id="60" gid="969" x="48" y="48" width="16" height="16"/>
   <object id="61" gid="969" x="48" y="64" width="16" height="16"/>
@@ -96,11 +98,8 @@
   <object id="100" gid="1808" x="160" y="192" width="16" height="16"/>
   <object id="101" gid="1808" x="176" y="192" width="16" height="16"/>
   <object id="102" gid="1808" x="176" y="176" width="16" height="16"/>
-  <object id="103" gid="1808" x="176" y="160" width="16" height="16"/>
-  <object id="104" gid="1808" x="176" y="144" width="16" height="16"/>
-  <object id="105" gid="1808" x="176" y="128" width="16" height="16"/>
   <object id="106" gid="1808" x="176" y="112" width="16" height="16"/>
-  <object id="107" gid="1808" x="176" y="96" width="16" height="16"/>
+  <object id="107" gid="1808" x="176" y="48" width="16" height="16"/>
   <object id="108" gid="1808" x="160" y="96" width="16" height="16"/>
   <object id="109" gid="1808" x="160" y="80" width="16" height="16"/>
   <object id="110" gid="1808" x="160" y="64" width="16" height="16"/>
@@ -142,6 +141,67 @@
   <object id="148" gid="1808" x="128" y="144" width="16" height="16"/>
   <object id="149" gid="1808" x="128" y="128" width="16" height="16"/>
   <object id="150" gid="1808" x="144" y="128" width="16" height="16"/>
+  <object id="152" type="TargetOwner" gid="3216" x="64" y="48" width="16" height="16">
+   <properties>
+    <property name="targetArray">{
+	&quot;targets&quot;: [{
+			&quot;x&quot;: 660,
+			&quot;y&quot;: 180,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		},
+		{
+			&quot;x&quot;: 660,
+			&quot;y&quot;: 240,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}, {
+			&quot;x&quot;: 660,
+			&quot;y&quot;: 300,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}, {
+			&quot;x&quot;: 660,
+			&quot;y&quot;: 420,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}, {
+			&quot;x&quot;: 660,
+			&quot;y&quot;: 480,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}, {
+			&quot;x&quot;: 660,
+			&quot;y&quot;: 540,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}
+	]
+}</property>
+    <property name="threshold" type="int" value="6"/>
+    <property name="time" type="int" value="10"/>
+    <property name="trigger" value="werewolf"/>
+   </properties>
+  </object>
+  <object id="153" gid="484" x="32" y="48" width="16" height="16">
+   <properties>
+    <property name="msg">WE HAVE LOCKED THE DUNGEON
+IN ORDER TO KEEP EVIL INSIDE
+
+FOR YOUR OWN SAFETY KEEP OUT
+
+A SEASONED MARKSMAN MIGHT
+PASS THIS SHOOTING CHALLENGE
+AND THEREBY GAIN ENTRY
+</property>
+   </properties>
+  </object>
  </objectgroup>
  <layer id="8" name="sky" width="12" height="12">
   <data encoding="csv">
@@ -208,7 +268,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="10" name="dividers" width="12" height="12" opacity="0.4">
+ <layer id="10" name="dividers" width="12" height="12" visible="0" opacity="0.4">
   <data encoding="csv">
 925,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
