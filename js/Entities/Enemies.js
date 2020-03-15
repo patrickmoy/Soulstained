@@ -298,7 +298,6 @@ class Necromancer
         }
     }
 
-
     preUpdate() {
 
 
@@ -834,5 +833,25 @@ class TargetOwner extends Sign {
             this.game.gateTriggers[this.trigger] = true;
             this.complete = true;
         }
+    }
+}
+
+class Wolf extends Enemy {
+    constructor(game, spritesheet, x, y, width, height) {
+        super(game, x, y, width, height);
+        this.alive = true;
+        this.context = game.GAME_CONTEXT;
+        this.state = 0; // 0 = wolf, 1 = human
+    }
+
+    preUpdate() {
+        super.preUpdate();
+    }
+
+    update() {
+        super.update();
+    }
+
+    draw() {
     }
 }
