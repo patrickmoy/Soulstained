@@ -165,13 +165,13 @@ class FireballProjectile extends Projectile {
 
 class VerticalArrow extends Projectile {
 
-    constructor(game, spritesheet, x, y, trajectory) {
+    constructor(game, spritesheet, x, y, trajectory, speed = 200) {
         super(game, x, y, 4, 57, 2);
         this.animation = new Animation(spritesheet, this, 4, 57, .10, 1, [1]);
         this.context = game.GAME_CONTEXT;
         this.alive = true;
         this.trajectory = trajectory; //A flight direction path of either: left, right or down.
-        this.speed = 200; //Speed of each projectile, presently hard-coded in.
+        this.speed = speed; //Speed of each vertical arrow
 
 
     }

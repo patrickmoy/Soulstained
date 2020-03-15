@@ -268,6 +268,6 @@ class WolfDungeon extends World {
 class testSection extends World {
     constructor(game, worldImage, layeredImage, sectionX, sectionY) {
         super(game, worldImage, layeredImage, sectionX, sectionY);
-        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST['./res/jsonderulo/testSection.json'])]]
+        this.tileMaps = [[new TileMap(this.GAME, this.GAME.ASSETS_LIST['./res/jsonderulo/testWolfRoom.json'])]]
     }
 }

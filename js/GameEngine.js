@@ -93,14 +93,15 @@ class GameEngine {
         this.WORLDS["cavebasic"] = new CaveBasic(this, this.ASSETS_LIST["./res/img/worlds/cavebasic.png"], this.ASSETS_LIST["./res/img/worlds/cavebasic2.png"], 0, 0);
         this.WORLDS["bluehouse"] = new BlueHouse(this, this.ASSETS_LIST["./res/img/worlds/bluehouse.png"], this.ASSETS_LIST["./res/img/worlds/bluehouse2.png"], 0, 0);
         this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 4, 2);
+        this.WORLDS["test2"] = new testSection(this, this.ASSETS_LIST["./res/img/worlds/testWolfRoom.png"], this.ASSETS_LIST["./res/img/worlds/testWolfRoom2.png"], 0, 0);
         //this.WORLDS["necro"] = new NecroDungeon(this, this.ASSETS_LIST["./res/img/worlds/necro.png"], this.ASSETS_LIST["./res/img/worlds/necro2.png"], 0, 2);
 
         this.WORLDS["wolf"] = new WolfDungeon(this, this.ASSETS_LIST["./res/img/worlds/wolf.png"], this.ASSETS_LIST["./res/img/worlds/wolf2.png"], 0, 0);
-        this.WORLDS["test"] = new TestDungeon(this, this.ASSETS_LIST["./res/img/worlds/testroom.png"], this.ASSETS_LIST["./res/img/worlds/testroom2.png"], 0, 0);
+        this.WORLDS["test"] = new testSection(this, this.ASSETS_LIST["./res/img/worlds/testroom.png"], this.ASSETS_LIST["./res/img/worlds/testroom2.png"], 0, 0);
 
 
-        this.currentWorld = this.WORLDS["openworld"]; // Set the current world to the open worlds
-       // this.currentWorld = this.WORLDS["necro"]; // Set the current world to the open worlds
+        this.currentWorld = this.WORLDS["test2"]; // Set the current world to the open worlds
+        // this.currentWorld = this.WORLDS["necro"]; // Set the current world to the open worlds
         // this.currentWorld = this.WORLDS["necro"];
         this.currentMusicID = overworldMusic.play();
         this.changeEntitiesToCurrent();
@@ -126,6 +127,7 @@ class GameEngine {
         console.log('Game initialized');
     }
 
+    // TODO why not just call init again with some additions? It seems like that's what it does.
     reset() {
         this.transition = false; // When transitioning is happening
         this.inInventory = false; // When player is in his inventory
@@ -145,9 +147,7 @@ class GameEngine {
         overworldMusic.stop();
         necroMusic.stop();
         this.currentMusicID = overworldMusic.play();
-        this.currentEntities[1] = this.currentWorld.getCurrentTileMap().BLOCKS;
-        this.currentEntities[2] = this.currentWorld.getCurrentTileMap().ENEMIES;
-        this.currentEntities[4] = this.currentWorld.getCurrentTileMap().PASSIVES;
+        this.changeEntitiesToCurrent();
         this.GAME_CANVAS_WIDTH = this.GAME_CONTEXT.canvas.width;
         this.GAME_CANVAS_HEIGHT = this.GAME_CONTEXT.canvas.height;
 
@@ -280,7 +280,6 @@ class GameEngine {
             // Updates accordingly w/ entity handler flags
             // Essentially, pushing update for valid movements.
             this.currentEntities[0].forEach(entity => entity.update()); // Updates hero
-            // TODO weird bug where the smoke still appears on the enemy's death location when transitioning back into the tilemap. Requires a filter for alive.
             this.currentEntities[1].filter(block => block.alive).forEach(entity => entity.update());
             this.currentEntities[2].filter(enemy => enemy.alive).forEach(enemy => enemy.update());
             this.currentEntities[3].forEach(projectile => projectile.update());

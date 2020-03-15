@@ -299,8 +299,6 @@ class Necromancer
     }
 
     preUpdate() {
-
-
         this.count += this.game.clockTick;
         if (this.knightSpawned === 0) {
             this.spawnKnight();
@@ -836,22 +834,98 @@ class TargetOwner extends Sign {
     }
 }
 
+const WOLF_DEFAULT_HEALTH = 20;
+const END_MESSAGE = "CONGRATS! YOU'RE DONE!";
+
 class Wolf extends Enemy {
     constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height);
         this.alive = true;
-        this.context = game.GAME_CONTEXT;
-        this.state = 0; // 0 = wolf, 1 = human
+        this.health = WOLF_DEFAULT_HEALTH;
+        this.messagePassed = false;
+        this.animation = null; // Human animation
+        this.fireCooldown = 5;
+        this.attackCooldown = 0;
+        this.speed = 0;
+    }
+
+    humanAction() {
+        const hero = this.game.HERO;
+        const hbx = this.hitbox;
+        const centerX = (hbx.xMin + hbx.xMax) / 2;
+        const centerY = (hbx.yMin + hbx.yMax) / 2;
+        const heroCenterX = (hero.hitbox.xMin + hero.hitbox.xMax) / 2;
+        const heroCenterY = (hero.hitbox.yMin + hero.hitbox.yMax) / 2;
+        // Hero is within vertical line of sight of boss, slightly larger than the boss's hitbox so it can prefire.
+        if (hero.hitbox.xMin > hbx.xMin - (hbx.xMin / 5) && hero.hitbox.xMax < hbx.xMax + (hbx.xMax / 5)) {
+            // Shoot the arrow
+            if (!this.attackCooldown) {
+                // cooldown for the arrow firing so we no constant fire.
+                this.attackCooldown = 30;
+                const arrowDirection = hero.hitbox.yMin > hbx.yMin ? "SOUTH" : "NORTH";
+                const arrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], centerX, centerY, arrowDirection, 250 + (Math.random() * 75));
+                this.game.currentEntities[3].push(arrow);
+            }
+            else {
+                this.attackCooldown--;
+            }
+        }
+
+        // further the boss is away from hero, the faster he moves.
+        this.speed = Math.sqrt(Math.pow(centerX - heroCenterX, 2) + Math.pow(centerY - heroCenterY, 2));
+        // max limit for speed
+        if (this.speed > 135) {
+            this.speed = 135;
+        }
+        const potentialMovement = this.game.clockTick * this.speed;
+        // Try to follow the player horizontally
+        // Hero is on the left
+        if (hero.hitbox.xMin < hbx.xMin) {
+            this.futureHitbox.xMin -= potentialMovement;
+            this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+        }
+        // Hero is on the right
+        else if (hero.hitbox.xMax > hbx.xMax) {
+            this.futureHitbox.xMin += potentialMovement;
+            this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
+        }
+    }
+
+    wolfAction() {
+        const hero = this.game.HERO;
+        const hbx = this.hitbox;
     }
 
     preUpdate() {
+
+        // Initial phase: human.
+        if (this.health > WOLF_DEFAULT_HEALTH / 2) {
+            this.animation = null; // Human animation
+            this.humanAction();
+        }
+        // Second phase: wolf.
+        else {
+            this.animation = null; // Wolf animation;
+            this.wolfAction();
+        }
         super.preUpdate();
     }
 
     update() {
         super.update();
+
+        // play end game message
+        if (!this.alive && !this.messagePassed) {
+            this.messagePassed = true;
+
+        }
     }
 
     draw() {
+        if (this.animation) this.animation.drawFrame(this.game.clockTick, this.game.GAME_CONTEXT, this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
+        else this.game.GAME_CONTEXT.fillRect(this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.width, this.height);
     }
 }

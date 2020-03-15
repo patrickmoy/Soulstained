@@ -182,7 +182,10 @@ class TileMap {
                 }
             }
             else if (entity.type === 'Rubble') {
-                this.BLOCKS.push(new Rubble(this.game, this.game.ASSETS_LIST['./res/img/rubble.png'], entity.x * 60/16, entity.y *60/16));
+                this.BLOCKS.push(new Rubble(this.game, this.game.ASSETS_LIST['./res/img/rubble.png'], entity.x * 60 / 16, entity.y * 60 / 16));
+            }
+            else if (entity.type === 'Wolf') {
+                this.ENEMIES.push(new Wolf(this.game, null, entity.x * 60 / 16, entity.y * 60 / 16, 60, 60))
             }
         }
     }
