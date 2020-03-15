@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="50">
+ <tileset firstgid="1" source="../../tilesets/wolf_dungeon.tsx"/>
+ <tileset firstgid="248" source="../../tilesets/dungeon pit.tsx"/>
+ <tileset firstgid="264" source="../../tilesets/zombie.tsx"/>
+ <tileset firstgid="268" source="../../tilesets/openworld.tsx"/>
+ <tileset firstgid="748" source="../../tilesets/darkdimension.tsx"/>
+ <tileset firstgid="1357" source="../../tilesets/openworld_realistic.tsx"/>
+ <tileset firstgid="2797" source="../../tilesets/pit.tsx"/>
+ <layer id="2" name="floor" width="12" height="12">
+  <data encoding="csv">
+7,7,7,7,7,7,7,7,7,7,7,7,
+7,46,46,46,46,31,31,46,46,46,46,7,
+7,46,46,46,46,46,46,46,46,46,46,7,
+7,46,48,2684354667,2684354667,46,46,2684354667,2684354667,1610612786,46,7,
+7,46,107,46,46,46,46,46,46,107,46,7,
+7,46,107,46,46,46,46,46,46,107,46,7,
+7,46,107,46,46,46,46,46,46,107,28,7,
+7,46,107,46,46,46,46,46,46,107,46,7,
+7,46,107,46,46,46,46,46,46,107,46,7,
+7,46,48,1610612843,1610612843,1610612843,1610612843,1610612843,1610612843,50,46,7,
+7,46,46,46,46,46,46,46,46,46,46,7,
+7,7,7,7,7,7,7,7,7,7,7,7
+</data>
+ </layer>
+ <layer id="3" name="level" width="12" height="12">
+  <data encoding="csv">
+4,58,58,58,58,0,0,58,58,58,58,5,
+77,0,0,0,0,0,0,0,0,0,0,78,
+77,248,249,249,250,0,0,248,249,249,250,78,
+77,252,253,253,254,0,0,252,253,253,254,78,
+77,256,257,257,258,0,0,256,257,257,258,78,
+77,0,0,1472,0,0,0,0,0,0,0,78,
+77,0,0,0,0,0,0,0,0,0,0,0,
+77,0,0,0,0,0,0,0,0,0,0,78,
+77,249,249,250,0,0,0,0,248,249,249,78,
+77,257,253,254,0,0,0,0,252,253,257,78,
+77,0,252,254,0,0,0,0,252,254,0,78,
+23,79,79,79,79,79,79,79,79,79,79,24
+</data>
+ </layer>
+ <objectgroup id="5" name="entities not drawn">
+  <object id="1" gid="1261" x="80" y="64" width="16" height="16">
+   <properties>
+    <property name="trigger" value="wolf4_1_gate"/>
+   </properties>
+  </object>
+  <object id="2" gid="1261" x="96" y="64" width="16" height="16">
+   <properties>
+    <property name="trigger" value="wolf4_1_gate"/>
+   </properties>
+  </object>
+  <object id="3" gid="264" x="64" y="32" width="16" height="16"/>
+  <object id="4" gid="264" x="112" y="32" width="16" height="16"/>
+  <object id="5" gid="264" x="80" y="112" width="16" height="16"/>
+  <object id="6" gid="1472" x="48" y="96" width="16" height="16">
+   <properties>
+    <property name="targetArray">{
+	&quot;targets&quot;: [{
+			&quot;x&quot;: 60,
+			&quot;y&quot;: 60,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		},
+		{
+			&quot;x&quot;: 60,
+			&quot;y&quot;: 600,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}, {
+			&quot;x&quot;: 600,
+			&quot;y&quot;: 60,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}, {
+			&quot;x&quot;: 600,
+			&quot;y&quot;: 600,
+			&quot;motionX&quot;: 0,
+			&quot;motionY&quot;: 0,
+			&quot;speed&quot;: 0
+		}
+	]
+}</property>
+    <property name="threshold" type="int" value="4"/>
+    <property name="time" type="int" value="12"/>
+    <property name="trigger" value="wolf4_1_gate"/>
+   </properties>
+  </object>
+  <object id="7" gid="2856" x="16" y="48" width="16" height="16"/>
+  <object id="8" gid="2856" x="32" y="48" width="16" height="16"/>
+  <object id="9" gid="2856" x="48" y="48" width="16" height="16"/>
+  <object id="10" gid="2856" x="64" y="48" width="16" height="16"/>
+  <object id="11" gid="2856" x="64" y="64" width="16" height="16"/>
+  <object id="12" gid="2856" x="48" y="64" width="16" height="16"/>
+  <object id="13" gid="2856" x="32" y="64" width="16" height="16"/>
+  <object id="14" gid="2856" x="16" y="64" width="16" height="16"/>
+  <object id="15" gid="2856" x="16" y="80" width="16" height="16"/>
+  <object id="16" gid="2856" x="32" y="80" width="16" height="16"/>
+  <object id="20" gid="2856" x="48" y="80" width="16" height="16"/>
+  <object id="21" gid="2856" x="64" y="80" width="16" height="16"/>
+  <object id="22" gid="2856" x="112" y="48" width="16" height="16"/>
+  <object id="23" gid="2856" x="128" y="48" width="16" height="16"/>
+  <object id="24" gid="2856" x="144" y="48" width="16" height="16"/>
+  <object id="25" gid="2856" x="160" y="48" width="16" height="16"/>
+  <object id="26" gid="2856" x="160" y="64" width="16" height="16"/>
+  <object id="27" gid="2856" x="144" y="64" width="16" height="16"/>
+  <object id="28" gid="2856" x="128" y="64" width="16" height="16"/>
+  <object id="29" gid="2856" x="112" y="64" width="16" height="16"/>
+  <object id="30" gid="2856" x="112" y="80" width="16" height="16"/>
+  <object id="31" gid="2856" x="128" y="80" width="16" height="16"/>
+  <object id="32" gid="2856" x="144" y="80" width="16" height="16"/>
+  <object id="33" gid="2856" x="160" y="80" width="16" height="16"/>
+  <object id="34" gid="2856" x="160" y="144" width="16" height="16"/>
+  <object id="35" gid="2856" x="144" y="144" width="16" height="16"/>
+  <object id="36" gid="2856" x="128" y="144" width="16" height="16"/>
+  <object id="37" gid="2856" x="128" y="160" width="16" height="16"/>
+  <object id="38" gid="2856" x="128" y="176" width="16" height="16"/>
+  <object id="39" gid="2856" x="144" y="176" width="16" height="16"/>
+  <object id="40" gid="2856" x="144" y="160" width="16" height="16"/>
+  <object id="41" gid="2856" x="160" y="160" width="16" height="16"/>
+  <object id="42" gid="2856" x="48" y="176" width="16" height="16"/>
+  <object id="43" gid="2856" x="32" y="176" width="16" height="16"/>
+  <object id="44" gid="2856" x="48" y="160" width="16" height="16"/>
+  <object id="45" gid="2856" x="32" y="160" width="16" height="16"/>
+  <object id="46" gid="2856" x="16" y="160" width="16" height="16"/>
+  <object id="47" gid="2856" x="16" y="144" width="16" height="16"/>
+  <object id="48" gid="2856" x="32" y="144" width="16" height="16"/>
+  <object id="49" gid="2856" x="48" y="144" width="16" height="16"/>
+ </objectgroup>
+</map>

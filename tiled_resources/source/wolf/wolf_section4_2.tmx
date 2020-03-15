@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="8">
+ <tileset firstgid="1" source="../../tilesets/dungeon pit.tsx"/>
+ <tileset firstgid="17" source="../../tilesets/zelda_inspired_dungeon.tsx"/>
+ <tileset firstgid="97" source="../../tilesets/wolf_dungeon.tsx"/>
+ <tileset firstgid="344" source="../../tilesets/zombie.tsx"/>
+ <tileset firstgid="348" source="../../tilesets/openworld.tsx"/>
+ <tileset firstgid="828" source="../../tilesets/green_world.tsx"/>
+ <tileset firstgid="997" source="../../tilesets/darkdimension.tsx"/>
+ <tileset firstgid="1606" source="../../tilesets/red_dungeon.tsx"/>
+ <tileset firstgid="1876" source="../../tilesets/ashlands.tsx"/>
+ <tileset firstgid="2716" source="../../tilesets/barf_dungeon.tsx"/>
+ <tileset firstgid="2972" source="../../tilesets/beast.tsx"/>
+ <tileset firstgid="3012" source="../../tilesets/bigchest.tsx"/>
+ <tileset firstgid="3014" source="../../tilesets/crab.tsx"/>
+ <tileset firstgid="3016" source="../../tilesets/cursed_grass.tsx"/>
+ <tileset firstgid="3026" source="../../tilesets/dungeon pit2.tsx"/>
+ <tileset firstgid="3042" source="../../tilesets/fire.tsx"/>
+ <tileset firstgid="3046" source="../../tilesets/flower.tsx"/>
+ <tileset firstgid="3050" source="../../tilesets/ghost.tsx"/>
+ <tileset firstgid="3058" source="../../tilesets/gray_dungeon32x32.tsx"/>
+ <tileset firstgid="3378" source="../../tilesets/hero.tsx"/>
+ <tileset firstgid="3386" source="../../tilesets/jawbreaker.tsx"/>
+ <tileset firstgid="3394" source="../../tilesets/knight.tsx"/>
+ <tileset firstgid="3415" source="../../tilesets/mage.tsx"/>
+ <tileset firstgid="3428" source="../../tilesets/objects_round.tsx"/>
+ <tileset firstgid="4088" source="../../tilesets/openworld_extra.tsx"/>
+ <tileset firstgid="4568" source="../../tilesets/openworld_realistic.tsx"/>
+ <tileset firstgid="6008" source="../../tilesets/pit.tsx"/>
+ <tileset firstgid="6072" source="../../tilesets/smallchest.tsx"/>
+ <tileset firstgid="6074" source="../../tilesets/sniper.tsx"/>
+ <tileset firstgid="6080" source="../../tilesets/stone_comfy_house.tsx"/>
+ <tileset firstgid="6164" source="../../tilesets/worm.tsx"/>
+ <layer id="1" name="floor" width="12" height="12">
+  <data encoding="csv">
+103,103,103,103,103,103,103,103,103,103,103,103,
+103,142,142,142,142,142,142,142,142,142,142,103,
+103,142,142,142,142,142,142,142,142,142,142,103,
+103,142,142,142,142,142,142,142,142,142,142,103,
+103,142,142,142,142,142,142,142,142,142,142,103,
+103,108,142,142,142,142,142,142,142,142,142,103,
+103,108,142,142,142,142,142,142,142,142,142,103,
+103,142,142,142,142,142,142,142,142,142,142,103,
+103,142,142,142,142,142,142,142,142,142,142,103,
+103,142,142,142,142,142,142,142,142,142,142,103,
+103,142,142,142,142,106,106,142,142,142,142,103,
+103,103,103,103,103,103,103,103,103,103,103,103
+</data>
+ </layer>
+ <layer id="2" name="level" width="12" height="12">
+  <data encoding="csv">
+100,154,154,154,154,154,154,154,154,154,154,101,
+173,0,0,0,0,0,0,0,0,0,0,174,
+173,0,0,0,0,0,0,0,0,0,0,174,
+173,0,0,0,0,0,0,0,0,0,0,174,
+173,0,0,0,357,129,129,357,0,0,0,174,
+173,142,0,0,129,1,3,129,0,0,0,174,
+0,0,0,0,129,9,11,129,0,0,0,174,
+173,0,0,0,357,129,129,357,0,0,0,174,
+173,0,0,0,0,0,0,0,0,0,0,174,
+173,0,0,0,0,0,0,0,0,0,0,174,
+173,0,0,0,0,0,0,0,0,0,0,174,
+119,175,175,175,175,0,0,175,175,175,175,120
+</data>
+ </layer>
+ <objectgroup id="4" name="entities to not draw">
+  <object id="4" gid="3042" x="64" y="80" width="16" height="16"/>
+  <object id="5" gid="3042" x="112" y="80" width="16" height="16"/>
+  <object id="6" gid="3042" x="112" y="128" width="16" height="16"/>
+  <object id="7" gid="3042" x="64" y="128" width="16" height="16"/>
+ </objectgroup>
+</map>

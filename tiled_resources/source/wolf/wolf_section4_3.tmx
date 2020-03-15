@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="81">
+ <tileset firstgid="1" source="../../tilesets/wolf_dungeon.tsx"/>
+ <tileset firstgid="248" source="../../tilesets/dungeon pit.tsx"/>
+ <tileset firstgid="264" source="../../tilesets/openworld.tsx"/>
+ <tileset firstgid="744" source="../../tilesets/mage.tsx"/>
+ <tileset firstgid="757" source="../../tilesets/sniper.tsx"/>
+ <tileset firstgid="763" source="../../tilesets/smallchest.tsx"/>
+ <tileset firstgid="765" source="../../tilesets/pit.tsx"/>
+ <layer id="1" name="floor" width="12" height="12">
+  <data encoding="csv">
+7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,108,65,7,7,67,7,64,49,7,7,
+7,7,89,7,7,49,66,7,66,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,48,7,7,7,7,7,48,51,7,7,
+7,7,67,66,7,68,68,7,51,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,69,7,7,7,7,7,7,7,7,
+7,7,70,108,7,107,89,7,50,51,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7
+</data>
+ </layer>
+ <layer id="2" name="level" width="12" height="12">
+  <data encoding="csv">
+4,58,58,58,58,0,0,58,58,58,58,5,
+77,248,261,261,249,249,261,253,261,261,250,78,
+77,255,0,0,252,258,0,255,0,0,255,78,
+77,255,0,248,254,0,0,255,0,248,254,78,
+77,252,261,253,253,249,249,253,261,257,254,78,
+77,255,0,256,253,257,257,254,0,0,255,78,
+77,255,0,0,255,0,0,255,0,248,254,78,
+77,252,249,261,253,249,249,253,249,257,254,78,
+77,252,258,0,253,257,257,253,258,0,255,78,
+77,255,0,0,255,0,0,255,0,0,255,78,
+77,256,261,261,257,261,261,257,261,261,258,78,
+23,79,79,79,79,79,79,79,79,79,79,24
+</data>
+ </layer>
+ <objectgroup id="3" name="entities to not draw" visible="0">
+  <object id="1" gid="744" x="32" y="48" width="16" height="16"/>
+  <object id="2" gid="757" x="144" y="48" width="16" height="16">
+   <properties>
+    <property name="direction" value="WEST"/>
+   </properties>
+  </object>
+  <object id="3" gid="757" x="32" y="112" width="16" height="16">
+   <properties>
+    <property name="direction" value="EAST"/>
+   </properties>
+  </object>
+  <object id="4" gid="757" x="144" y="160" width="16" height="16">
+   <properties>
+    <property name="direction" value="WEST"/>
+   </properties>
+  </object>
+  <object id="5" gid="763" x="144" y="144" width="16" height="16">
+   <properties>
+    <property name="loot" value="smallkey"/>
+    <property name="msg">YOU HAVE FOUND A KEY
+
+USE IT TO OPEN LOCKED DOORS</property>
+   </properties>
+  </object>
+  <object id="6" gid="824" x="16" y="32" width="16" height="16"/>
+  <object id="7" gid="824" x="32" y="32" width="16" height="16"/>
+  <object id="8" gid="824" x="48" y="32" width="16" height="16"/>
+  <object id="9" gid="824" x="64" y="32" width="16" height="16"/>
+  <object id="10" gid="824" x="80" y="32" width="16" height="16"/>
+  <object id="11" gid="824" x="96" y="32" width="16" height="16"/>
+  <object id="12" gid="824" x="112" y="32" width="16" height="16"/>
+  <object id="13" gid="824" x="128" y="32" width="16" height="16"/>
+  <object id="14" gid="824" x="144" y="32" width="16" height="16"/>
+  <object id="15" gid="824" x="160" y="32" width="16" height="16"/>
+  <object id="16" gid="824" x="160" y="48" width="16" height="16"/>
+  <object id="17" gid="824" x="112" y="48" width="16" height="16"/>
+  <object id="18" gid="824" x="80" y="48" width="16" height="16"/>
+  <object id="19" gid="824" x="64" y="48" width="16" height="16"/>
+  <object id="20" gid="824" x="16" y="48" width="16" height="16"/>
+  <object id="21" gid="824" x="16" y="64" width="16" height="16"/>
+  <object id="22" gid="824" x="48" y="64" width="16" height="16"/>
+  <object id="23" gid="824" x="64" y="64" width="16" height="16"/>
+  <object id="24" gid="824" x="112" y="64" width="16" height="16"/>
+  <object id="25" gid="824" x="144" y="64" width="16" height="16"/>
+  <object id="26" gid="824" x="160" y="64" width="16" height="16"/>
+  <object id="27" gid="824" x="160" y="80" width="16" height="16"/>
+  <object id="28" gid="824" x="144" y="80" width="16" height="16"/>
+  <object id="29" gid="824" x="128" y="80" width="16" height="16"/>
+  <object id="30" gid="824" x="112" y="80" width="16" height="16"/>
+  <object id="31" gid="824" x="96" y="80" width="16" height="16"/>
+  <object id="32" gid="824" x="64" y="80" width="16" height="16"/>
+  <object id="33" gid="824" x="48" y="80" width="16" height="16"/>
+  <object id="34" gid="824" x="80" y="80" width="16" height="16"/>
+  <object id="35" gid="824" x="32" y="80" width="16" height="16"/>
+  <object id="36" gid="824" x="16" y="80" width="16" height="16"/>
+  <object id="37" gid="824" x="16" y="96" width="16" height="16"/>
+  <object id="38" gid="824" x="16" y="112" width="16" height="16"/>
+  <object id="39" gid="824" x="16" y="128" width="16" height="16"/>
+  <object id="40" gid="824" x="16" y="144" width="16" height="16"/>
+  <object id="41" gid="824" x="32" y="144" width="16" height="16"/>
+  <object id="42" gid="824" x="32" y="128" width="16" height="16"/>
+  <object id="43" gid="824" x="16" y="160" width="16" height="16"/>
+  <object id="44" gid="824" x="16" y="176" width="16" height="16"/>
+  <object id="45" gid="824" x="32" y="176" width="16" height="16"/>
+  <object id="46" gid="824" x="48" y="176" width="16" height="16"/>
+  <object id="47" gid="824" x="64" y="176" width="16" height="16"/>
+  <object id="48" gid="824" x="64" y="160" width="16" height="16"/>
+  <object id="49" gid="824" x="64" y="144" width="16" height="16"/>
+  <object id="50" gid="824" x="64" y="128" width="16" height="16"/>
+  <object id="51" gid="824" x="48" y="128" width="16" height="16"/>
+  <object id="52" gid="824" x="64" y="112" width="16" height="16"/>
+  <object id="53" gid="824" x="64" y="96" width="16" height="16"/>
+  <object id="54" gid="824" x="48" y="96" width="16" height="16"/>
+  <object id="55" gid="824" x="80" y="96" width="16" height="16"/>
+  <object id="56" gid="824" x="96" y="96" width="16" height="16"/>
+  <object id="57" gid="824" x="112" y="96" width="16" height="16"/>
+  <object id="58" gid="824" x="112" y="112" width="16" height="16"/>
+  <object id="59" gid="824" x="144" y="112" width="16" height="16"/>
+  <object id="60" gid="824" x="160" y="112" width="16" height="16"/>
+  <object id="61" gid="824" x="160" y="96" width="16" height="16"/>
+  <object id="62" gid="824" x="160" y="128" width="16" height="16"/>
+  <object id="63" gid="824" x="144" y="128" width="16" height="16"/>
+  <object id="64" gid="824" x="128" y="128" width="16" height="16"/>
+  <object id="65" gid="824" x="112" y="128" width="16" height="16"/>
+  <object id="66" gid="824" x="96" y="128" width="16" height="16"/>
+  <object id="67" gid="824" x="80" y="128" width="16" height="16"/>
+  <object id="68" gid="824" x="80" y="144" width="16" height="16"/>
+  <object id="69" gid="824" x="96" y="144" width="16" height="16"/>
+  <object id="70" gid="824" x="112" y="144" width="16" height="16"/>
+  <object id="71" gid="824" x="128" y="144" width="16" height="16"/>
+  <object id="72" gid="824" x="112" y="160" width="16" height="16"/>
+  <object id="73" gid="824" x="112" y="176" width="16" height="16"/>
+  <object id="74" gid="824" x="96" y="176" width="16" height="16"/>
+  <object id="75" gid="824" x="80" y="176" width="16" height="16"/>
+  <object id="76" gid="824" x="128" y="176" width="16" height="16"/>
+  <object id="77" gid="824" x="144" y="176" width="16" height="16"/>
+  <object id="78" gid="824" x="160" y="176" width="16" height="16"/>
+  <object id="79" gid="824" x="160" y="160" width="16" height="16"/>
+  <object id="80" gid="824" x="160" y="144" width="16" height="16"/>
+ </objectgroup>
+</map>
