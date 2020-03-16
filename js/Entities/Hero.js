@@ -102,55 +102,62 @@ class Hero extends Entity {
             this.stunned--;
         }
         else {
-            if (!this.game.transition) {
-                this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
-                if (this.jumping) {
-                    this.jump();
+        if (!this.game.transition) {
+            this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
+            if (this.jumping) {
+                this.jump();
+            } else if (!this.jumping && this.beingUsed("boots") && this.canDoUniqueAct()) {
+                this.jumping = true;
+                this.jump();
+            }
+            if (this.status === 'attacking') {
+                this.attack();
+            } else if (this.status !== 'attacking' && this.beingUsed("whip")) {
+                this.status = 'attacking';
+                this.attack();
+            } else if (this.status === 'shooting') {
+                this.shoot();
+            } else if (this.beingUsed("bow") && this.canDoUniqueAct()) {
+                this.status = 'shooting';
+                this.shoot();
+                this.arrowShot = false;
+            } else if (this.status === 'hadouken') {
+                this.hadouken();
+            } else if (this.beingUsed("bracer") && this.canDoUniqueAct()) {
+                this.status = 'hadouken';
+                this.hadouken();
+            } else if (this.game.hasMoveInputs()) {
+                this.status = 'walking';
+                this.movingDiagonally = !!this.hasMultipleMoveInputs();
+                if (this.movingDiagonally) {
+                    this.speed *= this.game.DIAGONAL_ADJUSTMENT;
                 }
-                else if (!this.jumping && this.beingUsed("boots") && this.status !== 'shooting') {
-                    this.jumping = true;
-                    this.jump();
+                if (this.game.INPUTS["KeyW"]) {
+                    this.direction = 0;
+                    this.walk(this.direction);
                 }
-                if (this.status === 'attacking') {
-                    this.attack();
-                } else if (this.status !== 'attacking' && this.beingUsed("whip")) {
-                    this.status = 'attacking';
-                    this.attack();
-                } else if (this.status === 'shooting') {
-                    this.shoot();
-                } else if (this.beingUsed("bow") && (this.status !== 'attacking' && !this.jumping)) {
-                    this.status = 'shooting';
-                    this.shoot();
-                    this.arrowShot = false;
-                } else if (this.game.hasMoveInputs()) {
-                    this.status = 'walking';
-                    this.movingDiagonally = !!this.hasMultipleMoveInputs();
-                    if (this.movingDiagonally) {
-                        this.speed *= this.game.DIAGONAL_ADJUSTMENT;
-                    }
-                    if (this.game.INPUTS["KeyW"]) {
-                        this.direction = 0;
-                        this.walk(this.direction);
-                    }
-                    if (this.game.INPUTS["KeyS"]) {
-                        this.direction = 1;
-                        this.walk(this.direction);
-                    }
-                    if (this.game.INPUTS["KeyA"]) {
-                        this.direction = 2;
-                        this.walk(this.direction);
-                    }
-                    if (this.game.INPUTS["KeyD"]) {
-                        this.direction = 3;
-                        this.walk(this.direction);
-                    }
-                    this.speed = this.originalSpeed;
-
-                } else {
-                    this.status = 'idle';
+                if (this.game.INPUTS["KeyS"]) {
+                    this.direction = 1;
+                    this.walk(this.direction);
                 }
+                if (this.game.INPUTS["KeyA"]) {
+                    this.direction = 2;
+                    this.walk(this.direction);
+                }
+                if (this.game.INPUTS["KeyD"]) {
+                    this.direction = 3;
+                    this.walk(this.direction);
+                }
+                this.speed = this.originalSpeed;
+            }
+            } else {
+                this.status = 'idle';
             }
         }
+    }
+
+    canDoUniqueAct() {
+        return !this.jumping && this.status !== 'attacking' && this.status !== 'shooting' && this.status !== 'hadouken';
     }
 
     /**
@@ -314,8 +321,41 @@ class Hero extends Entity {
     shoot() {
         super.attack();
         if (this.actionElapsedTime >= .75 && !this.arrowShot) {
-            console.log("shooting 1 arrow!");
             this.arrowShot = true;
+            switch (this.direction) {
+                case 0:
+                    this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"],
+                        this.futureHitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR) + this.width / 2,
+                        this.futureHitbox.yMin - 57, 'NORTH');
+                    this.vertarrow.speed = 400;
+                    this.game.currentEntities[0].push(this.vertarrow);
+                    break;
+                case 1:
+                    this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"],
+                        this.futureHitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR) + this.width / 2 + 2,
+                        this.futureHitbox.yMin + 57, 'SOUTH');
+                    this.vertarrow.speed = 400;
+                    this.game.currentEntities[0].push(this.vertarrow);
+                    break;
+                case 2:
+                    this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"],
+                        this.futureHitbox.xMin - 57 - this.width / 2, this.futureHitbox.yMin + this.height / 2, "WEST");
+                    this.horizarrow.speed = 400;
+                    this.game.currentEntities[0].push(this.horizarrow);
+                    break;
+                case 3:
+                    this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"],
+                        this.futureHitbox.xMin + this.width, this.futureHitbox.yMin + this.height / 2, "EAST");
+                    this.horizarrow.speed = 400;
+                    this.game.currentEntities[0].push(this.horizarrow);
+                    break;
+            }
+        }
+    }
+
+    hadouken() {
+        super.attack();
+        if (this.actionElapsedTime >= 1.0) {
             switch (this.direction) {
                 case 0:
                     this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"],
