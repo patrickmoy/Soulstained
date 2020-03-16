@@ -177,8 +177,8 @@ class TileMap {
                 }
                 else if (entity.customProperties.Direction === "WEST" || entity.customProperties.Direction === "EAST") {
 
-                    this.BLOCKS.push(new RollingPin(this.game, this.game.ASSETS_LIST['./res/img/log2.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 165,
-                        22, 52, 0.15, 3.4, [6], entity.customProperties.Speed, entity.customProperties.Direction))
+                    this.BLOCKS.push(new RollingPin(this.game, this.game.ASSETS_LIST['./res/img/log2.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 100,
+                        22, 30, 0.15, 3.4, [6], entity.customProperties.Speed, entity.customProperties.Direction))
                 }
             }
             else if (entity.type === 'Rubble') {

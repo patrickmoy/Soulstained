@@ -887,6 +887,7 @@ class Wolf extends Enemy {
         get animations linked up with cool downs and charge up times
         get message to display once boss is defeated (Steven - I don't know how the whole messaging this is so I just avoided it)
         utilize the spritesheet parameter (and maybe add more to handle multiple animations?)
+        add the animation or scene when the boss goes second phase and jumps in the center!
      */
 
     /* Variables to change to your liking: CTRL + F to look for and change it there. Could be in different areas of the class or outside class

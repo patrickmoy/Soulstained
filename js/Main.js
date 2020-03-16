@@ -134,9 +134,9 @@ AssetHandler.queueJSON('./res/jsonderulo/section2_5.json');
     AssetHandler.queueJSON('./res/jsonderulo/wolf_section4_1.json');
     AssetHandler.queueJSON('./res/jsonderulo/wolf_section4_2.json');
     AssetHandler.queueJSON('./res/jsonderulo/wolf_section4_3.json');
-    AssetHandler.queueImage("./res/img/worlds/testWolfRoom.png");
-    AssetHandler.queueImage("./res/img/worlds/testWolfRoom2.png");
-    AssetHandler.queueJSON('./res/jsonderulo/testWolfRoom.json');
+    AssetHandler.queueImage("./res/img/worlds/wolfTest.png");
+    AssetHandler.queueImage("./res/img/worlds/wolfTest2.png");
+    AssetHandler.queueJSON('./res/jsonderulo/wolfTest.json');
     AssetHandler.startDownload()
         .then(() => {
             const myGame = new GameEngine(gameContext, AssetHandler.assets);
