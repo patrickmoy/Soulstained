@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="73">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="117">
  <editorsettings>
   <export target="J:/SchoolDownload/wolfTest.json" format="soulstain"/>
  </editorsettings>
@@ -47,6 +47,50 @@
   <object id="67" gid="807" x="0" y="160" width="16" height="16"/>
   <object id="68" gid="807" x="176" y="48" width="16" height="16"/>
   <object id="69" gid="807" x="0" y="48" width="16" height="16"/>
+  <object id="73" gid="60" x="16" y="16" width="16" height="16"/>
+  <object id="74" gid="60" x="16" y="32" width="16" height="16"/>
+  <object id="75" gid="60" x="32" y="32" width="16" height="16"/>
+  <object id="76" gid="60" x="48" y="32" width="16" height="16"/>
+  <object id="77" gid="60" x="64" y="32" width="16" height="16"/>
+  <object id="78" gid="60" x="96" y="32" width="16" height="16"/>
+  <object id="79" gid="60" x="80" y="32" width="16" height="16"/>
+  <object id="80" gid="60" x="112" y="32" width="16" height="16"/>
+  <object id="81" gid="60" x="144" y="32" width="16" height="16"/>
+  <object id="82" gid="60" x="128" y="32" width="16" height="16"/>
+  <object id="83" gid="60" x="160" y="32" width="16" height="16"/>
+  <object id="84" gid="60" x="160" y="16" width="16" height="16"/>
+  <object id="85" gid="60" x="160" y="48" width="16" height="16"/>
+  <object id="86" gid="60" x="144" y="48" width="16" height="16"/>
+  <object id="87" gid="60" x="128" y="48" width="16" height="16"/>
+  <object id="88" gid="60" x="112" y="48" width="16" height="16"/>
+  <object id="89" gid="60" x="96" y="48" width="16" height="16"/>
+  <object id="90" gid="60" x="80" y="48" width="16" height="16"/>
+  <object id="91" gid="60" x="64" y="48" width="16" height="16"/>
+  <object id="92" gid="60" x="48" y="48" width="16" height="16"/>
+  <object id="93" gid="60" x="32" y="48" width="16" height="16"/>
+  <object id="94" gid="60" x="16" y="48" width="16" height="16"/>
+  <object id="95" gid="60" x="16" y="160" width="16" height="16"/>
+  <object id="96" gid="60" x="32" y="160" width="16" height="16"/>
+  <object id="97" gid="60" x="48" y="160" width="16" height="16"/>
+  <object id="98" gid="60" x="64" y="160" width="16" height="16"/>
+  <object id="99" gid="60" x="80" y="160" width="16" height="16"/>
+  <object id="100" gid="60" x="96" y="160" width="16" height="16"/>
+  <object id="101" gid="60" x="112" y="160" width="16" height="16"/>
+  <object id="102" gid="60" x="128" y="160" width="16" height="16"/>
+  <object id="103" gid="60" x="144" y="160" width="16" height="16"/>
+  <object id="104" gid="60" x="160" y="160" width="16" height="16"/>
+  <object id="105" gid="60" x="160" y="176" width="16" height="16"/>
+  <object id="106" gid="60" x="160" y="192" width="16" height="16"/>
+  <object id="107" gid="60" x="144" y="176" width="16" height="16"/>
+  <object id="108" gid="60" x="128" y="176" width="16" height="16"/>
+  <object id="109" gid="60" x="112" y="176" width="16" height="16"/>
+  <object id="110" gid="60" x="96" y="176" width="16" height="16"/>
+  <object id="111" gid="60" x="80" y="176" width="16" height="16"/>
+  <object id="112" gid="60" x="64" y="176" width="16" height="16"/>
+  <object id="113" gid="60" x="48" y="176" width="16" height="16"/>
+  <object id="114" gid="60" x="32" y="176" width="16" height="16"/>
+  <object id="115" gid="60" x="16" y="176" width="16" height="16"/>
+  <object id="116" gid="60" x="16" y="192" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="2" name="entities that can be drawn later">
   <object id="4" type="RollingPin" x="16" y="48" width="31" height="15">
