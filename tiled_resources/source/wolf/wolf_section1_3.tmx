@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="72">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="12" height="12" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="73">
  <editorsettings>
   <export target="J:/SchoolDownload/wolfTest.json" format="soulstain"/>
  </editorsettings>
@@ -10,7 +10,7 @@
  <tileset firstgid="807" source="../../tilesets/fire.tsx"/>
  <tileset firstgid="811" source="../../tilesets/objects_round.tsx"/>
  <tileset firstgid="1471" source="../../tilesets/green_world.tsx"/>
- <layer id="1" name="Tile Layer 1" width="12" height="12" visible="0">
+ <layer id="1" name="Tile Layer 1" width="12" height="12">
   <data encoding="csv">
 72,4,72,72,72,72,72,72,72,72,4,72,
 72,9,2,2,2,2,2,2,2,2,11,72,
@@ -26,7 +26,7 @@
 72,20,72,72,72,72,72,72,72,72,20,72
 </data>
  </layer>
- <layer id="4" name="Tile Layer 2" width="12" height="12" visible="0">
+ <layer id="4" name="Tile Layer 2" width="12" height="12">
   <data encoding="csv">
 117,0,0,0,0,0,0,0,0,0,0,117,
 117,0,0,0,0,0,0,0,0,0,0,117,
@@ -42,25 +42,31 @@
 117,0,0,0,0,0,0,0,0,0,0,117
 </data>
  </layer>
- <objectgroup id="3" name="entities" visible="0">
+ <objectgroup id="3" name="entities">
   <object id="66" gid="807" x="176" y="160" width="16" height="16"/>
   <object id="67" gid="807" x="0" y="160" width="16" height="16"/>
   <object id="68" gid="807" x="176" y="48" width="16" height="16"/>
   <object id="69" gid="807" x="0" y="48" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="2" name="entities that can be drawn later" visible="0">
-  <object id="4" type="RollingPin" x="128" y="48" width="54" height="24">
+ <objectgroup id="2" name="entities that can be drawn later">
+  <object id="4" type="RollingPin" x="16" y="48" width="31" height="15">
    <properties>
-    <property name="Direction" value="WEST"/>
+    <property name="Direction" value="SOUTH"/>
     <property name="Speed" type="int" value="165"/>
    </properties>
   </object>
-  <object id="5" type="RollingPin" x="16" y="112" width="54" height="24">
+  <object id="5" type="RollingPin" x="80" y="128" width="32" height="16">
    <properties>
-    <property name="Direction" value="EAST"/>
+    <property name="Direction" value="NORTH"/>
     <property name="Speed" type="int" value="165"/>
    </properties>
   </object>
   <object id="71" type="Wolf" x="80" y="0" width="16" height="16"/>
+  <object id="72" type="RollingPin" x="144" y="48" width="32" height="16">
+   <properties>
+    <property name="Direction" value="SOUTH"/>
+    <property name="Speed" type="int" value="165"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
