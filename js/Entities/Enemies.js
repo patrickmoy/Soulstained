@@ -70,7 +70,8 @@ class Enemy extends Entity {
                 this.direction = Math.floor(Math.random() * 4.5); // Changes the direction
             }
             this.directionTime++;
-        } else {
+        }
+        else {
             this.direction = Math.floor(Math.random() * 4.5); // Gets a random direction.
             this.directionTime = 0;
         }
@@ -227,7 +228,8 @@ class Zombie extends Enemy {
             // Actually perform the zombie movement.
             this.followHero();
             this.movementCooldown = 5;
-        } else {
+        }
+        else {
             this.randomWalk(50, this.movementCooldown);
             if (this.movementCooldown > 0) this.movementCooldown--;
         }
@@ -317,7 +319,8 @@ class Necromancer
             this.tempCoordY = this.location[spot][1]; // Returns the y - coordinate to be used to determine where to spawn new projectile after teleport.
             this.attackAndSet();
 
-        } else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
+        }
+        else if (this.count >= 3.9) { // HARD CODED VALUE FOR NOW... NOT FINAL
             this.count = 0;
 
             if (this.attackCount === 2) {
@@ -326,7 +329,8 @@ class Necromancer
                 this.checkKnightCount();
                 this.attackCount = 0;
 
-            } else if ((this.attackCount < 3) && !this.isReadyToDie()) {
+            }
+            else if ((this.attackCount < 3) && !this.isReadyToDie()) {
 
                 this.fireBallAttack();
                 this.attackCount++;
@@ -343,16 +347,19 @@ class Necromancer
                 this.teleportMove = true;
                 this.actionElapsedTime = 0;
                 this.teleportAnimation = false;
-            } else {
+            }
+            else {
                 this.animation.drawFrame(this.game.clockTick, this.context,
                     this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                     this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
             }
-        } else if (this.knightSpawned !== -1) {
+        }
+        else if (this.knightSpawned !== -1) {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 2);
-        } else if (this.knightSpawned === -1 && this.isReadyToDie()) {
+        }
+        else if (this.knightSpawned === -1 && this.isReadyToDie()) {
             this.dead = true;
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -407,7 +414,8 @@ class Necromancer
                 this.totalSpawned++;
             }
 
-        } else {
+        }
+        else {
             this.knightSpawned = -1;
         }
     }
@@ -449,7 +457,8 @@ class Knight
             // Actually perform the zombie movement.
             this.followHero();
             this.movementCooldown = 5;
-        } else {
+        }
+        else {
             this.randomWalk(50, this.movementCooldown);
             if (this.movementCooldown > 0) this.movementCooldown--;
         }
@@ -495,16 +504,19 @@ class Sniper extends Enemy {
                 this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], this.futureHitbox.xMin + (this.futureHitbox.xMin * .10), this.futureHitbox.yMin + this.height, this.position); //correct
                 this.game.currentEntities[3].push(this.vertarrow);
 
-            } else if (this.position === "NORTH") {
+            }
+            else if (this.position === "NORTH") {
                 this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], this.futureHitbox.xMin + (this.futureHitbox.xMin * .025), this.futureHitbox.yMin - (this.futureHitbox.yMin * .15), this.position); //correct
                 this.game.currentEntities[3].push(this.vertarrow);
 
-            } else if (this.position === "EAST") {
+            }
+            else if (this.position === "EAST") {
                 this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"], this.futureHitbox.xMin + this.width, this.futureHitbox.yMin + (this.futureHitbox.yMin * .05), this.position); // correct
                 this.game.currentEntities[3].push(this.horizarrow);
 
 
-            } else if (this.position === "WEST") {
+            }
+            else if (this.position === "WEST") {
                 this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"], this.futureHitbox.xMin - this.width, this.futureHitbox.yMin + (this.futureHitbox.yMin * .10), this.position); // correct
                 this.game.currentEntities[3].push(this.horizarrow);
             }
@@ -520,16 +532,19 @@ class Sniper extends Enemy {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 1);
-        } else if (this.position === "EAST") {
+        }
+        else if (this.position === "EAST") {
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 2);
-        } else if (this.position === "WEST") {
+        }
+        else if (this.position === "WEST") {
 
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
                 this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 3);
-        } else if (this.position === "SOUTH") {
+        }
+        else if (this.position === "SOUTH") {
 
             this.animation.drawFrame(this.game.clockTick, this.context,
                 this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
@@ -566,15 +581,18 @@ class Beast
                 this.position = "WEST";
                 this.reverseDirection = false;
 
-            } else if (this.position === "WEST") {
+            }
+            else if (this.position === "WEST") {
 
                 this.position = "EAST";
                 this.reverseDirection = false;
-            } else if (this.position === "SOUTH") {
+            }
+            else if (this.position === "SOUTH") {
 
                 this.position = "NORTH";
                 this.reverseDirection = false;
-            } else if (this.position === "NORTH") {
+            }
+            else if (this.position === "NORTH") {
 
                 this.position = "SOUTH";
                 this.reverseDirection = false;
@@ -742,7 +760,8 @@ class Target extends Enemy {
                     this.motionCounter = this.motionX;
                     setBoxToThis(this.futureHitbox, this.maximumHitbox);
                 }
-            } else if (this.motionDirection === 'negative') {
+            }
+            else if (this.motionDirection === 'negative') {
                 this.walk(2);
                 this.motionCounter -= ((this.speed * this.game.clockTick) / 60);
                 if (this.motionCounter <= 0) {
@@ -751,7 +770,8 @@ class Target extends Enemy {
                     setBoxToThis(this.futureHitbox, this.originalHitbox);
                 }
             }
-        } else if (this.motionY !== 0) {
+        }
+        else if (this.motionY !== 0) {
             if (this.motionDirection === 'positive') {
                 this.walk(1);
                 this.motionCounter += ((this.speed * this.game.clockTick) / 60);
@@ -760,7 +780,8 @@ class Target extends Enemy {
                     this.motionCounter = this.motionY;
                     setBoxToThis(this.futureHitbox, this.maximumHitbox);
                 }
-            } else if (this.motionDirection === 'negative') {
+            }
+            else if (this.motionDirection === 'negative') {
                 this.walk(0);
                 this.motionCounter -= ((this.speed * this.game.clockTick) / 60);
                 if (this.motionCounter <= 0) {
@@ -811,7 +832,8 @@ class TargetOwner extends Sign {
                 this.timeCounter = 0;
                 this.targetCount = 0;
             }
-        } else if (this.pushMessage && !this.activated && !this.complete) {
+        }
+        else if (this.pushMessage && !this.activated && !this.complete) {
             if (this.game.newMsg === false) {
                 this.game.newMsg = true;
                 this.game.msg = this.msg;
@@ -836,19 +858,68 @@ class TargetOwner extends Sign {
 
 const WOLF_DEFAULT_HEALTH = 20;
 const END_MESSAGE = "CONGRATS! YOU'RE DONE!";
+var tempCircle = false;
+var tempCircleDrawTime = 15; // Circle used for testing
+var tempSlamRadius = 100; // Slam radius used for testing
 
 class Wolf extends Enemy {
+    /* LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE LOOK HERE */
+    /* Wolf Boss Fight:
+        * First phase: constantly fire arrows and follow the player horizontally
+            - Will occasionally fire 3 arrows, the frequency increases the less hp the boss has.
+        * When boss is half HP, go to second phase
+        * second phase: go to wolf form and melee fight with the hero.
+            - the less hp the boss has, the more aggressive he becomes.
+            - stun
+                * will always stun the hero whenever stun is off cooldown
+                * stun has a charge up time
+                * stun has infinite range
+            - melee attack (ground slam)
+                * will aoe if it is close enough to the hero
+                * aoe has a charge up time (enough for the hero to avoid it)
+                * will be "tired" once melee attack is done, cannot move
+            - movement
+                * will try to always follow the hero if it's not "tired"
+                * can not be pushed by the logs, logs will simply change direction.
+        * When boss is dead, just play game done message. No extra since you beat the game and nothing important happens.
+    */
+    /* TODO
+        get animations linked up with cool downs and charge up times
+        get message to display once boss is defeated (Steven - I don't know how the whole messaging this is so I just avoided it)
+        utilize the spritesheet parameter (and maybe add more to handle multiple animations?)
+     */
+
+    /* Variables to change to your liking: CTRL + F to look for and change it there. Could be in different areas of the class or outside class
+        * this.tired - timer for how long the boss is tired after AoE attack
+        * this.stunCooldown - timer for how long until next stun can be used
+        * this.speed - speed adjustment for how to move
+        * this.attackCooldown - used to determine the time between attacks (so the slam and the arrow shooting, varies depending on phase)
+        * this.attack - used to determine either stun or slam (never used during first phase) "stun" or "attack"
+        * hero.stunned - how long the hero should be stunned for
+        * WOLF_DEFAULT_HEALTH - default health of the wolf
+        * multiarrowSpeedAdd - how much speed to add for multiarrows (multiarrows are faster or however you want it)
+        * tempCircle - used only for drawing the AoE slam, can be removed once done
+        * tempCircleDrawTime - how long to draw the AoE slam indicator
+        I believe those are all the variables I used. There maybe implicit variables such as
+        making the vertical arrow's speed but should be quick to find (I hope).
+     */
+
     constructor(game, spritesheet, x, y, width, height) {
         super(game, x, y, width, height);
         this.alive = true;
         this.health = WOLF_DEFAULT_HEALTH;
         this.messagePassed = false;
         this.animation = null; // Human animation
-        this.fireCooldown = 5;
         this.attackCooldown = 0;
+        this.stunCooldown = 500; // how long until stun can be reused
+        this.tired = 0; // can't move since too tired
         this.speed = 0;
+        this.attack = ""; // only used in the wolf phase to handle multiple attacks
     }
 
+    /**
+     * Human phase of the fight
+     */
     humanAction() {
         const hero = this.game.HERO;
         const hbx = this.hitbox;
@@ -856,6 +927,7 @@ class Wolf extends Enemy {
         const centerY = (hbx.yMin + hbx.yMax) / 2;
         const heroCenterX = (hero.hitbox.xMin + hero.hitbox.xMax) / 2;
         const heroCenterY = (hero.hitbox.yMin + hero.hitbox.yMax) / 2;
+
         // Hero is within vertical line of sight of boss, slightly larger than the boss's hitbox so it can prefire.
         if (hero.hitbox.xMin > hbx.xMin - (hbx.xMin / 5) && hero.hitbox.xMax < hbx.xMax + (hbx.xMax / 5)) {
             // Shoot the arrow
@@ -863,8 +935,18 @@ class Wolf extends Enemy {
                 // cooldown for the arrow firing so we no constant fire.
                 this.attackCooldown = 30;
                 const arrowDirection = hero.hitbox.yMin > hbx.yMin ? "SOUTH" : "NORTH";
-                const arrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], centerX, centerY, arrowDirection, 250 + (Math.random() * 75));
-                this.game.currentEntities[3].push(arrow);
+                const arrow1 = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], centerX, centerY, arrowDirection, 260 + (Math.random() * 75));
+                // Chance for multiarrow
+                if (Math.random() * this.health < Math.random() * WOLF_DEFAULT_HEALTH / 2) {
+                    const multiarrowSpeedAdd = 10;
+                    arrow1.speed += multiarrowSpeedAdd;
+                    const arrowDistance = 25;
+                    const arrow2 = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], centerX + arrowDistance, centerY, arrow1.trajectory, arrow1.speed);
+                    const arrow3 = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"], centerX - arrowDistance, centerY, arrow1.trajectory, arrow1.speed);
+                    this.game.currentEntities[3].push(arrow2);
+                    this.game.currentEntities[3].push(arrow3);
+                }
+                this.game.currentEntities[3].push(arrow1);
             }
             else {
                 this.attackCooldown--;
@@ -877,27 +959,86 @@ class Wolf extends Enemy {
         if (this.speed > 135) {
             this.speed = 135;
         }
-        const potentialMovement = this.game.clockTick * this.speed;
         // Try to follow the player horizontally
         // Hero is on the left
         if (hero.hitbox.xMin < hbx.xMin) {
-            this.futureHitbox.xMin -= potentialMovement;
+            this.futureHitbox.xMin -= this.game.clockTick * this.speed;
             this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
         }
         // Hero is on the right
         else if (hero.hitbox.xMax > hbx.xMax) {
-            this.futureHitbox.xMin += potentialMovement;
+            this.futureHitbox.xMin += this.game.clockTick * this.speed;
             this.futureHitbox.xMax = this.futureHitbox.xMin + this.width;
         }
     }
 
+    /**
+     * Wolf phase of the fight
+     */
     wolfAction() {
         const hero = this.game.HERO;
         const hbx = this.hitbox;
+        if (this.attack === "stun") {
+            // Animation for stun is done, perform the stun.
+            if (/* TODO check if animation is done. Currently set as this.inAttack for testing */ this.attack) {
+                this.attack = "";
+                hero.stunned = 100;
+            }
+        }
+        else if (this.attack === "melee") {
+            if (/* TODO check if animation is done. Currently set as this.inAttack for testing */ this.attack) {
+                this.attack = "";
+                // Drawing test circle to indicate aoe;
+                tempCircle = true;
+                tempCircleDrawTime = 15;
+                const slamRadius = tempSlamRadius + (WOLF_DEFAULT_HEALTH - this.health);
+                // For testing
+                tempSlamRadius = slamRadius;
+            }
+        }
+        else {
+            // Always stun if not on cooldown
+            if (!this.stunCooldown) {
+                this.attack = "stun";
+                this.stunCooldown = 500;
+                this.animation = null; // set howl animation
+            }
+            else {
+                const centerX = (hbx.xMin + hbx.xMax) / 2;
+                const centerY = (hbx.yMin + hbx.yMax) / 2;
+                const heroCenterX = (hero.hitbox.xMin + hero.hitbox.xMax) / 2;
+                const heroCenterY = (hero.hitbox.yMin + hero.hitbox.yMax) / 2;
+                const dist = Math.sqrt(Math.pow(centerX - heroCenterX, 2) + Math.pow(centerY - heroCenterY, 2));
+
+                // stun is on cooldown so go boss goes for normal attack
+                this.stunCooldown--;
+
+                //not on attack cooldown
+                if (!this.attackCooldown) {
+                    // Within AoE range
+                    if (dist < 100) {
+                        this.attackCooldown = 100;
+                        this.attack = "melee"; // Replace for checking if animation is done
+                        this.tired = 75;
+                        this.animation = null; // Set aoe animation
+                    }
+                }
+                else {
+                    this.attackCooldown--;
+                }
+                // Boss will move if he is not tired.
+                if (!this.tired) {
+                    this.speed = 150 + ((WOLF_DEFAULT_HEALTH - this.health) * 2.5);
+                    this.followHero();
+                }
+                else {
+                    this.tired--;
+                }
+            }
+        }
     }
 
     preUpdate() {
-
         // Initial phase: human.
         if (this.health > WOLF_DEFAULT_HEALTH / 2) {
             this.animation = null; // Human animation
@@ -917,7 +1058,6 @@ class Wolf extends Enemy {
         // play end game message
         if (!this.alive && !this.messagePassed) {
             this.messagePassed = true;
-
         }
     }
 
@@ -927,5 +1067,17 @@ class Wolf extends Enemy {
         else this.game.GAME_CONTEXT.fillRect(this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
             this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR),
             this.width, this.height);
+        // Radius for AoE, only for testing. Feel free to delete this once you have a aoe indicator.
+        if (tempCircle && tempCircleDrawTime) {
+            tempCircleDrawTime--;
+            const hbx = this.hitbox;
+            const centerX = (hbx.xMin + hbx.xMax) / 2;
+            const centerY = (hbx.yMin + hbx.yMax) / 2;
+            this.game.GAME_CONTEXT.beginPath();
+            this.game.GAME_CONTEXT.fillStyle = "Red"
+            this.game.GAME_CONTEXT.arc(centerX, centerY, tempSlamRadius, 0, Math.PI * 2);
+            this.game.GAME_CONTEXT.fill();
+            this.game.GAME_CONTEXT.closePath();
+        }
     }
 }

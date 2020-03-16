@@ -27,6 +27,7 @@ class Hero extends Entity {
         this.smallKeys = 0;
         this.hasBossKey = false;
         this.alive = true;
+        this.stunned = 0;
         this.equipJ = "whip"; // Item equipped in J key.
         this.equipK = "empty"; // Item equipped in K key.
         this.inventory = ["empty", "whip"];
@@ -97,51 +98,57 @@ class Hero extends Entity {
      */
     preUpdate() {
 
-        if (!this.game.transition) {
-            this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
-            if (this.jumping) {
-                this.jump();
-            } else if (!this.jumping && this.beingUsed("boots") && this.status !== 'shooting') {
-                this.jumping = true;
-                this.jump();
-            }
-            if (this.status === 'attacking') {
-                this.attack();
-            } else if (this.status !== 'attacking' && this.beingUsed("whip")) {
-                this.status = 'attacking';
-                this.attack();
-            } else if (this.status === 'shooting') {
-                this.shoot();
-            } else if (this.beingUsed("bow") && (this.status !== 'attacking' && !this.jumping)) {
-                this.status = 'shooting';
-                this.shoot();
-                this.arrowShot = false;
-            } else if (this.game.hasMoveInputs()) {
-                this.status = 'walking';
-                this.movingDiagonally = !!this.hasMultipleMoveInputs();
-                if (this.movingDiagonally) {
-                    this.speed *= this.game.DIAGONAL_ADJUSTMENT;
+        if (this.stunned) {
+            this.stunned--;
+        }
+        else {
+            if (!this.game.transition) {
+                this.whip.active = this.actionElapsedTime >= (this.ACTION_DURATION * this.WHIP_ACTIVE_RATIO) && this.status === 'attacking';
+                if (this.jumping) {
+                    this.jump();
                 }
-                if (this.game.INPUTS["KeyW"]) {
-                    this.direction = 0;
-                    this.walk(this.direction);
+                else if (!this.jumping && this.beingUsed("boots") && this.status !== 'shooting') {
+                    this.jumping = true;
+                    this.jump();
                 }
-                if (this.game.INPUTS["KeyS"]) {
-                    this.direction = 1;
-                    this.walk(this.direction);
-                }
-                if (this.game.INPUTS["KeyA"]) {
-                    this.direction = 2;
-                    this.walk(this.direction);
-                }
-                if (this.game.INPUTS["KeyD"]) {
-                    this.direction = 3;
-                    this.walk(this.direction);
-                }
-                this.speed = this.originalSpeed;
+                if (this.status === 'attacking') {
+                    this.attack();
+                } else if (this.status !== 'attacking' && this.beingUsed("whip")) {
+                    this.status = 'attacking';
+                    this.attack();
+                } else if (this.status === 'shooting') {
+                    this.shoot();
+                } else if (this.beingUsed("bow") && (this.status !== 'attacking' && !this.jumping)) {
+                    this.status = 'shooting';
+                    this.shoot();
+                    this.arrowShot = false;
+                } else if (this.game.hasMoveInputs()) {
+                    this.status = 'walking';
+                    this.movingDiagonally = !!this.hasMultipleMoveInputs();
+                    if (this.movingDiagonally) {
+                        this.speed *= this.game.DIAGONAL_ADJUSTMENT;
+                    }
+                    if (this.game.INPUTS["KeyW"]) {
+                        this.direction = 0;
+                        this.walk(this.direction);
+                    }
+                    if (this.game.INPUTS["KeyS"]) {
+                        this.direction = 1;
+                        this.walk(this.direction);
+                    }
+                    if (this.game.INPUTS["KeyA"]) {
+                        this.direction = 2;
+                        this.walk(this.direction);
+                    }
+                    if (this.game.INPUTS["KeyD"]) {
+                        this.direction = 3;
+                        this.walk(this.direction);
+                    }
+                    this.speed = this.originalSpeed;
 
-            } else {
-                this.status = 'idle';
+                } else {
+                    this.status = 'idle';
+                }
             }
         }
     }
