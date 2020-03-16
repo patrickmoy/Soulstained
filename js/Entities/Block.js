@@ -258,7 +258,7 @@ class RollingPin extends Block {
         super.preUpdate();
         this.pushUpdate = true;
         console.log(detectCollide([this], this.game.currentEntities[2]));
-        if (detectCollide([this], this.game.currentEntities[1]).length >= 2 || detectCollide([this], this.game.currentEntities[2]).length >= 2) {
+        if (detectCollide([this], this.game.currentEntities[1]).length >= 2 || detectCollide([this], this.game.currentEntities[2]).length >= 1) {
             switch (this.direction) {
                 case "SOUTH":
                     this.direction = "NORTH";

@@ -172,11 +172,12 @@ class TileMap {
             }
             else if (entity.type === 'RollingPin') {
                 if (entity.customProperties.Direction === "SOUTH" || entity.customProperties.Direction === "NORTH") {
-                    this.BLOCKS.push(new RollingPin(this.game, this.game.ASSETS_LIST['./res/img/log.png'], entity.x * 60 / 16, entity.y * 60 / 16, 220, 60,
-                        55, 24, 0.1, 3.7, [6], entity.customProperties.Speed, entity.customProperties.Direction))
+                    this.BLOCKS.push(new RollingPin(this.game, this.game.ASSETS_LIST['./res/img/log.png'], entity.x * 60 / 16, entity.y * 60 / 16, 120, 40,
+                        55, 24, 0.1, 2, [6], /*entity.customProperties.Speed  hardcoded cause I got lazy, change it in tiled if you want - S.T.*/ 100, entity.customProperties.Direction))
                 }
                 else if (entity.customProperties.Direction === "WEST" || entity.customProperties.Direction === "EAST") {
 
+                    // TODO the values for width, height, framewidth, frameheight aren't aligned
                     this.BLOCKS.push(new RollingPin(this.game, this.game.ASSETS_LIST['./res/img/log2.png'], entity.x * 60 / 16, entity.y * 60 / 16, 60, 100,
                         22, 30, 0.15, 3.4, [6], entity.customProperties.Speed, entity.customProperties.Direction))
                 }

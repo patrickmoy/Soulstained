@@ -80,7 +80,11 @@ function flagImpassable(collisionPairs) {
         // Assuming convention of ordering of parameters (heros and enemies first, blocks/traps after)
         if (element[1] instanceof InvisibleBlock && !(element[1] instanceof Pit)) { // Check if element[0] is hero or an enemy instead (non ghost).
             element[0].pushUpdate = false;
-            element[1].pushUpdate = false; // :(
+            // This is a quick fix to a bug for rolling pin where it would move hero even if colliding with something else
+            if (element[0] instanceof Hero) {
+                element[1].pushUpdate = false; // :(
+            }
+
         }
         if (element[0] instanceof Hero && !(element[1] instanceof Pit)) {
             const xCheck = boxCheck(element[0].nbx, element[1].futureHitbox);
