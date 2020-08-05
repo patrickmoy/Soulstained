@@ -31,6 +31,7 @@ AssetHandler.queueImage("./res/img/bosslock.png");
     AssetHandler.queueImage("./res/img/dummy.png");
 AssetHandler.queueImage("./res/img/lock.png");
 AssetHandler.queueImage("./res/img/hero_extra.png");
+AssetHandler.queueImage("./res/img/hero_hadouken.png");
 AssetHandler.queueImage("./res/img/hero_bow.png");
 AssetHandler.queueImage("./res/img/hit.png");
 AssetHandler.queueImage("./res/img/zombie.png");
@@ -70,6 +71,7 @@ AssetHandler.queueImage('./res/img/coinAnimation.png');
 AssetHandler.queueImage('./res/img/gate.png');
 AssetHandler.queueImage("./res/img/boots.png");
 AssetHandler.queueImage("./res/img/bootsUI.png");
+AssetHandler.queueImage("./res/img/hadouken.png");
 
 AssetHandler.queueImage("./res/img/merchant.png");
 AssetHandler.queueImage("./res/img/lever.png");

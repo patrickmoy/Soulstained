@@ -83,7 +83,7 @@ class GameEngine {
         this.GAME_CONTEXT.imageSmoothingEnabled = false; // Disable Anti-aliasing to make pixel art look smoother
 
         // hero initialization
-        this.HERO = new Hero(this, this.ASSETS_LIST["./res/img/hero_extra.png"], this.ASSETS_LIST["./res/img/whip.png"], this.ASSETS_LIST["./res/img/hero_bow.png"]);
+        this.HERO = new Hero(this, this.ASSETS_LIST["./res/img/hero_extra.png"], this.ASSETS_LIST["./res/img/whip.png"], this.ASSETS_LIST["./res/img/hero_bow.png"], this.ASSETS_LIST["./res/img/hero_hadouken.png"]);
         // push hero to currentEntities
         this.currentEntities[0][0] = this.HERO; // Add hero to the entity list. Hero is always in an array that is at index 0 and in that array at index 0.
         this.currentEntities[0][1] = this.HERO.whip; // Add whip to the entity list. Weapons occupy Hero array in order acquired.
@@ -273,6 +273,7 @@ class GameEngine {
             // Flags entities for standard "impassable" behavior (mostly terrain)
             flagGravitate(creatureToBlockCollisions);
             flagImpassable(creatureToBlockCollisions);
+            console.log(creatureToBlockCollisions);
             flagImpassable(flinchEffect);
             flagMessages(creatureToBlockCollisions);
             flagPickup(pickups);

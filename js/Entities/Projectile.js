@@ -163,6 +163,58 @@ class FireballProjectile extends Projectile {
 
 }
 
+class Hadouken extends Projectile {
+    constructor(game, spritesheet, x, y, trajectory) {
+        super(game, x, y, 42, 42, 2);
+        this.animation = new Animation(spritesheet, this, 42, 42, .10, 1, [8]);
+        this.context = game.GAME_CONTEXT;
+        this.alive = true;
+        this.trajectory = trajectory;
+        this.speed = 400;
+    }
+
+    draw() {
+        if (!this.game.pause) {
+            this.animation.drawFrame(this.game.clockTick, this.context,
+                this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+                this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), 'walking', 0);
+        }
+    }
+
+    preUpdate() {
+        switch(this.trajectory) {
+            case 'SOUTH':
+                this.futureHitbox.yMin += this.game.clockTick * this.speed;
+                this.futureHitbox.yMax += this.game.clockTick * this.speed;
+                if (this.projectileNotOnScreen()) {
+                    this.alive = false;
+                }
+                break;
+            case 'NORTH':
+                this.futureHitbox.yMin -= this.game.clockTick * this.speed;
+                this.futureHitbox.yMax -= this.game.clockTick * this.speed;
+                if (this.projectileNotOnScreen()) {
+                    this.alive = false;
+                }
+                break;
+            case 'EAST':
+                this.futureHitbox.xMin += this.game.clockTick * this.speed;
+                this.futureHitbox.xMax += this.game.clockTick * this.speed;
+                if (this.projectileNotOnScreen()) {
+                    this.alive = false;
+                }
+                break;
+            case 'WEST':
+                this.futureHitbox.xMin -= this.game.clockTick * this.speed;
+                this.futureHitbox.xMax -= this.game.clockTick * this.speed;
+                if (this.projectileNotOnScreen()) {
+                    this.alive = false;
+                }
+                break;
+        }
+    }
+}
+
 class VerticalArrow extends Projectile {
 
     constructor(game, spritesheet, x, y, trajectory) {
@@ -172,8 +224,6 @@ class VerticalArrow extends Projectile {
         this.alive = true;
         this.trajectory = trajectory; //A flight direction path of either: left, right or down.
         this.speed = 200; //Speed of each projectile, presently hard-coded in.
-
-
     }
 
     preUpdate() {

@@ -54,7 +54,7 @@ class Animation {
                 } else if (status === 'attacking') {
                     xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) %
                         (this.frameIndices[1] - this.frameIndices[0]) + this.frameIndices[0]);
-                } else if (status === 'shooting') {
+                } else if (status === 'shooting' || status === 'hadouken') {
                     xIndex = this.frameWidth * (Math.floor(this.currentFrame(this.entity.actionElapsedTime)) % this.frameIndices[0]);
                 }
                 else if (status === 'weapon') {

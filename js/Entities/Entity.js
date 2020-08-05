@@ -171,8 +171,8 @@ class Entity {
             this.status = 'idle';
         } else if (this.actionElapsedTime > (this.ACTION_DURATION * 2) && this.status === 'shooting') {
             this.actionElapsedTime = 0;
-            this.status = 'idle'
-        } else if (this.actionElapsedTime > (this.ACTION_DURATION * 2) && this.status === 'hadouken') {
+            this.status = 'idle';
+        } else if (this.actionElapsedTime > (this.ACTION_DURATION * 3) && this.status === 'hadouken') {
             this.actionElapsedTime = 0;
             this.status = 'idle'
         }

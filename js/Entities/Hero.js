@@ -8,14 +8,16 @@ class Hero extends Entity {
      * @param spriteSheet {Image} The image of the hero for animation and updating
      * @param weaponSheet {Image} The image of the default weapon for animation.
      * @param bowSheet {Image} Bow sprites for hero.
+     * @param bracerSheet
      */
-    constructor(game, spriteSheet, weaponSheet, bowSheet) {
+    constructor(game, spriteSheet, weaponSheet, bowSheet, bracerSheet) {
         super(game, 300, 420, 38, 55, 1);
         // To modify whip speed, change last parameter here (.100 default, attackFrameTime parameter in Animation).
         // Must be 1/5 of this.ACTION_DURATION (change that too).
         this.animation = new Animation(spriteSheet, this, 16, 23, .250,
             2.4, [2, 7, 11], .100);
         this.bowAnimation = new Animation(bowSheet, this, 36, 36, .250, 2.4, [4]);
+        this.bracerAnimation = new Animation(bracerSheet, this, 16, 23, .125, 2.4, [12]);
         this.whip = new Weapon(game, weaponSheet, this, 84, 84, 2);
         this.context = game.GAME_CONTEXT;
         this.speed = 225;
@@ -28,8 +30,8 @@ class Hero extends Entity {
         this.hasBossKey = false;
         this.alive = true;
         this.equipJ = "whip"; // Item equipped in J key.
-        this.equipK = "empty"; // Item equipped in K key.
-        this.inventory = ["empty", "whip"];
+        this.equipK = "bracer"; // Item equipped in K key.
+        this.inventory = ["empty", "whip", "bracer", "bow"];
         this.nbx = {
             xMin: this.hitbox.xMin,
             yMin: this.hitbox.yMin,
@@ -65,6 +67,7 @@ class Hero extends Entity {
         this.whipSoundTag;
         this.jumpSoundTag;
         this.arrowShot;
+        this.hadoukenShot;
     }
 
     walk(direction) {
@@ -121,6 +124,7 @@ class Hero extends Entity {
             } else if (this.beingUsed("bracer") && this.canDoUniqueAct()) {
                 this.status = 'hadouken';
                 this.hadouken();
+                this.hadoukenShot = false;
             } else if (this.game.hasMoveInputs()) {
                 this.status = 'walking';
                 this.movingDiagonally = !!this.hasMultipleMoveInputs();
@@ -205,10 +209,12 @@ class Hero extends Entity {
      */
     draw() {
         if (!this.hurting) {
-           if (this.status !== 'shooting') {
+           if (this.status !== 'shooting' && this.status !== 'hadouken') {
                this.drawHeroHelper();
-           } else {
+           } else if (this.status === 'shooting') {
                this.drawHeroShootHelper();
+           } else {
+               this.drawHeroHadoukenHelper();
            }
         }
         if (this.hurting) {
@@ -240,6 +246,11 @@ class Hero extends Entity {
     drawHeroShootHelper() {
         this.bowAnimation.drawFrame(this.game.clockTick, this.context,this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR) - 20,
             this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR) - 16, this.status, this.direction);
+    }
+
+    drawHeroHadoukenHelper() {
+        this.bracerAnimation.drawFrame(this.game.clockTick, this.context,this.hitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR),
+            this.hitbox.yMin - this.height * (1 - this.HITBOX_SHRINK_FACTOR), this.status, this.direction);
     }
 
     /**
@@ -311,7 +322,7 @@ class Hero extends Entity {
         }
         this.whip.direction = this.direction;
         super.attack();
-    }
+}
 
     shoot() {
         super.attack();
@@ -350,33 +361,30 @@ class Hero extends Entity {
 
     hadouken() {
         super.attack();
-        if (this.actionElapsedTime >= 1.0) {
+        if (this.actionElapsedTime >= 1.0 && !this.hadoukenShot) {
+            this.hadoukenShot = true;
             switch (this.direction) {
                 case 0:
-                    this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"],
+                    this.hadoukenProj = new Hadouken(this.game, this.game.ASSETS_LIST["./res/img/hadouken.png"],
                         this.futureHitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR) + this.width / 2,
                         this.futureHitbox.yMin - 57, 'NORTH');
-                    this.vertarrow.speed = 400;
-                    this.game.currentEntities[0].push(this.vertarrow);
+                    this.game.currentEntities[0].push(this.hadoukenProj);
                     break;
                 case 1:
-                    this.vertarrow = new VerticalArrow(this.game, this.game.ASSETS_LIST["./res/img/vert_arrow.png"],
+                    this.hadoukenProj = new Hadouken(this.game, this.game.ASSETS_LIST["./res/img/hadouken.png"],
                         this.futureHitbox.xMin - this.width * (1 - this.HITBOX_SHRINK_FACTOR) + this.width / 2 + 2,
                         this.futureHitbox.yMin + 57, 'SOUTH');
-                    this.vertarrow.speed = 400;
-                    this.game.currentEntities[0].push(this.vertarrow);
+                    this.game.currentEntities[0].push(this.hadoukenProj);
                     break;
                 case 2:
-                    this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"],
+                    this.hadoukenProj = new Hadouken(this.game, this.game.ASSETS_LIST["./res/img/hadouken.png"],
                         this.futureHitbox.xMin - 57 - this.width / 2, this.futureHitbox.yMin + this.height / 2, "WEST");
-                    this.horizarrow.speed = 400;
-                    this.game.currentEntities[0].push(this.horizarrow);
+                    this.game.currentEntities[0].push(this.hadoukenProj);
                     break;
                 case 3:
-                    this.horizarrow = new HorizontalArrow(this.game, this.game.ASSETS_LIST["./res/img/horiz_arrow.png"],
+                    this.hadoukenProj = new Hadouken(this.game, this.game.ASSETS_LIST["./res/img/hadouken.png"],
                         this.futureHitbox.xMin + this.width, this.futureHitbox.yMin + this.height / 2, "EAST");
-                    this.horizarrow.speed = 400;
-                    this.game.currentEntities[0].push(this.horizarrow);
+                    this.game.currentEntities[0].push(this.hadoukenProj);
                     break;
             }
         }
