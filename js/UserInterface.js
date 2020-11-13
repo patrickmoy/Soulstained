@@ -887,10 +887,10 @@ class UserInterface {
             }
         }
 
-        this.ctx.fillRect(180, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2 + 24 + 12 + 2, 360, 12);
-        dx = 180;
+        this.ctx.fillRect(120, 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2 + 24 + 12 + 2, 480, 12);
+        dx = 120;
         dy = 156 + 24 + 2 + 12 + 2 + 12 + 2 + 12 + 2 + 24 + 12 + 48 + 48 + 12 + 2 + 24 + 12 + 2 + 24 + 12 + 2;
-        var inventory = this.parse("ACCESS INVENTORY AND EXIT MENU");
+        var inventory = this.parse("ACCESS INVENTORY AND EXIT MENUS OR SIGNS");
         for (var w=0; w<inventory.length; w++)
         {
             if (inventory[w] === 29) dx += 12;

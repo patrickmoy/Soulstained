@@ -30,8 +30,8 @@ class Hero extends Entity {
         this.hasBossKey = false;
         this.alive = true;
         this.equipJ = "whip"; // Item equipped in J key.
-        this.equipK = "bracer"; // Item equipped in K key.
-        this.inventory = ["empty", "whip", "bracer", "bow"];
+        this.equipK = "empty"; // Item equipped in K key.
+        this.inventory = ["empty", "whip"];
         this.nbx = {
             xMin: this.hitbox.xMin,
             yMin: this.hitbox.yMin,
