@@ -98,7 +98,7 @@ class Rubble extends Block {
     }
 
     update() {
-        if (this.game.HERO.hadoukenProj && entitiesCollided(this, this.game.HERO.hadoukenProj)) {
+        if (typeof this.game.HERO.hadoukenProj !== "undefined" && entitiesCollided(this, this.game.HERO.hadoukenProj)) {
             console.log("DESTROYED BY HADOUKEN!");
             //TODO: Fix lazy logic, because using a this.deleteSelf call is problematic on a global scale
             // Add new way of deleting rubble
